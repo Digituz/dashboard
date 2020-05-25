@@ -1,0 +1,14 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "digituz-dashboard",
+  "password": "123456",
+  "database": "digituz-dashboard",
+  "synchronize": false,
+  "migrationsTableName": "database_migrations",
+  "migrations": ["src/db-migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "src/db-migrations"
+  }
+}

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ProductsModule } from './products/products.module';
-import { Product } from './products/entities/product';
+import { Product } from './products/entities/product.entity';
 
 @Module({
   imports: [
@@ -11,10 +11,15 @@ import { Product } from './products/entities/product';
       host: 'localhost',
       port: 3306,
       username: 'digituz-dashboard',
-      password: 'mysecretpassword',
+      password: '123456',
       database: 'digituz-dashboard',
       entities: [Product],
-      synchronize: true,
+      synchronize: false,
+      migrationsTableName: 'database_migrations',
+      migrations: ['src/db-migrations/*.js'],
+      cli: {
+        migrationsDir: 'src/db-migrations',
+      },
     }),
     ProductsModule,
   ],
