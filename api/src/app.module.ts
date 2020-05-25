@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
+import { Product } from './products/entities/product';
 
 @Module({
   imports: [
@@ -14,12 +13,12 @@ import { ProductsModule } from './products/products.module';
       username: 'digituz-dashboard',
       password: 'mysecretpassword',
       database: 'digituz-dashboard',
-      entities: [],
+      entities: [Product],
       synchronize: true,
     }),
     ProductsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

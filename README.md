@@ -12,3 +12,14 @@ docker run --name digituz-dashboard-mysql \
 docker stop digituz-dashboard-mysql
 docker rm digituz-dashboard-mysql
 ```
+
+```bash
+curl localhost:3000/products
+
+curl -X POST -H 'Content-Type: application/json' -d '{
+  "sku": "LFK-0001",
+  "title": "Máscara Frida Kahlo",
+  "sellingPrice": 39.9,
+  "description": "Máscara da Loja Frida Kahlo para que você enfrente a pandemia com estilo!"
+}' localhost:3000/products
+```
