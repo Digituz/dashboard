@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import styled from "styled-components";
 
-const { Header, Content, Sider } = Layout;
+const { Header, Sider } = Layout;
 
 const Logo = styled.div`
   width: 100px;
@@ -20,10 +20,6 @@ const Logo = styled.div`
 
 const ContentLayout = styled(Layout)`
   padding: 0 24px 24px;
-`;
-
-const MainContent = styled(Content)`
-  padding: 24px;
 `;
 
 const VerticalMenu = styled(Menu)`

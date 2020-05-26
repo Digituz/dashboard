@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card, Col, Divider, Input, Row, Switch } from "antd";
 
-import InputLabel from "../components/InputLabel";
+import InputLabel from "../../components/InputLabel";
 
 function ProductForm() {
   return (

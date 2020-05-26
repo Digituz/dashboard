@@ -1,10 +1,14 @@
 import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+
 import DashboardLayout from "./components/DashboardLayout";
-import ProductForm from "./containers/ProductForm";
+import ProductList from "./products/components/ProductList";
 
 const App = () => (
   <DashboardLayout>
-    <ProductForm />
+    <BrowserRouter>
+      <Route path="/produtos" component={ProductList} />
+    </BrowserRouter>
   </DashboardLayout>
 );
 
