@@ -1,34 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+// First, create the thunk
+export const loadProducts = createAsyncThunk("products/load", async () => {
+  const response = await axios.get("/v1/products");
+  return response.data;
+});
 
 const productsSlice = createSlice({
   name: "productsSlice",
   initialState: {
     loading: null,
-    products: [
-      {
-        key: "1",
-        name: "Mike",
-        age: 32,
-        address: "10 Downing Street",
-      },
-      {
-        key: "2",
-        name: "John",
-        age: 42,
-        address: "10 Downing Street",
-      },
-    ],
+    products: [],
   },
   reducers: {
-    loadProducts: (state) => {
-      state.loading = true;
-    },
     showProducts: (state, action) => {
       state.products = action.payload;
     },
   },
+  extraReducers: {
+    [loadProducts.fulfilled]: (state, action) => {
+      state.products.push(...action.payload);
+      state.loading = false;
+    },
+  },
 });
 
-export const { loadProducts, showProducts } = productsSlice.actions;
+export const { showProducts } = productsSlice.actions;
 
 export default productsSlice.reducer;
