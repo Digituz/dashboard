@@ -6,6 +6,7 @@ import {
   PictureOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const { Header, Sider } = Layout;
 
@@ -39,7 +40,7 @@ function DashboardLayout(props) {
         <Sider width={200} className="site-layout-background">
           <VerticalMenu mode="inline">
             <Menu.Item key="produtos" icon={<GiftOutlined />}>
-              Produtos
+              <Link to="/produtos">Produtos</Link>
             </Menu.Item>
             <Menu.Item key="estoque" icon={<AppstoreAddOutlined />}>
               Estoque

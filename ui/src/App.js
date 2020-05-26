@@ -5,11 +5,11 @@ import DashboardLayout from "./components/DashboardLayout";
 import ProductList from "./products/components/ProductList";
 
 const App = () => (
-  <DashboardLayout>
-    <BrowserRouter>
+  <BrowserRouter>
+    <DashboardLayout>
       <Route path="/produtos" component={ProductList} />
-    </BrowserRouter>
-  </DashboardLayout>
+    </DashboardLayout>
+  </BrowserRouter>
 );
 
 export default App;
