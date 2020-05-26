@@ -1,14 +1,18 @@
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 
+import store from "./store";
 import DashboardLayout from "./components/DashboardLayout";
-import ProductList from "./products/components/ProductList";
+import ProductList from "./features/products/ProductList";
 
 const App = () => (
   <BrowserRouter>
-    <DashboardLayout>
-      <Route path="/produtos" component={ProductList} />
-    </DashboardLayout>
+    <Provider store={store}>
+      <DashboardLayout>
+        <Route path="/produtos" component={ProductList} />
+      </DashboardLayout>
+    </Provider>
   </BrowserRouter>
 );
 
