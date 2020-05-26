@@ -10,7 +10,7 @@ const InputLabelContainer = styled.div`
 function InputLabel(props) {
   return (
     <InputLabelContainer>
-      <label for={props.for}>{props.children}</label>
+      <label htmlFor={props.htmlFor}>{props.children}</label>
     </InputLabelContainer>
   );
 }

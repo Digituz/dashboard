@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Card, Col, Divider, Input, Row, Switch } from "antd";
+import { Button, Card, Col, Divider, Input, Row, Space, Switch } from "antd";
+import { Link } from "react-router-dom";
 
 import InputLabel from "../../components/InputLabel";
 
@@ -12,13 +13,13 @@ function ProductForm() {
         <Col xs={24}>
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={3}>
-              <InputLabel for="sku">SKU:</InputLabel>
+              <InputLabel htmlFor="sku">SKU:</InputLabel>
             </Col>
             <Col xs={24} sm={9}>
               <Input id="sku" placeholder="SKU do produto" />
             </Col>
             <Col xs={24} sm={3}>
-              <InputLabel for="isActive">Ativo:</InputLabel>
+              <InputLabel htmlFor="isActive">Ativo:</InputLabel>
             </Col>
             <Col xs={24} sm={9}>
               <Switch id="isActive" />
@@ -28,13 +29,13 @@ function ProductForm() {
         <Col xs={24}>
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={3}>
-              <InputLabel for="title">Título:</InputLabel>
+              <InputLabel htmlFor="title">Título:</InputLabel>
             </Col>
             <Col xs={24} sm={9}>
               <Input id="title" placeholder="Título do produto" />
             </Col>
             <Col xs={24} sm={3}>
-              <InputLabel for="sellingPrice">Preço de venda:</InputLabel>
+              <InputLabel htmlFor="sellingPrice">Preço de venda:</InputLabel>
             </Col>
             <Col xs={24} sm={9}>
               <Input
@@ -45,13 +46,16 @@ function ProductForm() {
           </Row>
         </Col>
         <Col xs={24} sm={3}>
-          <InputLabel for="description">Descrição:</InputLabel>
+          <InputLabel htmlFor="description">Descrição:</InputLabel>
         </Col>
         <Col xs={24} sm={21}>
           <Input id="description" placeholder="Descrição do produto" />
         </Col>
         <Col span={24}>
-          <Button>Salvar</Button>
+          <Space>
+            <Button type="primary">Salvar</Button>
+            <Link to={"/produtos"}><Button>Voltar</Button></Link>
+          </Space>
         </Col>
       </Row>
     </Card>
