@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ProductsModule } from './products/products.module';
 import { Product } from './products/entities/product.entity';
+import { ProductVariation } from './products/entities/product-variation.entity';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { Product } from './products/entities/product.entity';
       username: 'digituz-dashboard',
       password: '123456',
       database: 'digituz-dashboard',
-      entities: [Product],
+      entities: [Product, ProductVariation],
       synchronize: false,
       migrationsTableName: 'database_migrations',
       migrations: ['src/db-migrations/*.js'],

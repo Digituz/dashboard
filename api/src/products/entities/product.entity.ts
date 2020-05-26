@@ -1,5 +1,5 @@
-
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { ProductVariation } from './product-variation.entity';
 
 @Entity()
 export class Product {
@@ -7,34 +7,42 @@ export class Product {
   id: number;
 
   @Column({
-    type: "varchar",
+    type: 'varchar',
     length: 24,
     unique: true,
-    nullable: false
+    nullable: false,
   })
   sku: string;
 
   @Column({
-    type: "varchar",
+    type: 'varchar',
     length: 60,
-    nullable: false
+    nullable: false,
   })
   title: string;
 
   @Column({
-    type: "varchar",
-    length: 10000,
-    default: ""
+    type: 'text',
+    default: '',
   })
   description: string;
 
   @Column({
-    name: "selling_price",
+    name: 'selling_price',
     precision: 2,
     nullable: true,
   })
   sellingPrice: number;
 
-  @Column({name: "is_active", default: true })
+  @Column({ name: 'is_active', default: true })
   isActive: boolean;
+
+  @OneToMany(
+    type => ProductVariation,
+    productVariation => productVariation.product,
+    {
+      cascade: ['insert', 'update'],
+    },
+  )
+  productVariations: ProductVariation[];
 }

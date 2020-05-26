@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { CreateProductDTO } from './dtos/create-product.dto';
+import { CreateProductVariationDTO } from './dtos/create-product-variation.dto';
 
 @Injectable()
 export class ProductsService {
@@ -11,19 +12,36 @@ export class ProductsService {
     private productsRepository: Repository<Product>,
   ) {}
 
-  findAll(): Promise<Product[]> {
+  async findAll(): Promise<Product[]> {
     return this.productsRepository.find();
   }
 
-  findOne(id: string): Promise<Product> {
+  async findOne(id: number): Promise<Product> {
     return this.productsRepository.findOne(id);
   }
 
-  async remove(id: string): Promise<void> {
+  async findOneBySku(sku: string): Promise<Product> {
+    return this.productsRepository.findOne({
+      sku,
+    });
+  }
+
+  async remove(id: number): Promise<void> {
     await this.productsRepository.delete(id);
   }
 
-  save(createProductDTO: CreateProductDTO): Promise<Product> {
+  async save(createProductDTO: CreateProductDTO): Promise<Product> {
     return this.productsRepository.save(createProductDTO);
+  }
+
+  async addVariation(
+    parentSku: string,
+    createProductDTO: CreateProductVariationDTO,
+  ) {
+    const product = await this.findOneBySku(parentSku);
+    createProductDTO.product = product;
+    product.productVariations = product.productVariations || [];
+    product.productVariations.push(createProductDTO);
+    await this.save(product);
   }
 }
