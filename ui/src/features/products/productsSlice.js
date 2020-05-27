@@ -7,6 +7,15 @@ export const loadProducts = createAsyncThunk("products/load", async () => {
   return response.data;
 });
 
+export const createNewProduct = createAsyncThunk("products/create", async (newProduct) => {
+  console.log(newProduct);
+  try {
+    await axios.post("/v1/products", newProduct);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 const productsSlice = createSlice({
   name: "productsSlice",
   initialState: {

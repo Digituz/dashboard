@@ -41,15 +41,15 @@ truncate table product;
 Using the API:
 
 ```bash
-curl localhost:3000/products
+curl localhost:3000/v1/products
 
 curl -X POST -H 'Content-Type: application/json' -d '{
   "sku": "LFK-0001",
   "title": "Máscara Frida Kahlo"
-}' localhost:3000/products
+}' localhost:3000/v1/products
 
 curl -X POST -H 'Content-Type: application/json' -d '{
   "sku": "LFK-0001-K",
   "description": "Kids"
-}' localhost:3000/products/LFK-0001/variation
+}' localhost:3000/v1/products/LFK-0001/variation
 ```
