@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -11,29 +11,55 @@ import {
   Switch,
 } from "antd";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import InputLabel from "../../components/InputLabel";
 import useInput from "../../hooks/useInput";
-import { createNewProduct } from "./productsSlice";
+import { createNewProduct, loadProduct } from "./productsSlice";
 
-function ProductForm() {
+function ProductForm(props) {
+  const selectedProduct = useSelector(
+    (state) => state.productsSlice.selectedProduct
+  );
+  const loading = useSelector((state) => state.productsSlice.loading);
+
+  console.log("re-render");
+
   const dispatch = useDispatch();
-  const { value: sku, bind: bindSku } = useInput("");
-  const { value: title, bind: bindTitle } = useInput("");
-  const { value: description, bind: bindDescription } = useInput("");
-  const [ sellingPrice, setSellingPrice ] = useState(null);
-  const [ isActive, setIsActive ] = useState(false);
-  
+  const { value: sku, bind: bindSku, setValue: setSku } = useInput("");
+  const { value: title, bind: bindTitle, setValue: setTitle } = useInput("");
+  const { value: description, bind: bindDescription, setValue: setDescription } = useInput("");
+  const [sellingPrice, setSellingPrice] = useState(null);
+  const [isActive, setIsActive] = useState(false);
+  const [selectedProductUsed, setSelectedProductUsed] = useState(false);
+
+  if (selectedProduct && !selectedProductUsed) {
+    setSelectedProductUsed(true);
+    setSku(selectedProduct.sku);
+    setTitle(selectedProduct.title);
+    setDescription(selectedProduct.description);
+    setSellingPrice(selectedProduct.sellingPrice);
+    setIsActive(selectedProduct.isActive);
+  }
+
+  useEffect(() => {
+    const { productSku } = props.match.params;
+    if (productSku) dispatch(loadProduct(productSku));
+  }, [dispatch, props]);
+
+  if (loading) return <h1>Loading</h1>;
+
   const saveProduct = async () => {
     try {
-      await dispatch(createNewProduct({
-        sku,
-        title,
-        description,
-        sellingPrice,
-        isActive,
-      }));
+      await dispatch(
+        createNewProduct({
+          sku,
+          title,
+          description,
+          sellingPrice,
+          isActive,
+        })
+      );
       console.log("creating new product2;");
     } catch (err) {
       console.error(err);

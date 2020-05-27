@@ -13,6 +13,15 @@ export class ProductsController {
     return this.productsService.findAll();
   }
 
+  @Get(':sku')
+  findOne(@Param('sku') sku: string): Promise<Product> {
+    return new Promise((res) => {
+      setTimeout(() => {
+        res(this.productsService.findOneBySku(sku));
+      }, 5000);
+    });
+  }
+
   @Post()
   async create(@Body() createProductDTO: CreateProductDTO) {
     this.productsService.save(createProductDTO);

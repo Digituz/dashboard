@@ -57,9 +57,8 @@ function ProductList() {
         <Table rowKey="sku" dataSource={products} columns={columns} />
         <Link to="/produtos/novo">Novo Produto</Link>
       </Route>
-      <Route path={`${path}/:novo`}>
-        <ProductForm />
-      </Route>
+      <Route path={`${path}/editar/:productSku`} component={ProductForm} />
+      <Route path={`${path}/novo`} component={ProductForm} />
     </>
   );
 }

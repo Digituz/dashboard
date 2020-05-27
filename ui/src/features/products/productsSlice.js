@@ -1,19 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// First, create the thunk
-export const loadProducts = createAsyncThunk("products/load", async () => {
+export const loadProducts = createAsyncThunk("products/loadAll", async () => {
   const response = await axios.get("/v1/products");
   return response.data;
 });
 
-export const createNewProduct = createAsyncThunk("products/create", async (newProduct) => {
-  console.log(newProduct);
-  try {
+export const createNewProduct = createAsyncThunk(
+  "products/create",
+  async (newProduct) => {
     await axios.post("/v1/products", newProduct);
-  } catch (err) {
-    console.error(err);
   }
+);
+
+export const loadProduct = createAsyncThunk("products/loadOne", async (sku) => {
+  const response = await axios.get(`/v1/products/${sku}`);
+  return response.data;
 });
 
 const productsSlice = createSlice({
@@ -21,6 +23,7 @@ const productsSlice = createSlice({
   initialState: {
     loading: null,
     products: [],
+    selectedProduct: null,
   },
   reducers: {
     showProducts: (state, action) => {
@@ -30,6 +33,18 @@ const productsSlice = createSlice({
   extraReducers: {
     [loadProducts.fulfilled]: (state, action) => {
       state.products.push(...action.payload);
+      state.loading = false;
+    },
+    [loadProduct.pending]: (state) => {
+      state.selectedProduct = null;
+      state.loading = true;
+    },
+    [loadProduct.fulfilled]: (state, action) => {
+      state.selectedProduct = action.payload;
+      state.loading = false;
+    },
+    [loadProduct.rejected]: (state) => {
+      state.selectedProduct = null;
       state.loading = false;
     },
   },
