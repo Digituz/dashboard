@@ -7,6 +7,7 @@ import {
   Input,
   InputNumber,
   Row,
+  Skeleton,
   Space,
   Switch,
 } from "antd";
@@ -28,7 +29,11 @@ function ProductForm(props) {
   const dispatch = useDispatch();
   const { value: sku, bind: bindSku, setValue: setSku } = useInput("");
   const { value: title, bind: bindTitle, setValue: setTitle } = useInput("");
-  const { value: description, bind: bindDescription, setValue: setDescription } = useInput("");
+  const {
+    value: description,
+    bind: bindDescription,
+    setValue: setDescription,
+  } = useInput("");
   const [sellingPrice, setSellingPrice] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [selectedProductUsed, setSelectedProductUsed] = useState(false);
@@ -46,8 +51,6 @@ function ProductForm(props) {
     const { productSku } = props.match.params;
     if (productSku) dispatch(loadProduct(productSku));
   }, [dispatch, props]);
-
-  if (loading) return <h1>Loading</h1>;
 
   const saveProduct = async () => {
     try {
@@ -70,69 +73,73 @@ function ProductForm(props) {
     <Card title="Novo Produto">
       <p>Insira os dados do seu novo produto no formulário abaixo.</p>
       <Divider />
-      <Row gutter={[16, 16]}>
-        <Col xs={24}>
-          <Row gutter={[16, 16]}>
-            <Col xs={24} sm={3}>
-              <InputLabel htmlFor="sku">SKU:</InputLabel>
-            </Col>
-            <Col xs={24} sm={9}>
-              <Input id="sku" placeholder="SKU do produto" {...bindSku} />
-            </Col>
-            <Col xs={24} sm={3}>
-              <InputLabel htmlFor="isActive">Ativo:</InputLabel>
-            </Col>
-            <Col xs={24} sm={9}>
-              <Switch id="isActive" onChange={setIsActive} />
-            </Col>
-          </Row>
-        </Col>
-        <Col xs={24}>
-          <Row gutter={[16, 16]}>
-            <Col xs={24} sm={3}>
-              <InputLabel htmlFor="title">Título:</InputLabel>
-            </Col>
-            <Col xs={24} sm={9}>
-              <Input
-                id="title"
-                placeholder="Título do produto"
-                {...bindTitle}
-              />
-            </Col>
-            <Col xs={24} sm={3}>
-              <InputLabel htmlFor="sellingPrice">Preço de venda:</InputLabel>
-            </Col>
-            <Col xs={24} sm={9}>
-              <InputNumber
-                id="sellingPrice"
-                placeholder="Preço de venda do produto"
-                decimalSeparator=","
-                onChange={setSellingPrice}
-              />
-            </Col>
-          </Row>
-        </Col>
-        <Col xs={24} sm={3}>
-          <InputLabel htmlFor="description">Descrição:</InputLabel>
-        </Col>
-        <Col xs={24} sm={21}>
-          <Input
-            id="description"
-            placeholder="Descrição do produto"
-            {...bindDescription}
-          />
-        </Col>
-        <Col span={24}>
-          <Space>
-            <Button type="primary" onClick={saveProduct}>
-              Salvar
-            </Button>
-            <Link to={"/produtos"}>
-              <Button>Voltar</Button>
-            </Link>
-          </Space>
-        </Col>
-      </Row>
+      {loading && <Skeleton active />}
+      {!loading && (
+        <Row gutter={[16, 16]}>
+          <Col xs={24}>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={3}>
+                <InputLabel htmlFor="sku">SKU:</InputLabel>
+              </Col>
+              <Col xs={24} sm={9}>
+                <Input id="sku" placeholder="SKU do produto" {...bindSku} />
+              </Col>
+              <Col xs={24} sm={3}>
+                <InputLabel htmlFor="isActive">Ativo:</InputLabel>
+              </Col>
+              <Col xs={24} sm={9}>
+                <Switch id="isActive" onChange={setIsActive} />
+              </Col>
+            </Row>
+          </Col>
+          <Col xs={24}>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={3}>
+                <InputLabel htmlFor="title">Título:</InputLabel>
+              </Col>
+              <Col xs={24} sm={9}>
+                <Input
+                  id="title"
+                  placeholder="Título do produto"
+                  {...bindTitle}
+                />
+              </Col>
+              <Col xs={24} sm={3}>
+                <InputLabel htmlFor="sellingPrice">Preço de venda:</InputLabel>
+              </Col>
+              <Col xs={24} sm={9}>
+                <InputNumber
+                  id="sellingPrice"
+                  placeholder="Preço de venda do produto"
+                  decimalSeparator=","
+                  onChange={setSellingPrice}
+                  style={{ width: "100%" }}
+                />
+              </Col>
+            </Row>
+          </Col>
+          <Col xs={24} sm={3}>
+            <InputLabel htmlFor="description">Descrição:</InputLabel>
+          </Col>
+          <Col xs={24} sm={21}>
+            <Input
+              id="description"
+              placeholder="Descrição do produto"
+              {...bindDescription}
+            />
+          </Col>
+          <Col span={24}>
+            <Space>
+              <Button type="primary" onClick={saveProduct}>
+                Salvar
+              </Button>
+              <Link to={"/produtos"}>
+                <Button>Voltar</Button>
+              </Link>
+            </Space>
+          </Col>
+        </Row>
+      )}
     </Card>
   );
 }
