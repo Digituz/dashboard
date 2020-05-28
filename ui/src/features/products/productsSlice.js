@@ -23,7 +23,7 @@ const productsSlice = createSlice({
   initialState: {
     loading: null,
     products: [],
-    selectedProduct: null,
+    product: null,
   },
   reducers: {
     showProducts: (state, action) => {
@@ -36,15 +36,15 @@ const productsSlice = createSlice({
       state.loading = false;
     },
     [loadProduct.pending]: (state) => {
-      state.selectedProduct = null;
+      state.product = null;
       state.loading = true;
     },
     [loadProduct.fulfilled]: (state, action) => {
-      state.selectedProduct = action.payload;
+      state.product = action.payload;
       state.loading = false;
     },
     [loadProduct.rejected]: (state) => {
-      state.selectedProduct = null;
+      state.product = null;
       state.loading = false;
     },
   },

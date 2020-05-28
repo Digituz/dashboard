@@ -19,14 +19,29 @@ import useInput from "../../hooks/useInput";
 import { createNewProduct, loadProduct } from "./productsSlice";
 
 function ProductForm(props) {
-  const selectedProduct = useSelector(
-    (state) => state.productsSlice.selectedProduct
+  const product = useSelector(
+    (state) => state.productsSlice.product
   );
   const loading = useSelector((state) => state.productsSlice.loading);
 
   console.log("re-render");
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const { productSku } = props.match.params;
+    if (productSku) dispatch(loadProduct(productSku));
+  }, [dispatch, props]);
+
+  useEffect(() => {
+    if (!product) return;
+    setSku(product.sku);
+    setTitle(product.title);
+    setDescription(product.description);
+    setSellingPrice(product.sellingPrice);
+    setIsActive(product.isActive);
+  }, [product]);
+
   const { value: sku, bind: bindSku, setValue: setSku } = useInput("");
   const { value: title, bind: bindTitle, setValue: setTitle } = useInput("");
   const {
@@ -36,21 +51,6 @@ function ProductForm(props) {
   } = useInput("");
   const [sellingPrice, setSellingPrice] = useState(null);
   const [isActive, setIsActive] = useState(false);
-  const [selectedProductUsed, setSelectedProductUsed] = useState(false);
-
-  if (selectedProduct && !selectedProductUsed) {
-    setSelectedProductUsed(true);
-    setSku(selectedProduct.sku);
-    setTitle(selectedProduct.title);
-    setDescription(selectedProduct.description);
-    setSellingPrice(selectedProduct.sellingPrice);
-    setIsActive(selectedProduct.isActive);
-  }
-
-  useEffect(() => {
-    const { productSku } = props.match.params;
-    if (productSku) dispatch(loadProduct(productSku));
-  }, [dispatch, props]);
 
   const saveProduct = async () => {
     try {
