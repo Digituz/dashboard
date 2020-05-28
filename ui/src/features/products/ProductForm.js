@@ -19,9 +19,7 @@ import useInput from "../../hooks/useInput";
 import { createNewProduct, loadProduct } from "./productsSlice";
 
 function ProductForm(props) {
-  const product = useSelector(
-    (state) => state.productsSlice.product
-  );
+  const product = useSelector((state) => state.productsSlice.product);
   const loading = useSelector((state) => state.productsSlice.loading);
 
   console.log("re-render");
@@ -30,7 +28,11 @@ function ProductForm(props) {
 
   useEffect(() => {
     const { productSku } = props.match.params;
-    if (productSku) dispatch(loadProduct(productSku));
+    if (!productSku) return;
+    const promise = dispatch(loadProduct(productSku));
+    return () => {
+      promise.abort();
+    };
   }, [dispatch, props]);
 
   useEffect(() => {
