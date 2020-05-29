@@ -71,9 +71,14 @@ function ProductForm(props) {
     }
   };
 
+  const cardTitle = props.match.params.productSku ? "Editar de Produto" : "Novo Produto";
+  const cardDescription = props.match.params.productSku
+    ? "Atualize os dados do seu produto"
+    : "Insira os dados do seu novo produto";
+
   return (
-    <Card title="Novo Produto">
-      <p>Insira os dados do seu novo produto no formulário abaixo.</p>
+    <Card title={cardTitle}>
+      <p>{cardDescription} no formulário abaixo.</p>
       <Divider />
       {loading && <Skeleton active />}
       {!loading && (
