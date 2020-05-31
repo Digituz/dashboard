@@ -31,9 +31,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/main.scss"
+              "src/main.scss",
+              "node_modules/medium-editor/dist/css/medium-editor.min.css",
+              "node_modules/medium-editor/dist/css/themes/default.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/medium-editor/dist/js/medium-editor.min.js"
+            ]
           },
           "configurations": {
             "production": {

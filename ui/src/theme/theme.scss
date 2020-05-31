@@ -79,3 +79,15 @@ nz-form-control {
     text-align: right;
   }
 }
+
+medium-editor {
+  div {
+    outline-style: none;
+  }
+
+  > div {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 10px;
+  }
+}

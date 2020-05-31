@@ -57,7 +57,7 @@
       <div nz-col class="gutter-row" [nzSpan]="24">
         <nz-form-label nzFor="productDetails">Detalhamento</nz-form-label>
         <nz-form-control>
-          <textarea id="productDetails" name="productDetails" formControlName="productDetails" nz-input></textarea>
+          <medium-editor [(editorModel)]="productDetails"></medium-editor>
         </nz-form-control>
       </div>
     </div>

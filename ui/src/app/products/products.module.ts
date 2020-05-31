@@ -10,6 +10,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
+import { SharedModule } from '../@shared/shared.module';
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsComponent } from './products.component';
 import { ProductFormComponent } from './product-form/product-form.component';
@@ -27,6 +28,7 @@ import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
     NzTableModule,
     NzSkeletonModule,
     NzSwitchModule,
+    SharedModule,
     CommonModule,
     ProductsRoutingModule,
     NzButtonModule,

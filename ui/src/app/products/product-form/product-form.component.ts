@@ -11,6 +11,7 @@ import Product from '../product.entity';
 })
 export class ProductFormComponent implements OnInit {
   formFields: FormGroup;
+  productDetails: string;
   product: Product;
   loading: boolean = true;
 
@@ -39,15 +40,17 @@ export class ProductFormComponent implements OnInit {
       sku: [product.sku || ''],
       title: [product.title || ''],
       description: [product.description || ''],
-      productDetails: [product.productDetails || ''],
       sellingPrice: [product.sellingPrice || null],
       isActive: [product.isActive || false],
     });
+    this.productDetails = product.productDetails;
     this.loading = false;
   }
 
   submitProductDetails() {
-    this.productService.saveProduct(this.formFields.value).subscribe(() => {
+    const product = this.formFields.value;
+    product.productDetails = this.productDetails;
+    this.productService.saveProduct(product).subscribe(() => {
       this.router.navigate(['/products']);
     });
   }
