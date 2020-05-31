@@ -1,8 +1,8 @@
 import { Controller, Get, Body, Post, Param } from '@nestjs/common';
 import { Product } from './entities/product.entity';
 import { ProductsService } from './products.service';
-import { CreateProductDTO } from './dtos/create-product.dto';
-import { CreateProductVariationDTO } from './dtos/create-product-variation.dto';
+import { ProductDTO } from './dtos/product.dto';
+import { ProductVariationDTO } from './dtos/product-variation.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -23,15 +23,14 @@ export class ProductsController {
   }
 
   @Post()
-  async create(@Body() createProductDTO: CreateProductDTO) {
-    this.productsService.save(createProductDTO);
+  async save(@Body() productDTO: ProductDTO) {
+    this.productsService.save(productDTO);
   }
 
   @Post(':sku/variation')
-  async createVariation(
-    @Param('sku') parentSku: string,
-    @Body() createProductDTO: CreateProductVariationDTO,
+  async saveVariation(
+    @Body() productVariationDTO: ProductVariationDTO,
   ) {
-    this.productsService.addVariation(parentSku, createProductDTO);
+    this.productsService.saveVariation(productVariationDTO);
   }
 }

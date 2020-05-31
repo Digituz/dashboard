@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
@@ -9,10 +9,7 @@ import { Product } from './product.entity';
 
 @Entity()
 export class ProductVariation {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({
+  @PrimaryColumn({
     type: 'varchar',
     length: 24,
     unique: true,

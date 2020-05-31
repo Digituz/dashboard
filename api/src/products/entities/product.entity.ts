@@ -1,12 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
 import { ProductVariation } from './product-variation.entity';
 
 @Entity()
 export class Product {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({
+  @PrimaryColumn({
     type: 'varchar',
     length: 24,
     unique: true,
@@ -26,6 +23,13 @@ export class Product {
     default: '',
   })
   description: string;
+
+  @Column({
+    name: 'product_details',
+    type: 'text',
+    default: '',
+  })
+  productDetails: string;
 
   @Column({
     name: 'selling_price',

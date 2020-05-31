@@ -1,14 +1,17 @@
 import { Length, IsNotEmpty  } from 'class-validator';
 
-export class CreateProductDTO {
+export class ProductVariationDTO {
   @IsNotEmpty()
   @Length(5, 24)
   sku: string;
-  
+
+  @IsNotEmpty()
+  @Length(5, 24)
+  parentSku: string;
+
   @IsNotEmpty()
   @Length(5, 60)
-  title: string;
   description: string;
+
   sellingPrice: number;
-  isActive: boolean;
 }

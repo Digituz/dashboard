@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
-import { CreateProductDTO } from './dtos/create-product.dto';
-import { CreateProductVariationDTO } from './dtos/create-product-variation.dto';
+import { ProductDTO } from './dtos/product.dto';
+import { ProductVariationDTO } from './dtos/product-variation.dto';
 
 @Injectable()
 export class ProductsService {
@@ -30,18 +30,17 @@ export class ProductsService {
     await this.productsRepository.delete(id);
   }
 
-  async save(createProductDTO: CreateProductDTO): Promise<Product> {
-    return this.productsRepository.save(createProductDTO);
+  async save(productDTO: ProductDTO): Promise<Product> {
+    return this.productsRepository.save(productDTO);
   }
 
-  async addVariation(
-    parentSku: string,
-    createProductDTO: CreateProductVariationDTO,
-  ) {
-    const product = await this.findOneBySku(parentSku);
-    createProductDTO.product = product;
+  async saveVariation(productVariationDTO: ProductVariationDTO) {
+    const product = await this.findOneBySku(productVariationDTO.parentSku);
     product.productVariations = product.productVariations || [];
-    product.productVariations.push(createProductDTO);
+    product.productVariations.push({
+      ...productVariationDTO,
+      product: product,
+    });
     await this.save(product);
   }
 }
