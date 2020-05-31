@@ -16,9 +16,7 @@ export class ProductsController {
   @Get(':sku')
   findOne(@Param('sku') sku: string): Promise<Product> {
     return new Promise((res) => {
-      setTimeout(() => {
-        res(this.productsService.findOneBySku(sku));
-      }, 5000);
+      res(this.productsService.findOneBySku(sku));
     });
   }
 
