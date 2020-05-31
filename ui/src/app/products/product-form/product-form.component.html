@@ -1,0 +1,65 @@
+<div class="feature-header">
+  <h2>Edição de Produtos</h2>
+  <p>
+    <label>Atualize os dados do seu produto no formulário abaixo.</label>
+  </p>
+  <div class="actions">
+    <a routerLink="/products"><button nz-button>Voltar</button></a>
+    <button nz-button nzType="primary" (click)="submitProductDetails()">Salvar</button>
+  </div>
+</div>
+<nz-card>
+  <nz-skeleton [nzActive]="true" *ngIf="loading"></nz-skeleton>
+  <form nz-form [formGroup]="formFields" (ngSubmit)="submitProductDetails()" *ngIf="!loading">
+    <div nz-row [nzGutter]="16">
+      <div nz-col class="gutter-row" [nzSpan]="12">
+        <nz-form-label nzFor="sku">SKU</nz-form-label>
+        <nz-form-control>
+          <input nz-input name="sku" id="sku" placeholder="SKU do produto" formControlName="sku" />
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="12">
+        <nz-form-label nzFor="productActive">Ativo</nz-form-label>
+        <nz-form-control>
+          <nz-switch name="productActive" id="productActive" formControlName="isActive"></nz-switch>
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="12">
+        <nz-form-label nzFor="title">Título</nz-form-label>
+        <nz-form-control>
+          <input nz-input name="title" id="title" placeholder="Título do produto" formControlName="title" />
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="12">
+        <nz-form-label nzFor="seillingPrice">Preço de Venda</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            name="seillingPrice"
+            id="seillingPrice"
+            placeholder="Preço de venda do produto"
+            formControlName="sellingPrice"
+          />
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="24">
+        <nz-form-label nzFor="description">Descrição Curta</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            name="description"
+            id="description"
+            placeholder="Descrição curta do produto"
+            formControlName="description"
+          />
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="24">
+        <nz-form-label nzFor="productDetails">Detalhamento</nz-form-label>
+        <nz-form-control>
+          <textarea id="productDetails" name="productDetails" formControlName="productDetails" nz-input></textarea>
+        </nz-form-control>
+      </div>
+    </div>
+  </form>
+</nz-card>

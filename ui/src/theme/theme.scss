@@ -1,0 +1,81 @@
+/*
+ * Global application theme.
+ * Framework overrides and customization goes here.
+ */
+
+app-root,
+app-shell,
+app-header,
+header {
+  display: block;
+  height: 100%;
+}
+
+nz-layout.ant-layout {
+  min-height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+nz-form-label {
+  padding-bottom: 0 !important;
+
+  > label {
+    color: #666 !important;
+  }
+}
+
+textarea {
+  resize: vertical;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  width: 100%;
+  height: 200px;
+  padding: 5px;
+}
+
+nz-form-control {
+  input {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 5px;
+    width: 100%;
+  }
+}
+
+.gutter-row {
+  margin-bottom: 15px;
+}
+
+.form-actions {
+  padding: 0 16px !important;
+}
+
+.feature-header {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 35px;
+  grid-template-areas:
+    "header header"
+    "description actions";
+  margin-bottom: 5px;
+
+  header {
+    grid-area: header;
+  }
+
+  p {
+    grid-area: description;
+    display: flex;
+    margin: 0;
+
+    label {
+      align-self: flex-end;
+    }
+  }
+
+  div {
+    grid-area: actions;
+    text-align: right;
+  }
+}

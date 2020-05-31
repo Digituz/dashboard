@@ -1,0 +1,29 @@
+<div class="feature-header">
+  <h2>Lista de Produtos</h2>
+  <p>
+    <label>Controle os seus produtos de forma simplificada.</label>
+  </p>
+  <div class="actions">
+    <a title="Novo Produto" routerLink="/products/new"><button nz-button nzType="primary">Novo Produto</button></a>
+  </div>
+</div>
+<nz-table #productsTable [nzData]="products">
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Título</th>
+      <th>Preço</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of productsTable.data">
+      <td>{{ product.sku }}</td>
+      <td>{{ product.title }}</td>
+      <td>{{ product.sellingPrice }}</td>
+      <td>
+        <a [title]="'Início'" [routerLink]="'/products/' + product.sku"><button nz-button>Editar</button></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
