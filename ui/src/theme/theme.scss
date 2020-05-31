@@ -34,6 +34,13 @@ textarea {
   padding: 5px;
 }
 
+nz-input-number, .ant-input-number {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  padding: 1px;
+  width: 100%;
+}
+
 nz-form-control {
   input {
     border: 1px solid #ddd;

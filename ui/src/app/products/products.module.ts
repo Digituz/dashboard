@@ -7,6 +7,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
@@ -25,6 +26,7 @@ import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
     NzDividerModule,
     NzFormModule,
     NzGridModule,
+    NzInputNumberModule,
     NzTableModule,
     NzSkeletonModule,
     NzSwitchModule,

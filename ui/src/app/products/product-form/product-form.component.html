@@ -33,13 +33,15 @@
       <div nz-col class="gutter-row" [nzSpan]="12">
         <nz-form-label nzFor="seillingPrice">Preço de Venda</nz-form-label>
         <nz-form-control>
-          <input
-            nz-input
+          <nz-input-number
+            formControlName="sellingPrice"
             name="seillingPrice"
             id="seillingPrice"
-            placeholder="Preço de venda do produto"
-            formControlName="sellingPrice"
-          />
+            [nzMin]="0"
+            [nzMax]="1000000"
+            [nzStep]="0.5"
+            nzPlaceHolder="Preço de venda do produto"
+          ></nz-input-number>
         </nz-form-control>
       </div>
       <div nz-col class="gutter-row" [nzSpan]="24">
