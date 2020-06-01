@@ -13,6 +13,7 @@
       <th>SKU</th>
       <th>Título</th>
       <th>Preço</th>
+      <th>Ativo</th>
       <th></th>
     </tr>
   </thead>
@@ -21,6 +22,7 @@
       <td>{{ product.sku }}</td>
       <td>{{ product.title }}</td>
       <td>{{ product.sellingPrice }}</td>
+      <td>{{ product.isActive }}</td>
       <td>
         <a [title]="'Início'" [routerLink]="'/products/' + product.sku"><button nz-button>Editar</button></a>
       </td>

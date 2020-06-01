@@ -10,6 +10,10 @@ export class products1590442910556 implements MigrationInterface {
                 description text,
                 product_details text,
                 selling_price decimal(15,2),
+                height decimal(15,3),
+                width decimal(15,3),
+                length decimal(15,3),
+                weight decimal(15,3),
                 is_active boolean default true,
                 constraint pk_product primary key(sku)
             );

@@ -11,5 +11,9 @@ export class ProductDTO {
   description: string;
   productDetails: string;
   sellingPrice: number;
+  height: number;
+  width: number;
+  length: number;
+  weight: number;
   isActive: boolean;
 }

@@ -28,13 +28,19 @@ export class MediumEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   editable: ElementRef;
   @Input('editorModel') model: any;
   @Output('editorModelChange') update = new EventEmitter();
+  @Input('placeholder') placeholder: string;
 
   constructor() {}
 
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    this.editor = new MediumEditor(this.editable.nativeElement);
+    this.editor = new MediumEditor(this.editable.nativeElement, {
+      placeholder: {
+        text: this.placeholder || 'Digite um texto.',
+        hideOnClick: false,
+      },
+    });
     this.refreshView();
     this.editor.subscribe('editableInput', () => {
       this.updateModel();

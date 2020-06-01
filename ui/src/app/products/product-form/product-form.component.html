@@ -44,6 +44,62 @@
           ></nz-input-number>
         </nz-form-control>
       </div>
+      <div nz-col class="gutter-row" [nzSpan]="12">
+        <nz-form-label nzFor="seillingPrice">Altura do Produto (m)</nz-form-label>
+        <nz-form-control>
+          <nz-input-number
+            formControlName="height"
+            name="height"
+            id="height"
+            [nzMin]="0"
+            [nzMax]="500"
+            [nzStep]="0.01"
+            nzPlaceHolder="Altura do produto em metros"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="12">
+        <nz-form-label nzFor="seillingPrice">Largura do Produto (m)</nz-form-label>
+        <nz-form-control>
+          <nz-input-number
+            formControlName="width"
+            name="width"
+            id="width"
+            [nzMin]="0"
+            [nzMax]="500"
+            [nzStep]="0.01"
+            nzPlaceHolder="Largura do produto em metros"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="12">
+        <nz-form-label nzFor="seillingPrice">Comprimento do Produto (m)</nz-form-label>
+        <nz-form-control>
+          <nz-input-number
+            formControlName="length"
+            name="length"
+            id="length"
+            [nzMin]="0"
+            [nzMax]="500"
+            [nzStep]="0.01"
+            nzPlaceHolder="Comprimento do produto em metros"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="12">
+        <nz-form-label nzFor="seillingPrice">Peso do Produto (kg)</nz-form-label>
+        <nz-form-control>
+          <nz-input-number
+            formControlName="weight"
+            name="weight"
+            id="weight"
+            [nzMin]="0"
+            [nzMax]="500"
+            [nzStep]="0.01"
+            nzPlaceHolder="Peso do produto em quilogramas (kg)"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
       <div nz-col class="gutter-row" [nzSpan]="24">
         <nz-form-label nzFor="description">Descrição Curta</nz-form-label>
         <nz-form-control>
@@ -59,7 +115,7 @@
       <div nz-col class="gutter-row" [nzSpan]="24">
         <nz-form-label nzFor="productDetails">Detalhamento</nz-form-label>
         <nz-form-control>
-          <medium-editor [(editorModel)]="productDetails"></medium-editor>
+          <medium-editor [(editorModel)]="productDetails" placeholder="Descreva seu produto em detalhes."></medium-editor>
         </nz-form-control>
       </div>
     </div>

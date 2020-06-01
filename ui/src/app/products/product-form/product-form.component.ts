@@ -41,9 +41,13 @@ export class ProductFormComponent implements OnInit {
       title: [product.title || ''],
       description: [product.description || ''],
       sellingPrice: [product.sellingPrice || null],
+      height: [product.height || null],
+      width: [product.width || null],
+      length: [product.length || null],
+      weight: [product.weight || null],
       isActive: [product.isActive || false],
     });
-    this.productDetails = product.productDetails;
+    this.productDetails = product.productDetails || '';
     this.loading = false;
   }
 

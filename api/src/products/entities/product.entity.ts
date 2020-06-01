@@ -38,6 +38,34 @@ export class Product {
   })
   sellingPrice: number;
 
+  @Column({
+    name: 'height',
+    precision: 3,
+    nullable: true,
+  })
+  height: number;
+
+  @Column({
+    name: 'width',
+    precision: 3,
+    nullable: true,
+  })
+  width: number;
+
+  @Column({
+    name: 'length',
+    precision: 3,
+    nullable: true,
+  })
+  length: number;
+
+  @Column({
+    name: 'weight',
+    precision: 3,
+    nullable: true,
+  })
+  weight: number;
+
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
