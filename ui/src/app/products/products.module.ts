@@ -17,10 +17,9 @@ import { ProductsComponent } from './products.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
-import { ProductVariationFormComponent } from '../product-variation-form/product-variation-form.component';
 
 @NgModule({
-  declarations: [ProductsComponent, ProductFormComponent, ProductsListComponent, ProductVariationFormComponent],
+  declarations: [ProductsComponent, ProductFormComponent, ProductsListComponent],
   imports: [
     ReactiveFormsModule,
     NzCardModule,
