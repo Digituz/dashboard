@@ -1,1 +1,14 @@
-<p>media-library works!</p>
+<nz-upload
+  nzType="drag"
+  [nzMultiple]="true"
+  nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+  (nzChange)="handleChange($event)"
+>
+  <p class="ant-upload-drag-icon">
+    <i nz-icon nzType="picture" nzTheme="outline"></i>
+  </p>
+  <p class="ant-upload-text">Área de upload de imagens.</p>
+  <p class="ant-upload-hint">
+    Você pode arrastar e soltar imagens, ou clicar aqui e selecionar várias imagens.
+  </p>
+</nz-upload>
