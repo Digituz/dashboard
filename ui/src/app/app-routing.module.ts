@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./products/products.module').then((m) => m.ProductsModule),
   },
   {
+    path: 'media-library',
+    loadChildren: () => import('./media-library/media-library.module').then((m) => m.MediaLibraryModule),
+  },
+  {
     path: 'inventory',
     loadChildren: () => import('./inventory/inventory.module').then((m) => m.InventoryModule),
   },
