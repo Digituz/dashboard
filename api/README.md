@@ -90,7 +90,26 @@ curl -X POST -H 'Content-Type: application/json' -d '{
 }' localhost:3000/v1/products
 
 curl -X POST -H 'Content-Type: application/json' -d '{
+  "parentSku": "LFK-0001",
   "sku": "LFK-0001-K",
   "description": "Kids"
-}' localhost:3000/v1/products/LFK-0001/variation
+}' localhost:3000/v1/products/variations
+
+curl -X POST -H 'Content-Type: application/json' -d '{
+  "parentSku": "LFK-0001",
+  "sku": "LFK-0001-K",
+  "description": "4 Kids"
+}' localhost:3000/v1/products/variations
+
+curl -X POST -H 'Content-Type: application/json' -d '{
+  "parentSku": "LFK-0001",
+  "sku": "LFK-0001-M",
+  "description": "4 Men"
+}' localhost:3000/v1/products/variations
+
+curl -X POST -H 'Content-Type: application/json' -d '{
+  "parentSku": "LFK-0001",
+  "sku": "LFK-0001-W",
+  "description": "4 Women"
+}' localhost:3000/v1/products/variations
 ```

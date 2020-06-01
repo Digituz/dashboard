@@ -74,6 +74,7 @@ export class Product {
     productVariation => productVariation.product,
     {
       cascade: ['insert', 'update'],
+      eager: true
     },
   )
   productVariations: ProductVariation[];

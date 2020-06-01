@@ -10,7 +10,7 @@ export class ProductVariationDTO {
   parentSku: string;
 
   @IsNotEmpty()
-  @Length(5, 60)
+  @Length(1, 60)
   description: string;
 
   sellingPrice: number;

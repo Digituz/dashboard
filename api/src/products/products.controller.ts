@@ -15,8 +15,9 @@ export class ProductsController {
 
   @Get(':sku')
   findOne(@Param('sku') sku: string): Promise<Product> {
-    return new Promise((res) => {
-      res(this.productsService.findOneBySku(sku));
+    return new Promise(async (res) => {
+      const product = await this.productsService.findOneBySku(sku);
+      res(product);
     });
   }
 
@@ -25,7 +26,7 @@ export class ProductsController {
     this.productsService.save(productDTO);
   }
 
-  @Post(':sku/variation')
+  @Post('variations')
   async saveVariation(
     @Body() productVariationDTO: ProductVariationDTO,
   ) {

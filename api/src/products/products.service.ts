@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as _ from 'lodash';
+
 import { Product } from './entities/product.entity';
 import { ProductDTO } from './dtos/product.dto';
 import { ProductVariationDTO } from './dtos/product-variation.dto';
@@ -37,10 +39,20 @@ export class ProductsService {
   async saveVariation(productVariationDTO: ProductVariationDTO) {
     const product = await this.findOneBySku(productVariationDTO.parentSku);
     product.productVariations = product.productVariations || [];
+
+    // removing the previous version of the variation, if any
+    _.remove(
+      product.productVariations,
+      pv => pv.sku === productVariationDTO.sku,
+    );
+
+    // add the new one
     product.productVariations.push({
       ...productVariationDTO,
       product: product,
     });
+
+    // save it
     await this.save(product);
   }
 }

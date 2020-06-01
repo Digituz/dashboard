@@ -38,6 +38,6 @@ export class ProductVariation {
       nullable: false,
     },
   )
-  @JoinColumn({ name: 'product_id' })
+  @JoinColumn({ name: 'product_sku' })
   product: Product;
 }
