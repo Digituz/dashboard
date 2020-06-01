@@ -27,6 +27,7 @@
     "@nestjs/typeorm": "^7.0.1",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.10.2",
+    "dotenv": "^8.2.0",
     "lodash": "^4.17.15",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",

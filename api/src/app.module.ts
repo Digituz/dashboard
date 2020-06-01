@@ -10,11 +10,11 @@ import { MediaLibraryModule } from './media-library/media-library.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'digituz-dashboard',
-      password: '123456',
-      database: 'digituz-dashboard',
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       entities: [Product, ProductVariation],
       synchronize: false,
       migrationsTableName: 'database_migrations',

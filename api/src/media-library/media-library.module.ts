@@ -5,7 +5,7 @@ import { MulterModule } from '@nestjs/platform-express';
 @Module({
   controllers: [MediaLibraryController],
   imports: [MulterModule.register({
-    dest: './uploaded-files',
+    dest: process.env.UPLOAD_DESTINATION,
   })],
 })
 export class MediaLibraryModule {}
