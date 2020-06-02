@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import execa from 'execa';
+import { Image } from './image.entity';
+import { ImagesService } from './images.service';
 
 const defaultResults = [
   { label: 'thumbnail', width: 90, height: 90, quality: 80 },
@@ -13,10 +15,13 @@ const defaultResults = [
   { label: 'medium', width: 360, height: 360, quality: 85 },
   { label: 'large', width: 720, height: 720, quality: 85 },
   { label: 'extra-large', width: 1080, height: 1080, quality: 85 },
+  { label: 'original', width: 4096, height: 4096, quality: 100 },
 ];
 
 @Controller('media-library')
 export class MediaLibraryController {
+  constructor(private imagesService: ImagesService) {}
+
   private resize(image, fileSuffix: string, result) {
     const destination = `${process.env.UPLOAD_DESTINATION}/${fileSuffix}-${result.label}.jpg`;
     return new Promise((res, rej) => {
@@ -57,17 +62,22 @@ export class MediaLibraryController {
       return this.resize(file, fileSuffix, result);
     });
 
-    // Jimp.read(file.path)
-    //   .then(image => {
-    //     console.log(image);
-    //     const resizeJobs = defaultResults.map(defaultResult => {
-    //       this.resizeAndWrite(image, defaultResult);
-    //     });
-    //     return Promise.all(resizeJobs);
-    //   })
     const filesOnDisk = await Promise.all(resizeJobs);
     const removeJobs = [file.path, ...filesOnDisk].map(this.removeFileFromDisk);
     await Promise.all(removeJobs);
-    console.log("resized then removed;");
+
+    const image: Image = {
+      mainFilename: `${fileSuffix}-original.jpg`,
+      originalFilename: file.originalname,
+      mimetype: 'image/jpeg',
+      originalFileURL: `${process.env.CDN_URL}/${fileSuffix}-original.jpg`,
+      extraLargeFileURL: `${process.env.CDN_URL}/${fileSuffix}-extra-large.jpg`,
+      largeFileURL: `${process.env.CDN_URL}/${fileSuffix}-large.jpg`,
+      mediumFileURL: `${process.env.CDN_URL}/${fileSuffix}-medium.jpg`,
+      smallFileURL: `${process.env.CDN_URL}/${fileSuffix}-small.jpg`,
+      thumbnailFileURL: `${process.env.CDN_URL}/${fileSuffix}-thumbnail.jpg`,
+    };
+    await this.imagesService.save(image);
+    console.log('resized then removed;');
   }
 }

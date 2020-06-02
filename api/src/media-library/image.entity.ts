@@ -9,18 +9,86 @@
 //     size: 20343
 // }
 
-import { Entity } from 'typeorm';
+import { Entity, PrimaryColumn, Column } from 'typeorm';
 
 @Entity()
-export class Product {
-  fileName: string;
-  originalName: string;
+export class Image {
+  @PrimaryColumn({
+    name: 'main_filename',
+    type: 'varchar',
+    length: 140,
+    unique: true,
+    nullable: false,
+  })
+  mainFilename: string;
+
+  @Column({
+    name: 'original_filename',
+    type: 'varchar',
+    length: 140,
+    nullable: false,
+  })
+  originalFilename: string;
+  
+  @Column({
+    name: 'mimetype',
+    type: 'varchar',
+    length: 30,
+    nullable: false,
+  })
   mimetype: string;
-  pathOnDisk: string;
-  pathOnCloud: string;
-  size: number;
-  thumbnailCreated: boolean;
-  smallCreated: boolean;
-  mediumCreated: boolean;
-  largeCreated: boolean;
+
+  @Column({
+    name: 'original_file_url',
+    type: 'varchar',
+    length: 400,
+    unique: true,
+    nullable: false,
+  })
+  originalFileURL: string;
+
+  @Column({
+    name: 'extra_large_file_url',
+    type: 'varchar',
+    length: 400,
+    unique: true,
+    nullable: false,
+  })
+  extraLargeFileURL: string;
+
+  @Column({
+    name: 'large_file_url',
+    type: 'varchar',
+    length: 400,
+    unique: true,
+    nullable: false,
+  })
+  largeFileURL: string;
+
+  @Column({
+    name: 'medium_file_url',
+    type: 'varchar',
+    length: 400,
+    unique: true,
+    nullable: false,
+  })
+  mediumFileURL: string;
+
+  @Column({
+    name: 'small_file_url',
+    type: 'varchar',
+    length: 400,
+    unique: true,
+    nullable: false,
+  })
+  smallFileURL: string;
+
+  @Column({
+    name: 'thumbnail_file_url',
+    type: 'varchar',
+    length: 400,
+    unique: true,
+    nullable: false,
+  })
+  thumbnailFileURL: string;
 }
