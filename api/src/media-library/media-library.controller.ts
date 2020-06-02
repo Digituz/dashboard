@@ -17,13 +17,8 @@ const defaultResults = [
 
 @Controller('media-library')
 export class MediaLibraryController {
-  private resize(image, result) {
-    const indexOfFileExtensionSeparator = image.originalname.lastIndexOf('.');
-    const fileNameWithoutExtension = image.originalname.substr(
-      0,
-      indexOfFileExtensionSeparator,
-    );
-    const destination = `${process.env.UPLOAD_DESTINATION}/${fileNameWithoutExtension}-${Date.now()}-${result.label}.jpg`;
+  private resize(image, fileSuffix: string, result) {
+    const destination = `${process.env.UPLOAD_DESTINATION}/${fileSuffix}-${result.label}.jpg`;
     return new Promise((res, rej) => {
       execa('convert', [
         image.path,
@@ -33,6 +28,16 @@ export class MediaLibraryController {
         result.quality,
         destination,
       ])
+        .then(() => {
+          res(destination);
+        })
+        .catch(rej);
+    });
+  }
+
+  private removeFileFromDisk(file: string) {
+    return new Promise((res, rej) => {
+      execa('rm', [file])
         .then(res)
         .catch(rej);
     });
@@ -40,9 +45,16 @@ export class MediaLibraryController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file) {
+  async uploadFile(@UploadedFile() file): Promise<void> {
+    const now = Date.now();
+    const indexOfFileExtensionSeparator = file.originalname.lastIndexOf('.');
+    const fileNameWithoutExtension = file.originalname.substr(
+      0,
+      indexOfFileExtensionSeparator,
+    );
+    const fileSuffix = `${fileNameWithoutExtension}-${now}`;
     const resizeJobs = defaultResults.map(result => {
-      return this.resize(file, result);
+      return this.resize(file, fileSuffix, result);
     });
 
     // Jimp.read(file.path)
@@ -53,10 +65,9 @@ export class MediaLibraryController {
     //     });
     //     return Promise.all(resizeJobs);
     //   })
-    Promise.all(resizeJobs)
-      .then(() => {
-        console.log('Resize done!');
-      })
-      .catch(console.error);
+    const filesOnDisk = await Promise.all(resizeJobs);
+    const removeJobs = [file.path, ...filesOnDisk].map(this.removeFileFromDisk);
+    await Promise.all(removeJobs);
+    console.log("resized then removed;");
   }
 }
