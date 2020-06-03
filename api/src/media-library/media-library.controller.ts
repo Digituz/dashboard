@@ -1,3 +1,4 @@
+import S3 from 'aws-sdk/clients/s3';
 import {
   Controller,
   Post,
@@ -6,6 +7,8 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import execa from 'execa';
+import { readFile } from 'fs';
+
 import { Image } from './image.entity';
 import { ImagesService } from './images.service';
 
@@ -18,12 +21,23 @@ const defaultResults = [
   { label: 'original', width: 4096, height: 4096, quality: 100 },
 ];
 
+const s3 = new S3({
+  accessKeyId: process.env.DO_SPACES_ID,
+  secretAccessKey: process.env.DO_SPACES_SECRET,
+  endpoint: process.env.DO_ENDPOINT,
+});
+
 @Controller('media-library')
 export class MediaLibraryController {
   constructor(private imagesService: ImagesService) {}
 
-  private resize(image, fileSuffix: string, result) {
-    const destination = `${process.env.UPLOAD_DESTINATION}/${fileSuffix}-${result.label}.jpg`;
+  private resize(
+    image,
+    fileSuffix: string,
+    result,
+  ): Promise<{ destination: string; filename: string }> {
+    const filename = `${fileSuffix}-${result.label}.jpg`;
+    const destination = `${process.env.UPLOAD_DESTINATION}/${filename}`;
     return new Promise((res, rej) => {
       execa('convert', [
         image.path,
@@ -34,7 +48,10 @@ export class MediaLibraryController {
         destination,
       ])
         .then(() => {
-          res(destination);
+          res({
+            destination,
+            filename,
+          });
         })
         .catch(rej);
     });
@@ -48,9 +65,30 @@ export class MediaLibraryController {
     });
   }
 
+  private uploadFileToCDN(filename: string, path: string) {
+    return new Promise((res, rej) => {
+      readFile(path, (err, data) => {
+        if (err) rej(err);
+        const params = {
+          Bucket: process.env.DO_BUCKET,
+          Key: filename,
+          Body: data,
+          ContentType: 'image/jpeg',
+          ACL: 'public-read',
+        };
+
+        s3.upload(params, function(err) {
+          if (err) return rej(err);
+          res();
+        });
+      });
+    });
+  }
+
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file): Promise<void> {
+  async processFile(@UploadedFile() file): Promise<void> {
+    // preparing the file name
     const now = Date.now();
     const indexOfFileExtensionSeparator = file.originalname.lastIndexOf('.');
     const fileNameWithoutExtension = file.originalname.substr(
@@ -58,14 +96,26 @@ export class MediaLibraryController {
       indexOfFileExtensionSeparator,
     );
     const fileSuffix = `${fileNameWithoutExtension}-${now}`;
+
+    // resizing the image into different dimensions
     const resizeJobs = defaultResults.map(result => {
       return this.resize(file, fileSuffix, result);
     });
+    const files = await Promise.all(resizeJobs);
 
-    const filesOnDisk = await Promise.all(resizeJobs);
-    const removeJobs = [file.path, ...filesOnDisk].map(this.removeFileFromDisk);
+    // upload the different versions of this image to the CDN
+    const uploadJobs = files.map(file =>
+      this.uploadFileToCDN(file.filename, file.destination),
+    );
+    await Promise.all(uploadJobs);
+
+    // removing from disk, as they have been uploaded to the CDN
+    const removeJobs = [file.path, ...files.map(file => file.destination)].map(
+      this.removeFileFromDisk,
+    );
     await Promise.all(removeJobs);
 
+    // recording everything into the database, for easier reference
     const image: Image = {
       mainFilename: `${fileSuffix}-original.jpg`,
       originalFilename: file.originalname,
