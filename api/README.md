@@ -117,5 +117,12 @@ curl -X POST -H 'Content-Type: application/json' -d '{
 ## Authentication
 
 ```bash
+# sign in
 curl -X POST http://localhost:3000/v1/sign-in -d '{"username": "john", "password": "changeme"}' -H "Content-Type: application/json"
+
+# copy the token from the command above
+JWT=eyJ...Zxk
+
+# use the token on other requests
+curl -H 'Authorization: Bearer '$JWT localhost:3000/v1/profile
 ```
