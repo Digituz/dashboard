@@ -118,7 +118,7 @@ curl -X POST -H 'Content-Type: application/json' -d '{
 
 ```bash
 # sign in
-curl -X POST http://localhost:3000/v1/sign-in -d '{"username": "john", "password": "changeme"}' -H "Content-Type: application/json"
+curl -X POST http://localhost:3000/v1/sign-in -d '{"username": "bruno.krebs@fridakahlo.com.br", "password": "0607Frida"}' -H "Content-Type: application/json"
 
 # copy the token from the command above
 JWT=eyJ...Zxk

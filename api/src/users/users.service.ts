@@ -1,7 +1,6 @@
 
 import { Injectable } from '@nestjs/common';
-
-export type User = any;
+import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
@@ -10,24 +9,33 @@ export class UsersService {
   constructor() {
     this.users = [
       {
-        userId: 1,
-        username: 'john',
-        password: 'changeme',
+        id: 1,
+        email: 'bruno.krebs@fridakahlo.com.br',
+        name: 'Bruno Krebs',
+        password: '0607Frida',
       },
       {
-        userId: 2,
-        username: 'chris',
-        password: 'secret',
+        id: 2,
+        email: 'lena@fridakahlo.com.br',
+        name: 'Lena Vettoretti',
+        password: '0607Frida',
       },
       {
-        userId: 3,
-        username: 'maria',
-        password: 'guess',
+        id: 3,
+        email: 'admin@fridakahlo.com.br',
+        name: 'Fabíola Pires',
+        password: '0607Frida',
+      },
+      {
+        id: 4,
+        email: 'agnes@fridakahlo.com.br',
+        name: 'Agnes Romeu',
+        password: '0607Frida',
       },
     ];
   }
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username);
+  async findOne(email: string): Promise<User | undefined> {
+    return this.users.find(user => user.email === email);
   }
 }
