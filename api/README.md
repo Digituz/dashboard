@@ -113,3 +113,9 @@ curl -X POST -H 'Content-Type: application/json' -d '{
   "description": "4 Women"
 }' localhost:3000/v1/products/variations
 ```
+
+## Authentication
+
+```bash
+curl -X POST http://localhost:3000/v1/sign-in -d '{"username": "john", "password": "changeme"}' -H "Content-Type: application/json"
+```

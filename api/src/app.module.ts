@@ -6,6 +6,8 @@ import { ProductsModule } from './products/products.module';
 import { Product } from './products/entities/product.entity';
 import { ProductVariation } from './products/entities/product-variation.entity';
 import { MediaLibraryModule } from './media-library/media-library.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { MediaLibraryModule } from './media-library/media-library.module';
     }),
     ProductsModule,
     MediaLibraryModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],
