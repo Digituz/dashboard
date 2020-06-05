@@ -14,4 +14,8 @@ export class ImagesService {
   async save(image: Image): Promise<Image> {
     return this.imagesRepository.save(image);
   }
+
+  async findAll(): Promise<Image[]> {
+    return this.imagesRepository.find();
+  }
 }

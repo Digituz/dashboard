@@ -1,15 +1,39 @@
-<nz-upload
-  nzType="drag"
-  [nzMultiple]="true"
-  [nzShowUploadList]="false"
-  nzAction="/media-library/upload"
-  (nzChange)="handleChange($event)"
->
-  <p class="ant-upload-drag-icon">
-    <i nz-icon nzType="picture" nzTheme="outline"></i>
+<div class="upload-area">
+  <nz-upload
+    nzType="drag"
+    [nzMultiple]="true"
+    [nzShowUploadList]="false"
+    nzAction="/media-library/upload"
+    (nzChange)="handleChange($event)"
+  >
+    <p class="ant-upload-drag-icon">
+      <i nz-icon nzType="picture" nzTheme="outline"></i>
+    </p>
+    <p class="ant-upload-text">Área de upload de imagens.</p>
+    <p class="ant-upload-hint">
+      Você pode arrastar e soltar imagens, ou clicar aqui e selecionar várias imagens.
+    </p>
+  </nz-upload>
+</div>
+<div class="feature-header">
+  <h2>Lista de Imagens</h2>
+  <p>
+    <label>Controle as imagens do seu negócio de forma simplificada.</label>
   </p>
-  <p class="ant-upload-text">Área de upload de imagens.</p>
-  <p class="ant-upload-hint">
-    Você pode arrastar e soltar imagens, ou clicar aqui e selecionar várias imagens.
-  </p>
-</nz-upload>
+</div>
+<nz-card>
+  <div nz-row [nzGutter]="8">
+    <div
+      class="gutter-row"
+      nz-col
+      [nzXs]="24"
+      [nzSm]="12"
+      [nzMd]="6"
+      [nzLg]="4"
+      [nzXl]="3"
+      *ngFor="let image of images"
+    >
+      <img style="max-width: 100%;" [src]="image.smallFileURL" [alt]="image.originalFilename" />
+    </div>
+  </div>
+</nz-card>

@@ -5,6 +5,7 @@ import {
   UseInterceptors,
   UploadedFile,
   UseGuards,
+  Get,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import execa from 'execa';
@@ -131,5 +132,10 @@ export class MediaLibraryController {
       thumbnailFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-thumbnail.jpg`,
     };
     await this.imagesService.save(image);
+  }
+
+  @Get()
+  findAll(): Promise<Image[]> {
+    return this.imagesService.findAll();
   }
 }
