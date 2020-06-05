@@ -1,6 +1,26 @@
 <div class="sign-container">
   <div class="sign-in-form">
     <form nz-form [formGroup]="formFields" (ngSubmit)="signIn()" *ngIf="!loading">
+      <div class="logo">
+        <i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Digituz
+      </div>
+      <div nz-row [nzGutter]="16">
+        <div nz-col class="gutter-row" [nzSpan]="24">
+          <nz-form-label class="sign-in-form-label" nzFor="user">Usuário</nz-form-label>
+          <nz-form-control>
+            <input nz-input name="user" id="user" placeholder="Digite seu e-mail" formControlName="user" />
+          </nz-form-control>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="24">
+          <nz-form-label class="sign-in-form-label" nzFor="password">Senha</nz-form-label>
+          <nz-form-control>
+            <input nz-input type="password" name="password" id="password" placeholder="Digite sua senha" formControlName="password" />
+          </nz-form-control>
+        </div>
+      </div>
+      <div class="sign-in-button-container">
+        <button nz-button nzType="primary">Entrar</button>
+      </div>
     </form>
   </div>
 </div>
