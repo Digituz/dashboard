@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
+import { SignInService } from './sign-in/sign-in.service';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
-  constructor(public router: Router) {}
+  constructor(private signInService: SignInService, public router: Router) {}
   canActivate() {
-    console.log('========================================================');
+    if (!this.signInService.isSignedId()) {
+      return this.router.parseUrl('/');
+    }
     return true;
-    // return this.router.parseUrl('/sign-in');
   }
 }
