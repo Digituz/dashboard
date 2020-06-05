@@ -77,52 +77,52 @@ select * from product;
 truncate table product;
 ```
 
-## Interacting with the API
-
-Using the API:
-
-```bash
-curl localhost:3000/v1/products
-
-curl -X POST -H 'Content-Type: application/json' -d '{
-  "sku": "LFK-0001",
-  "title": "Máscara Frida Kahlo"
-}' localhost:3000/v1/products
-
-curl -X POST -H 'Content-Type: application/json' -d '{
-  "parentSku": "LFK-0001",
-  "sku": "LFK-0001-K",
-  "description": "Kids"
-}' localhost:3000/v1/products/variations
-
-curl -X POST -H 'Content-Type: application/json' -d '{
-  "parentSku": "LFK-0001",
-  "sku": "LFK-0001-K",
-  "description": "4 Kids"
-}' localhost:3000/v1/products/variations
-
-curl -X POST -H 'Content-Type: application/json' -d '{
-  "parentSku": "LFK-0001",
-  "sku": "LFK-0001-M",
-  "description": "4 Men"
-}' localhost:3000/v1/products/variations
-
-curl -X POST -H 'Content-Type: application/json' -d '{
-  "parentSku": "LFK-0001",
-  "sku": "LFK-0001-W",
-  "description": "4 Women"
-}' localhost:3000/v1/products/variations
-```
-
 ## Authentication
 
 ```bash
 # sign in
-curl -X POST http://localhost:3000/v1/sign-in -d '{"username": "bruno.krebs@fridakahlo.com.br", "password": "0607Frida"}' -H "Content-Type: application/json"
+curl -X POST http://localhost:3000/v1/sign-in -d '{"username": "bruno.krebs@fridakahlo.com.br", "password": "lbX01as$"}' -H "Content-Type: application/json"
 
 # copy the token from the command above
 JWT=eyJ...Zxk
 
 # use the token on other requests
 curl -H 'Authorization: Bearer '$JWT localhost:3000/v1/profile
+```
+
+## Interacting with the API
+
+Using the API. For the moment, they all need JWTs. So, check the instructions above, then execute the following commands:
+
+```bash
+curl -H 'Authorization: Bearer '$JWT localhost:3000/v1/products
+
+curl -X POST -H 'Authorization: Bearer '$JWT -H 'Content-Type: application/json' -d '{
+  "sku": "LFK-0001",
+  "title": "Máscara Frida Kahlo"
+}' localhost:3000/v1/products
+
+curl -X POST -H 'Authorization: Bearer '$JWT -H 'Content-Type: application/json' -d '{
+  "parentSku": "LFK-0001",
+  "sku": "LFK-0001-K",
+  "description": "Kids"
+}' localhost:3000/v1/products/variations
+
+curl -X POST -H 'Authorization: Bearer '$JWT -H 'Content-Type: application/json' -d '{
+  "parentSku": "LFK-0001",
+  "sku": "LFK-0001-K",
+  "description": "4 Kids"
+}' localhost:3000/v1/products/variations
+
+curl -X POST -H 'Authorization: Bearer '$JWT -H 'Content-Type: application/json' -d '{
+  "parentSku": "LFK-0001",
+  "sku": "LFK-0001-M",
+  "description": "4 Men"
+}' localhost:3000/v1/products/variations
+
+curl -X POST -H 'Authorization: Bearer '$JWT -H 'Content-Type: application/json' -d '{
+  "parentSku": "LFK-0001",
+  "sku": "LFK-0001-W",
+  "description": "4 Women"
+}' localhost:3000/v1/products/variations
 ```

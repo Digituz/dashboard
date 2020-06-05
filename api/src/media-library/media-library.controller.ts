@@ -4,6 +4,7 @@ import {
   Post,
   UseInterceptors,
   UploadedFile,
+  UseGuards,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import execa from 'execa';
@@ -11,6 +12,7 @@ import { readFile } from 'fs';
 
 import { Image } from './image.entity';
 import { ImagesService } from './images.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 const defaultResults = [
   { label: 'thumbnail', width: 90, height: 90, quality: 80 },
@@ -28,6 +30,7 @@ const s3 = new S3({
 });
 
 @Controller('media-library')
+@UseGuards(JwtAuthGuard)
 export class MediaLibraryController {
   constructor(private imagesService: ImagesService) {}
 
