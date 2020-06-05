@@ -24,7 +24,6 @@ export class SignInComponent implements OnInit {
 
   signIn(): void {
     this.signInService.signIn(this.formFields.value).subscribe(() => {
-
       return this.router.navigateByUrl("home");
     });
   }
