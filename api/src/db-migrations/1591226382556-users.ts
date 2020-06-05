@@ -11,6 +11,10 @@ export class users1591226382556 implements MigrationInterface {
                 constraint pk_users primary key(id)
             );
         `);
+    await queryRunner.query(`insert into user (name, email, password) values ("Bruno Krebs", "bruno.krebs@fridakahlo.com.br", "lbX01as$");`);
+    await queryRunner.query(`insert into user (name, email, password) values ("Lena Vettoretti", "lena@fridakahlo.com.br", "lbX01as$");`);
+    await queryRunner.query(`insert into user (name, email, password) values ("Fabíola Pires", "admin@fridakahlo.com.br", "lbX01as$");`);
+    await queryRunner.query(`insert into user (name, email, password) values ("Agnes Romeu", "agnessromeu@gmail.com", "lbX01as$");`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

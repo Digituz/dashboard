@@ -8,6 +8,7 @@ import { ProductVariation } from './products/entities/product-variation.entity';
 import { MediaLibraryModule } from './media-library/media-library.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { User } from './users/user.entity';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { UsersModule } from './users/users.module';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [Product, ProductVariation, Image],
+      entities: [Product, ProductVariation, Image, User],
       synchronize: false,
       migrationsTableName: 'database_migrations',
       migrations: ['src/db-migrations/*.js'],
