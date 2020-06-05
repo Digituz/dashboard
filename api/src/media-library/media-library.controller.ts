@@ -123,14 +123,13 @@ export class MediaLibraryController {
       mainFilename: `${fileSuffix}-original.jpg`,
       originalFilename: file.originalname,
       mimetype: 'image/jpeg',
-      originalFileURL: `${process.env.CDN_URL}/${fileSuffix}-original.jpg`,
-      extraLargeFileURL: `${process.env.CDN_URL}/${fileSuffix}-extra-large.jpg`,
-      largeFileURL: `${process.env.CDN_URL}/${fileSuffix}-large.jpg`,
-      mediumFileURL: `${process.env.CDN_URL}/${fileSuffix}-medium.jpg`,
-      smallFileURL: `${process.env.CDN_URL}/${fileSuffix}-small.jpg`,
-      thumbnailFileURL: `${process.env.CDN_URL}/${fileSuffix}-thumbnail.jpg`,
+      originalFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-original.jpg`,
+      extraLargeFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-extra-large.jpg`,
+      largeFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-large.jpg`,
+      mediumFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-medium.jpg`,
+      smallFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-small.jpg`,
+      thumbnailFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-thumbnail.jpg`,
     };
     await this.imagesService.save(image);
-    console.log('resized then removed;');
   }
 }
