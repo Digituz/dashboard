@@ -70,9 +70,9 @@ export class MediaLibraryComponent implements OnInit {
     this.reloadImages();
 
     const searchProducts = (query: string) => {
-      return this.productsService.loadProducts().pipe(
+      return this.productsService.findProducts(query).pipe(
         map((products: Product[]) => {
-          return products.map((item: Product) => `${item.title}`);
+          return products.map((item: Product) => `${item.sku} - ${item.title}`);
         })
       );
     };

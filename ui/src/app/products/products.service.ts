@@ -15,6 +15,10 @@ export class ProductsService {
     return this.httpClient.get<Product[]>(this.PRODUCTS_ENDPOINT);
   }
 
+  public findProducts(query: string): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.PRODUCTS_ENDPOINT}?query=${query}`);
+  }
+
   public saveProduct(product: Product): Observable<void> {
     return this.httpClient.post<void>(this.PRODUCTS_ENDPOINT, product);
   }
