@@ -26,6 +26,7 @@ import { User } from './users/user.entity';
       cli: {
         migrationsDir: 'src/db-migrations',
       },
+      logging: true,
     }),
     ProductsModule,
     MediaLibraryModule,
