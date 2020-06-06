@@ -64,9 +64,11 @@ export class MediaLibraryComponent implements OnInit {
   handleOk(): void {
     console.log('click ok');
     this.isModalVisible = false;
+    this.modalImage = null;
   }
 
   handleCancel(): void {
     this.isModalVisible = false;
+    this.modalImage = null;
   }
 }
