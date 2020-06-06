@@ -24,6 +24,7 @@ export class MediaLibraryComponent implements OnInit {
   isModalVisible = false;
   isSpinning = false;
   isProductListLoading = false;
+  showManagementSection = false;
   modalTitle: string;
   modalImage: string;
   selectedProduct?: string;
@@ -58,6 +59,10 @@ export class MediaLibraryComponent implements OnInit {
     this.imageService.loadImages().subscribe((images) => {
       this.images = images;
     });
+  }
+
+  toggleManagementSection() {
+    this.showManagementSection = !this.showManagementSection;
   }
 
   ngOnInit(): void {
