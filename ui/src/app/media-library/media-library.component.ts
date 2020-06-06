@@ -5,6 +5,7 @@ import { BreadcrumbsService } from '@app/breadcrumbs/breadcrumbs.service';
 
 import { Image } from './image.entity';
 import { ImageService } from './image.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-media-library',
@@ -13,11 +14,15 @@ import { ImageService } from './image.service';
 })
 export class MediaLibraryComponent implements OnInit {
   images: Image[];
+  isModalVisible = false;
+  modalTitle: string;
+  modalImage: string;
 
   constructor(
     private msg: NzMessageService,
     private breadcrumbsService: BreadcrumbsService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private modalService: NzModalService // although not used, we need it here
   ) {}
 
   handleChange({ file, fileList }: UploadChangeParam): void {
@@ -37,5 +42,20 @@ export class MediaLibraryComponent implements OnInit {
     this.imageService.loadImages().subscribe((images) => {
       this.images = images;
     });
+  }
+
+  showModal(image: Image): void {
+    this.isModalVisible = true;
+    this.modalTitle = image.originalFilename
+    this.modalImage = image.largeFileURL
+  }
+
+  handleOk(): void {
+    console.log('click ok');
+    this.isModalVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isModalVisible = false;
   }
 }

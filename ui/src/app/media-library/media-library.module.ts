@@ -4,6 +4,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzUploadModule } from "ng-zorro-antd/upload";
 import { MediaLibraryComponent } from './media-library.component';
@@ -25,6 +26,7 @@ const icons: IconDefinition[] = [
     NzCardModule,
     NzGridModule,
     NzMessageModule,
+    NzModalModule,
     NzUploadModule,
     MediaLibraryRoutingModule
   ]

@@ -22,5 +22,20 @@
   </p>
 </div>
 <div class="container">
-  <div *ngFor="let image of images" [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"></div>
+  <div
+    *ngFor="let image of images"
+    [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"
+    (click)="showModal(image)"
+  ></div>
 </div>
+<nz-modal
+  nzWrapClassName="vertical-center-modal"
+  [(nzVisible)]="isModalVisible"
+  [nzTitle]="modalTitle"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzCancelText]="'Cancel'"
+  [nzOkText]="'Ok'"
+>
+  <img style="max-width: 100%;" [src]="modalImage" [alt]="modalTitle">
+</nz-modal>
