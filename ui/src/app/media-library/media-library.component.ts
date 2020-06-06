@@ -40,14 +40,19 @@ export class MediaLibraryComponent implements OnInit {
 
     if (this.imagesBeingUploaded.size === 0) {
       this.msg.success(`Imagens carregadas com sucesso.`);
+      this.reloadImages();
     }
+  }
+
+  private reloadImages() {
+    this.imageService.loadImages().subscribe((images) => {
+      this.images = images;
+    });
   }
 
   ngOnInit(): void {
     this.breadcrumbsService.refreshBreadcrumbs([{ label: 'Imagens', url: '/imagens' }]);
-    this.imageService.loadImages().subscribe((images) => {
-      this.images = images;
-    });
+    this.reloadImages();
   }
 
   showModal(image: Image): void {
