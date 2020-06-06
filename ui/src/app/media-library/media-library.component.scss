@@ -61,3 +61,13 @@
 ::ng-deep .vertical-center-modal .ant-modal {
   top: 0;
 }
+
+nz-form-label {
+  display: block;
+  padding: 0 !important;
+  margin-bottom: 5px;
+}
+
+nz-select {
+  width: 100%;
+}

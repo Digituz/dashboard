@@ -6,6 +6,11 @@ import { BreadcrumbsService } from '@app/breadcrumbs/breadcrumbs.service';
 import { Image } from './image.entity';
 import { ImageService } from './image.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { ProductsService } from '@app/products/products.service';
+import { map, switchMap, debounceTime } from 'rxjs/operators';
+import Product from '@app/products/product.entity';
 
 @Component({
   selector: 'app-media-library',
@@ -13,16 +18,21 @@ import { NzModalService } from 'ng-zorro-antd/modal';
   styleUrls: ['./media-library.component.scss'],
 })
 export class MediaLibraryComponent implements OnInit {
+  private imagesBeingUploaded = new Set();
+  private searchChange$ = new BehaviorSubject('');
   images: Image[];
   isModalVisible = false;
   isSpinning = false;
+  isProductListLoading = false;
   modalTitle: string;
   modalImage: string;
-  private imagesBeingUploaded = new Set();
+  selectedProduct?: string;
+  optionList: string[] = [];
 
   constructor(
     private msg: NzMessageService,
     private breadcrumbsService: BreadcrumbsService,
+    private productsService: ProductsService,
     private imageService: ImageService,
     private modalService: NzModalService // although not used, we need it here
   ) {}
@@ -53,6 +63,24 @@ export class MediaLibraryComponent implements OnInit {
   ngOnInit(): void {
     this.breadcrumbsService.refreshBreadcrumbs([{ label: 'Imagens', url: '/imagens' }]);
     this.reloadImages();
+
+    const searchProducts = (query: string) => {
+      return this.productsService.loadProducts().pipe(
+        map((products: Product[]) => {
+          return products.map((item: Product) => `${item.title}`);
+        })
+      );
+    };
+
+    const optionList$: Observable<string[]> = this.searchChange$
+      .asObservable()
+      .pipe(debounceTime(500))
+      .pipe(switchMap(searchProducts));
+
+    optionList$.subscribe((data) => {
+      this.optionList = data;
+      this.isProductListLoading = false;
+    });
   }
 
   showModal(image: Image): void {
@@ -70,5 +98,10 @@ export class MediaLibraryComponent implements OnInit {
   handleCancel(): void {
     this.isModalVisible = false;
     this.modalImage = null;
+  }
+
+  onSearch(value: string): void {
+    this.isProductListLoading = true;
+    this.searchChange$.next(value);
   }
 }
