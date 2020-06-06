@@ -10,4 +10,5 @@ export default class Product {
   length?: number;
   weight?: number;
   isActive?: boolean;
+  ncm?: string;
 }

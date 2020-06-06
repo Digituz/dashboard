@@ -15,6 +15,7 @@ export class products1590442910556 implements MigrationInterface {
                 length decimal(15,3),
                 weight decimal(15,3),
                 is_active boolean default true,
+                ncm varchar(10) not null,
                 constraint pk_product primary key(sku)
             );
         `);

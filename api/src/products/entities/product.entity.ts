@@ -78,4 +78,11 @@ export class Product {
     },
   )
   productVariations: ProductVariation[];
+
+  @Column({
+    type: 'varchar',
+    length: 10,
+    nullable: false,
+  })
+  ncm: string;
 }
