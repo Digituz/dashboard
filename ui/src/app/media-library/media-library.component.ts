@@ -15,8 +15,10 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 export class MediaLibraryComponent implements OnInit {
   images: Image[];
   isModalVisible = false;
+  isSpinning = false;
   modalTitle: string;
   modalImage: string;
+  private imagesBeingUploaded = new Set();
 
   constructor(
     private msg: NzMessageService,
@@ -25,15 +27,19 @@ export class MediaLibraryComponent implements OnInit {
     private modalService: NzModalService // although not used, we need it here
   ) {}
 
-  handleChange({ file, fileList }: UploadChangeParam): void {
-    const status = file.status;
-    if (status !== 'uploading') {
-      console.log(file, fileList);
-    }
+  handleChange({ file }: UploadChangeParam): void {
+    const { status, uid } = file;
     if (status === 'done') {
-      this.msg.success(`${file.name} file uploaded successfully.`);
+      this.imagesBeingUploaded.delete(uid);
     } else if (status === 'error') {
-      this.msg.error(`${file.name} file upload failed.`);
+      this.msg.error(`Ocorreu um problema no upload do arquivo ${file.name}`);
+    } else {
+      this.imagesBeingUploaded.add(uid);
+    }
+    this.isSpinning = this.imagesBeingUploaded.size > 0;
+
+    if (this.imagesBeingUploaded.size === 0) {
+      this.msg.success(`Imagens carregadas com sucesso.`);
     }
   }
 
@@ -46,8 +52,8 @@ export class MediaLibraryComponent implements OnInit {
 
   showModal(image: Image): void {
     this.isModalVisible = true;
-    this.modalTitle = image.originalFilename
-    this.modalImage = image.largeFileURL
+    this.modalTitle = image.originalFilename;
+    this.modalImage = image.largeFileURL;
   }
 
   handleOk(): void {

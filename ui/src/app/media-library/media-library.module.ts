@@ -6,6 +6,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzUploadModule } from "ng-zorro-antd/upload";
 import { MediaLibraryComponent } from './media-library.component';
 import { MediaLibraryRoutingModule } from './media-library-routing.module';
@@ -27,6 +28,7 @@ const icons: IconDefinition[] = [
     NzGridModule,
     NzMessageModule,
     NzModalModule,
+    NzSpinModule,
     NzUploadModule,
     MediaLibraryRoutingModule
   ]

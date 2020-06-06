@@ -1,20 +1,22 @@
-<div class="upload-area">
-  <nz-upload
-    nzType="drag"
-    [nzMultiple]="true"
-    [nzShowUploadList]="false"
-    nzAction="/media-library/upload"
-    (nzChange)="handleChange($event)"
-  >
-    <p class="ant-upload-drag-icon">
-      <i nz-icon nzType="picture" nzTheme="outline"></i>
-    </p>
-    <p class="ant-upload-text">Área de upload de imagens.</p>
-    <p class="ant-upload-hint">
-      Você pode arrastar e soltar imagens, ou clicar aqui e selecionar várias imagens.
-    </p>
-  </nz-upload>
-</div>
+<nz-spin [nzSpinning]="isSpinning" [nzDelay]="500">
+  <div class="upload-area">
+    <nz-upload
+      nzType="drag"
+      [nzMultiple]="true"
+      [nzShowUploadList]="false"
+      nzAction="/media-library/upload"
+      (nzChange)="handleChange($event)"
+    >
+      <p class="ant-upload-drag-icon">
+        <i nz-icon nzType="picture" nzTheme="outline"></i>
+      </p>
+      <p class="ant-upload-text">Área de upload de imagens.</p>
+      <p class="ant-upload-hint">
+        Você pode arrastar e soltar imagens, ou clicar aqui e selecionar várias imagens.
+      </p>
+    </nz-upload>
+  </div>
+</nz-spin>
 <div class="feature-header">
   <h2>Lista de Imagens</h2>
   <p>
