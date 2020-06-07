@@ -23,16 +23,38 @@ async function getMoreProducts(page) {
   return responseObject.retorno.produtos.map((produto) => produto.produto);
 }
 
+async function getToken() {
+  const { body } = await got.post("http://localhost:3000/v1/sign-in", {
+    json: {
+      username: "bruno.krebs@fridakahlo.com.br",
+      password: "lbX01as$",
+    },
+    responseType: "json",
+  });
+  return body.access_token;
+}
+
+async function insertProductVariation(variation) {}
+
+async function insertProduct(token, product) {
+  console.log(`inserting ${product.sku}`);
+  await got.post("http://localhost:3000/v1/products", {
+    json: product,
+    headers: {
+      authorization: `Bearer ${token}`
+    },
+    responseType: "json",
+  });
+}
+
 (async () => {
   try {
     const pages = [0, 1, 2, 3, 4];
     const getProductsJob = pages.map((page) => getMoreProducts(page));
     const resultsFromJobs = await Promise.all(getProductsJob);
-    _.uniqBy(resultsFromJobs, p => p.codigo).forEach((result) =>
+    _.uniqBy(resultsFromJobs, (p) => p.codigo).forEach((result) =>
       allProductsIncludingVariations.push(...result)
     );
-
-    fs.writeFileSync(`${__dirname}/../bling-bkp/${Date.now()}.json`, JSON.stringify(allProductsIncludingVariations));
 
     allProductsExcludingVariations.push(
       ...allProductsIncludingVariations.filter((p) => !p.codigoPai)
@@ -59,7 +81,9 @@ async function getMoreProducts(page) {
         title: parentProduct.descricao,
         description: null,
         productDetails: parentProduct.descricaoCurta
-          ? converter.makeHtml(turndownService.turndown(parentProduct.descricaoCurta))
+          ? converter.makeHtml(
+              turndownService.turndown(parentProduct.descricaoCurta)
+            )
           : "",
         sellingPrice: parentProduct.preco
           ? parseFloat(parentProduct.preco)
@@ -81,29 +105,50 @@ async function getMoreProducts(page) {
       };
 
       if (parentProduct.variacoes) {
-        parentProduct.variations = _.uniqBy(parentProduct.variations, p => p.codigo);
-        if (!parentProduct.variations || parentProduct.variations.length !== parentProduct.variacoes.length) {
-          console.log(parentProduct.codigo, parentProduct.variacoes.length, parentProduct.variations?.length);
+        parentProduct.variations = _.uniqBy(
+          parentProduct.variations,
+          (p) => p.codigo
+        );
+        if (
+          !parentProduct.variations ||
+          parentProduct.variations.length !== parentProduct.variacoes.length
+        ) {
+          console.log(
+            parentProduct.codigo,
+            parentProduct.variacoes.length,
+            parentProduct.variations?.length
+          );
         }
       }
 
       if (parentProduct.variations) {
         digituzProduct.variations = [];
-        parentProduct.variations.forEach(variation => {
-          const blingVariationDetails = parentProduct.variacoes.find(({variacao}) => variacao.codigoPai === variation.sku);
-          if (!blingVariationDetails) console.log(variation.sku);
-          // digituzProduct.variations.push({
-          //   sku: variation.codigo,
-          //   description: null,
-          //   sellingPrice: null,
-          // });
+        parentProduct.variations.forEach((variation) => {
+          const blingVariationDetails = parentProduct.variacoes.find(
+            ({ variacao }) => variacao.codigoPai === variation.sku
+          );
+          digituzProduct.variations.push({
+            sku: variation.codigo,
+            description: blingVariationDetails.nome,
+            sellingPrice: parseFloat(variation.preco),
+          });
         });
       }
 
       digituzProducts.push(digituzProduct);
     });
 
-    // digituzProducts.forEach(console.log);
+    // fs.writeFileSync(`${__dirname}/../bkp/${Date.now()}-digituz-products-problem.json`, JSON.stringify(digituzProducts.filter(p => !!!p.sku.trim())));
+    // fs.writeFileSync(`${__dirname}/../bkp/${Date.now()}-digituz-products-good.json`, JSON.stringify(digituzProducts.filter(p => !!p.sku.trim())));
+    const productsToBeSaved = digituzProducts.filter((p) => !!p.sku.trim());
+    console.log(productsToBeSaved.length);
+    // const token = await getToken();
+
+    // const insertProductJobs = productsToBeSaved.map((product) => {
+    //   return insertProduct(token, product);
+    // });
+    // await Promise.all(insertProductJobs);
+    // console.log("done");
   } catch (error) {
     console.log(error);
   }
