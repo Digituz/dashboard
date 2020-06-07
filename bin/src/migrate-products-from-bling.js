@@ -33,7 +33,26 @@ async function getToken() {
   return body.access_token;
 }
 
-async function insertProductVariation(variation) {}
+async function insertProductVariation(token, variation, delay) {
+  return new Promise((res, rej) => {
+    setTimeout(async () => {
+      try {
+        console.log(`inserting ${variation.sku} with ${delay}ms delay`);
+        await got.post("http://localhost:3000/v1/products/variations", {
+          json: variation,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+          responseType: "json",
+        });
+        res();
+      } catch (e) {
+        console.log(`had problems on ${variation.sku} with ${delay}ms delay`);
+        rej();
+      }
+    }, delay);
+  });
+}
 
 async function insertProduct(token, product, delay) {
   return new Promise((res, rej) => {
@@ -139,12 +158,12 @@ async function insertProduct(token, product, delay) {
       if (parentProduct.variations) {
         digituzProduct.variations = [];
         parentProduct.variations.forEach((variation) => {
-          const blingVariationDetails = parentProduct.variacoes.find(
-            ({ variacao }) => variacao.codigoPai === variation.sku
+          const variacao = parentProduct.variacoes.find(
+            ({ variacao }) => variacao.codigo === variation.codigo
           );
           digituzProduct.variations.push({
             sku: variation.codigo,
-            description: blingVariationDetails.nome,
+            description: variacao.variacao.nome.replace(": ", ":"),
             sellingPrice: parseFloat(variation.preco),
           });
         });
@@ -153,17 +172,17 @@ async function insertProduct(token, product, delay) {
       digituzProducts.push(digituzProduct);
     });
 
-    // fs.writeFileSync(
-    //   `${__dirname}/../bkp/${Date.now()}-digituz-products-problem.json`,
-    //   JSON.stringify(digituzProducts.filter((p) => !!!p.sku.trim()))
-    // );
-    // fs.writeFileSync(
-    //   `${__dirname}/../bkp/${Date.now()}-digituz-products-good.json`,
-    //   JSON.stringify(digituzProducts.filter((p) => !!p.sku.trim()))
-    // );
+    fs.writeFileSync(
+      `${__dirname}/../bkp/${Date.now()}-digituz-products-problem.json`,
+      JSON.stringify(digituzProducts.filter((p) => !!!p.sku.trim()))
+    );
+    fs.writeFileSync(
+      `${__dirname}/../bkp/${Date.now()}-digituz-products-good.json`,
+      JSON.stringify(digituzProducts.filter((p) => !!p.sku.trim()))
+    );
     const productsToBeIgnored = digituzProducts.filter((p) => !!!p.sku.trim());
     const productsToBeSaved = digituzProducts.filter((p) => !!p.sku.trim());
-    
+
     console.log(`to be ignored - ${productsToBeIgnored.length}`);
     console.log(`to be saved - ${productsToBeSaved.length}`);
 
@@ -173,6 +192,25 @@ async function insertProduct(token, product, delay) {
       return insertProduct(token, product, index * 10);
     });
     await Promise.all(insertProductJobs);
+
+    const variationsToBeSaved = productsToBeSaved
+      .filter(
+        (parentProduct) =>
+          parentProduct.variations && parentProduct.variations.length > 0
+      )
+      .flatMap((parentProduct) => {
+        return parentProduct.variations.map((variation) => ({
+          sku: variation.sku,
+          parentSku: parentProduct.sku,
+          description: variation.description,
+          sellingPrice: variation.sellingPrice,
+        }));
+      });
+    const insertVariationJobs = variationsToBeSaved.map((variation, index) => {
+      return insertProductVariation(token, variation, index * 10);
+    });
+    await Promise.all(insertVariationJobs);
+
     console.log("done");
   } catch (error) {
     console.log(error);
