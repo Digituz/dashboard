@@ -22,7 +22,10 @@
       <td>{{ product.sku }}</td>
       <td>{{ product.title }}</td>
       <td>{{ product.sellingPrice }}</td>
-      <td>{{ product.isActive }}</td>
+      <td>
+        <i nz-icon style="color: green" nzType="check" nzTheme="outline" *ngIf="product.isActive"></i>
+        <i nz-icon style="color: red" nzType="close" nzTheme="outline" *ngIf="!product.isActive"></i>
+      </td>
       <td>
         <a [title]="'Início'" [routerLink]="'/products/' + product.sku"><button nz-button>Editar</button></a>
       </td>

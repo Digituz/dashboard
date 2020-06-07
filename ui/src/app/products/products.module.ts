@@ -8,6 +8,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { IconDefinition } from '@ant-design/icons-angular';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
@@ -17,6 +19,10 @@ import { ProductsComponent } from './products.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
+
+import { CheckOutline, CloseOutline } from '@ant-design/icons-angular/icons';
+
+const icons: IconDefinition[] = [CheckOutline, CloseOutline];
 
 @NgModule({
   declarations: [ProductsComponent, ProductFormComponent, ProductsListComponent],
@@ -30,6 +36,7 @@ import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
     NzTableModule,
     NzSkeletonModule,
     NzSwitchModule,
+    NzIconModule.forRoot(icons),
     SharedModule,
     CommonModule,
     ProductsRoutingModule,
