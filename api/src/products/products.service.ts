@@ -20,10 +20,14 @@ export class ProductsService {
 
   async findByQuery(query: string): Promise<Product[]> {
     return this.productsRepository
-      .createQueryBuilder("product")
-      .where('LOWER(product.title) LIKE LOWER(:query)', { query: `%${query.toLowerCase()}%` })
-      .orWhere('LOWER(product.sku) LIKE LOWER(:query)', { query: `%${query.toLowerCase()}%` })
-      .orderBy("product.title")
+      .createQueryBuilder('product')
+      .where('LOWER(product.title) LIKE LOWER(:query)', {
+        query: `%${query.toLowerCase()}%`,
+      })
+      .orWhere('LOWER(product.sku) LIKE LOWER(:query)', {
+        query: `%${query.toLowerCase()}%`,
+      })
+      .orderBy('product.title')
       .limit(10)
       .getMany();
   }

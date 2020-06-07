@@ -10,7 +10,6 @@ const turndownService = new TurndownService();
 const BLING_APIKEY =
   "b147523f150783ffd260159239a1a6271ab233749c4c016c0a9320ad85ff60426824fe07";
 
-const allProductsIncludingVariations = [];
 const allProductsExcludingVariations = [];
 
 const digituzProducts = [];
@@ -36,24 +35,40 @@ async function getToken() {
 
 async function insertProductVariation(variation) {}
 
-async function insertProduct(token, product) {
-  console.log(`inserting ${product.sku}`);
-  await got.post("http://localhost:3000/v1/products", {
-    json: product,
-    headers: {
-      authorization: `Bearer ${token}`
-    },
-    responseType: "json",
+async function insertProduct(token, product, delay) {
+  return new Promise((res, rej) => {
+    setTimeout(async () => {
+      try {
+        console.log(`inserting ${product.sku} with ${delay}ms delay`);
+        await got.post("http://localhost:3000/v1/products", {
+          json: product,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+          responseType: "json",
+        });
+        res();
+      } catch (e) {
+        console.log(`had problems on ${product.sku} with ${delay}ms delay`);
+        rej();
+      }
+    }, delay);
   });
 }
 
 (async () => {
   try {
+    let allProductsIncludingVariations = [];
     const pages = [0, 1, 2, 3, 4];
     const getProductsJob = pages.map((page) => getMoreProducts(page));
     const resultsFromJobs = await Promise.all(getProductsJob);
-    _.uniqBy(resultsFromJobs, (p) => p.codigo).forEach((result) =>
+    resultsFromJobs.forEach((result) =>
       allProductsIncludingVariations.push(...result)
+    );
+
+    allProductsIncludingVariations = _.uniqBy(
+      allProductsIncludingVariations,
+      (p) => p.codigo
     );
 
     allProductsExcludingVariations.push(
@@ -138,17 +153,27 @@ async function insertProduct(token, product) {
       digituzProducts.push(digituzProduct);
     });
 
-    // fs.writeFileSync(`${__dirname}/../bkp/${Date.now()}-digituz-products-problem.json`, JSON.stringify(digituzProducts.filter(p => !!!p.sku.trim())));
-    // fs.writeFileSync(`${__dirname}/../bkp/${Date.now()}-digituz-products-good.json`, JSON.stringify(digituzProducts.filter(p => !!p.sku.trim())));
+    // fs.writeFileSync(
+    //   `${__dirname}/../bkp/${Date.now()}-digituz-products-problem.json`,
+    //   JSON.stringify(digituzProducts.filter((p) => !!!p.sku.trim()))
+    // );
+    // fs.writeFileSync(
+    //   `${__dirname}/../bkp/${Date.now()}-digituz-products-good.json`,
+    //   JSON.stringify(digituzProducts.filter((p) => !!p.sku.trim()))
+    // );
+    const productsToBeIgnored = digituzProducts.filter((p) => !!!p.sku.trim());
     const productsToBeSaved = digituzProducts.filter((p) => !!p.sku.trim());
-    console.log(productsToBeSaved.length);
-    // const token = await getToken();
+    
+    console.log(`to be ignored - ${productsToBeIgnored.length}`);
+    console.log(`to be saved - ${productsToBeSaved.length}`);
 
-    // const insertProductJobs = productsToBeSaved.map((product) => {
-    //   return insertProduct(token, product);
-    // });
-    // await Promise.all(insertProductJobs);
-    // console.log("done");
+    const token = await getToken();
+
+    const insertProductJobs = productsToBeSaved.map((product, index) => {
+      return insertProduct(token, product, index * 10);
+    });
+    await Promise.all(insertProductJobs);
+    console.log("done");
   } catch (error) {
     console.log(error);
   }

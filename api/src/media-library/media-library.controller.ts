@@ -13,7 +13,7 @@ import { readFile } from 'fs';
 
 import { Image } from './image.entity';
 import { ImagesService } from './images.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 const defaultResults = [
   { label: 'thumbnail', width: 90, height: 90, quality: 80 },

@@ -13,6 +13,14 @@
             "sourceMaps": true,
             "cwd": "${workspaceRoot}/api",
             "protocol": "inspector"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run Bling Migration",
+            "args": ["${workspaceFolder}/bin/src/migrate-products-from-bling.js"],
+            "cwd": "${workspaceRoot}/bin",
+            "protocol": "inspector"
         }
     ]
 }

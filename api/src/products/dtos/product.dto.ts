@@ -2,7 +2,7 @@ import { Length, IsNotEmpty  } from 'class-validator';
 
 export class ProductDTO {
   @IsNotEmpty()
-  @Length(5, 24)
+  @Length(3, 24)
   sku: string;
   
   @IsNotEmpty()

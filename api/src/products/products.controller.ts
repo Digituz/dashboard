@@ -3,7 +3,7 @@ import { Product } from './entities/product.entity';
 import { ProductsService } from './products.service';
 import { ProductDTO } from './dtos/product.dto';
 import { ProductVariationDTO } from './dtos/product-variation.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('products')
 @UseGuards(JwtAuthGuard)
