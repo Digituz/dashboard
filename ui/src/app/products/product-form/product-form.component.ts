@@ -18,6 +18,8 @@ export class ProductFormComponent implements OnInit {
   variations: ProductVariation[];
   loading: boolean = true;
   isModalVisible: boolean = false;
+  showRemoveButton: boolean = false;
+  variationBeingEdited: ProductVariation;
 
   constructor(
     private fb: FormBuilder,
@@ -65,22 +67,36 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  handleOk(): void {
-    console.log('click ok');
-    this.isModalVisible = false;
-  }
-
   handleCancel(): void {
     this.isModalVisible = false;
   }
 
-  showModal(): void {
+  newProductVariation(): void {
     this.formFieldsVariation = this.fb.group({
       sku: '',
       description: '',
       sellingPrice: '',
     });
     this.isModalVisible = true;
+    this.showRemoveButton = false;
+    this.variationBeingEdited = null;
+  }
+
+  editProductVariation(productVariation: ProductVariation): void {
+    this.formFieldsVariation = this.fb.group({
+      sku: productVariation.sku,
+      description: productVariation.description,
+      sellingPrice: productVariation.sellingPrice,
+    });
+    this.isModalVisible = true;
+    this.showRemoveButton = true;
+    this.variationBeingEdited = productVariation;
+  }
+
+  removeVariation() {
+    if (!this.variationBeingEdited) return;
+    this.variations = this.variations.filter((v) => v.sku != this.variationBeingEdited.sku);
+    this.isModalVisible = false;
   }
 
   submitVariation(): void {

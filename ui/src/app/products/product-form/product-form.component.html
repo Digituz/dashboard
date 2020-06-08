@@ -130,7 +130,7 @@
     <label>A tabela abaixo mostra as variações do produto em questão.</label>
   </p>
   <div class="actions">
-    <button nz-button nzType="primary" (click)="showModal()">Nova Variação</button>
+    <button nz-button nzType="primary" (click)="newProductVariation()">Nova Variação</button>
   </div>
 </div>
 <nz-table #variationsTable [nzData]="variations">
@@ -148,7 +148,7 @@
       <td>{{ variation.description }}</td>
       <td>{{ variation.sellingPrice }}</td>
       <td class="actions">
-        <button nz-button>Editar</button>
+        <button nz-button (click)="editProductVariation(variation)">Editar</button>
       </td>
     </tr>
   </tbody>
@@ -158,7 +158,6 @@
   [(nzVisible)]="isModalVisible"
   nzTitle="Formulário de Edição de Variação"
   (nzOnCancel)="handleCancel()"
-  (nzOnOk)="submitVariation()"
   [nzCancelText]="'Cancel'"
   [nzOkText]="'Ok'"
 >
@@ -192,4 +191,9 @@
       </div>
     </div>
   </form>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
+    <button nz-button nzType="danger" (click)="removeVariation()" *ngIf="showRemoveButton">Remover</button>
+    <button nz-button nzType="primary" (click)="submitVariation()">Salvar</button>
+  </div>
 </nz-modal>
