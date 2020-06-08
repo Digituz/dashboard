@@ -12,10 +12,12 @@ import { ProductVariation } from '../product-variation.entity';
 })
 export class ProductFormComponent implements OnInit {
   formFields: FormGroup;
+  formFieldsVariation: FormGroup;
   productDetails: string;
   product: Product;
   variations: ProductVariation[];
   loading: boolean = true;
+  isModalVisible: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -60,5 +62,27 @@ export class ProductFormComponent implements OnInit {
     this.productService.saveProduct(product).subscribe(() => {
       this.router.navigate(['/products']);
     });
+  }
+
+  handleOk(): void {
+    console.log('click ok');
+    this.isModalVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isModalVisible = false;
+  }
+
+  showModal(): void {
+    this.formFieldsVariation = this.fb.group({
+      sku: '',
+      description: '',
+      sellingPrice: '',
+    });
+    this.isModalVisible = true;
+  }
+
+  submitVariation(): void {
+
   }
 }

@@ -7,6 +7,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -34,6 +35,7 @@ const icons: IconDefinition[] = [CheckOutline, CloseOutline];
     NzGridModule,
     NzInputNumberModule,
     NzTableModule,
+    NzModalModule,
     NzSkeletonModule,
     NzSwitchModule,
     NzIconModule.forRoot(icons),

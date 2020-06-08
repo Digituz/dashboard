@@ -115,7 +115,10 @@
       <div nz-col class="gutter-row" [nzSpan]="24">
         <nz-form-label nzFor="productDetails">Detalhamento</nz-form-label>
         <nz-form-control>
-          <medium-editor [(editorModel)]="productDetails" placeholder="Descreva seu produto em detalhes."></medium-editor>
+          <medium-editor
+            [(editorModel)]="productDetails"
+            placeholder="Descreva seu produto em detalhes."
+          ></medium-editor>
         </nz-form-control>
       </div>
     </div>
@@ -126,6 +129,9 @@
   <p>
     <label>A tabela abaixo mostra as variações do produto em questão.</label>
   </p>
+  <div class="actions">
+    <button nz-button nzType="primary" (click)="showModal()">Nova Variação</button>
+  </div>
 </div>
 <nz-table #variationsTable [nzData]="variations">
   <thead>
@@ -147,3 +153,43 @@
     </tr>
   </tbody>
 </nz-table>
+<nz-modal
+  nzWrapClassName="vertical-center-modal"
+  [(nzVisible)]="isModalVisible"
+  nzTitle="Formulário de Edição de Variação"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzCancelText]="'Cancel'"
+  [nzOkText]="'Ok'"
+>
+  <form nz-form [formGroup]="formFieldsVariation" (ngSubmit)="submitVariation()" *ngIf="isModalVisible">
+    <div nz-row [nzGutter]="16">
+      <div nz-col class="gutter-row" [nzSpan]="24">
+        <nz-form-label nzFor="variationSku">SKU</nz-form-label>
+        <nz-form-control>
+          <input nz-input name="variationSku" id="variationSku" placeholder="SKU da variação" formControlName="sku" />
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="24">
+        <nz-form-label nzFor="variationDescription">Descrição</nz-form-label>
+        <nz-form-control>
+          <input nz-input name="variationDescription" id="variationDescription" placeholder="Descrição da variação" formControlName="description" />
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="24">
+        <nz-form-label nzFor="seillingPrice">Preço de Venda</nz-form-label>
+        <nz-form-control>
+          <nz-input-number
+            formControlName="sellingPrice"
+            name="variationSeillingPrice"
+            id="variationSeillingPrice"
+            [nzMin]="0"
+            [nzMax]="1000000"
+            [nzStep]="0.5"
+            nzPlaceHolder="Preço de venda da variação"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+    </div>
+  </form>
+</nz-modal>
