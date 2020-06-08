@@ -1,3 +1,5 @@
+import { ProductVariation } from './product-variation.entity';
+
 export default class Product {
   id?: number;
   sku?: string;
@@ -11,4 +13,5 @@ export default class Product {
   weight?: number;
   isActive?: boolean;
   ncm?: string;
+  productVariations?: ProductVariation[];
 }

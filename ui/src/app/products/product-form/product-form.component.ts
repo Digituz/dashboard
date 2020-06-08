@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductsService } from '../products.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import Product from '../product.entity';
+import { ProductVariation } from '../product-variation.entity';
 
 @Component({
   selector: 'app-product-form',
@@ -13,6 +14,7 @@ export class ProductFormComponent implements OnInit {
   formFields: FormGroup;
   productDetails: string;
   product: Product;
+  variations: ProductVariation[];
   loading: boolean = true;
 
   constructor(
@@ -30,6 +32,7 @@ export class ProductFormComponent implements OnInit {
       this.configureFormFields(this.product);
     } else {
       this.productService.loadProduct(sku).subscribe((product) => {
+        this.variations = product.productVariations;
         this.configureFormFields(product);
       });
     }

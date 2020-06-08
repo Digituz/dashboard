@@ -26,7 +26,7 @@
         <i nz-icon style="color: green" nzType="check" nzTheme="outline" *ngIf="product.isActive"></i>
         <i nz-icon style="color: red" nzType="close" nzTheme="outline" *ngIf="!product.isActive"></i>
       </td>
-      <td>
+      <td class="actions">
         <a [title]="'Início'" [routerLink]="'/products/' + product.sku"><button nz-button>Editar</button></a>
       </td>
     </tr>

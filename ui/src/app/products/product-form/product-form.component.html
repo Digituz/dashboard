@@ -121,3 +121,29 @@
     </div>
   </form>
 </nz-card>
+<div class="feature-header" style="margin-top: 30px;">
+  <h2>Variações do Produto</h2>
+  <p>
+    <label>A tabela abaixo mostra as variações do produto em questão.</label>
+  </p>
+</div>
+<nz-table #variationsTable [nzData]="variations">
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Título</th>
+      <th>Preço</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let variation of variationsTable.data">
+      <td>{{ variation.sku }}</td>
+      <td>{{ variation.description }}</td>
+      <td>{{ variation.sellingPrice }}</td>
+      <td class="actions">
+        <button nz-button>Editar</button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
