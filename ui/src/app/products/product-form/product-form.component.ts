@@ -35,6 +35,7 @@ export class ProductFormComponent implements OnInit {
     } else {
       this.productService.loadProduct(sku).subscribe((product) => {
         this.variations = product.productVariations;
+        this.product = product;
         this.configureFormFields(product);
       });
     }
@@ -83,6 +84,8 @@ export class ProductFormComponent implements OnInit {
   }
 
   submitVariation(): void {
-
+    const variation = this.formFieldsVariation.value;
+    this.variations = [...this.variations, variation];
+    this.isModalVisible = false;
   }
 }
