@@ -102,9 +102,17 @@ export class ProductFormComponent implements OnInit {
   }
 
   submitVariation(): void {
-    const variation = this.formFieldsVariation.value;
-    variation.parentSku = this.product.sku;
-    this.variations = [...this.variations, variation];
+    const inputValues = this.formFieldsVariation.value;
+    if (this.variationBeingEdited) {
+      Object.assign(this.variationBeingEdited, inputValues);
+      this.variations = [...this.variations];
+    } else {
+      const variation: ProductVariation = {
+        parentSku: this.product.sku,
+        ...inputValues,
+      };
+      this.variations = [...this.variations, variation];
+    }
     this.isModalVisible = false;
   }
 }
