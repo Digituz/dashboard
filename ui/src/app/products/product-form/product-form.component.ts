@@ -33,6 +33,7 @@ export class ProductFormComponent implements OnInit {
 
     if (sku === 'new') {
       this.product = {};
+      this.variations = [];
       this.configureFormFields(this.product);
     } else {
       this.productService.loadProduct(sku).subscribe((product) => {
@@ -47,6 +48,7 @@ export class ProductFormComponent implements OnInit {
   private configureFormFields(product: Product) {
     this.formFields = this.fb.group({
       sku: [product.sku || ''],
+      ncm: [product.ncm || ''],
       title: [product.title || ''],
       description: [product.description || ''],
       sellingPrice: [product.sellingPrice || null],

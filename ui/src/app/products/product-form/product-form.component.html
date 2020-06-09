@@ -18,7 +18,13 @@
           <input nz-input name="sku" id="sku" placeholder="SKU do produto" formControlName="sku" />
         </nz-form-control>
       </div>
-      <div nz-col class="gutter-row" [nzSpan]="12">
+      <div nz-col class="gutter-row" [nzSpan]="4">
+        <nz-form-label nzFor="ncm">NCM</nz-form-label>
+        <nz-form-control>
+          <input nz-input name="ncm" id="ncm" placeholder="NCM do produto" formControlName="ncm" />
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="4">
         <nz-form-label nzFor="productActive">Ativo</nz-form-label>
         <nz-form-control>
           <nz-switch name="productActive" id="productActive" formControlName="isActive"></nz-switch>
@@ -172,7 +178,13 @@
       <div nz-col class="gutter-row" [nzSpan]="24">
         <nz-form-label nzFor="variationDescription">Descrição</nz-form-label>
         <nz-form-control>
-          <input nz-input name="variationDescription" id="variationDescription" placeholder="Descrição da variação" formControlName="description" />
+          <input
+            nz-input
+            name="variationDescription"
+            id="variationDescription"
+            placeholder="Descrição da variação"
+            formControlName="description"
+          />
         </nz-form-control>
       </div>
       <div nz-col class="gutter-row" [nzSpan]="24">
