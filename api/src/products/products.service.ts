@@ -67,6 +67,6 @@ export class ProductsService {
     });
 
     // save it
-    await this.save(product);
+    return this.productsRepository.save(product);
   }
 }

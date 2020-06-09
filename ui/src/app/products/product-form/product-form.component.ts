@@ -63,6 +63,7 @@ export class ProductFormComponent implements OnInit {
   submitProductDetails() {
     const product = this.formFields.value;
     product.productDetails = this.productDetails;
+    product.productVariations = this.variations;
     this.productService.saveProduct(product).subscribe(() => {
       this.router.navigate(['/products']);
     });
