@@ -6,12 +6,15 @@ import * as _ from 'lodash';
 import { Product } from './entities/product.entity';
 import { ProductDTO } from './dtos/product.dto';
 import { ProductVariationDTO } from './dtos/product-variation.dto';
+import { ProductVariation } from './entities/product-variation.entity';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private productsRepository: Repository<Product>,
+    @InjectRepository(ProductVariation)
+    private productVariationsRepository: Repository<ProductVariation>,
   ) {}
 
   async findAll(): Promise<Product[]> {
@@ -47,6 +50,10 @@ export class ProductsService {
   }
 
   async save(productDTO: ProductDTO): Promise<Product> {
+    const product = await this.findOneBySku(productDTO.sku);
+    if (product) {
+      return this.updateProduct(product, productDTO);
+    }
     return this.productsRepository.save(productDTO);
   }
 
@@ -68,5 +75,19 @@ export class ProductsService {
 
     // save it
     return this.productsRepository.save(product);
+  }
+
+  private async updateProduct(
+    product: Product,
+    productDTO: ProductDTO,
+  ): Promise<Product> {
+    const existingVariations = product.productVariations;
+    const newVariations = productDTO.productVariations;
+
+    // remove variations that are not part of the DTO being passed
+    const excludedVariations = _.differenceBy(existingVariations, newVariations, 'sku');
+    this.productVariationsRepository.remove(excludedVariations);
+
+    return this.productsRepository.save(productDTO);
   }
 }

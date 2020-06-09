@@ -36,6 +36,7 @@ export class ProductVariation {
     product => product.productVariations,
     {
       nullable: false,
+      onDelete: 'CASCADE',
     },
   )
   @JoinColumn({ name: 'product_sku' })
