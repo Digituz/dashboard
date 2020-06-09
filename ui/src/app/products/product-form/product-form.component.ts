@@ -36,7 +36,8 @@ export class ProductFormComponent implements OnInit {
       this.configureFormFields(this.product);
     } else {
       this.productService.loadProduct(sku).subscribe((product) => {
-        this.variations = product.productVariations;
+        product.productVariations = product.productVariations.map((v) => ({...v, parentSku: product.sku}));
+        this.variations = product.productVariations
         this.product = product;
         this.configureFormFields(product);
       });
@@ -101,6 +102,7 @@ export class ProductFormComponent implements OnInit {
 
   submitVariation(): void {
     const variation = this.formFieldsVariation.value;
+    variation.parentSku = this.product.sku;
     this.variations = [...this.variations, variation];
     this.isModalVisible = false;
   }

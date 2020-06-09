@@ -73,7 +73,7 @@ export class Product {
     type => ProductVariation,
     productVariation => productVariation.product,
     {
-      cascade: ['insert', 'update'],
+      cascade: ['insert', 'update', 'remove'],
       eager: true
     },
   )
