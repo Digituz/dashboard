@@ -1,27 +1,15 @@
-.logo {
-  width: 120px;
-  color: #fff;
-  float: left;
-  opacity: 0.7;
-  font-size: 16px;
-  margin-left: 10px;
-}
-
 .header-menu {
   line-height: 64px;
   float: right;
 }
 
-.sider-menu {
-  padding: 15px 30px;
-}
-
-.inner-layout {
+.inner-layout .main-content-area {
   padding: 0 24px 24px;
 }
 
 nz-header {
   padding: 0 20px;
+  background-color: #fff;
 }
 
 nz-breadcrumb {
@@ -35,14 +23,39 @@ nz-content {
 }
 
 nz-sider {
-  li {
-    line-height: 40px;
+  .logo {
+    color: #fff;
+    opacity: 0.9;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 20px 30px 0 30px;
+    text-align: center;
+  }
 
-    a {
-      color: inherit;
+  ul {
+    margin-top: 15px;
 
-      &:hover {
-        color: #096dd9;
+    li {
+      line-height: 40px;
+
+      a {
+        color: inherit;
+        display: block;
+        padding: 10px 15px;
+
+        i {
+          margin-right: 10px;
+
+          &:last-child {
+            float: right;
+            font-size: 10px;
+            line-height: 42px;
+          }
+        }
+
+        &:hover {
+          color: #fff;
+        }
       }
     }
   }

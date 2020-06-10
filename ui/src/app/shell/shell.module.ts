@@ -20,6 +20,7 @@ import {
   LaptopOutline,
   NotificationOutline,
   PictureOutline,
+  RightOutline,
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -30,6 +31,7 @@ const icons: IconDefinition[] = [
   LaptopOutline,
   NotificationOutline,
   PictureOutline,
+  RightOutline,
 ];
 
 @NgModule({
