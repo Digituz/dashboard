@@ -25,6 +25,11 @@ nz-form-label {
   }
 }
 
+nz-breadcrumb.ant-breadcrumb {
+  padding: 0 11px !important;
+  margin: 5px 0;
+}
+
 textarea {
   resize: vertical;
   border: 1px solid #ddd;
