@@ -66,15 +66,10 @@ nz-form-control {
 .feature-header {
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 35px;
   grid-template-areas:
-    "header header"
     "description actions";
-  margin-bottom: 5px;
-
-  header {
-    grid-area: header;
-  }
+  padding: 15px;
+  background-color: #fff;
 
   p {
     grid-area: description;
@@ -82,7 +77,7 @@ nz-form-control {
     margin: 0;
 
     label {
-      align-self: flex-end;
+      align-self: center;
     }
   }
 
