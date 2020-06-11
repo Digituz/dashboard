@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BreadcrumbsService } from '@app/breadcrumbs/breadcrumbs.service';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   isLoading = false;
 
-  constructor() {}
+  constructor(private breadcrumbsService: BreadcrumbsService) {}
 
   ngOnInit() {
     this.isLoading = false;
+    this.breadcrumbsService.refreshBreadcrumbs('Painel de Controle', []);
   }
 }

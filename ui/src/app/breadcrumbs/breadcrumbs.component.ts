@@ -11,14 +11,17 @@ export class BreadcrumbsComponent implements OnInit {
   static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
   readonly home = { icon: 'pi pi-home', url: 'home' };
   breadcrumbs: Breadcrumb[];
+  pageTitle: string;
 
   constructor(private breadcrumbsService: BreadcrumbsService) {
     this.breadcrumbs = [];
+    this.pageTitle = '';
   }
 
   ngOnInit(): void {
-    this.breadcrumbsService.getBreadcrumbsSubject().subscribe((breadcrumbs) => {
+    this.breadcrumbsService.getBreadcrumbsSubject().subscribe(({breadcrumbs, pageTitle}) => {
       this.breadcrumbs = breadcrumbs;
+      this.pageTitle = pageTitle;
     });
   }
 }

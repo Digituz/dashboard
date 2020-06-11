@@ -1,13 +1,13 @@
 <header>
   <nz-layout>
     <nz-layout>
-      <nz-sider nzWidth="200px" nzTheme="dark">
+      <nz-sider nzWidth="250px" nzTheme="dark">
         <div class="logo"><i nz-icon nzType="deployment-unit" nzTheme="outline"></i> Digituz</div>
         <ul nz-menu nzMode="inline" class="sider-menu" nzTheme="dark">
           <li>
-            <a title="Início" routerLink="/">
+            <a title="Início" routerLink="/home">
               <i nz-icon nzType="home" nzTheme="outline"></i>
-              Início
+              Painel de Controle
               <i nz-icon nzType="right" nzTheme="outline"></i>
             </a>
           </li>
@@ -35,7 +35,6 @@
         </nz-header>
         <div class="breadcrumbs-page-title-area">
           <breadcrumbs></breadcrumbs>
-          <h1>Lista de Produtos</h1>
         </div>
         <div class="main-content-area">
           <router-outlet></router-outlet>

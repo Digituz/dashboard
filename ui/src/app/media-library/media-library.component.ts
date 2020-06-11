@@ -7,7 +7,6 @@ import { Image } from './image.entity';
 import { ImageService } from './image.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { ProductsService } from '@app/products/products.service';
 import { map, switchMap, debounceTime } from 'rxjs/operators';
 import Product from '@app/products/product.entity';
@@ -66,7 +65,7 @@ export class MediaLibraryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.breadcrumbsService.refreshBreadcrumbs([{ label: 'Imagens', url: '/imagens' }]);
+    this.breadcrumbsService.refreshBreadcrumbs('Imagens', [{ label: 'Imagens', url: '/imagens' }]);
     this.reloadImages();
 
     const searchProducts = (query: string) => {

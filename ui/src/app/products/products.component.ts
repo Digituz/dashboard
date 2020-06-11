@@ -10,6 +10,6 @@ export class ProductsComponent implements OnInit {
   constructor(private breadcrumbsService: BreadcrumbsService) {}
 
   ngOnInit(): void {
-    this.breadcrumbsService.refreshBreadcrumbs([{ label: 'Produtos', url: '/products' }]);
+    this.breadcrumbsService.refreshBreadcrumbs('Produtos', [{ label: 'Produtos', url: '/products' }]);
   }
 }

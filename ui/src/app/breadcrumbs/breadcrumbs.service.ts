@@ -6,15 +6,23 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class BreadcrumbsService {
+  private pageTitle: string = '';
   private homeRoute: Breadcrumb = { label: 'Início', url: '' };
   private breadcrumbs: Breadcrumb[] = [this.homeRoute];
-  private breadcrumbsSubject = new BehaviorSubject(this.breadcrumbs);
+  private breadcrumbsSubject = new BehaviorSubject({
+    pageTitle: this.pageTitle,
+    breadcrumbs: this.breadcrumbs,
+  });
 
   constructor() {}
 
-  refreshBreadcrumbs(breadcrumbs: Breadcrumb[]): void {
+  refreshBreadcrumbs(pageTitle: string, breadcrumbs: Breadcrumb[]): void {
+    this.pageTitle = pageTitle;
     this.breadcrumbs = [this.homeRoute, ...breadcrumbs];
-    this.breadcrumbsSubject.next(this.breadcrumbs);
+    this.breadcrumbsSubject.next({
+      pageTitle: this.pageTitle,
+      breadcrumbs: this.breadcrumbs,
+    });
   }
 
   getBreadcrumbsSubject() {
