@@ -1,0 +1,34 @@
+table {
+  width: 100%;
+}
+
+:host ::ng-deep{
+  thead {
+    background-color: rgb(250, 250, 250);
+  }
+
+  tbody {
+    background-color: #ffffff;
+  }
+
+  th, td {
+    line-height: 40px;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-size: 14px;
+    font-variant: tabular-nums;
+    font-weight: 500;
+    border-bottom: 1px solid rgb(240, 240, 240);
+
+    &:first-child {
+      padding-left: 15px;
+    }
+
+    &:last-child {
+      padding-right: 15px;
+    }
+  }
+
+  td {
+    line-height: 50px;
+  }
+}
