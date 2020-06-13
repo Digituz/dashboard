@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import Product from './product.entity';
 import { Observable } from 'rxjs';
-import { IDataProvider, Pagination } from '@app/util/pagination';
+import { IDataProvider, Pagination, QueryParam } from '@app/util/pagination';
 
 @Injectable({
   providedIn: 'root',
@@ -12,15 +12,26 @@ export class ProductsService implements IDataProvider<Product> {
 
   constructor(private httpClient: HttpClient) {}
 
-  loadData(pageNumber: number, pageSize: number, sortedBy?: string, sortDirectionAscending?: boolean): Observable<Pagination<Product>> {
+  loadData(
+    pageNumber: number,
+    pageSize: number,
+    sortedBy?: string,
+    sortDirectionAscending?: boolean,
+    queryParams?: QueryParam[]
+  ): Observable<Pagination<Product>> {
     let query = `${this.PRODUCTS_ENDPOINT}?page=${pageNumber}&limit=${pageSize}`;
 
     if (sortedBy) {
-      query += `&sortedBy=${sortedBy}`
+      query += `&sortedBy=${sortedBy}`;
     }
     if (sortDirectionAscending) {
-      query += `&sortDirectionAscending=${sortDirectionAscending}`
+      query += `&sortDirectionAscending=${sortDirectionAscending}`;
     }
+
+    queryParams.filter((queryParam) => (!!queryParam.value)).forEach(queryParam => {
+      query += `&${queryParam.key}=${queryParam.value}`;
+    });
+
     return this.httpClient.get<Pagination<Product>>(query);
   }
 

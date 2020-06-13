@@ -25,6 +25,9 @@ export class ProductsController {
     @Query('limit') limit: number = 10,
     @Query('sortedBy') sortedBy: string,
     @Query('sortDirectionAscending') sortDirectionAscending: boolean,
+    @Query('query') query: string,
+    @Query('isActive') isActive: string,
+    @Query('withVariations') withVariations: string,
   ): Promise<Pagination<Product>> {
     // if (query) {
     //   return this.productsService.findByQuery(query);

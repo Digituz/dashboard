@@ -1,5 +1,5 @@
 <div class="search-container">
-  <form nz-form [formGroup]="formFields" (ngSubmit)="queryProducts()">
+  <form nz-form (ngSubmit)="queryProducts()">
     <div nz-row [nzGutter]="16">
       <div nz-col class="gutter-row" [nzSpan]="12">
         <nz-form-label nzFor="query">Pesquisa</nz-form-label>
@@ -9,7 +9,7 @@
             name="query"
             id="query"
             placeholder="Pesquise por SKU, título, ou descrição."
-            formControlName="query"
+            [(ngModel)]="query" name="name"
           />
         </nz-form-control>
       </div>
@@ -21,7 +21,7 @@
             name="isActive"
             id="isActive"
             placeholder="Pesquise por SKU, título, ou descrição."
-            formControlName="isActive"
+            [(ngModel)]="isActive" name="name"
           />
         </nz-form-control>
       </div>
@@ -33,14 +33,14 @@
             name="withVariations"
             id="withVariations"
             placeholder="Pesquise por SKU, título, ou descrição."
-            formControlName="withVariations"
+            [(ngModel)]="withVariations" name="name"
           />
         </nz-form-control>
       </div>
     </div>
     <div nz-row>
       <div nz-col class="gutter-row" [nzSpan]="4" style="padding-left: 9px;">
-        <button nz-button nzType="primary" (click)="queryProducts()" style="margin-right: 9px;">Pesquisar</button>
+        <button nz-button nzType="primary" style="margin-right: 9px;">Pesquisar</button>
       </div>
     </div>
   </form>

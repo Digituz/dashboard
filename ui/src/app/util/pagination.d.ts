@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 export interface IPaginationOptions {
   /**
@@ -71,20 +71,32 @@ export declare class Pagination<PaginationObject> {
    */
   readonly links: IPaginationLinks;
   constructor(
-  /**
-   * a list of items to be returned
-   */
-  items: PaginationObject[],
-  /**
-   * associated meta information (e.g., counts)
-   */
-  meta: IPaginationMeta,
-  /**
-   * associated links
-   */
-  links: IPaginationLinks);
+    /**
+     * a list of items to be returned
+     */
+    items: PaginationObject[],
+    /**
+     * associated meta information (e.g., counts)
+     */
+    meta: IPaginationMeta,
+    /**
+     * associated links
+     */
+    links: IPaginationLinks
+  );
+}
+
+interface QueryParam {
+  key: string;
+  value: string | number;
 }
 
 interface IDataProvider<DataType> {
-  loadData(pageNumber: number, pageSize: number, sortedBy?: string, sortDirectionAscending?: boolean): Observable<Pagination<DataType>>;
+  loadData(
+    pageNumber: number,
+    pageSize: number,
+    sortedBy?: string,
+    sortDirectionAscending?: boolean,
+    queryParams?: QueryParam[],
+  ): Observable<Pagination<DataType>>;
 }

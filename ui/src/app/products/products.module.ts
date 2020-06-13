@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -28,6 +28,7 @@ const icons: IconDefinition[] = [CheckOutline, CloseOutline];
 @NgModule({
   declarations: [ProductsComponent, ProductFormComponent, ProductsListComponent],
   imports: [
+    FormsModule,
     ReactiveFormsModule,
     NzCardModule,
     NzDividerModule,
