@@ -102,14 +102,51 @@ export class ProductsService {
   }
 
   async paginate(options: IPaginationOpts): Promise<Pagination<Product>> {
-    const searchOptions: FindManyOptions<Product> = {};
+    const queryBuilder = this.productsRepository.createQueryBuilder('p');
 
-    if (options.sortedBy) {
-      searchOptions.order = {
-        [options.sortedBy]: options.sortDirectionAscending === false ? 'DESC' : 'ASC',
-      }
+    let orderColumn = '';
+
+    switch (options.sortedBy?.trim()) {
+      case null:
+      case '':
+        break;
+      case 'productVariations':
+        orderColumn = 'variationsSize';
+        queryBuilder
+          .addSelect('count(variations.sku)', 'variationsSize')
+          .distinctOn(['p.sku'])
+          .leftJoin('p.productVariations', 'variations')
+          .groupBy('p.sku');
+        break;
+      case 'isActive':
+        orderColumn = 'is_active';
+        break;
+      case 'sellingPrice':
+        orderColumn = 'selling_price';
+        break;
+      default:
+        orderColumn = options.sortedBy;
     }
-    
-    return paginate<Product>(this.productsRepository, options, searchOptions);
+
+    queryBuilder.orderBy(
+      orderColumn,
+      options.sortDirectionAscending === false ? 'DESC' : 'ASC',
+    );
+
+    const results = await paginate<Product>(queryBuilder, options);
+
+    return new Pagination(
+      await Promise.all(
+        results.items.map(async (item: Product) => {
+          const hydratedProduct = await this.productsRepository.findOne({
+            sku: item.sku,
+          });
+          item.productVariations = hydratedProduct.productVariations;
+          return item;
+        }),
+      ),
+      results.meta,
+      results.links,
+    );
   }
 }
