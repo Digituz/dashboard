@@ -12,7 +12,8 @@
       <th>SKU</th>
       <th>Título</th>
       <th>Preço</th>
-      <th>Ativo</th>
+      <th style="text-align: center;">Variações</th>
+      <th style="text-align: center;">Ativo</th>
       <th></th>
     </tr>
   </thead>
@@ -21,7 +22,8 @@
       <td>{{ product.sku }}</td>
       <td>{{ product.title }}</td>
       <td>{{ product.sellingPrice }}</td>
-      <td>
+      <td style="text-align: center;">{{ product.productVariations.length || "" }}</td>
+      <td style="text-align: center;">
         <i nz-icon style="color: green" nzType="check" nzTheme="outline" *ngIf="product.isActive"></i>
         <i nz-icon style="color: red" nzType="close" nzTheme="outline" *ngIf="!product.isActive"></i>
       </td>
