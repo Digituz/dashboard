@@ -17,6 +17,7 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
   query: string;
   isActive: string;
   withVariations: string;
+  queryParams: QueryParam[] = [];
 
   constructor(private productsService: ProductsService, private fb: FormBuilder) {}
 
@@ -26,19 +27,16 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
     sortedBy?: string,
     sortDirectionAscending?: boolean
   ): Observable<Pagination<Product>> {
-    const queryParams: QueryParam[] = [
-      { key: 'query', value: this.query },
-      { key: 'isActive', value: this.isActive },
-      { key: 'withVariations', value: this.withVariations },
-    ];
-    return this.productsService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, queryParams);
+    return this.productsService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, this.queryParams);
   }
 
   ngOnInit(): void {}
 
   queryProducts() {
-    this.loadData(1, 10, null, null).subscribe(() => {
-      console.log('done');
-    });
+    this.queryParams = [
+      { key: 'query', value: this.query },
+      { key: 'isActive', value: this.isActive },
+      { key: 'withVariations', value: this.withVariations },
+    ];
   }
 }

@@ -53,7 +53,7 @@
     <a title="Novo Produto" routerLink="/products/new"><button nz-button nzType="primary">Novo Produto</button></a>
   </div>
 </div>
-<dgz-table #productsTable [dataProvider]="this">
+<dgz-table #productsTable [dataProvider]="this" [queryParams]="queryParams">
   <thead>
     <tr>
       <th dgz-sortable="sku">SKU</th>

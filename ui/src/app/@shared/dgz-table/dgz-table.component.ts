@@ -1,14 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { IDataProvider } from '@app/util/pagination';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { IDataProvider, QueryParam } from '@app/util/pagination';
 
 @Component({
   selector: 'dgz-table',
   templateUrl: './dgz-table.component.html',
   styleUrls: ['./dgz-table.component.scss']
 })
-export class DgzTableComponent<T> implements OnInit {
+export class DgzTableComponent<T> implements OnInit, OnChanges {
   @Input()
   dataProvider: IDataProvider<T>;
+
+  @Input()
+  queryParams: QueryParam[];
+
   currentData: T[] = [];
   currentPage: number = 1;
   pageSize: number = 10;
@@ -17,6 +21,11 @@ export class DgzTableComponent<T> implements OnInit {
   totalItems: number = 0;
 
   constructor() { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.currentPage = 1;
+    this.loadData();
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -28,7 +37,7 @@ export class DgzTableComponent<T> implements OnInit {
   }
 
   private loadData() {
-    this.dataProvider.loadData(this.currentPage, this.pageSize, this.sortedBy, this.sortDirectionAscending).subscribe((response) => {
+    this.dataProvider.loadData(this.currentPage, this.pageSize, this.sortedBy, this.sortDirectionAscending, this.queryParams).subscribe((response) => {
       this.currentData = response.items;
       this.totalItems = response.meta.totalItems;
     });
