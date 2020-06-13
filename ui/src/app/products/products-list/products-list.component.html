@@ -1,3 +1,50 @@
+<div class="search-container">
+  <form nz-form [formGroup]="formFields" (ngSubmit)="queryProducts()">
+    <div nz-row [nzGutter]="16">
+      <div nz-col class="gutter-row" [nzSpan]="12">
+        <nz-form-label nzFor="query">Pesquisa</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            name="query"
+            id="query"
+            placeholder="Pesquise por SKU, título, ou descrição."
+            formControlName="query"
+          />
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="6">
+        <nz-form-label nzFor="isActive">Status</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            name="isActive"
+            id="isActive"
+            placeholder="Pesquise por SKU, título, ou descrição."
+            formControlName="isActive"
+          />
+        </nz-form-control>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="6">
+        <nz-form-label nzFor="withVariations">Variações</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            name="withVariations"
+            id="withVariations"
+            placeholder="Pesquise por SKU, título, ou descrição."
+            formControlName="withVariations"
+          />
+        </nz-form-control>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col class="gutter-row" [nzSpan]="4" style="padding-left: 9px;">
+        <button nz-button nzType="primary" (click)="queryProducts()" style="margin-right: 9px;">Pesquisar</button>
+      </div>
+    </div>
+  </form>
+</div>
 <div class="feature-header">
   <p>
     <label>Controle os seus produtos de forma simplificada.</label>
@@ -22,10 +69,10 @@
       <td>{{ product.sku }}</td>
       <td>{{ product.title }}</td>
       <td>{{ product.sellingPrice }}</td>
-      <td class="centered">{{ product.productVariations.length || "" }}</td>
+      <td class="centered">{{ product.productVariations.length || '' }}</td>
       <td class="centered">
-        <i nz-icon style="color: green" nzType="check" nzTheme="outline" *ngIf="product.isActive"></i>
-        <i nz-icon style="color: red" nzType="close" nzTheme="outline" *ngIf="!product.isActive"></i>
+        <i nz-icon style="color: green;" nzType="check" nzTheme="outline" *ngIf="product.isActive"></i>
+        <i nz-icon style="color: red;" nzType="close" nzTheme="outline" *ngIf="!product.isActive"></i>
       </td>
       <td class="actions">
         <a [title]="'Início'" [routerLink]="'/products/' + product.sku"><button nz-button>Editar</button></a>
