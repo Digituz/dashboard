@@ -7,13 +7,14 @@ import { IDataProvider } from '@app/util/pagination';
   styleUrls: ['./dgz-table.component.scss']
 })
 export class DgzTableComponent<T> implements OnInit {
-  currentPage: number = 1;
-  pageSize: number = 10;
-  totalItems: number = 0;
-
   @Input()
   dataProvider: IDataProvider<T>;
   currentData: T[] = [];
+  currentPage: number = 1;
+  pageSize: number = 10;
+  sortedBy: string;
+  sortDirectionAscending: boolean;
+  totalItems: number = 0;
 
   constructor() { }
 
@@ -31,5 +32,9 @@ export class DgzTableComponent<T> implements OnInit {
       this.currentData = response.items;
       this.totalItems = response.meta.totalItems;
     });
+  }
+
+  sortTable($event: Event) {
+    console.log($event.target);
   }
 }

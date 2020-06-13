@@ -18,13 +18,23 @@ table {
     font-variant: tabular-nums;
     font-weight: 500;
     border-bottom: 1px solid rgb(240, 240, 240);
+    padding-left: 15px;
 
-    &:first-child {
-      padding-left: 15px;
+    &.centered {
+      padding-left: 0;
+      text-align: center;
     }
 
     &:last-child {
       padding-right: 15px;
+    }
+
+    &[sortable] {
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(240, 240, 240);
+      }
     }
   }
 
