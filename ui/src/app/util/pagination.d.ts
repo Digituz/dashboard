@@ -86,5 +86,5 @@ export declare class Pagination<PaginationObject> {
 }
 
 interface IDataProvider<DataType> {
-  loadData(pageNumber: number, pageSize: number): Observable<Pagination<DataType>>;
+  loadData(pageNumber: number, pageSize: number, sortedBy?: string, sortDirectionAscending?: boolean): Observable<Pagination<DataType>>;
 }

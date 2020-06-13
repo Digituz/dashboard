@@ -15,7 +15,6 @@ export class SignInService {
   signIn(credentials: { username: string; password: string }): Observable<any> {
     const request = this.httpClient.post<any>(SignInService.SIGN_IN_ENDPOINT, credentials);
     request.subscribe((response) => {
-      console.log(response);
       const { access_token } = response;
       localStorage.setItem(SignInService.tokenStorage, JSON.stringify(access_token));
       this.token = access_token;

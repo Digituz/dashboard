@@ -12,8 +12,16 @@ export class ProductsService implements IDataProvider<Product> {
 
   constructor(private httpClient: HttpClient) {}
 
-  loadData(pageNumber: number, pageSize: number): Observable<Pagination<Product>> {
-    return this.httpClient.get<Pagination<Product>>(`${this.PRODUCTS_ENDPOINT}?page=${pageNumber}&limit=${pageSize}`);
+  loadData(pageNumber: number, pageSize: number, sortedBy?: string, sortDirectionAscending?: boolean): Observable<Pagination<Product>> {
+    let query = `${this.PRODUCTS_ENDPOINT}?page=${pageNumber}&limit=${pageSize}`;
+
+    if (sortedBy) {
+      query += `&sortedBy=${sortedBy}`
+    }
+    if (sortDirectionAscending) {
+      query += `&sortDirectionAscending=${sortDirectionAscending}`
+    }
+    return this.httpClient.get<Pagination<Product>>(query);
   }
 
   public findProducts(query: string): Observable<Product[]> {

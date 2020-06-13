@@ -1,4 +1,4 @@
-<table (click)="sortTable($event)">
+<table (click)="sortTable($event.target)">
   <ng-content select="thead"></ng-content>
   <ng-content select="tbody"></ng-content>
 </table>

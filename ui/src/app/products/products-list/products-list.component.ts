@@ -16,8 +16,8 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
 
   constructor(private productsService: ProductsService) {}
 
-  loadData(pageNumber: number, pageSize: number): Observable<Pagination<Product>> {
-    return this.productsService.loadData(pageNumber, pageSize);
+  loadData(pageNumber: number, pageSize: number, sortedBy?: string, sortDirectionAscending?: boolean): Observable<Pagination<Product>> {
+    return this.productsService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending);
   }
 
   ngOnInit(): void {

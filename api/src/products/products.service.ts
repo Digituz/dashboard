@@ -1,13 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {paginate, Pagination, IPaginationOptions} from 'nestjs-typeorm-paginate';
-import { Repository } from 'typeorm';
+import {
+  paginate,
+  Pagination,
+  IPaginationOptions,
+} from 'nestjs-typeorm-paginate';
+import { Repository, FindConditions, FindManyOptions } from 'typeorm';
 import * as _ from 'lodash';
 
 import { Product } from './entities/product.entity';
 import { ProductDTO } from './dtos/product.dto';
 import { ProductVariationDTO } from './dtos/product-variation.dto';
 import { ProductVariation } from './entities/product-variation.entity';
+import { IPaginationOpts } from 'src/pagination/pagination';
 
 @Injectable()
 export class ProductsService {
@@ -86,13 +91,25 @@ export class ProductsService {
     const newVariations = productDTO.productVariations;
 
     // remove variations that are not part of the DTO being passed
-    const excludedVariations = _.differenceBy(existingVariations, newVariations, 'sku');
+    const excludedVariations = _.differenceBy(
+      existingVariations,
+      newVariations,
+      'sku',
+    );
     this.productVariationsRepository.remove(excludedVariations);
 
     return this.productsRepository.save(productDTO);
   }
 
-  async paginate(options: IPaginationOptions): Promise<Pagination<Product>> {
-    return paginate<Product>(this.productsRepository, options);
+  async paginate(options: IPaginationOpts): Promise<Pagination<Product>> {
+    const searchOptions: FindManyOptions<Product> = {};
+
+    if (options.sortedBy) {
+      searchOptions.order = {
+        [options.sortedBy]: options.sortDirectionAscending === false ? 'DESC' : 'ASC',
+      }
+    }
+    
+    return paginate<Product>(this.productsRepository, options, searchOptions);
   }
 }

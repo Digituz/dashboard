@@ -19,22 +19,25 @@ export class DgzTableComponent<T> implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.dataProvider.loadData(this.currentPage, this.pageSize).subscribe((response) => {
-      this.currentData = response.items;
-      this.totalItems = response.meta.totalItems;
-    });
+    this.loadData();
   }
 
   loadPage(pageNumber: number) {
     this.currentPage = pageNumber;
+    this.loadData();
+  }
 
-    this.dataProvider.loadData(this.currentPage, this.pageSize).subscribe((response) => {
+  private loadData() {
+    this.dataProvider.loadData(this.currentPage, this.pageSize, this.sortedBy, this.sortDirectionAscending).subscribe((response) => {
       this.currentData = response.items;
       this.totalItems = response.meta.totalItems;
     });
   }
 
-  sortTable($event: Event) {
-    console.log($event.target);
+  sortTable(target: Element) {
+    const newSortedAttribute = target.attributes.getNamedItem("sortable").value;
+    this.sortDirectionAscending = newSortedAttribute !== this.sortedBy || this.sortDirectionAscending === false;
+    this.sortedBy = newSortedAttribute;
+    this.loadData();
   }
 }
