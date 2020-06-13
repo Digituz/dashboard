@@ -3,5 +3,5 @@
   <ng-content select="tbody"></ng-content>
 </table>
 <div class="pagination-area">
-  <nz-pagination [nzPageIndex]="currentPage" [nzTotal]="totalItems"></nz-pagination>
+  <nz-pagination [nzPageIndex]="currentPage" [nzTotal]="totalItems" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
 </div>

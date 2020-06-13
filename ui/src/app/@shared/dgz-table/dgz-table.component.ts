@@ -21,7 +21,15 @@ export class DgzTableComponent<T> implements OnInit {
     this.dataProvider.loadData(this.currentPage, this.pageSize).subscribe((response) => {
       this.currentData = response.items;
       this.totalItems = response.meta.totalItems;
-      console.log(response.meta);
+    });
+  }
+
+  loadPage(pageNumber: number) {
+    this.currentPage = pageNumber;
+
+    this.dataProvider.loadData(this.currentPage, this.pageSize).subscribe((response) => {
+      this.currentData = response.items;
+      this.totalItems = response.meta.totalItems;
     });
   }
 }
