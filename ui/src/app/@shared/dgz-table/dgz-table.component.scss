@@ -32,3 +32,9 @@ table {
     line-height: 50px;
   }
 }
+
+div.pagination-area {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 10px;
+}

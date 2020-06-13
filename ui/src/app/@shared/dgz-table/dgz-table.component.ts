@@ -9,6 +9,8 @@ import { IDataProvider } from '@app/util/pagination';
 export class DgzTableComponent<T> implements OnInit {
   currentPage: number = 1;
   pageSize: number = 10;
+  totalItems: number = 0;
+
   @Input()
   dataProvider: IDataProvider<T>;
   currentData: T[] = [];
@@ -18,6 +20,8 @@ export class DgzTableComponent<T> implements OnInit {
   ngOnInit(): void {
     this.dataProvider.loadData(this.currentPage, this.pageSize).subscribe((response) => {
       this.currentData = response.items;
+      this.totalItems = response.meta.totalItems;
+      console.log(response.meta);
     });
   }
 }
