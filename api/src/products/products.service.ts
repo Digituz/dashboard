@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import {paginate, Pagination, IPaginationOptions} from 'nestjs-typeorm-paginate';
 import { Repository } from 'typeorm';
 import * as _ from 'lodash';
 
@@ -89,5 +90,9 @@ export class ProductsService {
     this.productVariationsRepository.remove(excludedVariations);
 
     return this.productsRepository.save(productDTO);
+  }
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<Product>> {
+    return paginate<Product>(this.productsRepository, options);
   }
 }
