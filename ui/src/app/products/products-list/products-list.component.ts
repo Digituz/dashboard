@@ -15,7 +15,7 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
   @ViewChild('productsTable') appFoo: DgzTableComponent<Product>;
   products: Product[];
   query: string;
-  isActive: string;
+  isActive: boolean = null;
   withVariations: string;
   queryParams: QueryParam[] = [];
 

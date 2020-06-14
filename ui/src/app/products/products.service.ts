@@ -28,9 +28,13 @@ export class ProductsService implements IDataProvider<Product> {
       query += `&sortDirectionAscending=${sortDirectionAscending}`;
     }
 
-    queryParams.filter((queryParam) => (!!queryParam.value)).forEach(queryParam => {
-      query += `&${queryParam.key}=${queryParam.value}`;
-    });
+    queryParams
+      .filter((queryParam) => {
+        return queryParam !== null && queryParam.value !== null && queryParam.value !== undefined;
+      })
+      .forEach((queryParam) => {
+        query += `&${queryParam.key}=${queryParam.value}`;
+      });
 
     return this.httpClient.get<Pagination<Product>>(query);
   }

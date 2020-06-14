@@ -16,25 +16,19 @@
       <div nz-col class="gutter-row" [nzSpan]="6">
         <nz-form-label nzFor="isActive">Status</nz-form-label>
         <nz-form-control>
-          <input
-            nz-input
-            name="isActive"
-            id="isActive"
-            placeholder="Pesquise por SKU, título, ou descrição."
-            [(ngModel)]="isActive" name="name"
-          />
+          <nz-select [(ngModel)]="isActive" name="isActive" nzPlaceHolder="Todos" nzAllowClear>
+            <nz-option [nzValue]="true" nzLabel="Ativos"></nz-option>
+            <nz-option [nzValue]="false" nzLabel="Inativos"></nz-option>
+          </nz-select>
         </nz-form-control>
       </div>
       <div nz-col class="gutter-row" [nzSpan]="6">
         <nz-form-label nzFor="withVariations">Variações</nz-form-label>
         <nz-form-control>
-          <input
-            nz-input
-            name="withVariations"
-            id="withVariations"
-            placeholder="Pesquise por SKU, título, ou descrição."
-            [(ngModel)]="withVariations" name="name"
-          />
+          <nz-select [(ngModel)]="withVariations" name="withVariations" nzPlaceHolder="Todos" nzAllowClear>
+            <nz-option [nzValue]="true" nzLabel="Com Variações"></nz-option>
+            <nz-option [nzValue]="false" nzLabel="Sem Variações"></nz-option>
+          </nz-select>
         </nz-form-control>
       </div>
     </div>

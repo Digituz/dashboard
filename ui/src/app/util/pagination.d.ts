@@ -88,7 +88,7 @@ export declare class Pagination<PaginationObject> {
 
 interface QueryParam {
   key: string;
-  value: string | number;
+  value: string | number | boolean;
 }
 
 interface IDataProvider<DataType> {

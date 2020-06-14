@@ -11,6 +11,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
@@ -37,6 +38,7 @@ const icons: IconDefinition[] = [CheckOutline, CloseOutline];
     NzInputNumberModule,
     NzTableModule,
     NzModalModule,
+    NzSelectModule,
     NzSkeletonModule,
     NzSwitchModule,
     NzIconModule.forRoot(icons),
