@@ -5,7 +5,7 @@ import {
   Pagination,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
-import { Repository, FindConditions, FindManyOptions } from 'typeorm';
+import { Repository, FindConditions, FindManyOptions, Brackets } from 'typeorm';
 import * as _ from 'lodash';
 
 import { Product } from './entities/product.entity';
@@ -13,6 +13,7 @@ import { ProductDTO } from './dtos/product.dto';
 import { ProductVariationDTO } from './dtos/product-variation.dto';
 import { ProductVariation } from './entities/product-variation.entity';
 import { IPaginationOpts } from 'src/pagination/pagination';
+import { query } from 'express';
 
 @Injectable()
 export class ProductsService {
@@ -141,7 +142,11 @@ export class ProductsService {
         switch (queryParam.key) {
           case 'query':
             queryBuilder.andWhere(
-              `lower(p.title) like '%${queryParam.value}%'`,
+              new Brackets(qb => {
+                qb.where(`lower(p.title) like '%${queryParam.value}%'`)
+                  .orWhere(`lower(p.sku) like '%${queryParam.value}%'`)
+                  .orWhere(`lower(p.description) like '%${queryParam.value}%'`);
+              }),
             );
             break;
           case 'isActive':
