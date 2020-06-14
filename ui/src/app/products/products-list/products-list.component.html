@@ -62,7 +62,7 @@
     <tr *ngFor="let product of productsTable.currentData">
       <td>{{ product.sku }}</td>
       <td>{{ product.title }}</td>
-      <td>{{ product.sellingPrice }}</td>
+      <td>{{ product.sellingPrice | reais }}</td>
       <td class="centered">{{ product.productVariations.length || '' }}</td>
       <td class="centered">
         <i nz-icon style="color: green;" nzType="check" nzTheme="outline" *ngIf="product.isActive"></i>

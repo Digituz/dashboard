@@ -1,7 +1,13 @@
-<table (click)="sortTable($event.target)">
+<div *ngIf="loading" style="background-color: #fff; padding: 30px 15px;">
+  <nz-skeleton [nzActive]="loading"></nz-skeleton>
+</div>
+<table (click)="sortTable($event.target)" *ngIf="!loading">
   <ng-content select="thead"></ng-content>
   <ng-content select="tbody"></ng-content>
 </table>
-<div class="pagination-area">
+<div *ngIf="!loading && currentData.length === 0" style="background-color: #fff; padding: 30px 15px;">
+  Nenhum resultado encontrado.
+</div>
+<div class="pagination-area" *ngIf="!loading">
   <nz-pagination [nzPageIndex]="currentPage" [nzTotal]="totalItems" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
 </div>
