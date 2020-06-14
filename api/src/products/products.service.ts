@@ -143,14 +143,14 @@ export class ProductsService {
           case 'query':
             queryBuilder.andWhere(
               new Brackets(qb => {
-                qb.where(`lower(p.title) like '%${queryParam.value}%'`)
-                  .orWhere(`lower(p.sku) like '%${queryParam.value}%'`)
-                  .orWhere(`lower(p.description) like '%${queryParam.value}%'`);
+                qb.where(`lower(p.title) like :query`, { query: `%${queryParam.value}%` })
+                  .orWhere(`lower(p.sku) like :query`, { query: `%${queryParam.value}%` })
+                  .orWhere(`lower(p.description) like :query`, { query: `%${queryParam.value}%` });
               }),
             );
             break;
           case 'isActive':
-            queryBuilder.andWhere(`is_active = ${queryParam.value}`);
+            queryBuilder.andWhere(`is_active = :isActive`, { isActive: queryParam.value });
             break;
           case 'withVariations':
             if (queryParam.value) {
