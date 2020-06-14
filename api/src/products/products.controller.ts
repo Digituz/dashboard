@@ -37,6 +37,20 @@ export class ProductsController {
       limit,
       sortedBy,
       sortDirectionAscending,
+      queryParams: [
+        {
+          key: 'query',
+          value: query,
+        },
+        {
+          key: 'isActive',
+          value: query,
+        },
+        {
+          key: 'withVariations',
+          value: query,
+        },
+      ],
     });
   }
 

@@ -128,6 +128,19 @@ export class ProductsService {
         orderColumn = options.sortedBy;
     }
 
+    options.queryParams.filter((queryParam) => (!!queryParam.value)).forEach((queryParam) => {
+      switch (queryParam.key) {
+        case 'query':
+          queryBuilder.andWhere(`lower(p.title) like '%${queryParam.value}%'`);
+          break;
+        case 'isActive':
+          queryBuilder.andWhere(`is_active = true`);
+          break;
+        case 'query':
+          queryBuilder.andWhere(`variationsSize > 0`);
+      }
+    });
+
     queryBuilder.orderBy(
       orderColumn,
       options.sortDirectionAscending === false ? 'DESC' : 'ASC',

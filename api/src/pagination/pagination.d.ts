@@ -1,6 +1,12 @@
-import { IPaginationOptions } from "nestjs-typeorm-paginate";
+import { IPaginationOptions } from 'nestjs-typeorm-paginate';
+
+export interface QueryParam {
+  key: string;
+  value: string | number;
+}
 
 export interface IPaginationOpts extends IPaginationOptions {
-    sortedBy?: string;
-    sortDirectionAscending?: boolean;
-  }
+  sortedBy?: string;
+  sortDirectionAscending?: boolean;
+  queryParams?: QueryParam[];
+}
