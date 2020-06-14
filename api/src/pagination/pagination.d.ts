@@ -2,7 +2,7 @@ import { IPaginationOptions } from 'nestjs-typeorm-paginate';
 
 export interface QueryParam {
   key: string;
-  value: string | number;
+  value: string | number | boolean;
 }
 
 export interface IPaginationOpts extends IPaginationOptions {

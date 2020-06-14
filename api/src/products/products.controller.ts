@@ -26,12 +26,9 @@ export class ProductsController {
     @Query('sortedBy') sortedBy: string,
     @Query('sortDirectionAscending') sortDirectionAscending: boolean,
     @Query('query') query: string,
-    @Query('isActive') isActive: string,
-    @Query('withVariations') withVariations: string,
+    @Query('isActive') isActive: string | boolean,
+    @Query('withVariations') withVariations: string | boolean,
   ): Promise<Pagination<Product>> {
-    // if (query) {
-    //   return this.productsService.findByQuery(query);
-    // }
     return this.productsService.paginate({
       page,
       limit,
@@ -44,11 +41,11 @@ export class ProductsController {
         },
         {
           key: 'isActive',
-          value: query,
+          value: isActive,
         },
         {
           key: 'withVariations',
-          value: query,
+          value: withVariations,
         },
       ],
     });

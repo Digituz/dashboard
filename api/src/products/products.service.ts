@@ -128,18 +128,32 @@ export class ProductsService {
         orderColumn = options.sortedBy;
     }
 
-    options.queryParams.filter((queryParam) => (!!queryParam.value)).forEach((queryParam) => {
-      switch (queryParam.key) {
-        case 'query':
-          queryBuilder.andWhere(`lower(p.title) like '%${queryParam.value}%'`);
-          break;
-        case 'isActive':
-          queryBuilder.andWhere(`is_active = true`);
-          break;
-        case 'query':
-          queryBuilder.andWhere(`variationsSize > 0`);
-      }
-    });
+    options.queryParams
+      .filter(queryParam => {
+        return (
+          queryParam !== null &&
+          queryParam.value !== null &&
+          queryParam.value !== undefined
+        );
+      })
+      .forEach(queryParam => {
+        switch (queryParam.key) {
+          case 'query':
+            queryBuilder.andWhere(
+              `lower(p.title) like '%${queryParam.value}%'`,
+            );
+            break;
+          case 'isActive':
+            queryBuilder.andWhere(`is_active = ${queryParam.value}`);
+            break;
+          case 'withVariations':
+            if (queryParam.value) {
+              queryBuilder.andWhere(`variationsSize > 0`);
+            } else {
+              queryBuilder.andWhere(`variationsSize < 1`);
+            }
+        }
+      });
 
     queryBuilder.orderBy(
       orderColumn,
