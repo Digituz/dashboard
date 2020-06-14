@@ -60,7 +60,10 @@ export class ProductsService {
     if (product) {
       return this.updateProduct(product, productDTO);
     }
-    return this.productsRepository.save(productDTO);
+    return this.productsRepository.save({
+      ...productDTO,
+      variationsSize: productDTO.productVariations?.length,
+    });
   }
 
   async saveVariation(productVariationDTO: ProductVariationDTO) {
@@ -98,7 +101,10 @@ export class ProductsService {
     );
     this.productVariationsRepository.remove(excludedVariations);
 
-    return this.productsRepository.save(productDTO);
+    return this.productsRepository.save({
+      ...productDTO,
+      variationsSize: productDTO.productVariations?.length,
+    });
   }
 
   async paginate(options: IPaginationOpts): Promise<Pagination<Product>> {
@@ -111,12 +117,7 @@ export class ProductsService {
       case '':
         break;
       case 'productVariations':
-        orderColumn = 'variationsSize';
-        queryBuilder
-          .addSelect('count(variations.sku)', 'variationsSize')
-          .distinctOn(['p.sku'])
-          .leftJoin('p.productVariations', 'variations')
-          .groupBy('p.sku');
+        orderColumn = 'variations_size';
         break;
       case 'isActive':
         orderColumn = 'is_active';
@@ -148,9 +149,9 @@ export class ProductsService {
             break;
           case 'withVariations':
             if (queryParam.value) {
-              queryBuilder.andWhere(`variationsSize > 0`);
+              queryBuilder.andWhere(`variations_size > 0`);
             } else {
-              queryBuilder.andWhere(`variationsSize < 1`);
+              queryBuilder.andWhere(`variations_size < 1`);
             }
         }
       });

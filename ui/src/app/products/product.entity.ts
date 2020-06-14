@@ -13,5 +13,6 @@ export default class Product {
   weight?: number;
   isActive?: boolean;
   ncm?: string;
+  variationsSize?: number;
   productVariations?: ProductVariation[];
 }

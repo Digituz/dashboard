@@ -17,6 +17,5 @@ export class ProductDTO {
   length: number;
   weight: number;
   isActive: boolean;
-
   productVariations?: ProductVariationDTO[];
 }

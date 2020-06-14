@@ -85,4 +85,10 @@ export class Product {
     nullable: false,
   })
   ncm: string;
+
+  @Column({
+    name: 'variations_size',
+    type: 'int',
+  })
+  variationsSize?: number;
 }
