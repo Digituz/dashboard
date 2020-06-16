@@ -10,6 +10,15 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 8px;
+  background-color: #ffffff;
+  padding: 10px;
+
+  > .ng-star-inserted {
+    border: 1px solid #eee;
+    padding: 5px;
+    background-origin: content-box;
+    background-position: center;
+  }
 }
 
 .container div {

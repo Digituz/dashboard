@@ -122,7 +122,7 @@ export class MediaLibraryController {
     // recording everything into the database, for easier reference
     // ps. while uploading, the name of the file suffers a transformation similar to encodeURIComponent, so we use it
     const image: Image = {
-      mainFilename: `${fileSuffix}-original.jpg`,
+      mainFilename: `${encodeURIComponent(fileSuffix)}-original.jpg`,
       originalFilename: file.originalname,
       mimetype: 'image/jpeg',
       originalFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-original.jpg`,
