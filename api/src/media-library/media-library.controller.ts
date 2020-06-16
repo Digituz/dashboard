@@ -120,16 +120,17 @@ export class MediaLibraryController {
     await Promise.all(removeJobs);
 
     // recording everything into the database, for easier reference
+    // ps. while uploading, the name of the file suffers a transformation similar to encodeURIComponent, so we use it
     const image: Image = {
       mainFilename: `${fileSuffix}-original.jpg`,
       originalFilename: file.originalname,
       mimetype: 'image/jpeg',
-      originalFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-original.jpg`,
-      extraLargeFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-extra-large.jpg`,
-      largeFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-large.jpg`,
-      mediumFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-medium.jpg`,
-      smallFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-small.jpg`,
-      thumbnailFileURL: `https://${process.env.DO_BUCKET}/${fileSuffix}-thumbnail.jpg`,
+      originalFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-original.jpg`,
+      extraLargeFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-extra-large.jpg`,
+      largeFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-large.jpg`,
+      mediumFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-medium.jpg`,
+      smallFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-small.jpg`,
+      thumbnailFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-thumbnail.jpg`,
     };
     await this.imagesService.save(image);
   }
