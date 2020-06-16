@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit {
   formFields: FormGroup;
@@ -19,12 +19,11 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   signIn(): void {
     this.signInService.signIn(this.formFields.value).subscribe(() => {
-      return this.router.navigateByUrl("home");
+      return this.router.navigateByUrl('home');
     });
   }
 }

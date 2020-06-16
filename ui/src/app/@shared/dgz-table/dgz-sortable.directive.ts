@@ -1,7 +1,7 @@
-import { Directive, ElementRef, Renderer2, OnInit } from "@angular/core";
+import { Directive, ElementRef, Renderer2, OnInit } from '@angular/core';
 
 @Directive({
-  selector: "[dgz-sortable]"
+  selector: '[dgz-sortable]',
 })
 export class DgzSortableDirective implements OnInit {
   constructor(private el: ElementRef, private renderer: Renderer2) {}

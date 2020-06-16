@@ -31,7 +31,7 @@ const routes: Routes = [
         loadChildren: () => import('./inventory/inventory.module').then((m) => m.InventoryModule),
       },
     ],
-  }
+  },
 ];
 
 @NgModule({

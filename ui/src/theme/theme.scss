@@ -39,7 +39,8 @@ textarea {
   padding: 5px;
 }
 
-nz-input-number, .ant-input-number {
+nz-input-number,
+.ant-input-number {
   border: 1px solid #ddd;
   border-radius: 2px;
   padding: 1px;
@@ -70,8 +71,7 @@ nz-form-control {
 .feature-header {
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-areas:
-    "description actions";
+  grid-template-areas: "description actions";
   padding: 15px;
   background-color: #fff;
 

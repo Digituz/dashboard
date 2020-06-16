@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -12,19 +13,15 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { NzUploadModule } from "ng-zorro-antd/upload";
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+
+
 import { MediaLibraryComponent } from './media-library.component';
 import { MediaLibraryRoutingModule } from './media-library-routing.module';
 
-import {
-  LoadingOutline,
-  PictureOutline,
-} from '@ant-design/icons-angular/icons';
+import { LoadingOutline, PictureOutline } from '@ant-design/icons-angular/icons';
 
-const icons: IconDefinition[] = [
-  LoadingOutline,
-  PictureOutline,
-];
+const icons: IconDefinition[] = [LoadingOutline, PictureOutline];
 
 @NgModule({
   declarations: [MediaLibraryComponent],
@@ -42,7 +39,8 @@ const icons: IconDefinition[] = [
     NzSpinModule,
     NzSwitchModule,
     NzUploadModule,
-    MediaLibraryRoutingModule
-  ]
+    FontAwesomeModule,
+    MediaLibraryRoutingModule,
+  ],
 })
-export class MediaLibraryModule { }
+export class MediaLibraryModule {}

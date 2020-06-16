@@ -22,14 +22,34 @@
 
     .look {
       position: absolute;
+      display: none;
       right: 0;
       bottom: 0;
+      background-color: #eee;
+      padding: 5px 5px 0 10px;
+      border-top-left-radius: 20px;
+      border: 1px solid #ddd;
+      border-bottom: none;
+      border-right: none;
     }
 
     .select {
       position: absolute;
+      display: none;
       left: 0;
       top: 0;
+      background-color: #eee;
+      padding: 0 10px 5px 5px;
+      border-bottom-right-radius: 20px;
+      border: 1px solid #ddd;
+      border-top: none;
+      border-left: none;
+    }
+
+    &:hover {
+      .look, .select {
+        display: initial;
+      }
     }
   }
 }

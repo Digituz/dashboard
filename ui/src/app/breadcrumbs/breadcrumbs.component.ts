@@ -19,7 +19,7 @@ export class BreadcrumbsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.breadcrumbsService.getBreadcrumbsSubject().subscribe(({breadcrumbs, pageTitle}) => {
+    this.breadcrumbsService.getBreadcrumbsSubject().subscribe(({ breadcrumbs, pageTitle }) => {
       this.breadcrumbs = breadcrumbs;
       this.pageTitle = pageTitle;
     });

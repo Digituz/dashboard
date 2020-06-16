@@ -56,9 +56,13 @@
     [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"
     (click)="showModal(image)"
   >
-  <span class="select" style="background-color: #fff;">select</span>
-  <span class="look" style="background-color: #fff;">look</span>
-</div>
+    <span class="select">
+      <fa-icon [icon]="faSquare"></fa-icon>
+    </span>
+    <span class="look">
+      <fa-icon [icon]="faSearch"></fa-icon>
+    </span>
+  </div>
 </div>
 <nz-modal
   nzWrapClassName="vertical-center-modal"

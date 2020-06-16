@@ -37,8 +37,8 @@ export class ProductFormComponent implements OnInit {
       this.configureFormFields(this.product);
     } else {
       this.productService.loadProduct(sku).subscribe((product) => {
-        product.productVariations = product.productVariations.map((v) => ({...v, parentSku: product.sku}));
-        this.variations = product.productVariations
+        product.productVariations = product.productVariations.map((v) => ({ ...v, parentSku: product.sku }));
+        this.variations = product.productVariations;
         this.product = product;
         this.configureFormFields(product);
       });

@@ -97,6 +97,6 @@ interface IDataProvider<DataType> {
     pageSize: number,
     sortedBy?: string,
     sortDirectionAscending?: boolean,
-    queryParams?: QueryParam[],
+    queryParams?: QueryParam[]
   ): Observable<Pagination<DataType>>;
 }

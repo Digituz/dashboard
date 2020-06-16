@@ -5,7 +5,7 @@ import { delay } from 'rxjs/operators';
 @Component({
   selector: 'dgz-table',
   templateUrl: './dgz-table.component.html',
-  styleUrls: ['./dgz-table.component.scss']
+  styleUrls: ['./dgz-table.component.scss'],
 })
 export class DgzTableComponent<T> implements OnInit, OnChanges {
   @Input()
@@ -22,7 +22,7 @@ export class DgzTableComponent<T> implements OnInit, OnChanges {
   sortDirectionAscending: boolean;
   totalItems: number = 0;
 
-  constructor() { }
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.currentPage = 1;
@@ -40,23 +40,22 @@ export class DgzTableComponent<T> implements OnInit, OnChanges {
 
   private loadData() {
     this.loading = true;
-    this.dataProvider.loadData(this.currentPage, this.pageSize, this.sortedBy, this.sortDirectionAscending, this.queryParams)
-    .pipe(
-      delay(250)
-    )
-    .subscribe((response) => {
-      this.currentData = response.items;
-      this.totalItems = response.meta.totalItems;
-      this.loading = false;
-    });
+    this.dataProvider
+      .loadData(this.currentPage, this.pageSize, this.sortedBy, this.sortDirectionAscending, this.queryParams)
+      .pipe(delay(250))
+      .subscribe((response) => {
+        this.currentData = response.items;
+        this.totalItems = response.meta.totalItems;
+        this.loading = false;
+      });
   }
 
   sortTable(target: Element) {
     let sortableItem = target;
-    while (!sortableItem.attributes || !sortableItem.attributes.getNamedItem("dgz-sortable")) {
+    while (!sortableItem.attributes || !sortableItem.attributes.getNamedItem('dgz-sortable')) {
       sortableItem = sortableItem.parentElement;
     }
-    const newSortedAttribute = sortableItem.attributes.getNamedItem("dgz-sortable").value;
+    const newSortedAttribute = sortableItem.attributes.getNamedItem('dgz-sortable').value;
     this.sortDirectionAscending = newSortedAttribute !== this.sortedBy || this.sortDirectionAscending === false;
     this.sortedBy = newSortedAttribute;
     this.loadData();
