@@ -8,4 +8,7 @@ export class Image {
   mediumFileURL: string;
   smallFileURL: string;
   thumbnailFileURL: string;
+
+  // transient
+  selected?: boolean;
 }

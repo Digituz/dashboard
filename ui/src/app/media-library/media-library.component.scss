@@ -18,7 +18,13 @@
     padding: 5px;
     background-origin: content-box;
     background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
     position: relative;
+
+    &.selected {
+      border: 1px solid #9cce9c;
+    }
 
     .look {
       position: absolute;
@@ -31,9 +37,10 @@
       border: 1px solid #ddd;
       border-bottom: none;
       border-right: none;
+      cursor: pointer;
     }
 
-    .select {
+    .deselect, .select {
       position: absolute;
       display: none;
       left: 0;
@@ -42,6 +49,15 @@
       padding: 0 10px 5px 5px;
       border-bottom-right-radius: 20px;
       border: 1px solid #ddd;
+      border-top: none;
+      border-left: none;
+      cursor: pointer;
+    }
+
+    .deselect {
+      display: initial;
+      background-color: #cbffcb;
+      border: 1px solid #9cce9c;
       border-top: none;
       border-left: none;
     }
@@ -57,7 +73,6 @@
 .container div {
   background-color: #888;
   background-size: cover;
-  cursor: pointer;
 }
 
 .container div::before {

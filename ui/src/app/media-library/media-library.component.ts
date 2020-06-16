@@ -36,6 +36,8 @@ export class MediaLibraryComponent implements OnInit {
   faCheckSquare = faCheckSquare;
   faSquare = faSquare;
 
+  selectedImages: Image[] = [];
+
   constructor(
     private msg: NzMessageService,
     private breadcrumbsService: BreadcrumbsService,
@@ -94,10 +96,22 @@ export class MediaLibraryComponent implements OnInit {
     });
   }
 
-  showModal(image: Image): void {
+  showLargeImage(image: Image): void {
     this.isModalVisible = true;
     this.modalTitle = image.originalFilename;
     this.modalImage = image.largeFileURL;
+  }
+
+  selectImage(image: Image): void {
+    this.selectedImages.push(image);
+    image.selected = true;
+  }
+
+  deselectImage(image: Image): void {
+    this.selectedImages = this.selectedImages.filter(
+      (selectedImage) => selectedImage.originalFileURL !== image.originalFileURL
+    );
+    image.selected = false;
   }
 
   handleOk(): void {

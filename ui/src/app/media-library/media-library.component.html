@@ -54,12 +54,15 @@
   <div
     *ngFor="let image of images"
     [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"
-    (click)="showModal(image)"
+    [ngClass]="image.selected ? 'selected' : ''"
   >
-    <span class="select">
+    <span class="select" (click)="selectImage(image)" *ngIf="!image.selected">
       <fa-icon [icon]="faSquare"></fa-icon>
     </span>
-    <span class="look">
+    <span class="deselect" (click)="deselectImage(image)" *ngIf="image.selected">
+      <fa-icon [icon]="faCheckSquare"></fa-icon>
+    </span>
+    <span class="look" (click)="showLargeImage(image)">
       <fa-icon [icon]="faSearch"></fa-icon>
     </span>
   </div>
