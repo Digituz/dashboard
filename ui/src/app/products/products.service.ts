@@ -39,8 +39,8 @@ export class ProductsService implements IDataProvider<Product> {
     return this.httpClient.get<Pagination<Product>>(query);
   }
 
-  public findProducts(query: string): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(`${this.PRODUCTS_ENDPOINT}?query=${query}`);
+  public findProducts(query: string): Observable<Pagination<Product>> {
+    return this.httpClient.get<Pagination<Product>>(`${this.PRODUCTS_ENDPOINT}?page=1&limit=10&query=${query}`);
   }
 
   public saveProduct(product: Product): Observable<void> {
