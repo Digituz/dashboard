@@ -55,7 +55,10 @@
     *ngFor="let image of images"
     [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"
     (click)="showModal(image)"
-  ></div>
+  >
+  <span class="select" style="background-color: #fff;">select</span>
+  <span class="look" style="background-color: #fff;">look</span>
+</div>
 </div>
 <nz-modal
   nzWrapClassName="vertical-center-modal"

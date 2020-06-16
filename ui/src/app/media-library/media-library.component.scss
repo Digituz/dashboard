@@ -18,6 +18,19 @@
     padding: 5px;
     background-origin: content-box;
     background-position: center;
+    position: relative;
+
+    .look {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+
+    .select {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
   }
 }
 
