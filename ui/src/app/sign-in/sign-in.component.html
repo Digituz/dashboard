@@ -1,10 +1,16 @@
 <div class="sign-container">
-  <div class="sign-in-form">
-    <form [formGroup]="formFields" (ngSubmit)="signIn()" *ngIf="!loading">
-      <div class="logo"><i nzType="deployment-unit" nzTheme="outline"></i> Digituz</div>
-      <div class="sign-in-button-container">
-        <button>Entrar</button>
+  <div class="p-grid">
+    <div class="p-col-4 p-offset-4 p-col-align-center">
+      <div class="sign-in-form">
+        <form [formGroup]="formFields" (ngSubmit)="signIn()" *ngIf="!loading">
+          <div class="logo">
+            Digituz
+          </div>
+          <div class="sign-in-button-container">
+            <button pButton type="button" icon="pi pi-check" iconPos="left" label="Entrar"></button>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </div>

@@ -31,9 +31,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/main.scss",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css",
               "node_modules/medium-editor/dist/css/medium-editor.min.css",
-              "node_modules/medium-editor/dist/css/themes/default.css"
+              "node_modules/medium-editor/dist/css/themes/default.css",
+              "src/main.scss"
             ],
             "scripts": [
               "node_modules/medium-editor/dist/js/medium-editor.min.js"

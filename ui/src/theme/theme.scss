@@ -3,31 +3,17 @@
  * Framework overrides and customization goes here.
  */
 
+html,
+body,
 app-root,
 app-shell,
 app-header,
 header {
   display: block;
   height: 100%;
-}
-
-nz-layout.ant-layout {
-  min-height: 100%;
-  display: flex;
-  flex-flow: column;
-}
-
-nz-form-label {
-  padding-bottom: 0 !important;
-
-  > label {
-    color: inherit !important;
-  }
-}
-
-nz-breadcrumb.ant-breadcrumb {
-  padding: 0 11px !important;
-  margin: 5px 0;
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 textarea {
@@ -37,27 +23,6 @@ textarea {
   width: 100%;
   height: 200px;
   padding: 5px;
-}
-
-nz-input-number,
-.ant-input-number {
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  padding: 1px;
-  width: 100%;
-}
-
-nz-select {
-  width: 100%;
-}
-
-nz-form-control {
-  input {
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    padding: 5px;
-    width: 100%;
-  }
 }
 
 .gutter-row {
