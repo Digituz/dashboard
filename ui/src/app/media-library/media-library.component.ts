@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { UploadChangeParam } from 'ng-zorro-antd/upload/interface';
 import { BreadcrumbsService } from '@app/breadcrumbs/breadcrumbs.service';
 
 import { Image } from './image.entity';
 import { ImageService } from './image.service';
-import { NzModalService } from 'ng-zorro-antd/modal';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ProductsService } from '@app/products/products.service';
 import { map, switchMap, debounceTime } from 'rxjs/operators';
@@ -39,29 +36,27 @@ export class MediaLibraryComponent implements OnInit {
   selectedImages: Image[] = [];
 
   constructor(
-    private msg: NzMessageService,
     private breadcrumbsService: BreadcrumbsService,
     private productsService: ProductsService,
     private imageService: ImageService,
-    private modalService: NzModalService // although not used, we need it here
   ) {}
 
-  handleChange({ file }: UploadChangeParam): void {
-    const { status, uid } = file;
-    if (status === 'done') {
-      this.imagesBeingUploaded.delete(uid);
-    } else if (status === 'error') {
-      this.msg.error(`Ocorreu um problema no upload do arquivo ${file.name}`);
-    } else {
-      this.imagesBeingUploaded.add(uid);
-    }
-    this.isSpinning = this.imagesBeingUploaded.size > 0;
+  // handleChange({ file }): void {
+  //   const { status, uid } = file;
+  //   if (status === 'done') {
+  //     this.imagesBeingUploaded.delete(uid);
+  //   } else if (status === 'error') {
+  //     // this.msg.error(`Ocorreu um problema no upload do arquivo ${file.name}`);
+  //   } else {
+  //     this.imagesBeingUploaded.add(uid);
+  //   }
+  //   this.isSpinning = this.imagesBeingUploaded.size > 0;
 
-    if (this.imagesBeingUploaded.size === 0) {
-      this.msg.success(`Imagens carregadas com sucesso.`);
-      this.reloadImages();
-    }
-  }
+  //   if (this.imagesBeingUploaded.size === 0) {
+  //     this.msg.success(`Imagens carregadas com sucesso.`);
+  //     this.reloadImages();
+  //   }
+  // }
 
   private reloadImages() {
     this.imageService.loadImages().subscribe((images) => {

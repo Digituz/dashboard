@@ -1,5 +1,5 @@
 <div *ngIf="loading" style="background-color: #fff; padding: 30px 15px;">
-  <nz-skeleton [nzActive]="loading"></nz-skeleton>
+
 </div>
 <table (click)="sortTable($event.target)" *ngIf="!loading">
   <ng-content select="thead"></ng-content>
@@ -25,9 +25,5 @@
   <p class="ant-empty-description">Nenhum resultado encontrado.</p>
 </div>
 <div class="pagination-area" *ngIf="!loading">
-  <nz-pagination
-    [nzPageIndex]="currentPage"
-    [nzTotal]="totalItems"
-    (nzPageIndexChange)="loadPage($event)"
-  ></nz-pagination>
+
 </div>
