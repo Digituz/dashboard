@@ -13,6 +13,26 @@
 
 .ui-inputtext {
   &.ui-corner-all {
-    border-radius: 2px;
+    border-radius: 1px;
+    border-color: #ccc;
+    outline: 0;
+  }
+}
+
+body .ui-inputtext {
+  font-size: 13px;
+  color: #666;
+}
+
+body .ui-inputtext:enabled:focus:not(.ui-state-error) {
+  box-shadow: none;
+  border-color: #ccc;
+}
+
+.p-fluid.p-formgrid.p-grid {
+  .p-field {
+    input {
+      width: 100%;
+    }
   }
 }

@@ -1,4 +1,20 @@
 <div class="search-container">
+  <form nz-form (ngSubmit)="queryProducts()">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <label for="query">Pesquisa:</label>
+        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+      <div class="p-field p-col">
+        <label for="query">Pesquisa:</label>
+        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+      <div class="p-field p-col">
+        <label for="query">Pesquisa:</label>
+        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+    </div>
+  </form>
 </div>
 <div class="feature-header">
   <p>
@@ -25,8 +41,7 @@
       <td>{{ product.title }}</td>
       <td>{{ product.sellingPrice | reais }}</td>
       <td class="centered">{{ product.productVariations.length || '' }}</td>
-      <td class="centered">
-      </td>
+      <td class="centered"></td>
       <td class="actions">
         <a [title]="'Início'" [routerLink]="'/products/' + product.sku"><button>Editar</button></a>
       </td>
