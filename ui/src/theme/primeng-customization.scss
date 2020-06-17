@@ -9,3 +9,10 @@
     padding-right: 10px;
   }
 }
+
+
+.ui-inputtext {
+  &.ui-corner-all {
+    border-radius: 2px;
+  }
+}
