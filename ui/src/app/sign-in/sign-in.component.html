@@ -1,5 +1,5 @@
 <div class="sign-container">
-  <div class="p-grid p-nogutter">
+  <div class="p-grid p-nogutter p-align-center">
     <div class="p-col-4 p-offset-4 p-col-align-center">
       <div class="sign-in-form">
         <form [formGroup]="formFields" (ngSubmit)="signIn()" *ngIf="!loading">
@@ -13,11 +13,11 @@
             </div>
             <div class="p-field">
               <label for="password">Senha</label>
-              <input id="password" type="text" placeholder="Digite sua senha" formControlName="password" pInputText />
+              <input id="password" type="password" placeholder="Digite sua senha" formControlName="password" pInputText />
             </div>
           </div>
           <div class="sign-in-button-container">
-            <button pButton type="button" icon="pi pi-check" iconPos="left" label="Entrar"></button>
+            <button pButton type="submit" icon="pi pi-check" iconPos="left" label="Entrar"></button>
           </div>
         </form>
       </div>
