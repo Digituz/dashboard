@@ -1,3 +1,28 @@
-<header>
-
-</header>
+<div class="app-layout">
+  <div class="logo">
+    <span>Digituz</span>
+  </div>
+  <div class="top-bar">Top Bar</div>
+  <div class="menu">
+    <ul>
+      <li>
+        <a title="Início" routerLink="/home">
+          Painel de Controle
+        </a>
+      </li>
+      <li>
+        <a title="Produtos" routerLink="/products">
+          Produtos
+        </a>
+      </li>
+      <li>
+        <a title="Imagens" routerLink="/media-library">
+          Imagens
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
