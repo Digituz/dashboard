@@ -50,6 +50,42 @@ div.pagination-area {
   display: flex;
   flex-direction: row-reverse;
   margin-top: 10px;
+
+  > p {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    margin-right: 5px;
+    color: #999;
+    font-size: 13px;
+  }
+
+  button {
+    display: flex;
+    width: 50px;
+    height: 30px;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 300;
+    margin-left: 7px;
+    box-shadow: 2px 2px 4px 0px #999;
+    cursor: pointer;
+    color: #666;
+
+    p {
+      margin-top: 14px;
+    }
+
+    &:disabled {
+      color: #aaa;
+      cursor: not-allowed;
+    }
+  }
 }
 
 div.ant-empty.ant-empty-normal {

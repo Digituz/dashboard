@@ -1,6 +1,4 @@
-<div *ngIf="loading" style="background-color: #fff; padding: 30px 15px;">
-
-</div>
+<div *ngIf="loading" style="background-color: #fff; padding: 30px 15px;"></div>
 <table (click)="sortTable($event.target)" *ngIf="!loading">
   <ng-content select="thead"></ng-content>
   <ng-content select="tbody"></ng-content>
@@ -25,6 +23,7 @@
   <p class="ant-empty-description">Nenhum resultado encontrado.</p>
 </div>
 <div class="pagination-area" *ngIf="!loading">
-  <button pButton type="button" label="Próxima" (click)="nextPage()" [disabled]="currentPage === numberOfPages"></button>
-  <button pButton type="button" label="Anterior" (click)="previousPage()" [disabled]="currentPage === 1"></button>
+  <button (click)="nextPage()" [disabled]="currentPage === numberOfPages"><p>»</p></button>
+  <button (click)="previousPage()" [disabled]="currentPage === 1"><p>«</p></button>
+  <p>Página {{ currentPage }} de {{ numberOfPages }}</p>
 </div>
