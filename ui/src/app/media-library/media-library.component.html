@@ -9,6 +9,7 @@
 
 <div class="container">
   <div
+    class="image-in-gallery"
     *ngFor="let image of images"
     [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"
     [ngClass]="image.selected ? 'selected' : ''"
