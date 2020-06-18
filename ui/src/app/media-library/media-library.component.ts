@@ -8,6 +8,7 @@ import { ProductsService } from '@app/products/products.service';
 import { map, switchMap, debounceTime } from 'rxjs/operators';
 import Product from '@app/products/product.entity';
 import { Pagination } from '@app/util/pagination';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-media-library',
@@ -33,7 +34,8 @@ export class MediaLibraryComponent implements OnInit {
   constructor(
     private breadcrumbsService: BreadcrumbsService,
     private productsService: ProductsService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private httpClient: HttpClient
   ) {}
 
   // handleChange({ file }): void {
@@ -126,6 +128,17 @@ export class MediaLibraryComponent implements OnInit {
   onImageRemoved($event: any) {
     this.imagesSelectedForUpload = this.imagesSelectedForUpload.filter((image: File) => {
       return image.name !== $event.file.name || image.lastModified !== $event.file.lastModified;
+    });
+  }
+
+  uploadFiles({ files }: any) {
+    const formData: FormData = new FormData();
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('file', files[i], files[i].name);
+    }
+    this.httpClient.post('/media-library/upload', formData).subscribe((response) => {
+      console.log('got r', response);
     });
   }
 }
