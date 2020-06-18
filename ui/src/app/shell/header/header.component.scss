@@ -38,6 +38,8 @@
       list-style: none;
 
       li {
+        cursor: pointer;
+
         a {
           display: block;
           color: #fff;
@@ -46,6 +48,16 @@
 
           &:hover {
             opacity: 1;
+          }
+
+          i:first-child {
+            margin-right: 10px;
+          }
+
+          i:last-child {
+            float: right;
+            font-size: 9px;
+            margin-top: 5px;
           }
         }
       }
