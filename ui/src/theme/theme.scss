@@ -94,6 +94,11 @@ table.digituz {
 
   thead {
     background-color: rgb(250, 250, 250);
+
+    th {
+      text-align: center;
+      padding-left: 0;
+    }
   }
 
   tbody {

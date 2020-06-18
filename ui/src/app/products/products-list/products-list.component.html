@@ -35,8 +35,8 @@
       <th dgz-sortable="sku">SKU</th>
       <th dgz-sortable="title">Título</th>
       <th dgz-sortable="sellingPrice">Preço</th>
-      <th dgz-sortable="productVariations" class="centered">Variações</th>
-      <th dgz-sortable="isActive" class="centered">Ativo</th>
+      <th dgz-sortable="productVariations">Variações</th>
+      <th dgz-sortable="isActive">Ativo</th>
       <th></th>
     </tr>
   </thead>
@@ -46,7 +46,10 @@
       <td>{{ product.title }}</td>
       <td class="currency">{{ product.sellingPrice | reais }}</td>
       <td class="centered">{{ product.productVariations.length || '' }}</td>
-      <td class="centered"></td>
+      <td class="centered">
+        <i class="fal fa-check" style="color: #67c167" *ngIf="product.isActive"></i>
+        <i class="fal fa-times" style="color: #df6666" *ngIf="!product.isActive"></i>
+      </td>
       <td class="actions">
         <a [title]="'Início'" [routerLink]="'/products/' + product.sku"><button pButton type="button" label="Editar"></button></a>
       </td>
