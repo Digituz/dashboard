@@ -31,8 +31,17 @@ body .ui-inputtext:enabled:focus:not(.ui-state-error) {
 
 .p-fluid.p-formgrid.p-grid {
   .p-field {
+    label {
+      display: block;
+      width: 100%;
+    }
+
     input {
       width: 100%;
+    }
+
+    p-inputswitch > div {
+      margin-top: 2px;
     }
   }
 
@@ -49,4 +58,9 @@ body .ui-inputtext:enabled:focus:not(.ui-state-error) {
 button.ui-button {
   border-radius: 2px;
   box-shadow: 2px 2px 4px 0px #999;
+}
+
+body .ui-card {
+  box-shadow: none;
+  border-radius: 0;
 }

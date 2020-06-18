@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 import { SharedModule } from '../@shared/shared.module';
 import { ProductsRoutingModule } from './products-routing.module';
@@ -21,8 +23,10 @@ import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
     SharedModule,
     CommonModule,
     ButtonModule,
+    CardModule,
     DropdownModule,
     InputTextModule,
+    InputSwitchModule,
     ProductsRoutingModule,
     BreadcrumbsModule,
   ],
