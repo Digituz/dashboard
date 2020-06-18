@@ -88,6 +88,21 @@
           placeholder="Peso do produto em quilogramas (kg)"
         />
       </div>
+      <div class="p-field p-col-12">
+        <label for="description">Descrição Curta</label>
+        <input
+          id="description"
+          name="description"
+          type="text"
+          formControlName="description"
+          pInputText
+          placeholder="Descrição curta do produto"
+        />
+      </div>
+      <div class="p-field p-col-12">
+        <label for="description">Descrição Detalhada</label>
+        <medium-editor [(editorModel)]="productDetails" placeholder="Descreva seu produto em detalhes."></medium-editor>
+      </div>
     </div>
   </form>
 </p-card>
