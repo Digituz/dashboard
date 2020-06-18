@@ -135,3 +135,11 @@
     </tr>
   </tbody>
 </table>
+<p-dialog header="Variação do Produto" [(visible)]="isModalVisible" [dismissableMask]="true" [modal]="true" [resizable]="false" [draggable]="false">
+  Content
+  <p-footer>
+    <button pButton type="button" class="ui-button-secondary" (click)="handleCancel()" label="Cancelar"></button>
+    <button pButton type="button" class="ui-button-danger" (click)="removeVariation()" *ngIf="showRemoveButton" label="Remover"></button>
+    <button pButton type="button" class="ui-button-primary" (click)="submitVariation()" label="Salvar"></button>
+  </p-footer>
+</p-dialog>
