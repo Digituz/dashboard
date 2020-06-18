@@ -26,7 +26,7 @@
     <label>Controle os seus produtos de forma simplificada.</label>
   </p>
   <div class="actions">
-    <a title="Novo Produto" routerLink="/products/new"><button>Novo Produto</button></a>
+    <a title="Novo Produto" routerLink="/products/new"><button pButton type="button" label="Novo Produto"></button></a>
   </div>
 </div>
 <dgz-table #productsTable [dataProvider]="this" [queryParams]="queryParams">
@@ -48,7 +48,7 @@
       <td class="centered">{{ product.productVariations.length || '' }}</td>
       <td class="centered"></td>
       <td class="actions">
-        <a [title]="'Início'" [routerLink]="'/products/' + product.sku"><button>Editar</button></a>
+        <a [title]="'Início'" [routerLink]="'/products/' + product.sku"><button pButton type="button" label="Editar"></button></a>
       </td>
     </tr>
   </tbody>

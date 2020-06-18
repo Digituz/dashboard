@@ -1,5 +1,6 @@
 table {
   width: 100%;
+  border-collapse: collapse;
 }
 
 :host ::ng-deep {
@@ -18,7 +19,7 @@ table {
       Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     font-size: 14px;
     font-variant: tabular-nums;
-    font-weight: 500;
+    font-weight: 300;
     border-bottom: 1px solid rgb(240, 240, 240);
     padding-left: 15px;
 
