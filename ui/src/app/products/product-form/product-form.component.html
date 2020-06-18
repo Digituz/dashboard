@@ -112,6 +112,26 @@
     <label>A tabela abaixo mostra as variações do produto em questão.</label>
   </p>
   <div class="actions">
-    <button (click)="newProductVariation()">Nova Variação</button>
+    <button pButton type="button" (click)="newProductVariation()" label="Nova Variação"></button>
   </div>
 </div>
+<table class="digituz">
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Título</th>
+      <th>Preço</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let variation of variations">
+      <td>{{ variation.sku }}</td>
+      <td>{{ variation.description }}</td>
+      <td class="currency">{{ variation.sellingPrice | reais }}</td>
+      <td class="actions">
+        <button pButton type="button" (click)="editProductVariation(variation)" label="Editar"></button>
+      </td>
+    </tr>
+  </tbody>
+</table>

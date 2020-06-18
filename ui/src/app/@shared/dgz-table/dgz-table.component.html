@@ -1,5 +1,5 @@
 <div *ngIf="loading" style="background-color: #fff; padding: 30px 15px;"></div>
-<table (click)="sortTable($event.target)" *ngIf="!loading">
+<table class="digituz" (click)="sortTable($event.target)" *ngIf="!loading">
   <ng-content select="thead"></ng-content>
   <ng-content select="tbody"></ng-content>
 </table>
