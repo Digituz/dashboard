@@ -1,3 +1,9 @@
+<p-fileUpload url="/media-library/upload" multiple="multiple" (onSelect)="onImagesSelected($event)" (onRemove)="onImageRemoved($event)">
+  <ng-template pTemplate="content">
+    <div *ngIf="!imagesSelectedForUpload || imagesSelectedForUpload.length === 0">Selecione uma ou mais imagens para fazer upload.</div>
+  </ng-template>
+</p-fileUpload>
+
 <div class="feature-header">
   <p>
     <label>Controle as imagens do seu negócio de forma simplificada.</label>

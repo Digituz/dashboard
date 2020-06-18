@@ -26,13 +26,14 @@ export class MediaLibraryComponent implements OnInit {
   modalImage: string;
   selectedProduct?: string;
   optionList: string[] = [];
+  imagesSelectedForUpload: File[] = [];
 
   selectedImages: Image[] = [];
 
   constructor(
     private breadcrumbsService: BreadcrumbsService,
     private productsService: ProductsService,
-    private imageService: ImageService,
+    private imageService: ImageService
   ) {}
 
   // handleChange({ file }): void {
@@ -116,5 +117,15 @@ export class MediaLibraryComponent implements OnInit {
   onSearch(value: string): void {
     this.isProductListLoading = true;
     this.searchChange$.next(value);
+  }
+
+  onImagesSelected($event: any) {
+    this.imagesSelectedForUpload = $event.currentFiles;
+  }
+
+  onImageRemoved($event: any) {
+    this.imagesSelectedForUpload = this.imagesSelectedForUpload.filter((image: File) => {
+      return image.name !== $event.file.name || image.lastModified !== $event.file.lastModified;
+    });
   }
 }
