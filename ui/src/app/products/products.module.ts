@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
@@ -25,6 +26,7 @@ import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
     ButtonModule,
     CardModule,
     DropdownModule,
+    InputNumberModule,
     InputTextModule,
     InputSwitchModule,
     ProductsRoutingModule,

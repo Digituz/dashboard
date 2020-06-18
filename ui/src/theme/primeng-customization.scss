@@ -63,4 +63,8 @@ button.ui-button {
 body .ui-card {
   box-shadow: none;
   border-radius: 0;
+
+  .ui-card-body {
+    padding: 15px;
+  }
 }

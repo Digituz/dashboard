@@ -8,11 +8,11 @@
   </div>
 </div>
 <p-card>
-  <form [formGroup]="formFields" (ngSubmit)="submitProductDetails()">
+  <form [formGroup]="formFields" (ngSubmit)="submitProductDetails()" *ngIf="!loading">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
         <label for="sku">SKU:</label>
-        <input id="sku" name="sku" type="text" formControlName="sku" pInputText placeholder="Título do seu produto" />
+        <input id="sku" name="sku" type="text" formControlName="sku" pInputText placeholder="SKU do seu produto" />
       </div>
       <div class="p-field p-col">
         <label for="ncm">NCM:</label>
@@ -21,6 +21,72 @@
       <div class="p-field p-col">
         <label for="productActive">Ativo:</label>
         <p-inputSwitch id="productActive" name="productActive" formControlName="isActive"></p-inputSwitch>
+      </div>
+      <div class="p-field p-col-6">
+        <label for="title">Título:</label>
+        <input
+          id="title"
+          name="title"
+          type="text"
+          formControlName="title"
+          pInputText
+          placeholder="Título do seu produto"
+        />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="sellingPrice">Preço de venda:</label>
+        <input
+          id="sellingPrice"
+          name="sellingPrice"
+          type="text"
+          formControlName="sellingPrice"
+          pInputText
+          placeholder="Preço de venda do produto"
+        />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="height">Altura do Produto (m):</label>
+        <input
+          id="height"
+          name="height"
+          type="text"
+          formControlName="height"
+          pInputText
+          placeholder="Altura do produto em metros"
+        />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="width">Largura do Produto (m):</label>
+        <input
+          id="width"
+          name="width"
+          type="text"
+          formControlName="width"
+          pInputText
+          placeholder="Largura do produto em metros"
+        />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="length">Comprimento do Produto (m)</label>
+        <input
+          id="length"
+          name="length"
+          type="text"
+          formControlName="length"
+          pInputText
+          placeholder="Comprimento do produto em metros"
+        />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="weight">Peso do Produto (kg)</label>
+        <input
+          id="weight"
+          name="weight"
+          type="text"
+          formControlName="weight"
+          pInputText
+          placeholder="Peso do produto em quilogramas (kg)"
+        />
       </div>
     </div>
   </form>
