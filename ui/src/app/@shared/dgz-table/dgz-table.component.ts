@@ -17,6 +17,7 @@ export class DgzTableComponent<T> implements OnInit, OnChanges {
   loading: boolean = false;
   currentData: T[] = [];
   currentPage: number = 1;
+  numberOfPages: number = 1;
   pageSize: number = 10;
   sortedBy: string;
   sortDirectionAscending: boolean;
@@ -46,6 +47,7 @@ export class DgzTableComponent<T> implements OnInit, OnChanges {
       .subscribe((response) => {
         this.currentData = response.items;
         this.totalItems = response.meta.totalItems;
+        this.numberOfPages = Math.floor(this.totalItems / this.pageSize);
         this.loading = false;
       });
   }
@@ -58,6 +60,18 @@ export class DgzTableComponent<T> implements OnInit, OnChanges {
     const newSortedAttribute = sortableItem.attributes.getNamedItem('dgz-sortable').value;
     this.sortDirectionAscending = newSortedAttribute !== this.sortedBy || this.sortDirectionAscending === false;
     this.sortedBy = newSortedAttribute;
+    this.loadData();
+  }
+
+  nextPage() {
+    if (this.currentPage >= this.numberOfPages) return;
+    this.currentPage++;
+    this.loadData();
+  }
+
+  previousPage() {
+    if (this.currentPage <= 1) return;
+    this.currentPage--;
     this.loadData();
   }
 }

@@ -56,7 +56,7 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
     this.queryParams = [
       { key: 'query', value: this.query },
       { key: 'isActive', value: this.isActive.value },
-      { key: 'withVariations', value: `${this.withVariations.value}` },
+      { key: 'withVariations', value: this.withVariations.value },
     ];
   }
 }
