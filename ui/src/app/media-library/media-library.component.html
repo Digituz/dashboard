@@ -25,3 +25,14 @@
     </span>
   </div>
 </div>
+<p-dialog
+  [header]="modalTitle"
+  [(visible)]="isModalVisible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [resizable]="false"
+  [draggable]="false"
+  (onHide)="clearModal()"
+>
+  <img style="max-width: 100%;" [src]="modalImage" [alt]="modalTitle" />
+</p-dialog>

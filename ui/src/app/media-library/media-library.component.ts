@@ -108,7 +108,7 @@ export class MediaLibraryComponent implements OnInit {
     this.modalImage = null;
   }
 
-  handleCancel(): void {
+  clearModal(): void {
     this.isModalVisible = false;
     this.modalImage = null;
   }
