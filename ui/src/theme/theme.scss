@@ -78,16 +78,6 @@ medium-editor {
   }
 }
 
-tbody {
-  td.actions {
-    text-align: right;
-  }
-
-  td.currency {
-    text-align: center;
-  }
-}
-
 table.digituz {
   width: 100%;
   border-collapse: collapse;
@@ -103,6 +93,15 @@ table.digituz {
 
   tbody {
     background-color: #ffffff;
+    
+    td.actions {
+      text-align: right;
+    }
+
+    td.currency {
+      text-align: center;
+      padding-left: 0;
+    }
   }
 
   th,
