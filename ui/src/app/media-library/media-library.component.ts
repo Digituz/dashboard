@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreadcrumbsService } from '@app/breadcrumbs/breadcrumbs.service';
+
+import { FileUpload } from 'primeng/fileupload';
 
 import { Image } from './image.entity';
 import { ImageService } from './image.service';
@@ -16,6 +18,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./media-library.component.scss'],
 })
 export class MediaLibraryComponent implements OnInit {
+  @ViewChild('uploader') uploader: FileUpload;
+
   private imagesBeingUploaded = new Set();
   private searchChange$ = new BehaviorSubject('');
   images: Image[];
@@ -132,13 +136,21 @@ export class MediaLibraryComponent implements OnInit {
   }
 
   uploadFiles({ files }: any) {
-    const formData: FormData = new FormData();
-
-    for (let i = 0; i < files.length; i++) {
-      formData.append('file', files[i], files[i].name);
-    }
-    this.httpClient.post('/media-library/upload', formData).subscribe((response) => {
-      console.log('got r', response);
+    const uploadJobs = files.map((file: File) => {
+      return new Promise((res, rej) => {
+        const formData: FormData = new FormData();
+        formData.append('file', file, file.name);
+        this.httpClient.post('/media-library/upload', formData).subscribe(res, rej);
+      });
     });
+    Promise.all(uploadJobs)
+      .then(() => {
+        this.uploader.clear();
+        this.imagesSelectedForUpload = [];
+        this.reloadImages();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
