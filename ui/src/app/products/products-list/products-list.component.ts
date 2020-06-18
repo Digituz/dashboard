@@ -6,6 +6,16 @@ import { IDataProvider, Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
+interface IsActiveOption {
+  label: string;
+  value: boolean;
+}
+
+interface WithVariationsOption {
+  label: string;
+  value: string;
+}
+
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
@@ -15,8 +25,18 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
   @ViewChild('productsTable') appFoo: DgzTableComponent<Product>;
   products: Product[];
   query: string;
-  isActive: boolean = null;
-  withVariations: string;
+  withVariationsOptions: WithVariationsOption[] = [
+    { label: "Todos", value: null },
+    { label: "Com variações", value: "true" },
+    { label: "Sem variações", value: "false" },
+  ];
+  withVariations: WithVariationsOption = this.withVariationsOptions[0];
+  isActiveOptions: IsActiveOption[] = [
+    { label: "Todos", value: null },
+    { label: "Ativos", value: true },
+    { label: "Inativos", value: false },
+  ];
+  isActive: IsActiveOption = this.isActiveOptions[0];
   queryParams: QueryParam[] = [];
 
   constructor(private productsService: ProductsService, private fb: FormBuilder) {}
@@ -35,8 +55,8 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
   queryProducts() {
     this.queryParams = [
       { key: 'query', value: this.query },
-      { key: 'isActive', value: this.isActive },
-      { key: 'withVariations', value: this.withVariations },
+      { key: 'isActive', value: this.isActive.value },
+      { key: 'withVariations', value: `${this.withVariations.value}` },
     ];
   }
 }

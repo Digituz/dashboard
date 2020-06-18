@@ -13,6 +13,8 @@
     justify-content: center;
     font-size: 24px;
     font-weight: 400;
+    box-shadow: 2px -2px 2px 0px #999;
+    z-index: 11;
 
     span {
       opacity: 0.8;
@@ -28,6 +30,8 @@
   .menu {
     background-color: #001529;
     color: white;
+    box-shadow: 2px -3px 2px 0px #999;
+    z-index: 10;
 
     ul {
       padding: 0;

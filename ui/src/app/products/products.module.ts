@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 
 import { SharedModule } from '../@shared/shared.module';
@@ -18,6 +20,8 @@ import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
     ReactiveFormsModule,
     SharedModule,
     CommonModule,
+    ButtonModule,
+    DropdownModule,
     InputTextModule,
     ProductsRoutingModule,
     BreadcrumbsModule,

@@ -6,12 +6,17 @@
         <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
       </div>
       <div class="p-field p-col">
-        <label for="query">Pesquisa:</label>
-        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+        <label for="isActive">Ativos:</label>
+        <p-dropdown name="isActive" [options]="isActiveOptions" [(ngModel)]="isActive" optionLabel="label"></p-dropdown>
       </div>
       <div class="p-field p-col">
-        <label for="query">Pesquisa:</label>
-        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+        <label for="withVariations">Variações:</label>
+        <p-dropdown name="withVariations" [options]="withVariationsOptions" [(ngModel)]="withVariations" optionLabel="label"></p-dropdown>
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <button pButton type="submit" label="Pesquisar"></button>
       </div>
     </div>
   </form>

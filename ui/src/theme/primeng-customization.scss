@@ -35,4 +35,18 @@ body .ui-inputtext:enabled:focus:not(.ui-state-error) {
       width: 100%;
     }
   }
+
+  p-dropdown {
+    > div {
+      width: 100%;
+      box-shadow: none;
+      border-color: #ccc;
+      border-radius: 1px;
+    }
+  }
+}
+
+button.ui-button {
+  border-radius: 2px;
+  box-shadow: 2px 2px 4px 0px #999;
 }
