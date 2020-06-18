@@ -14,13 +14,13 @@
     [ngClass]="image.selected ? 'selected' : ''"
   >
     <span class="select" (click)="selectImage(image)" *ngIf="!image.selected">
-      <fa-icon [icon]="faSquare"></fa-icon>
+      <i class="fal fa-square"></i>
     </span>
     <span class="deselect" (click)="deselectImage(image)" *ngIf="image.selected">
-      <fa-icon [icon]="faCheckSquare"></fa-icon>
+      <i class="fal fa-check-square"></i>
     </span>
     <span class="look" (click)="showLargeImage(image)">
-      <fa-icon [icon]="faSearch"></fa-icon>
+      <i class="fal fa-search"></i>
     </span>
   </div>
 </div>

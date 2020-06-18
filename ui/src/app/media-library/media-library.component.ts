@@ -8,7 +8,6 @@ import { ProductsService } from '@app/products/products.service';
 import { map, switchMap, debounceTime } from 'rxjs/operators';
 import Product from '@app/products/product.entity';
 import { Pagination } from '@app/util/pagination';
-import { faSearch, faCheckSquare, faSquare } from '@fortawesome/pro-light-svg-icons';
 
 @Component({
   selector: 'app-media-library',
@@ -27,11 +26,6 @@ export class MediaLibraryComponent implements OnInit {
   modalImage: string;
   selectedProduct?: string;
   optionList: string[] = [];
-
-  //icons
-  faSearch = faSearch;
-  faCheckSquare = faCheckSquare;
-  faSquare = faSquare;
 
   selectedImages: Image[] = [];
 
