@@ -10,6 +10,53 @@
   }
 }
 
+p-fileupload {
+  .ui-fileupload-buttonbar {
+    border-radius: 0;
+  }
+
+  .ui-fileupload-content {
+    border-radius: 0;
+    position: relative;
+
+    .ui-progressbar {
+      display: none;
+    }
+
+    .uploading {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(100, 100, 100, 0.3);
+
+      i {
+        font-size: 30px;
+        margin-bottom: 20px;
+        animation: rotation 2s infinite linear;
+      }
+    }
+
+    .upload-message {
+      display: flex;
+      flex-direction: column;
+      height: 150px;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        font-size: 30px;
+        margin-bottom: 20px;
+        color: #666;
+      }
+    }
+  }
+}
 
 .ui-inputtext {
   &.ui-corner-all {

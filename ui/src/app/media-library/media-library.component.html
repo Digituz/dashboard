@@ -2,13 +2,22 @@
   #uploader
   multiple="multiple"
   customUpload="true"
+  chooseLabel="Selecionar Imagens"
+  uploadLabel="Enviar Imagens"
+  cancelLabel="Cancelar Envio"
+  (onClear)="onCancelFileSelection()"
   (onSelect)="onImagesSelected($event)"
   (onRemove)="onImageRemoved($event)"
   (uploadHandler)="uploadFiles($event)"
 >
   <ng-template pTemplate="content">
-    <div *ngIf="!imagesSelectedForUpload || imagesSelectedForUpload.length === 0">
-      Selecione uma ou mais imagens para fazer upload.
+    <div class="upload-message" *ngIf="(!imagesSelectedForUpload || imagesSelectedForUpload.length === 0) && !isUploading">
+      <i class="fal fa-upload"></i>
+      <p>Selecione uma ou mais imagens para fazer upload.</p>
+    </div>
+    <div class="uploading" *ngIf="isUploading">
+      <i class="fal fa-spinner"></i>
+      <p>Processando suas imagens... Por favor, aguarde.</p>
     </div>
   </ng-template>
 </p-fileUpload>

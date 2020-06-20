@@ -26,6 +26,7 @@ export class MediaLibraryComponent implements OnInit {
   isModalVisible = false;
   isSpinning = false;
   isProductListLoading = false;
+  isUploading = false;
   showManagementSection = false;
   modalTitle: string;
   modalImage: string;
@@ -125,6 +126,10 @@ export class MediaLibraryComponent implements OnInit {
     this.searchChange$.next(value);
   }
 
+  onCancelFileSelection() {
+    this.imagesSelectedForUpload = [];
+  }
+
   onImagesSelected($event: any) {
     this.imagesSelectedForUpload = $event.currentFiles;
   }
@@ -136,6 +141,7 @@ export class MediaLibraryComponent implements OnInit {
   }
 
   uploadFiles({ files }: any) {
+    this.isUploading = true;
     const uploadJobs = files.map((file: File) => {
       return new Promise((res, rej) => {
         const formData: FormData = new FormData();
@@ -148,9 +154,11 @@ export class MediaLibraryComponent implements OnInit {
         this.uploader.clear();
         this.imagesSelectedForUpload = [];
         this.reloadImages();
+        this.isUploading = false;
       })
       .catch((err) => {
         console.log(err);
+        this.isUploading = false;
       });
   }
 }

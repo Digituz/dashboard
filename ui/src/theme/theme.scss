@@ -93,7 +93,7 @@ table.digituz {
 
   tbody {
     background-color: #ffffff;
-    
+
     td.actions {
       text-align: right;
     }
@@ -135,5 +135,14 @@ table.digituz {
 
   td {
     line-height: 50px;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
   }
 }
