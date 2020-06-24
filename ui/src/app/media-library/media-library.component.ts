@@ -19,8 +19,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MediaLibraryComponent implements OnInit {
   @ViewChild('uploader') uploader: FileUpload;
-
-  private imagesBeingUploaded = new Set();
   private searchChange$ = new BehaviorSubject('');
   images: Image[];
   isModalVisible = false;
@@ -33,6 +31,8 @@ export class MediaLibraryComponent implements OnInit {
   selectedProduct?: string;
   optionList: string[] = [];
   imagesSelectedForUpload: File[] = [];
+  texts: string[];
+  results: string[];
 
   selectedImages: Image[] = [];
 
@@ -42,23 +42,6 @@ export class MediaLibraryComponent implements OnInit {
     private imageService: ImageService,
     private httpClient: HttpClient
   ) {}
-
-  // handleChange({ file }): void {
-  //   const { status, uid } = file;
-  //   if (status === 'done') {
-  //     this.imagesBeingUploaded.delete(uid);
-  //   } else if (status === 'error') {
-  //     // this.msg.error(`Ocorreu um problema no upload do arquivo ${file.name}`);
-  //   } else {
-  //     this.imagesBeingUploaded.add(uid);
-  //   }
-  //   this.isSpinning = this.imagesBeingUploaded.size > 0;
-
-  //   if (this.imagesBeingUploaded.size === 0) {
-  //     this.msg.success(`Imagens carregadas com sucesso.`);
-  //     this.reloadImages();
-  //   }
-  // }
 
   private reloadImages() {
     this.imageService.loadImages().subscribe((images) => {
@@ -161,4 +144,10 @@ export class MediaLibraryComponent implements OnInit {
         this.isUploading = false;
       });
   }
+
+    search(event: any) {
+        // this.mylookupservice.getResults(event.query).then(data => {
+        //     this.results = data;
+        // });
+    }
 }

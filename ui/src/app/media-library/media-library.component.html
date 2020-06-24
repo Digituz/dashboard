@@ -32,7 +32,7 @@
 </div>
 
 <div class="management-section">
-  managing area
+  <p-autoComplete [(ngModel)]="texts" [suggestions]="results" (completeMethod)="search($event)" [multiple]="true"></p-autoComplete>
 </div>
 
 <div class="container">
