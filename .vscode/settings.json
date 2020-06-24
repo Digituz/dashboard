@@ -3,5 +3,18 @@
     "search.exclude": {
         "**/node_modules": true,
         "**/dist": true
-    }
+    },
+    "sqltools.connections": [
+        {
+            "askForPassword": false,
+            "database": "digituz-dashboard",
+            "driver": "PostgreSQL",
+            "name": "dashboard",
+            "password": "myextremellysecretpassword",
+            "port": 5432,
+            "previewLimit": 50,
+            "server": "localhost",
+            "username": "digituz-dashboard"
+        }
+    ]
 }

@@ -20,21 +20,20 @@ npm install
 npm i -g ts-node
 ```
 
-## The Database (MySQL)
+## The Database (PostgreSQL)
 
 Creating a local database with Docker:
 
 ```bash
-docker run --name digituz-dashboard-mysql \
-    -p 3306:3306 \
-    -e MYSQL_ROOT_PASSWORD=myextremellysecretpassword \
-    -e MYSQL_DATABASE=digituz-dashboard \
-    -e MYSQL_USER=digituz-dashboard \
-    -e MYSQL_PASSWORD=123456 \
-    -d mysql:5.7
+docker run --name digituz-dashboard-postgres \
+    -p 5432:5432 \
+    -e POSTGRES_DB=digituz-dashboard \
+    -e POSTGRES_USER=digituz-dashboard \
+    -e POSTGRES_PASSWORD=myextremellysecretpassword \
+    -d postgres:12.3-alpine
 
-docker stop digituz-dashboard-mysql
-docker rm digituz-dashboard-mysql
+docker stop digituz-dashboard-postgres
+docker rm digituz-dashboard-postgres
 ```
 
 ## Running the app
@@ -65,10 +64,10 @@ Connecting to the database:
 
 ```bash
 # getting inside the docker instace
-docker exec -i -t digituz-dashboard-mysql /bin/bash
+docker exec -i -t digituz-dashboard-postgres /bin/bash
 
 # from within the docker instance, connect to the databse
-mysql --user digituz-dashboard --database digituz-dashboard --password
+psql --user digituz-dashboard --password digituz-dashboard
 
 # run your queries
 select * from product;
