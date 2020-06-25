@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { ProductVariation } from './product-variation.entity';
 import { BaseEntity } from '../../util/base-entity';
 

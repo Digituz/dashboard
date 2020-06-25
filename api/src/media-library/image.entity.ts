@@ -9,7 +9,7 @@
 //     size: 20343
 // }
 
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { BaseEntity } from '../util/base-entity';
 
 @Entity()
