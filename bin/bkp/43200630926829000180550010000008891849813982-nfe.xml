@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+    <NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+        <infNFe versao="4.00" Id="NFe43200630926829000180550010000008891849813982">
+            <ide>
+                <cUF>43</cUF>
+                <cNF>84981398</cNF>
+                <natOp>Venda de mercadorias</natOp>
+                <mod>55</mod>
+                <serie>1</serie>
+                <nNF>889</nNF>
+                <dhEmi>2020-06-25T07:58:44-03:00</dhEmi>
+                <tpNF>1</tpNF>
+                <idDest>2</idDest>
+                <cMunFG>4314902</cMunFG>
+                <tpImp>1</tpImp>
+                <tpEmis>1</tpEmis>
+                <cDV>2</cDV>
+                <tpAmb>1</tpAmb>
+                <finNFe>1</finNFe>
+                <indFinal>1</indFinal>
+                <indPres>9</indPres>
+                <procEmi>0</procEmi>
+                <verProc>Bling 1.0</verProc>
+            </ide>
+            <emit>
+                <CNPJ>30926829000180</CNPJ>
+                <xNome>LB Joias e Com Ltda</xNome>
+                <xFant>Frida Kahlo</xFant>
+                <enderEmit>
+                    <xLgr>Avenida Ijui</xLgr>
+                    <nro>56</nro>
+                    <xCpl>403</xCpl>
+                    <xBairro>Petropolis</xBairro>
+                    <cMun>4314902</cMun>
+                    <xMun>Porto Alegre</xMun>
+                    <UF>RS</UF>
+                    <CEP>90460200</CEP>
+                    <cPais>1058</cPais>
+                    <xPais>Brasil</xPais>
+                </enderEmit>
+                <IE>0963754343</IE>
+                <IM>Isento</IM>
+                <CNAE>4783101</CNAE>
+                <CRT>1</CRT>
+            </emit>
+            <dest>
+                <CPF>10209372621</CPF>
+                <xNome>Beatriz Garcia Correa</xNome>
+                <enderDest>
+                    <xLgr>Rua Francisco de Paula Mendonca</xLgr>
+                    <nro>11</nro>
+                    <xCpl>casa</xCpl>
+                    <xBairro>Jardim America</xBairro>
+                    <cMun>3155801</cMun>
+                    <xMun>Rio Pomba</xMun>
+                    <UF>MG</UF>
+                    <CEP>36180000</CEP>
+                    <cPais>1058</cPais>
+                    <xPais>Brasil</xPais>
+                    <fone>32999748113</fone>
+                </enderDest>
+                <indIEDest>9</indIEDest>
+                <email>formed95@yahoo.com.br</email>
+            </dest>
+            <det nItem="1">
+                <prod>
+                    <cProd>43367</cProd>
+                    <cEAN>SEM GTIN</cEAN>
+                    <xProd>Copo Termico Plastico Red Birds and Flowers</xProd>
+                    <NCM>39241000</NCM>
+                    <CFOP>6102</CFOP>
+                    <uCom>Un</uCom>
+                    <qCom>1.0000</qCom>
+                    <vUnCom>39.92</vUnCom>
+                    <vProd>39.92</vProd>
+                    <cEANTrib>SEM GTIN</cEANTrib>
+                    <uTrib>Un</uTrib>
+                    <qTrib>1.0000</qTrib>
+                    <vUnTrib>39.92</vUnTrib>
+                    <vFrete>4.95</vFrete>
+                    <indTot>1</indTot>
+                    <nItemPed>1</nItemPed>
+                </prod>
+                <imposto>
+                    <vTotTrib>1.79</vTotTrib>
+                    <ICMS>
+                        <ICMSSN102>
+                            <orig>0</orig>
+                            <CSOSN>400</CSOSN>
+                        </ICMSSN102>
+                    </ICMS>
+                    <PIS>
+                        <PISNT>
+                            <CST>07</CST>
+                        </PISNT>
+                    </PIS>
+                    <COFINS>
+                        <COFINSNT>
+                            <CST>07</CST>
+                        </COFINSNT>
+                    </COFINS>
+                    <ICMSUFDest>
+                        <vBCUFDest>0.00</vBCUFDest>
+                        <vBCFCPUFDest>0.00</vBCFCPUFDest>
+                        <pFCPUFDest>0.0000</pFCPUFDest>
+                        <pICMSUFDest>18.0000</pICMSUFDest>
+                        <pICMSInter>12.00</pICMSInter>
+                        <pICMSInterPart>100.0000</pICMSInterPart>
+                        <vFCPUFDest>0.00</vFCPUFDest>
+                        <vICMSUFDest>0.00</vICMSUFDest>
+                        <vICMSUFRemet>0.00</vICMSUFRemet>
+                    </ICMSUFDest>
+                </imposto>
+            </det>
+            <det nItem="2">
+                <prod>
+                    <cProd>43368</cProd>
+                    <cEAN>SEM GTIN</cEAN>
+                    <xProd>Copo Termico Plastico Red Flowers</xProd>
+                    <NCM>39241000</NCM>
+                    <CFOP>6102</CFOP>
+                    <uCom>Un</uCom>
+                    <qCom>1.0000</qCom>
+                    <vUnCom>39.92</vUnCom>
+                    <vProd>39.92</vProd>
+                    <cEANTrib>SEM GTIN</cEANTrib>
+                    <uTrib>Un</uTrib>
+                    <qTrib>1.0000</qTrib>
+                    <vUnTrib>39.92</vUnTrib>
+                    <vFrete>4.95</vFrete>
+                    <indTot>1</indTot>
+                    <nItemPed>2</nItemPed>
+                </prod>
+                <imposto>
+                    <vTotTrib>1.79</vTotTrib>
+                    <ICMS>
+                        <ICMSSN102>
+                            <orig>0</orig>
+                            <CSOSN>400</CSOSN>
+                        </ICMSSN102>
+                    </ICMS>
+                    <PIS>
+                        <PISNT>
+                            <CST>07</CST>
+                        </PISNT>
+                    </PIS>
+                    <COFINS>
+                        <COFINSNT>
+                            <CST>07</CST>
+                        </COFINSNT>
+                    </COFINS>
+                    <ICMSUFDest>
+                        <vBCUFDest>0.00</vBCUFDest>
+                        <vBCFCPUFDest>0.00</vBCFCPUFDest>
+                        <pFCPUFDest>0.0000</pFCPUFDest>
+                        <pICMSUFDest>18.0000</pICMSUFDest>
+                        <pICMSInter>12.00</pICMSInter>
+                        <pICMSInterPart>100.0000</pICMSInterPart>
+                        <vFCPUFDest>0.00</vFCPUFDest>
+                        <vICMSUFDest>0.00</vICMSUFDest>
+                        <vICMSUFRemet>0.00</vICMSUFRemet>
+                    </ICMSUFDest>
+                </imposto>
+            </det>
+            <total>
+                <ICMSTot>
+                    <vBC>0.00</vBC>
+                    <vICMS>0.00</vICMS>
+                    <vICMSDeson>0.00</vICMSDeson>
+                    <vFCP>0.00</vFCP>
+                    <vBCST>0.00</vBCST>
+                    <vST>0.00</vST>
+                    <vFCPST>0.00</vFCPST>
+                    <vFCPSTRet>0.00</vFCPSTRet>
+                    <vProd>79.84</vProd>
+                    <vFrete>9.90</vFrete>
+                    <vSeg>0.00</vSeg>
+                    <vDesc>0.00</vDesc>
+                    <vII>0.00</vII>
+                    <vIPI>0.00</vIPI>
+                    <vIPIDevol>0.00</vIPIDevol>
+                    <vPIS>0.00</vPIS>
+                    <vCOFINS>0.00</vCOFINS>
+                    <vOutro>0.00</vOutro>
+                    <vNF>89.74</vNF>
+                    <vTotTrib>3.58</vTotTrib>
+                </ICMSTot>
+            </total>
+            <transp>
+                <modFrete>1</modFrete>
+                <vol>
+                    <qVol>1</qVol>
+                    <esp>Volumes</esp>
+                    <pesoL>0.000</pesoL>
+                    <pesoB>0.000</pesoB>
+                </vol>
+            </transp>
+            <cobr>
+                <fat>
+                    <nFat>000889</nFat>
+                    <vOrig>89.74</vOrig>
+                    <vDesc>0</vDesc>
+                    <vLiq>89.74</vLiq>
+                </fat>
+                <dup>
+                    <nDup>001</nDup>
+                    <dVenc>2020-06-26</dVenc>
+                    <vDup>89.74</vDup>
+                </dup>
+            </cobr>
+            <pag>
+                <detPag>
+                    <tPag>01</tPag>
+                    <vPag>89.74</vPag>
+                </detPag>
+            </pag>
+            <infAdic>
+                <infCpl>Total aproximado de tributos: R$ 3,58 (3,99%)   .&lt;br /&gt;</infCpl>
+            </infAdic>
+            <infRespTec>
+                <CNPJ>01056417000139</CNPJ>
+                <xContato>Jonatan Fracasso da Silva</xContato>
+                <email>fiscal@bling.com.br</email>
+                <fone>05430579470</fone>
+            </infRespTec>
+        </infNFe>
+        <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+            <SignedInfo>
+                <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+                <Reference URI="#NFe43200630926829000180550010000008891849813982">
+                    <Transforms>
+                        <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                        <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                    </Transforms>
+                    <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                    <DigestValue>g/Uz6Fpu5iV5+0qg9XoiFUBryQo=</DigestValue>
+                </Reference>
+            </SignedInfo>
+            <SignatureValue>MKEP5RdcJiLOL1Eisxu3x0VAJieRaOB0f0HFUA+rpDcbo3j/39yzjGDVKFMNHhDZ/ABWMArBQxdYPuGtyPN6EXIntzhirnSMyAydTsRZntao3uQhHLEFWcPTSaG5es6wygb4bKYPMT0yQaeGkjGiUvpddQVPpSl+lAuc4agd62CKHUrIL9p/GOme3XcsltEtHAnFxSXpoSZ9og9HGMCmR8LvdxO+96+dJ8rhKYzYYBWmGiYWu6IKYigD0zyH4mzUbEmPdJPRl5IRO8h2BrO8G14lYq2B2R6nxQAvu9Ma3lCCkCTRwc4OKMlG4xINZG+W97yH0XWqD1Gm3a35x6lhBQ==</SignatureValue>
+            <KeyInfo>
+                <X509Data>
+                    <X509Certificate>MIIH9TCCBd2gAwIBAgIQOQhjYAsiLj0lDVwMIU2P+TANBgkqhkiG9w0BAQsFADB4MQswCQYDVQQGEwJCUjETMBEGA1UEChMKSUNQLUJyYXNpbDE2MDQGA1UECxMtU2VjcmV0YXJpYSBkYSBSZWNlaXRhIEZlZGVyYWwgZG8gQnJhc2lsIC0gUkZCMRwwGgYDVQQDExNBQyBDZXJ0aXNpZ24gUkZCIEc1MB4XDTIwMDEzMDE1MDE1OVoXDTIxMDEyOTE1MDE1OVowgeIxCzAJBgNVBAYTAkJSMRMwEQYDVQQKDApJQ1AtQnJhc2lsMQswCQYDVQQIDAJSUzEVMBMGA1UEBwwMUG9ydG8gQWxlZ3JlMTYwNAYDVQQLDC1TZWNyZXRhcmlhIGRhIFJlY2VpdGEgRmVkZXJhbCBkbyBCcmFzaWwgLSBSRkIxFjAUBgNVBAsMDVJGQiBlLUNOUEogQTExFzAVBgNVBAsMDjEwODY5MDgwMDAwMTcwMTEwLwYDVQQDDChMQiBDT01FUkNJTyBERSBKT0lBUyBMVERBOjMwOTI2ODI5MDAwMTgwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArZfc8IuxKBKVXDfpcQhmAlWSAF9jmb87YW+QQZMSbypyaqaXyGSG0BWDTa7VTDI6YLKJgMlW7TXWY4A2cBfZF82sL6YCKryXJANv+2ii3+b4WSGGoYyZ8Fqrh9moRo4u0jZDILeqg2zjVG4IVr3pamB7XUrvaNAXjULofQ/FKYOqogwpKk6TbtzgTyg6btpkhUN83pT4jdcYOgqpGsmzQbha5TJ9muYnX2V+bjZpWsiuC/pxlzx9l8AaYpC3OrW7qgX/xKSswdtbqZnV4My9rSR7VCCWNkpJqDK2mhekrRPjDIlyqRWM7Opp0k4s3+dYRytVduW+YSnHUVK10D3GKQIDAQABo4IDDjCCAwowgb0GA1UdEQSBtTCBsqA/BgVgTAEDBKA2BDQwNDAxMTk3MzY1MTAxMjYwMDEwMDAwMDAwMDAwMDAwMDAwMDMwMTM0MjUxODFTU1BQQ1JToCIGBWBMAQMCoBkEF01BUklBIEhFTEVOQSBWRVRUT1JFVFRJoBkGBWBMAQMDoBAEDjMwOTI2ODI5MDAwMTgwoBcGBWBMAQMHoA4EDDAwMDAwMDAwMDAwMIEXYWRtaW5AZnJpZGFrYWhsby5jb20uYnIwCQYDVR0TBAIwADAfBgNVHSMEGDAWgBRTfX+dvtFh0CC62p/jiacTc1jNQjB/BgNVHSAEeDB2MHQGBmBMAQIBDDBqMGgGCCsGAQUFBwIBFlxodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2RwYy9BQ19DZXJ0aXNpZ25fUkZCL0RQQ19BQ19DZXJ0aXNpZ25fUkZCLnBkZjCBvAYDVR0fBIG0MIGxMFegVaBThlFodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2xjci9BQ0NlcnRpc2lnblJGQkc1L0xhdGVzdENSTC5jcmwwVqBUoFKGUGh0dHA6Ly9pY3AtYnJhc2lsLm91dHJhbGNyLmNvbS5ici9yZXBvc2l0b3Jpby9sY3IvQUNDZXJ0aXNpZ25SRkJHNS9MYXRlc3RDUkwuY3JsMA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgawGCCsGAQUFBwEBBIGfMIGcMF8GCCsGAQUFBzAChlNodHRwOi8vaWNwLWJyYXNpbC5jZXJ0aXNpZ24uY29tLmJyL3JlcG9zaXRvcmlvL2NlcnRpZmljYWRvcy9BQ19DZXJ0aXNpZ25fUkZCX0c1LnA3YzA5BggrBgEFBQcwAYYtaHR0cDovL29jc3AtYWMtY2VydGlzaWduLXJmYi5jZXJ0aXNpZ24uY29tLmJyMA0GCSqGSIb3DQEBCwUAA4ICAQCr5RQWX6ZZXukGAXhJu+CyeJyGw2a4ANNgH3E/LiBTR9ao89zyb6ygXh4c93BobsAXiC1mFuq7sRDEiH6coAQna6KrVgPyC6pQSMPRyWzBgz8l3AzHP8nyqIGIopRs7zAY2b734GfxiljPdNezOIgtrARfV+555ICAdb4Usl0v2xFk0OqDEFhfbNfFFrBbVLb235Q1lgNX1YrzDrl0vyuVQPlLPNLomXqlGiq9YWsNe6Suz1XE4r7opWNjd1OavpxFXNVa1+8LyhYuloI7Yk4zaNNulbJkbyHiZlg3qHx5Do2JDlJInHWOnPFdbAZ1kn1Wqh7tTg+DcbzwD4YIMGS78moXwUXTr8VA7PpTU8t8bKTLT/P0O7bFQwhJ+Mwm7zPbepGe3+sXhsanTi1g8LcHVU8K/JQVA/xdS1bZrLqL1JBxIZ2US/2RTQ2JjNx/TeseFQ5PBhjP9PUUZe89HNdsmsSPjgWBB3hOw7lyTndLC10tyWoMCtDokAAubSDBfgRgvYydPPvYWZepn5hBXvrlFbE8NfXIc03NuN18rfp7y1W60UsJ/iEexeBhihlOr45iwM7RGx41mWbgpbZ3+acjUYBew67exGaSXXgBfvtMuqsicLVCpcLf2fENDlWCTI5H6S3TrmqgkXHSCW0DuWRQx2O4EbZg79IEJJAi9/QnUg==</X509Certificate>
+                </X509Data>
+            </KeyInfo>
+        </Signature>
+    </NFe>
+    <protNFe versao="4.00">
+        <infProt>
+            <tpAmb>1</tpAmb>
+            <verAplic>RS202006241257</verAplic>
+            <chNFe>43200630926829000180550010000008891849813982</chNFe>
+            <dhRecbto>2020-06-25T07:58:45-03:00</dhRecbto>
+            <nProt>143200109537256</nProt>
+            <digVal>g/Uz6Fpu5iV5+0qg9XoiFUBryQo=</digVal>
+            <cStat>100</cStat>
+            <xMotivo>Autorizado o uso da NF-e</xMotivo>
+        </infProt>
+    </protNFe>
+</nfeProc>
