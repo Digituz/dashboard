@@ -1,15 +1,16 @@
 import {
   Entity,
   Column,
-  PrimaryColumn,
   ManyToOne,
   JoinColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Product } from './product.entity';
+import { BaseEntity } from '../../util/base-entity';
 
 @Entity()
-export class ProductVariation {
-  @PrimaryColumn({
+export class ProductVariation extends BaseEntity {
+  @Column({
     type: 'varchar',
     length: 24,
     unique: true,
@@ -39,6 +40,6 @@ export class ProductVariation {
       onDelete: 'CASCADE',
     },
   )
-  @JoinColumn({ name: 'product_sku' })
+  @JoinColumn({ name: 'product_id' })
   product: Product;
 }

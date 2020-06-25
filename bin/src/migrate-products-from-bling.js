@@ -33,28 +33,14 @@ async function getToken() {
   return body.access_token;
 }
 
-async function insertProductVariation(token, variation, delay) {
-  return new Promise((res, rej) => {
-    setTimeout(async () => {
-      try {
-        console.log(`inserting ${variation.sku} with ${delay}ms delay`);
-        await got.post("http://localhost:3000/v1/products/variations", {
-          json: variation,
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-          responseType: "json",
-        });
-        res();
-      } catch (e) {
-        console.log(`had problems on ${variation.sku} with ${delay}ms delay`);
-        rej();
-      }
-    }, delay);
-  });
-}
-
 async function insertProduct(token, product, delay) {
+  if (product.variations) {
+    product.productVariations = product.variations.map(variation => ({
+      parentSku: product.sku,
+      ...variation,
+    }));
+  }
+
   return new Promise((res, rej) => {
     setTimeout(async () => {
       try {
@@ -192,25 +178,6 @@ async function insertProduct(token, product, delay) {
       return insertProduct(token, product, index * 10);
     });
     await Promise.all(insertProductJobs);
-
-    const variationsToBeSaved = productsToBeSaved
-      .filter(
-        (parentProduct) =>
-          parentProduct.variations && parentProduct.variations.length > 0
-      )
-      .flatMap((parentProduct) => {
-        return parentProduct.variations.map((variation) => ({
-          sku: variation.sku,
-          parentSku: parentProduct.sku,
-          description: variation.description,
-          sellingPrice: variation.sellingPrice,
-        }));
-      });
-    const insertVariationJobs = variationsToBeSaved.map((variation, index) => {
-      return insertProductVariation(token, variation, index * 10);
-    });
-    await Promise.all(insertVariationJobs);
-
     console.log("done");
   } catch (error) {
     console.log(error);

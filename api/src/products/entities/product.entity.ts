@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ProductVariation } from './product-variation.entity';
+import { BaseEntity } from '../../util/base-entity';
 
 @Entity()
-export class Product {
-  @PrimaryColumn({
+export class Product extends BaseEntity {
+  @Column({
     type: 'varchar',
     length: 24,
     unique: true,
@@ -74,7 +75,7 @@ export class Product {
     productVariation => productVariation.product,
     {
       cascade: ['insert', 'update', 'remove'],
-      eager: true
+      eager: true,
     },
   )
   productVariations: ProductVariation[];

@@ -103,6 +103,7 @@ export class ProductsService {
     this.productVariationsRepository.remove(excludedVariations);
 
     return this.productsRepository.save({
+      id: product.id,
       ...productDTO,
       variationsSize: productDTO.productVariations?.length,
     });

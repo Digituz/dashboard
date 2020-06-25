@@ -9,11 +9,12 @@
 //     size: 20343
 // }
 
-import { Entity, PrimaryColumn, Column } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity } from '../util/base-entity';
 
 @Entity()
-export class Image {
-  @PrimaryColumn({
+export class Image extends BaseEntity {
+  @Column({
     name: 'main_filename',
     type: 'varchar',
     length: 140,
@@ -29,7 +30,7 @@ export class Image {
     nullable: false,
   })
   originalFilename: string;
-  
+
   @Column({
     name: 'mimetype',
     type: 'varchar',

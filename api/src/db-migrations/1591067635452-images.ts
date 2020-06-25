@@ -5,7 +5,8 @@ export class images1591067635452 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
             create table image (
-                main_filename varchar(140) not null,
+                id serial primary key,
+                main_filename varchar(140) not null unique,
                 original_filename varchar(140) not null,
                 mimetype varchar(30) not null,
                 original_file_url varchar(400) not null,
@@ -14,7 +15,10 @@ export class images1591067635452 implements MigrationInterface {
                 medium_file_url varchar(400) not null,
                 small_file_url varchar(400) not null,
                 thumbnail_file_url varchar(400) not null,
-                constraint pk_image primary key(main_filename)
+                created_at timestamp with time zone,
+                updated_at timestamp with time zone,
+                deleted_at timestamp with time zone,
+                version integer
             );
         `);
         await queryRunner.query(`create unique index uidx_image_original_file_url on image(original_file_url);`);

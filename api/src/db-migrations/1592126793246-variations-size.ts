@@ -8,8 +8,8 @@ export class variationsSize1592126793246 implements MigrationInterface {
     await queryRunner.query(`
         update product set variations_size = (
             select count(1) from product_variation
-            where product_variation.product_sku = product.sku
-            group by product_sku
+            where product_variation.product_id = product.id
+            group by product_id
         );`);
   }
 
