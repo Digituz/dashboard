@@ -63,9 +63,4 @@ export class ProductsController {
   async save(@Body() productDTO: ProductDTO) {
     this.productsService.save(productDTO);
   }
-
-  @Post('variations')
-  async saveVariation(@Body() productVariationDTO: ProductVariationDTO) {
-    this.productsService.saveVariation(productVariationDTO);
-  }
 }

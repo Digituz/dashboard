@@ -9,6 +9,8 @@ import { MediaLibraryModule } from './media-library/media-library.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
+import { TagsModule } from './tags/tags.module';
+import { Tag } from './tags/tag.entity';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { User } from './users/user.entity';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [Product, ProductVariation, Image, User],
+      entities: [Product, ProductVariation, Image, User, Tag],
       synchronize: false,
       migrationsTableName: 'database_migrations',
       migrations: ['src/db-migrations/*.js'],
@@ -32,6 +34,7 @@ import { User } from './users/user.entity';
     MediaLibraryModule,
     AuthModule,
     UsersModule,
+    TagsModule,
   ],
   controllers: [],
   providers: [],

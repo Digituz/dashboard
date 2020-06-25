@@ -4,9 +4,10 @@ import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
 import { Product } from './entities/product.entity';
 import { ProductVariation } from './entities/product-variation.entity';
+import { TagsModule } from 'src/tags/tags.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Product, ProductVariation])],
+    imports: [TagsModule, TypeOrmModule.forFeature([Product, ProductVariation])],
     providers: [ProductsService],
     controllers: [ProductsController]
 })
