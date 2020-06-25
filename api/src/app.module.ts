@@ -28,7 +28,7 @@ import { Tag } from './tags/tag.entity';
       cli: {
         migrationsDir: 'src/db-migrations',
       },
-      logging: false,
+      logging: true,
     }),
     ProductsModule,
     MediaLibraryModule,
