@@ -11,7 +11,10 @@
   (uploadHandler)="uploadFiles($event)"
 >
   <ng-template pTemplate="content">
-    <div class="upload-message" *ngIf="(!imagesSelectedForUpload || imagesSelectedForUpload.length === 0) && !isUploading">
+    <div
+      class="upload-message"
+      *ngIf="(!imagesSelectedForUpload || imagesSelectedForUpload.length === 0) && !isUploading"
+    >
       <i class="fal fa-upload"></i>
       <p>Selecione uma ou mais imagens para fazer upload.</p>
     </div>
@@ -22,35 +25,36 @@
   </ng-template>
 </p-fileUpload>
 
+<div class="search-container">
+  <p-autoComplete
+    [(ngModel)]="texts"
+    [suggestions]="results"
+    (completeMethod)="search($event)"
+    [multiple]="true"
+  ></p-autoComplete>
+</div>
+
 <div class="feature-header">
   <p>
     <label>Controle as imagens do seu negócio de forma simplificada.</label>
   </p>
-  <div class="actions">
-    <button pButton (click)="toggleManagementSection()" label="Gerenciar Imagens"></button>
-  </div>
-</div>
-
-<div class="management-section">
-  <p-autoComplete [(ngModel)]="texts" [suggestions]="results" (completeMethod)="search($event)" [multiple]="true"></p-autoComplete>
-</div>
-
-<div class="container">
-  <div
-    class="image-in-gallery"
-    *ngFor="let image of images"
-    [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"
-    [ngClass]="image.selected ? 'selected' : ''"
-  >
-    <span class="select" (click)="selectImage(image)" *ngIf="!image.selected">
-      <i class="fal fa-square"></i>
-    </span>
-    <span class="deselect" (click)="deselectImage(image)" *ngIf="image.selected">
-      <i class="fal fa-check-square"></i>
-    </span>
-    <span class="look" (click)="showLargeImage(image)">
-      <i class="fal fa-search"></i>
-    </span>
+  <div class="container">
+    <div
+      class="image-in-gallery"
+      *ngFor="let image of images"
+      [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"
+      [ngClass]="image.selected ? 'selected' : ''"
+    >
+      <span class="select" (click)="selectImage(image)" *ngIf="!image.selected">
+        <i class="fal fa-square"></i>
+      </span>
+      <span class="deselect" (click)="deselectImage(image)" *ngIf="image.selected">
+        <i class="fal fa-check-square"></i>
+      </span>
+      <span class="look" (click)="showLargeImage(image)">
+        <i class="fal fa-search"></i>
+      </span>
+    </div>
   </div>
 </div>
 <p-dialog
