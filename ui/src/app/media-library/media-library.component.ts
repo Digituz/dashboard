@@ -11,6 +11,7 @@ import { map, switchMap, debounceTime } from 'rxjs/operators';
 import Product from '@app/products/product.entity';
 import { Pagination } from '@app/util/pagination';
 import { HttpClient } from '@angular/common/http';
+import { TagsService } from '@app/tags/tags.service';
 
 @Component({
   selector: 'app-media-library',
@@ -40,7 +41,8 @@ export class MediaLibraryComponent implements OnInit {
     private breadcrumbsService: BreadcrumbsService,
     private productsService: ProductsService,
     private imageService: ImageService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private tagsService: TagsService
   ) {}
 
   private reloadImages() {
@@ -145,9 +147,10 @@ export class MediaLibraryComponent implements OnInit {
       });
   }
 
-    search(event: any) {
-        // this.mylookupservice.getResults(event.query).then(data => {
-        //     this.results = data;
-        // });
-    }
+  search(event: any) {
+    console.log('a 1');
+    this.tagsService.findTags(event.query).subscribe((tags) => {
+      this.results = tags.map((tag) => `${tag.label} - ${tag.description}`);
+    });
+  }
 }
