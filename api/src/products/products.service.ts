@@ -7,8 +7,8 @@ import * as _ from 'lodash';
 import { Product } from './entities/product.entity';
 import { ProductDTO } from './dtos/product.dto';
 import { ProductVariation } from './entities/product-variation.entity';
-import { IPaginationOpts } from 'src/pagination/pagination';
-import { TagsService } from 'src/tags/tags.service';
+import { IPaginationOpts } from '../pagination/pagination';
+import { TagsService } from '../tags/tags.service';
 
 @Injectable()
 export class ProductsService {
