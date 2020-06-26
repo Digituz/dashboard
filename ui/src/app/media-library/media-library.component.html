@@ -26,37 +26,53 @@
 </p-fileUpload>
 
 <div class="search-container">
-  <p-autoComplete
-    [(ngModel)]="texts"
-    [suggestions]="results"
-    (completeMethod)="search($event)"
-    [multiple]="true"
-  ></p-autoComplete>
+  <div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+      <label for="query">Tags:</label>
+      <p-autoComplete
+        [(ngModel)]="texts"
+        [suggestions]="results"
+        (completeMethod)="search($event)"
+        [multiple]="true"
+      ></p-autoComplete>
+    </div>
+    <div class="p-field p-col-fixed" style="width: 120px;">
+      <label>&nbsp;</label>
+      <div>
+        <button style="width: 100%;" pButton label="Aplicar Tags"></button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="feature-header">
   <p>
     <label>Controle as imagens do seu negócio de forma simplificada.</label>
   </p>
-  <div class="container">
-    <div
-      class="image-in-gallery"
-      *ngFor="let image of images"
-      [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"
-      [ngClass]="image.selected ? 'selected' : ''"
-    >
-      <span class="select" (click)="selectImage(image)" *ngIf="!image.selected">
-        <i class="fal fa-square"></i>
-      </span>
-      <span class="deselect" (click)="deselectImage(image)" *ngIf="image.selected">
-        <i class="fal fa-check-square"></i>
-      </span>
-      <span class="look" (click)="showLargeImage(image)">
-        <i class="fal fa-search"></i>
-      </span>
-    </div>
+  <div></div>
+  <div class="">
+    <button pButton label="Filtrar"></button>
   </div>
 </div>
+<div class="container">
+  <div
+    class="image-in-gallery"
+    *ngFor="let image of images"
+    [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"
+    [ngClass]="image.selected ? 'selected' : ''"
+  >
+    <span class="select" (click)="selectImage(image)" *ngIf="!image.selected">
+      <i class="fal fa-square"></i>
+    </span>
+    <span class="deselect" (click)="deselectImage(image)" *ngIf="image.selected">
+      <i class="fal fa-check-square"></i>
+    </span>
+    <span class="look" (click)="showLargeImage(image)">
+      <i class="fal fa-search"></i>
+    </span>
+  </div>
+</div>
+
 <p-dialog
   [header]="modalTitle"
   [(visible)]="isModalVisible"

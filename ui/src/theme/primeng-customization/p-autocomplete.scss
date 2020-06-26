@@ -1,0 +1,10 @@
+p-autocomplete {
+  width: 100%;
+  display: block;
+
+  .ui-autocomplete,
+  .ui-autocomplete ul {
+    width: 100%;
+    display: block;
+  }
+}

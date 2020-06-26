@@ -1,3 +1,5 @@
+@import "primeng-customization/p-autocomplete";
+
 body .ui-button {
   background-color: rgb(24, 144, 255);
   border-color: rgb(64, 169, 255);;
@@ -15,6 +17,7 @@ body .ui-button {
   .ui-button-text {
     font-size: 13px;
     padding: 7px 15px;
+    line-height: 19px;
   }
 
   span.ui-button-icon-left {
