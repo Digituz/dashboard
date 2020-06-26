@@ -12,6 +12,7 @@ import Product from '@app/products/product.entity';
 import { Pagination } from '@app/util/pagination';
 import { HttpClient } from '@angular/common/http';
 import { TagsService } from '@app/tags/tags.service';
+import Tag from '@app/tags/tag.entity';
 
 @Component({
   selector: 'app-media-library',
@@ -31,8 +32,8 @@ export class MediaLibraryComponent implements OnInit {
   selectedProduct?: string;
   optionList: string[] = [];
   imagesSelectedForUpload: File[] = [];
-  texts: string[];
-  results: string[];
+  selectedTags: Tag[];
+  tagsFound: Tag[];
 
   selectedImages: Image[] = [];
 
@@ -143,9 +144,8 @@ export class MediaLibraryComponent implements OnInit {
   }
 
   search(event: any) {
-    console.log('a 1');
     this.tagsService.findTags(event.query).subscribe((tags) => {
-      this.results = tags.map((tag) => `${tag.label} - ${tag.description}`);
+      this.tagsFound = tags;
     });
   }
 }

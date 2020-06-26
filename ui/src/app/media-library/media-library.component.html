@@ -30,11 +30,16 @@
     <div class="p-field p-col">
       <label for="query">Tags:</label>
       <p-autoComplete
-        [(ngModel)]="texts"
-        [suggestions]="results"
+        [(ngModel)]="selectedTags"
+        [suggestions]="tagsFound"
         (completeMethod)="search($event)"
         [multiple]="true"
-      ></p-autoComplete>
+        field="label"
+      >
+        <ng-template let-tag pTemplate="item">
+          <div>{{ tag.label }} - {{ tag.description }}</div>
+        </ng-template>
+      </p-autoComplete>
     </div>
     <div class="p-field p-col-fixed" style="width: 120px;">
       <label>&nbsp;</label>

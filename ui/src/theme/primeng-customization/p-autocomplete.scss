@@ -1,3 +1,5 @@
+@import "../theme-variables";
+
 p-autocomplete {
   width: 100%;
   display: block;
@@ -6,5 +8,26 @@ p-autocomplete {
   .ui-autocomplete ul {
     width: 100%;
     display: block;
+  }
+
+  .ui-autocomplete.ui-autocomplete-multiple {
+    .ui-autocomplete-multiple-container {
+      li.ui-autocomplete-token {
+        background-color: $button-primary-color;
+        border-color: $button-primary-border-color;
+        border-radius: $default-border-radius;
+        font-size: 13px;
+
+        span.ui-autocomplete-token-label {
+          margin-right: 22px;
+        }
+
+        span.ui-autocomplete-token-icon {
+          font-size: 10px;
+          margin-right: 3px;
+          margin-top: -4px;
+        }
+      }
+    }
   }
 }
