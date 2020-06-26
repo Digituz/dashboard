@@ -13,10 +13,7 @@ p-autocomplete {
   .ui-autocomplete.ui-autocomplete-multiple {
     .ui-autocomplete-multiple-container {
       li.ui-autocomplete-token {
-        background-color: $button-primary-color;
-        border-color: $button-primary-border-color;
-        border-radius: $default-border-radius;
-        font-size: 13px;
+        @include button-primary;
 
         span.ui-autocomplete-token-label {
           margin-right: 22px;

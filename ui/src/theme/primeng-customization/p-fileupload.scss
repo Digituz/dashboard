@@ -1,0 +1,21 @@
+@import "../theme-variables";
+
+p-fileupload {
+  button.ui-state-disabled {
+    display: none;
+  }
+
+  .ui-fileupload-choose.ui-button {
+    @include button-primary;
+  }
+
+  .ui-fileupload-choose {
+    @include button-primary;
+  }
+
+  .ui-fileupload-files {
+    .ui-button {
+      @include button-primary;
+    }
+  }
+}
