@@ -8,11 +8,19 @@ body .ui-button {
   font-size: 13px;
 
   &:enabled:hover,
-  &:enabled:focus,
-  &:hover,
-  &:focus {
+  &:enabled:focus {
     background-color: #40a9ff;
     border-color: #40a9ff;
+  }
+
+  &.ui-state-default.ui-button-danger:enabled:hover,
+  &.ui-state-default.ui-button-danger:enabled:focus {
+    background-color: #ff2a3c;
+    border-color: #f21b2d;
+  }
+
+  &.ui-button-danger:disabled {
+    cursor: not-allowed;
   }
 
   .ui-button-text {
