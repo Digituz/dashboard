@@ -22,4 +22,8 @@ export class TagsService {
       .limit(10)
       .getMany();
   }
+
+  async findByIds(ids: string[]): Promise<Tag[]> {
+    return this.tagsRepository.findByIds(ids);
+  }
 }
