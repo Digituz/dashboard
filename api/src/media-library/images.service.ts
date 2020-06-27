@@ -17,7 +17,7 @@ export class ImagesService {
 
   async findAll(archived = false): Promise<Image[]> {
     return this.imagesRepository.find({
-      where: { archived }
+      where: { archived },
     });
   }
 
@@ -28,5 +28,13 @@ export class ImagesService {
       .leftJoinAndSelect('image.tags', 'tags')
       .where('image.id = :id', { id })
       .getOne();
+  }
+
+  findAllWithTag(tagLabel: string): Promise<Image[]> {
+    return this.imagesRepository
+      .createQueryBuilder('image')
+      .leftJoin('image.tags', 'tag')
+      .where('tag.label = :label', { label: tagLabel })
+      .getMany();
   }
 }

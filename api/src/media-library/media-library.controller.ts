@@ -144,6 +144,11 @@ export class MediaLibraryController {
     return this.imagesService.findAll();
   }
 
+  @Get('with-tag/:tagLabel')
+  findAllWithTag(@Param('tagLabel') tagLabel: string): Promise<Image[]> {
+    return this.imagesService.findAllWithTag(tagLabel);
+  }
+
   @Get(':imageId')
   find(@Param('imageId') imageId: number): Promise<Image> {
     return this.imagesService.findById(imageId);

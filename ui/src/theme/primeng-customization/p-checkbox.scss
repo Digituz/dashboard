@@ -1,0 +1,14 @@
+@import "../theme-variables.scss";
+
+body .ui-chkbox .ui-chkbox-box {
+  border-radius: $default-border-radius;
+}
+
+body .ui-chkbox .ui-chkbox-box.ui-state-active:not(.ui-state-disabled) {
+  @include button-primary;
+}
+
+body .ui-chkbox .ui-chkbox-box .ui-chkbox-icon {
+  font-size: 10px;
+  padding: 4px 2px;
+}

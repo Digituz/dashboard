@@ -32,6 +32,10 @@ export class ImageService {
     }));
   }
 
+  public withTags(tagLabel: string): Observable<Image[]> {
+    return this.httpClient.get<Image[]>(`${this.IMAGES_ENDPOINT}/with-tag/${tagLabel}`);
+  }
+
   loadImage(id: number) {
     return this.httpClient.get<Image>(`${this.IMAGES_ENDPOINT}/${id}`);
   }

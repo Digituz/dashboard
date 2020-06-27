@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -14,11 +15,13 @@ import { SharedModule } from '../@shared/shared.module';
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsComponent } from './products.component';
 import { ProductFormComponent } from './product-form/product-form.component';
+import { ProductImagesComponent } from './product-form/product-images/product-images.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
+import { ImageService } from '@app/media-library/image.service';
 
 @NgModule({
-  declarations: [ProductsComponent, ProductFormComponent, ProductsListComponent],
+  declarations: [ProductsComponent, ProductFormComponent, ProductImagesComponent, ProductsListComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -26,6 +29,7 @@ import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
     CommonModule,
     ButtonModule,
     CardModule,
+    CheckboxModule,
     DialogModule,
     DropdownModule,
     InputNumberModule,
@@ -34,5 +38,6 @@ import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
     ProductsRoutingModule,
     BreadcrumbsModule,
   ],
+  providers: [ImageService],
 })
 export class ProductsModule {}

@@ -1,0 +1,34 @@
+<div class="feature-header" style="margin-top: 30px;">
+  <h2>Imagens do Produto</h2>
+  <p>
+    <label>Este produto ainda não tem imagens vinculadas.</label>
+  </p>
+  <div class="actions">
+    <button pButton type="button" (click)="openImagesDialog()" label="Vincular Imagens"></button>
+  </div>
+</div>
+<p-dialog
+  header="Acervo de Imagens"
+  [(visible)]="isModalVisible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [resizable]="false"
+  [draggable]="false"
+>
+  <div class="images-container">
+    <div class="image" *ngFor="let image of images">
+      <div class="select-image">
+        <p-checkbox name="selectedImages" [value]="image" [(ngModel)]="selectedImages"></p-checkbox>
+      </div>
+      <img class="image-thumbnail" [src]="image.smallFileURL" [alt]="image.originalFilename" />
+      <div class="image-details">
+        <p>Nome da Imagem: {{ image.originalFilename }}</p>
+        <p>Imagem Original: <a target="_blank" [href]="image.originalFileURL">{{ image.originalFileURL }}</a></p>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button pButton type="button" class="ui-button-secondary" (click)="closeDialog()" label="Cancelar"></button>
+    <button pButton type="button" class="ui-button-primary" (click)="saveProductImages()" label="Salvar"></button>
+  </p-footer>
+</p-dialog>

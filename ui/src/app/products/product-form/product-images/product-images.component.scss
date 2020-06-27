@@ -1,0 +1,28 @@
+div.images-container {
+  display: flex;
+  flex-direction: column;
+
+  div.image {
+    display: flex;
+    flex-direction: row;
+
+    div.select-image {
+      width: 25px;
+      display: flex;
+      justify-items: center;
+      align-items: center;
+    }
+
+    div.image-details {
+      padding: 5px;
+
+      p {
+        line-height: 25px;
+      }
+    }
+
+    img.image-thumbnail {
+      max-width: 80px;
+    }
+  }
+}
