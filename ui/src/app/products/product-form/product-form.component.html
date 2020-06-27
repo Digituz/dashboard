@@ -136,6 +136,9 @@
         <button pButton type="button" (click)="editProductVariation(variation)" label="Editar"></button>
       </td>
     </tr>
+    <tr *ngIf="!variations || variations.length === 0">
+      <td colspan="4" style="text-align: center;">Produto sem variações cadastradas.</td>
+    </tr>
   </tbody>
 </table>
 <p-dialog
