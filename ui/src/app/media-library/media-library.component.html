@@ -87,5 +87,15 @@
   [draggable]="false"
   (onHide)="clearModal()"
 >
-  <img style="max-width: 100%;" [src]="modalImage" [alt]="modalTitle" />
+  <div class="img-container">
+    <img [src]="modalImage" [alt]="modalTitle" />
+  </div>
+  <div class="image-tags">
+    <div *ngIf="!selectedImage">
+      <i class="fal fa-spinner"></i> Carregando tags...
+    </div>
+    <div class="tags-container">
+      <div class="tag" *ngFor="let tag of selectedImage?.tags"><span>{{ tag.label }}<i class="fal fa-times"></i></span></div>
+    </div>
+  </div>
 </p-dialog>
