@@ -148,6 +148,7 @@ export class MediaLibraryController {
     const image = await this.imagesService.findById(imageId);
     const newTags = await this.tagsService.findByLabels(tags);
     image.tags = newTags;
+    image.numberOfTags = newTags.length;
     return this.imagesService.save(image);
   }
 }

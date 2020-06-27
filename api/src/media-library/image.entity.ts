@@ -101,4 +101,12 @@ export class Image extends BaseEntity {
     inverseJoinColumn: { name: 'tag_id' },
   })
   tags?: Tag[];
+
+  @Column({
+    name: 'number_of_tags',
+    type: 'int',
+    unique: false,
+    nullable: false,
+  })
+  numberOfTags: number = 0;
 }

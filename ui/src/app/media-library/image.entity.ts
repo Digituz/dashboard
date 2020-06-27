@@ -1,3 +1,5 @@
+import Tag from '@app/tags/tag.entity';
+
 export class Image {
   id?: number;
 
@@ -10,6 +12,9 @@ export class Image {
   mediumFileURL: string;
   smallFileURL: string;
   thumbnailFileURL: string;
+
+  tags: Tag[];
+  numberOfTags: number = 0;
 
   // transient
   selected?: boolean;
