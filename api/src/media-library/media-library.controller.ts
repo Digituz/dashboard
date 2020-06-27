@@ -8,6 +8,7 @@ import {
   Get,
   Body,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import execa from 'execa';
@@ -154,6 +155,14 @@ export class MediaLibraryController {
     const newTags = await this.tagsService.findByLabels(tags);
     image.tags = newTags;
     image.numberOfTags = newTags.length;
+    return this.imagesService.save(image);
+  }
+
+  @Delete(':imageId/tag/:tagLabel')
+  async removeTag(@Param('imageId') imageId: number, @Param('tagLabel') tagLabel: string): Promise<Image> {
+    const image = await this.imagesService.findById(imageId);
+    image.tags = image.tags.filter((tag) => tag.label !== tagLabel);
+    image.numberOfTags = image.tags.length;
     return this.imagesService.save(image);
   }
 }

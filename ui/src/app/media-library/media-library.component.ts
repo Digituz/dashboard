@@ -158,4 +158,10 @@ export class MediaLibraryComponent implements OnInit {
       this.selectedTags = null;
     });
   }
+
+  removeTag(tag: Tag) {
+    this.imageService.removeTag(this.selectedImage, tag).subscribe(() => {
+      this.selectedImage.tags = this.selectedImage.tags.filter((imageTag) => imageTag.label !== tag.label);
+    });
+  }
 }

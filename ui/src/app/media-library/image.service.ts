@@ -22,6 +22,10 @@ export class ImageService {
     }));
   }
 
+  public removeTag(image: Image, tag: Tag): Observable<void> {
+    return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}/tag/${tag.label}`);
+  }
+
   loadImage(id: number) {
     return this.httpClient.get<Image>(`${this.IMAGES_ENDPOINT}/${id}`);
   }

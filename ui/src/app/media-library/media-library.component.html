@@ -95,7 +95,7 @@
       <i class="fal fa-spinner"></i> Carregando tags...
     </div>
     <div class="tags-container">
-      <div class="tag" *ngFor="let tag of selectedImage?.tags"><span>{{ tag.label }}<i class="fal fa-times"></i></span></div>
+      <div class="tag" *ngFor="let tag of selectedImage?.tags" (click)="removeTag(tag)"><span>{{ tag.label }}<i class="fal fa-times"></i></span></div>
     </div>
   </div>
 </p-dialog>
