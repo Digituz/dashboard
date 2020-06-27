@@ -66,6 +66,9 @@
     [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"
     [ngClass]="image.selected ? 'selected' : ''"
   >
+    <span class="number-of-tags" *ngIf="image.numberOfTags > 0">
+      {{ image.numberOfTags }}
+    </span>
     <span class="select" (click)="selectImage(image)" *ngIf="!image.selected">
       <i class="fal fa-square"></i>
     </span>
