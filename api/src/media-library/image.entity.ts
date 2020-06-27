@@ -95,6 +95,10 @@ export class Image extends BaseEntity {
   thumbnailFileURL: string;
 
   @ManyToMany(type => Tag)
-  @JoinTable()
+  @JoinTable({
+    name: 'image_tag',
+    joinColumn: { name: 'image_id' },
+    inverseJoinColumn: { name: 'tag_id' },
+  })
   tags?: Tag[];
 }

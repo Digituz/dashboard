@@ -1,4 +1,6 @@
 export class Image {
+  id?: number;
+
   mainFilename: string;
   originalFilename: string;
   mimetype: string;

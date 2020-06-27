@@ -1,6 +1,7 @@
 ## Prerequisites
 
 - `typeorm` installed globally
+- `ts-node` installed globally
 - PostgreSQL database up, running, and fed
 
 ## Steps
@@ -13,7 +14,19 @@ cd api
 typeorm migration:create -n image-tags
 ```
 
-The last command generates a file like `api/src/db-migrations/1593177822667-image-tags.ts`. Now, it is just a matter of inserting the code that will adjust the database. You can check the migrations directory for examples.
+The last command generates a file like `api/src/db-migrations/1593177822667-image-tags.ts`. Now, you can insert the code that will adjust the database. To do so, you can check the migrations directory for examples.
+
+After you finish writing the migration, you will need to run it to update you database:
+
+```bash
+ts-node ./node_modules/typeorm/cli.js migration:run
+```
+
+Note that this will run all the migrations that haven't been run yet. Later, if you need to, you can revert one migration at a time by issuing this:
+
+```bash
+ts-node ./node_modules/typeorm/cli.js migration:revert
+```
 
 ## Tips
 

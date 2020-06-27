@@ -148,4 +148,10 @@ export class MediaLibraryComponent implements OnInit {
       this.tagsFound = tags;
     });
   }
+
+  applyTags() {
+    this.imageService.applyTags(this.selectedImages, this.selectedTags).subscribe(() => {
+      this.selectedTags = null;
+    });
+  }
 }

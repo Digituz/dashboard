@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Image } from './image.entity';
-import { Observable } from 'rxjs';
+import { merge, Observable } from 'rxjs';
+import Tag from '@app/tags/tag.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -13,5 +14,11 @@ export class ImageService {
 
   public loadImages(): Observable<Image[]> {
     return this.httpClient.get<Image[]>(this.IMAGES_ENDPOINT);
+  }
+
+  public applyTags(images: Image[],tags: Tag[]): Observable<void> {
+    return merge(...images.map(image => {
+      return this.httpClient.post<void>(`${this.IMAGES_ENDPOINT}/${image.id}`, tags.map(tag => tag.label));
+    }));
   }
 }
