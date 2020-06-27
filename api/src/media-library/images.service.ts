@@ -20,6 +20,11 @@ export class ImagesService {
   }
 
   async findById(id: number) {
-    return this.imagesRepository.findOne(id);
+    // return this.imagesRepository.findOne(id);
+    return this.imagesRepository
+      .createQueryBuilder('image')
+      .leftJoinAndSelect('image.tags', 'tags')
+      .where('image.id = :id', { id })
+      .getOne();
   }
 }

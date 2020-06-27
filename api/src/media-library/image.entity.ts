@@ -108,5 +108,5 @@ export class Image extends BaseEntity {
     unique: false,
     nullable: false,
   })
-  numberOfTags: number = 0;
+  numberOfTags?: number = 0;
 }

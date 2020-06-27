@@ -35,6 +35,7 @@ export class MediaLibraryComponent implements OnInit {
   selectedTags: Tag[];
   tagsFound: Tag[];
 
+  selectedImage: Image;
   selectedImages: Image[] = [];
 
   constructor(
@@ -78,6 +79,9 @@ export class MediaLibraryComponent implements OnInit {
     this.isModalVisible = true;
     this.modalTitle = image.originalFilename;
     this.modalImage = image.largeFileURL;
+    this.imageService.loadImage(image.id).subscribe((image) => {
+      this.selectedImage = image;
+    });
   }
 
   selectImage(image: Image): void {

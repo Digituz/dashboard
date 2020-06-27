@@ -143,6 +143,11 @@ export class MediaLibraryController {
     return this.imagesService.findAll();
   }
 
+  @Get(':imageId')
+  find(@Param('imageId') imageId: number): Promise<Image> {
+    return this.imagesService.findById(imageId);
+  }
+
   @Post(':imageId')
   async save(@Body() tags: string[], @Param('imageId') imageId: number): Promise<Image> {
     const image = await this.imagesService.findById(imageId);

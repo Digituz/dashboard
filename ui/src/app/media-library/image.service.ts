@@ -21,4 +21,8 @@ export class ImageService {
       return this.httpClient.post<void>(`${this.IMAGES_ENDPOINT}/${image.id}`, tags.map(tag => tag.label));
     }));
   }
+
+  loadImage(id: number) {
+    return this.httpClient.get<Image>(`${this.IMAGES_ENDPOINT}/${id}`);
+  }
 }
