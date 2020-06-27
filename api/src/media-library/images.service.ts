@@ -15,11 +15,13 @@ export class ImagesService {
     return this.imagesRepository.save(image);
   }
 
-  async findAll(): Promise<Image[]> {
-    return this.imagesRepository.find();
+  async findAll(archived = false): Promise<Image[]> {
+    return this.imagesRepository.find({
+      where: { archived }
+    });
   }
 
-  async findById(id: number) {
+  async findById(id: number): Promise<Image> {
     // return this.imagesRepository.findOne(id);
     return this.imagesRepository
       .createQueryBuilder('image')

@@ -158,6 +158,13 @@ export class MediaLibraryController {
     return this.imagesService.save(image);
   }
 
+  @Delete(':imageId')
+  async archiveImage(@Param('imageId') imageId: number): Promise<Image> {
+    const image = await this.imagesService.findById(imageId);
+    image.archived = true;
+    return this.imagesService.save(image);
+  }
+
   @Delete(':imageId/tag/:tagLabel')
   async removeTag(@Param('imageId') imageId: number, @Param('tagLabel') tagLabel: string): Promise<Image> {
     const image = await this.imagesService.findById(imageId);

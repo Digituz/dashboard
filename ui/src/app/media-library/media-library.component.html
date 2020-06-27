@@ -56,7 +56,7 @@
   </p>
   <div></div>
   <div class="">
-    <button pButton class="ui-button-danger" label="Arquivar" disabled></button>
+    <button pButton class="ui-button-danger" label="Arquivar" [disabled]="selectedImages?.length === 0" (click)="archiveImages()"></button>
     <button pButton label="Filtrar"></button>
   </div>
 </div>

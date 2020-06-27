@@ -16,7 +16,7 @@ export class ImageService {
     return this.httpClient.get<Image[]>(this.IMAGES_ENDPOINT);
   }
 
-  public applyTags(images: Image[],tags: Tag[]): Observable<void> {
+  public applyTags(images: Image[], tags: Tag[]): Observable<void> {
     return merge(...images.map(image => {
       return this.httpClient.post<void>(`${this.IMAGES_ENDPOINT}/${image.id}`, tags.map(tag => tag.label));
     }));
@@ -24,6 +24,12 @@ export class ImageService {
 
   public removeTag(image: Image, tag: Tag): Observable<void> {
     return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}/tag/${tag.label}`);
+  }
+
+  public archiveImages(images: Image[]): Observable<void> {
+    return merge(...images.map(image => {
+      return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}`);
+    }));
   }
 
   loadImage(id: number) {

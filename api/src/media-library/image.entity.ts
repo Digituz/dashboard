@@ -109,4 +109,12 @@ export class Image extends BaseEntity {
     nullable: false,
   })
   numberOfTags?: number = 0;
+
+  @Column({
+    name: 'archived',
+    type: 'boolean',
+    unique: false,
+    nullable: false,
+  })
+  archived?: boolean = false;
 }

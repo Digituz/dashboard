@@ -49,6 +49,7 @@ export class MediaLibraryComponent implements OnInit {
   private reloadImages() {
     this.imageService.loadImages().subscribe((images) => {
       this.images = images;
+      this.selectedImages = [];
     });
   }
 
@@ -162,6 +163,13 @@ export class MediaLibraryComponent implements OnInit {
   removeTag(tag: Tag) {
     this.imageService.removeTag(this.selectedImage, tag).subscribe(() => {
       this.selectedImage.tags = this.selectedImage.tags.filter((imageTag) => imageTag.label !== tag.label);
+      this.reloadImages();
+    });
+  }
+
+  archiveImages() {
+    this.imageService.archiveImages(this.selectedImages).subscribe(() => {
+      this.reloadImages();
     });
   }
 }

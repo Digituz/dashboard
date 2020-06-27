@@ -15,6 +15,7 @@ export class Image {
 
   tags: Tag[];
   numberOfTags: number = 0;
+  archived: boolean = false;
 
   // transient
   selected?: boolean;
