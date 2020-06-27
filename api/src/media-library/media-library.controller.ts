@@ -146,7 +146,7 @@ export class MediaLibraryController {
   @Post(':imageId')
   async save(@Body() tags: string[], @Param('imageId') imageId: number): Promise<Image> {
     const image = await this.imagesService.findById(imageId);
-    const newTags = await this.tagsService.findByIds(tags);
+    const newTags = await this.tagsService.findByLabels(tags);
     image.tags = newTags;
     return this.imagesService.save(image);
   }

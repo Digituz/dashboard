@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { Tag } from './tag.entity';
 
 @Injectable()
@@ -18,12 +18,17 @@ export class TagsService {
     return this.tagsRepository
       .createQueryBuilder('tag')
       .where('tag.label like :query', { query: `%${query.toLowerCase()}%` })
-      .orWhere('tag.description like :query', { query: `%${query.toLowerCase()}%` })
+      .orWhere('tag.description like :query', {
+        query: `%${query.toLowerCase()}%`,
+      })
       .limit(10)
       .getMany();
   }
 
-  async findByIds(ids: string[]): Promise<Tag[]> {
-    return this.tagsRepository.findByIds(ids);
+  async findByLabels(labels: string[]): Promise<Tag[]> {
+    return this.tagsRepository.find({
+      where: { label: In(labels) },
+      order: { description: 'ASC' },
+    });
   }
 }
