@@ -1,39 +1,7 @@
 @import "primeng-customization/p-autocomplete";
+@import "primeng-customization/p-button";
 @import "primeng-customization/p-checkbox";
 @import "primeng-customization/p-fileupload";
-
-body .ui-button {
-  background-color: rgb(24, 144, 255);
-  border-color: rgb(64, 169, 255);
-  border-radius: 2px;
-  font-size: 13px;
-
-  &:enabled:hover,
-  &:enabled:focus {
-    background-color: #40a9ff;
-    border-color: #40a9ff;
-  }
-
-  &.ui-state-default.ui-button-danger:enabled:hover,
-  &.ui-state-default.ui-button-danger:enabled:focus {
-    background-color: #ff2a3c;
-    border-color: #f21b2d;
-  }
-
-  &.ui-button-danger:disabled {
-    cursor: not-allowed;
-  }
-
-  .ui-button-text {
-    font-size: 13px;
-    padding: 7px 15px;
-    line-height: 19px;
-  }
-
-  span.ui-button-icon-left {
-    font-size: 12px;
-  }
-}
 
 p-fileupload {
   .ui-fileupload-buttonbar {
@@ -125,11 +93,6 @@ body .ui-inputtext:enabled:focus:not(.ui-state-error) {
       border-radius: 1px;
     }
   }
-}
-
-button.ui-button {
-  border-radius: 2px;
-  box-shadow: none;
 }
 
 body .ui-card {
