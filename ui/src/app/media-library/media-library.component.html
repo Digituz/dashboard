@@ -94,7 +94,8 @@
     <div *ngIf="!selectedImage">
       <i class="fal fa-spinner"></i> Carregando tags...
     </div>
-    <div class="tags-container">
+    <div class="tags-container" *ngIf="selectedImage">
+      <div *ngIf="!selectedImage.tags || selectedImage.tags.length === 0">Imagem sem tags atribuídas.</div>
       <div class="tag" *ngFor="let tag of selectedImage?.tags" (click)="removeTag(tag)"><span>{{ tag.label }}<i class="fal fa-times"></i></span></div>
     </div>
   </div>
