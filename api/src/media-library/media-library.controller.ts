@@ -6,6 +6,8 @@ import {
   UploadedFile,
   UseGuards,
   Get,
+  Body,
+  Param,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import execa from 'execa';
@@ -14,6 +16,7 @@ import { readFile } from 'fs';
 import { Image } from './image.entity';
 import { ImagesService } from './images.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { TagsService } from '../tags/tags.service';
 
 const defaultResults = [
   { label: 'thumbnail', width: 90, height: 90, quality: 80 },
@@ -33,7 +36,7 @@ const s3 = new S3({
 @Controller('media-library')
 @UseGuards(JwtAuthGuard)
 export class MediaLibraryController {
-  constructor(private imagesService: ImagesService) {}
+  constructor(private imagesService: ImagesService, private tagsService: TagsService) {}
 
   private resize(
     image,
@@ -138,5 +141,13 @@ export class MediaLibraryController {
   @Get()
   findAll(): Promise<Image[]> {
     return this.imagesService.findAll();
+  }
+
+  @Post(':imageId')
+  async save(@Body() tags: string[], @Param('imageId') imageId: number): Promise<Image> {
+    const image = await this.imagesService.findById(imageId);
+    const newTags = await this.tagsService.findByIds(tags);
+    image.tags = newTags;
+    return this.imagesService.save(image);
   }
 }

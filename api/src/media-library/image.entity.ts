@@ -9,8 +9,9 @@
 //     size: 20343
 // }
 
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { BaseEntity } from '../util/base-entity';
+import { Tag } from '../tags/tag.entity';
 
 @Entity()
 export class Image extends BaseEntity {
@@ -92,4 +93,8 @@ export class Image extends BaseEntity {
     nullable: false,
   })
   thumbnailFileURL: string;
+
+  @ManyToMany(type => Tag)
+  @JoinTable()
+  tags?: Tag[];
 }

@@ -18,4 +18,8 @@ export class ImagesService {
   async findAll(): Promise<Image[]> {
     return this.imagesRepository.find();
   }
+
+  async findById(id: number) {
+    return this.imagesRepository.findOne(id);
+  }
 }
