@@ -7,7 +7,7 @@ import { Image } from './image.entity';
 import { ImageService } from './image.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ProductsService } from '@app/products/products.service';
-import { map, switchMap, debounceTime } from 'rxjs/operators';
+import { map, switchMap, debounceTime, delay } from 'rxjs/operators';
 import Product from '@app/products/product.entity';
 import { Pagination } from '@app/util/pagination';
 import { HttpClient } from '@angular/common/http';
@@ -49,7 +49,7 @@ export class MediaLibraryComponent implements OnInit {
 
   private reloadImages() {
     this.loading = true;
-    this.imageService.loadImages().subscribe((images) => {
+    this.imageService.loadImages().pipe(delay(350)).subscribe((images) => {
       this.loading = false;
       this.images = images;
       this.selectedImages = [];

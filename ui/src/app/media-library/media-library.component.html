@@ -64,6 +64,10 @@
   <i class="fal fa-exclamation-circle"></i>
   <p>Nenhuma imagem encontrada.</p>
 </div>
+<div class="dgz-table dgz-table-info digituz-loading-set" *ngIf="loading">
+  <i class="fal fa-spinner"></i>
+  <p>Carregando informações.</p>
+</div>
 <div class="container" *ngIf="!loading && images.length > 0">
   <div
     class="image-in-gallery"
