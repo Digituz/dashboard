@@ -57,7 +57,7 @@ async function downloadImage(imageId) {
     const taggedImages = await getTaggedImages();
 
     // 3. download images from imagekit and pass down info about path, image name, and tags
-    const downloadJobs = taggedImages.slice(0, 1).map((taggedImage, idx) => {
+    const downloadJobs = taggedImages.slice(0, 15).map((taggedImage, idx) => {
       return new Promise((res) => {
         setTimeout(async () => {
           console.log(`downloading with ${idx * 400}ms delay`);

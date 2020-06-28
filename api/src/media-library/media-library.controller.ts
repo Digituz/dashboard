@@ -9,6 +9,7 @@ import {
   Body,
   Param,
   Delete,
+  UseFilters,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import execa from 'execa';
@@ -18,6 +19,7 @@ import { Image } from './image.entity';
 import { ImagesService } from './images.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { TagsService } from '../tags/tags.service';
+import { GlobalExceptionsFilter } from '../global-exceptions.filter';
 
 const defaultResults = [
   { label: 'thumbnail', width: 90, height: 90, quality: 80 },
@@ -26,6 +28,14 @@ const defaultResults = [
   { label: 'large', width: 720, height: 720, quality: 85 },
   { label: 'extra-large', width: 1080, height: 1080, quality: 85 },
   { label: 'original', width: 4096, height: 4096, quality: 100 },
+];
+
+const supportedImageTypes = [
+  { mimetype: 'image/bmp', extension: '.bmp' },
+  { mimetype: 'image/gif', extension: '.gif' },
+  { mimetype: 'image/jpeg', extension: '.jpg' },
+  { mimetype: 'image/png', extension: '.png' },
+  { mimetype: 'image/svg+xml', extension: '.svg' },
 ];
 
 const s3 = new S3({
@@ -44,27 +54,30 @@ interface ImageDetails {
 @Controller('media-library')
 @UseGuards(JwtAuthGuard)
 export class MediaLibraryController {
-  constructor(private imagesService: ImagesService, private tagsService: TagsService) {}
+  constructor(
+    private imagesService: ImagesService,
+    private tagsService: TagsService,
+  ) {}
 
   private getImageDetails(image): Promise<ImageDetails> {
     return new Promise(async (res, rej) => {
-      const {stdout: dimRes, stderr: dimErr} = await execa('identify', [
+      const { stdout: dimRes, stderr: dimErr } = await execa('identify', [
         '-ping',
         '-format',
         '"%w %h"',
-        image
+        image,
       ]);
       if (dimErr) return rej(dimErr);
 
-      const dimensionsStr = dimRes.replace(/"/g, '').split(" ");
+      const dimensionsStr = dimRes.replace(/"/g, '').split(' ');
       const dimensions = {
         width: parseInt(dimensionsStr[0]),
         height: parseInt(dimensionsStr[1]),
       };
 
-      const {stdout: sizeRes, stderr: sizeErr} = await execa('wc', [
+      const { stdout: sizeRes, stderr: sizeErr } = await execa('wc', [
         '-c',
-        image
+        image,
       ]);
       if (sizeErr) return rej(sizeErr);
       const fileSize = parseInt(sizeRes.trim().split(' ')[0]);
@@ -80,10 +93,11 @@ export class MediaLibraryController {
 
   private resize(
     image,
+    imageType,
     fileSuffix: string,
     result,
   ): Promise<{ destination: string; filename: string }> {
-    const filename = `${fileSuffix}-${result.label}.jpg`;
+    const filename = `${fileSuffix}-${result.label}${imageType.extension}`;
     const destination = `${process.env.UPLOAD_DESTINATION}/${filename}`;
     return new Promise((res, rej) => {
       execa('convert', [
@@ -133,8 +147,14 @@ export class MediaLibraryController {
   }
 
   @Post('upload')
+  @UseFilters(new GlobalExceptionsFilter())
   @UseInterceptors(FileInterceptor('file'))
   async processFile(@UploadedFile() file): Promise<void> {
+    // file type (mimetype)
+    const imageType = supportedImageTypes.find(
+      imageType => imageType.mimetype === file.mimetype,
+    );
+
     // preparing the file name
     const now = Date.now();
     const indexOfFileExtensionSeparator = file.originalname.lastIndexOf('.');
@@ -146,7 +166,7 @@ export class MediaLibraryController {
 
     // resizing the image into different dimensions
     const resizeJobs = defaultResults.map(result => {
-      return this.resize(file, fileSuffix, result);
+      return this.resize(file, imageType, fileSuffix, result);
     });
     const files = await Promise.all(resizeJobs);
 
@@ -168,15 +188,27 @@ export class MediaLibraryController {
     // recording everything into the database, for easier reference
     // ps. while uploading, the name of the file suffers a transformation similar to encodeURIComponent, so we use it
     const image: Image = {
-      mainFilename: `${encodeURIComponent(fileSuffix)}-original.jpg`,
+      mainFilename: `${encodeURIComponent(fileSuffix)}-original${imageType.extension}`,
       originalFilename: file.originalname,
       mimetype: 'image/jpeg',
-      originalFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-original.jpg`,
-      extraLargeFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-extra-large.jpg`,
-      largeFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-large.jpg`,
-      mediumFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-medium.jpg`,
-      smallFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-small.jpg`,
-      thumbnailFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-thumbnail.jpg`,
+      originalFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
+        fileSuffix,
+      )}-original${imageType.extension}`,
+      extraLargeFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
+        fileSuffix,
+      )}-extra-large${imageType.extension}`,
+      largeFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
+        fileSuffix,
+      )}-large${imageType.extension}`,
+      mediumFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
+        fileSuffix,
+      )}-medium${imageType.extension}`,
+      smallFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
+        fileSuffix,
+      )}-small${imageType.extension}`,
+      thumbnailFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
+        fileSuffix,
+      )}-thumbnail${imageType.extension}`,
       fileSize: imageDetails.size,
       width: imageDetails.width,
       height: imageDetails.height,
@@ -201,7 +233,10 @@ export class MediaLibraryController {
   }
 
   @Post(':imageId')
-  async save(@Body() tags: string[], @Param('imageId') imageId: number): Promise<Image> {
+  async save(
+    @Body() tags: string[],
+    @Param('imageId') imageId: number,
+  ): Promise<Image> {
     const image = await this.imagesService.findById(imageId);
     const newTags = await this.tagsService.findByLabels(tags);
     image.tags = newTags;
@@ -217,9 +252,12 @@ export class MediaLibraryController {
   }
 
   @Delete(':imageId/tag/:tagLabel')
-  async removeTag(@Param('imageId') imageId: number, @Param('tagLabel') tagLabel: string): Promise<Image> {
+  async removeTag(
+    @Param('imageId') imageId: number,
+    @Param('tagLabel') tagLabel: string,
+  ): Promise<Image> {
     const image = await this.imagesService.findById(imageId);
-    image.tags = image.tags.filter((tag) => tag.label !== tagLabel);
+    image.tags = image.tags.filter(tag => tag.label !== tagLabel);
     image.numberOfTags = image.tags.length;
     return this.imagesService.save(image);
   }
