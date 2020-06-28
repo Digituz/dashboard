@@ -1,11 +1,14 @@
-<div *ngIf="loading" style="background-color: #fff; padding: 30px 15px;"></div>
-<table class="digituz" (click)="sortTable($event.target)" *ngIf="!loading">
+<table class="digituz" (click)="sortTable($event.target)">
   <ng-content select="thead"></ng-content>
   <ng-content select="tbody"></ng-content>
 </table>
-<div class="digituz-empty-set" *ngIf="!loading && currentData.length === 0">
+<div class="dgz-table dgz-table-info digituz-loading-set" *ngIf="loading">
+  <i class="fal fa-spinner"></i>
+  <p>Carregando informações.</p>
+</div>
+<div class="dgz-table dgz-table-info" *ngIf="!loading && currentData.length === 0">
   <i class="fal fa-exclamation-circle"></i>
-  <p class="ant-empty-description">Nenhum resultado encontrado.</p>
+  <p>Nenhum resultado encontrado.</p>
 </div>
 <div class="pagination-area" *ngIf="!loading && currentData.length > 0">
   <button (click)="nextPage()" [disabled]="currentPage >= numberOfPages"><p>»</p></button>

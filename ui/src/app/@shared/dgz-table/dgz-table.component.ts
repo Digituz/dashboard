@@ -43,7 +43,7 @@ export class DgzTableComponent<T> implements OnInit, OnChanges {
     this.loading = true;
     this.dataProvider
       .loadData(this.currentPage, this.pageSize, this.sortedBy, this.sortDirectionAscending, this.queryParams)
-      .pipe(delay(250))
+      .pipe(delay(350))
       .subscribe((response) => {
         this.currentData = response.items;
         this.totalItems = response.meta.totalItems;

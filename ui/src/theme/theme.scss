@@ -158,7 +158,8 @@ div.search-container {
   }
 }
 
-body app-root div.digituz-empty-set {
+
+body app-root div.dgz-table.dgz-table-info {
   background-color: #fff;
   margin: 0;
   padding: 50px;
@@ -171,5 +172,11 @@ body app-root div.digituz-empty-set {
 
   i {
     font-size: 50px;
+  }
+
+  &.digituz-loading-set {
+    i {
+      animation: rotation 2s infinite linear;
+    }
   }
 }
