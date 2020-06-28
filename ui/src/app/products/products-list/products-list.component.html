@@ -2,15 +2,15 @@
   <form (ngSubmit)="queryProducts()">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
-        <label for="query">Pesquisa:</label>
+        <label for="query">Pesquisa</label>
         <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
       </div>
       <div class="p-field p-col">
-        <label for="isActive">Ativos:</label>
+        <label for="isActive">Ativos</label>
         <p-dropdown name="isActive" [options]="isActiveOptions" [(ngModel)]="isActive" optionLabel="label"></p-dropdown>
       </div>
       <div class="p-field p-col">
-        <label for="withVariations">Variações:</label>
+        <label for="withVariations">Variações</label>
         <p-dropdown name="withVariations" [options]="withVariationsOptions" [(ngModel)]="withVariations" optionLabel="label"></p-dropdown>
       </div>
     </div>

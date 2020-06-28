@@ -28,7 +28,7 @@
 <div class="search-container">
   <div class="p-fluid p-formgrid p-grid">
     <div class="p-field p-col">
-      <label for="query">Tags:</label>
+      <label for="query">Tags</label>
       <p-autoComplete
         [(ngModel)]="selectedTags"
         [suggestions]="tagsFound"
@@ -59,6 +59,10 @@
     <button pButton class="ui-button-danger" label="Arquivar" [disabled]="selectedImages?.length === 0" (click)="archiveImages()"></button>
     <button pButton label="Filtrar"></button>
   </div>
+</div>
+<div class="digituz-empty-set" *ngIf="!loading && images.length === 0">
+  <i class="fal fa-exclamation-circle"></i>
+  <p class="ant-empty-description">Nenhuma imagem encontrada.</p>
 </div>
 <div class="container">
   <div

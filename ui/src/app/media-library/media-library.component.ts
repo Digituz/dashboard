@@ -26,6 +26,7 @@ export class MediaLibraryComponent implements OnInit {
   isModalVisible = false;
   isSpinning = false;
   isProductListLoading = false;
+  loading = false;
   isUploading = false;
   modalTitle: string;
   modalImage: string;
@@ -47,7 +48,9 @@ export class MediaLibraryComponent implements OnInit {
   ) {}
 
   private reloadImages() {
+    this.loading = true;
     this.imageService.loadImages().subscribe((images) => {
+      this.loading = false;
       this.images = images;
       this.selectedImages = [];
     });

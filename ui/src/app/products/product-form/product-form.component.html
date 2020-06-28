@@ -11,19 +11,19 @@
   <form [formGroup]="formFields" (ngSubmit)="submitProductDetails()" *ngIf="!loading">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
-        <label for="sku">SKU:</label>
+        <label for="sku">SKU</label>
         <input id="sku" name="sku" type="text" formControlName="sku" pInputText placeholder="SKU do seu produto" />
       </div>
       <div class="p-field p-col">
-        <label for="ncm">NCM:</label>
+        <label for="ncm">NCM</label>
         <input id="ncm" name="ncm" type="text" formControlName="ncm" pInputText placeholder="Ex. 1234.12.34" />
       </div>
       <div class="p-field p-col">
-        <label for="productActive">Ativo:</label>
+        <label for="productActive">Ativo</label>
         <p-inputSwitch id="productActive" name="productActive" formControlName="isActive"></p-inputSwitch>
       </div>
       <div class="p-field p-col-6">
-        <label for="title">Título:</label>
+        <label for="title">Título</label>
         <input
           id="title"
           name="title"
@@ -34,7 +34,7 @@
         />
       </div>
       <div class="p-field p-col-6">
-        <label for="sellingPrice">Preço de venda:</label>
+        <label for="sellingPrice">Preço de venda</label>
         <input
           id="sellingPrice"
           name="sellingPrice"
@@ -45,7 +45,7 @@
         />
       </div>
       <div class="p-field p-col-6">
-        <label for="height">Altura do Produto (m):</label>
+        <label for="height">Altura do Produto (m)</label>
         <input
           id="height"
           name="height"
@@ -56,7 +56,7 @@
         />
       </div>
       <div class="p-field p-col-6">
-        <label for="width">Largura do Produto (m):</label>
+        <label for="width">Largura do Produto (m)</label>
         <input
           id="width"
           name="width"
@@ -152,11 +152,11 @@
   <form nz-form [formGroup]="formFieldsVariation" (ngSubmit)="submitVariation()" *ngIf="isModalVisible">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-12">
-        <label for="variationSku">SKU:</label>
+        <label for="variationSku">SKU</label>
         <input pInputText name="variationSku" id="variationSku" placeholder="SKU da variação" formControlName="sku" />
       </div>
       <div class="p-field p-col-12">
-        <label for="variationDescription">Descrição:</label>
+        <label for="variationDescription">Descrição</label>
         <input
           pInputText
           name="variationDescription"
@@ -166,7 +166,7 @@
         />
       </div>
       <div class="p-field p-col-12">
-        <label for="variationSellingPrice">Preço de Venda:</label>
+        <label for="variationSellingPrice">Preço de Venda</label>
         <input
           pInputText
           name="variationSellingPrice"

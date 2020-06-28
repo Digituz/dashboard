@@ -157,3 +157,19 @@ div.search-container {
     margin-top: 0;
   }
 }
+
+body app-root div.digituz-empty-set {
+  background-color: #fff;
+  margin: 0;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  color: #666;
+
+  i {
+    font-size: 50px;
+  }
+}
