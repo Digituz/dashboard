@@ -4,6 +4,8 @@ const _ = require("lodash");
 const showdown = require("showdown");
 const TurndownService = require("turndown");
 
+const getToken = require("./util/auth");
+
 const converter = new showdown.Converter();
 const turndownService = new TurndownService();
 
@@ -22,17 +24,6 @@ async function getMoreProducts(page) {
   return responseObject.retorno.produtos.map((produto) => produto.produto);
 }
 
-async function getToken() {
-  const { body } = await got.post("http://localhost:3000/v1/sign-in", {
-    json: {
-      username: "bruno.krebs@fridakahlo.com.br",
-      password: "lbX01as$",
-    },
-    responseType: "json",
-  });
-  return body.access_token;
-}
-
 async function insertProduct(token, product, delay) {
   if (product.variations) {
     product.productVariations = product.variations.map(variation => ({
@@ -44,7 +35,6 @@ async function insertProduct(token, product, delay) {
   return new Promise((res, rej) => {
     setTimeout(async () => {
       try {
-        console.log(`inserting ${product.sku} with ${delay}ms delay`);
         await got.post("http://localhost:3000/v1/products", {
           json: product,
           headers: {
