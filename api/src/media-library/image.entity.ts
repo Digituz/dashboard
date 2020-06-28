@@ -117,4 +117,36 @@ export class Image extends BaseEntity {
     nullable: false,
   })
   archived?: boolean = false;
+
+  @Column({
+    name: 'file_size',
+    type: 'integer',
+    unique: false,
+    nullable: false,
+  })
+  fileSize?: number = 0;
+
+  @Column({
+    name: 'width',
+    type: 'integer',
+    unique: false,
+    nullable: false,
+  })
+  width?: number = 0;
+
+  @Column({
+    name: 'height',
+    type: 'integer',
+    unique: false,
+    nullable: false,
+  })
+  height?: number = 0;
+
+  @Column({
+    name: 'aspect_ratio',
+    type: 'integer',
+    unique: false,
+    nullable: false,
+  })
+  aspectRatio?: number = 0;
 }

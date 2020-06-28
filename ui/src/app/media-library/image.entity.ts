@@ -17,6 +17,11 @@ export class Image {
   numberOfTags: number = 0;
   archived: boolean = false;
 
+  fileSize?: number;
+  width?: number;
+  height?: number;
+  aspectRatio?: number;
+
   // transient
   selected?: boolean;
 }

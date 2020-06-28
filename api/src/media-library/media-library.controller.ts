@@ -34,10 +34,49 @@ const s3 = new S3({
   endpoint: process.env.DO_ENDPOINT,
 });
 
+interface ImageDetails {
+  size: number;
+  width: number;
+  height: number;
+  aspectRatio: number;
+}
+
 @Controller('media-library')
 @UseGuards(JwtAuthGuard)
 export class MediaLibraryController {
   constructor(private imagesService: ImagesService, private tagsService: TagsService) {}
+
+  private getImageDetails(image): Promise<ImageDetails> {
+    return new Promise(async (res, rej) => {
+      const {stdout: dimRes, stderr: dimErr} = await execa('identify', [
+        '-ping',
+        '-format',
+        '"%w %h"',
+        image
+      ]);
+      if (dimErr) return rej(dimErr);
+
+      const dimensionsStr = dimRes.replace(/"/g, '').split(" ");
+      const dimensions = {
+        width: parseInt(dimensionsStr[0]),
+        height: parseInt(dimensionsStr[1]),
+      };
+
+      const {stdout: sizeRes, stderr: sizeErr} = await execa('wc', [
+        '-c',
+        image
+      ]);
+      if (sizeErr) return rej(sizeErr);
+      const fileSize = parseInt(sizeRes.trim().split(' ')[0]);
+
+      res({
+        size: fileSize,
+        aspectRatio: dimensions.width / dimensions.height,
+        width: dimensions.width,
+        height: dimensions.height,
+      });
+    });
+  }
 
   private resize(
     image,
@@ -111,6 +150,9 @@ export class MediaLibraryController {
     });
     const files = await Promise.all(resizeJobs);
 
+    // reading image details (dimensions and size)
+    const imageDetails = await this.getImageDetails(files[5].destination);
+
     // upload the different versions of this image to the CDN
     const uploadJobs = files.map(file =>
       this.uploadFileToCDN(file.filename, file.destination),
@@ -135,6 +177,10 @@ export class MediaLibraryController {
       mediumFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-medium.jpg`,
       smallFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-small.jpg`,
       thumbnailFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(fileSuffix)}-thumbnail.jpg`,
+      fileSize: imageDetails.size,
+      width: imageDetails.width,
+      height: imageDetails.height,
+      aspectRatio: imageDetails.aspectRatio,
     };
     await this.imagesService.save(image);
   }
