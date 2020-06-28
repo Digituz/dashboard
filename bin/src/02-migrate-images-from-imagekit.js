@@ -1,4 +1,11 @@
+const fs = require("fs");
 const got = require("got");
+const os = require("os");
+const stream = require("stream");
+const { promisify } = require("util");
+
+const pipeline = promisify(stream.pipeline);
+
 const getToken = require("./util/auth");
 
 async function getProducts(token) {
@@ -26,6 +33,15 @@ async function getTaggedImages() {
   return response.body;
 }
 
+async function downloadImage(imageId) {
+  const path = `${os.tmpdir()}/${imageId}`;
+  await pipeline(
+    got.stream(`https://ik.imagekit.io/fridakahlo/${imageId}`),
+    fs.createWriteStream(path)
+  );
+  return path;
+}
+
 (async () => {
   try {
     // 0. get access token
@@ -38,14 +54,18 @@ async function getTaggedImages() {
     const taggedImages = await getTaggedImages();
 
     // 3. upload images to Digituz while linking with tags
-    const uploadJobs = taggedImages.map((taggedImage) => {
+    const uploadJobs = taggedImages.slice(0, 4).map((taggedImage, idx) => {
       return new Promise((res, rej) => {
-        res(`https://ik.imagekit.io/fridakahlo/${taggedImage.imageId}`);
+        setTimeout(async () => {
+          console.log(`downloadind with ${idx * 400}ms delay`);
+          const path = await downloadImage(taggedImage.imageId);
+          res(path);
+        }, idx * 400);
       });
     });
 
     Promise.all(uploadJobs).then((images) => {
-        console.log(images);
+      console.log(images);
     });
   } catch (error) {
     console.log(error);
