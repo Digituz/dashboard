@@ -31,11 +31,8 @@ const defaultResults = [
 ];
 
 const supportedImageTypes = [
-  { mimetype: 'image/bmp', extension: '.bmp' },
-  { mimetype: 'image/gif', extension: '.gif' },
   { mimetype: 'image/jpeg', extension: '.jpg' },
   { mimetype: 'image/png', extension: '.png' },
-  { mimetype: 'image/svg+xml', extension: '.svg' },
 ];
 
 const s3 = new S3({
@@ -91,6 +88,16 @@ export class MediaLibraryController {
     });
   }
 
+  private getColorsAmount(image): Promise<number> {
+    return new Promise((res, rej) => {
+      execa('identify', ['-format', '%k', image.path])
+        .then(({stdout}) => {
+          res(parseInt(stdout));
+        })
+        .catch(rej);
+    });
+  }
+
   private resize(
     image,
     imageType,
@@ -99,11 +106,14 @@ export class MediaLibraryController {
   ): Promise<{ destination: string; filename: string }> {
     const filename = `${fileSuffix}-${result.label}${imageType.extension}`;
     const destination = `${process.env.UPLOAD_DESTINATION}/${filename}`;
-    return new Promise((res, rej) => {
+    return new Promise(async (res, rej) => {
+      const colorAmount = await this.getColorsAmount(image);
       execa('convert', [
         image.path,
         '-resize',
         `${result.width}x${result.height}\>`,
+        '-colors',
+        `${colorAmount + 10}`,
         '-quality',
         result.quality,
         destination,
@@ -188,7 +198,9 @@ export class MediaLibraryController {
     // recording everything into the database, for easier reference
     // ps. while uploading, the name of the file suffers a transformation similar to encodeURIComponent, so we use it
     const image: Image = {
-      mainFilename: `${encodeURIComponent(fileSuffix)}-original${imageType.extension}`,
+      mainFilename: `${encodeURIComponent(fileSuffix)}-original${
+        imageType.extension
+      }`,
       originalFilename: file.originalname,
       mimetype: 'image/jpeg',
       originalFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
