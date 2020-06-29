@@ -50,6 +50,7 @@ interface ImageDetails {
 
 @Controller('media-library')
 @UseGuards(JwtAuthGuard)
+@UseFilters(new GlobalExceptionsFilter())
 export class MediaLibraryController {
   constructor(
     private imagesService: ImagesService,
@@ -157,9 +158,8 @@ export class MediaLibraryController {
   }
 
   @Post('upload')
-  @UseFilters(new GlobalExceptionsFilter())
   @UseInterceptors(FileInterceptor('file'))
-  async processFile(@UploadedFile() file): Promise<void> {
+  async processFile(@UploadedFile() file): Promise<Image> {
     // file type (mimetype)
     const imageType = supportedImageTypes.find(
       imageType => imageType.mimetype === file.mimetype,
@@ -226,7 +226,7 @@ export class MediaLibraryController {
       height: imageDetails.height,
       aspectRatio: imageDetails.aspectRatio,
     };
-    await this.imagesService.save(image);
+    return this.imagesService.save(image);
   }
 
   @Get()
