@@ -14,6 +14,7 @@
   [modal]="true"
   [resizable]="false"
   [draggable]="false"
+  class="product-images"
 >
   <div *ngIf="!images || images.length === 0" style="text-align: center; width: 200px; line-height: 25px;">
     Este produto não contém imagens registradas <a routerLink="/media-library">no acervo</a>.
@@ -23,12 +24,12 @@
       <div class="select-image">
         <p-checkbox name="selectedImages" [value]="image" [(ngModel)]="selectedImages"></p-checkbox>
       </div>
-      <img class="image-thumbnail" [src]="image.smallFileURL" [alt]="image.originalFilename" />
+      <div class="thumbnail-container" [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"></div>
       <div class="image-details">
-        <p>Nome da Imagem: {{ image.originalFilename }}</p>
         <p>
-          Imagem Original: <a target="_blank" [href]="image.originalFileURL">{{ image.originalFileURL }}</a>
+          Nome da Imagem: <a target="_blank" [href]="image.originalFileURL">{{ image.originalFilename }} <i class="fal fa-external-link"></i></a>
         </p>
+        <p>Dimensões: {{ image.width }}x{{ image.height }}</p>
       </div>
     </div>
   </div>

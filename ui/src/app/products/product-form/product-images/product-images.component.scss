@@ -1,28 +1,51 @@
 div.images-container {
   display: flex;
   flex-direction: column;
+  padding: 5px;
+  max-height: 350px;
 
   div.image {
     display: flex;
     flex-direction: row;
+    margin-bottom: 15px;
+
+    &:last-child {
+      padding-bottom: 15px;
+    }
 
     div.select-image {
       width: 25px;
       display: flex;
       justify-items: center;
       align-items: center;
+      margin-right: 15px;
     }
 
     div.image-details {
       padding: 5px;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+
+      i {
+        font-size: 11px;
+        margin-left: 2px;
+      }
 
       p {
         line-height: 25px;
       }
     }
 
-    img.image-thumbnail {
-      max-width: 80px;
+    div.thumbnail-container {
+      width: 90px;
+      height: 90px;
+      padding: 5px;
+      background-origin: content-box;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      margin-right: 10px;
     }
   }
 }
