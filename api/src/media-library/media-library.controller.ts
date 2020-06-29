@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import execa from 'execa';
-import { readFile } from 'fs';
+import Kraken from 'kraken';
 
 import { Image } from './image.entity';
 import { ImagesService } from './images.service';
@@ -21,32 +21,29 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { TagsService } from '../tags/tags.service';
 import { GlobalExceptionsFilter } from '../global-exceptions.filter';
 
-const defaultResults = [
-  { label: 'thumbnail', width: 90, height: 90, quality: 80 },
-  { label: 'small', width: 180, height: 180, quality: 80 },
-  { label: 'medium', width: 360, height: 360, quality: 85 },
-  { label: 'large', width: 720, height: 720, quality: 85 },
-  { label: 'extra-large', width: 1080, height: 1080, quality: 85 },
-  { label: 'original', width: 4096, height: 4096, quality: 100 },
+const transformations = [
+  { id: 'thumbnail', width: 90, height: 90, strategy: 'auto', enhance: true },
+  { id: 'small', width: 180, height: 180, strategy: 'auto', enhance: true },
+  { id: 'medium', width: 360, height: 360, strategy: 'auto' },
+  { id: 'large', width: 720, height: 720, strategy: 'auto' },
+  { id: 'extra-large', width: 1080, height: 1080, strategy: 'auto' },
+  { id: 'original', strategy: 'none' },
 ];
 
-const supportedImageTypes = [
+interface ImageType {
+  mimetype: string;
+  extension: string;
+}
+
+const supportedImageTypes: ImageType[] = [
   { mimetype: 'image/jpeg', extension: '.jpg' },
   { mimetype: 'image/png', extension: '.png' },
 ];
 
-const s3 = new S3({
-  accessKeyId: process.env.DO_SPACES_ID,
-  secretAccessKey: process.env.DO_SPACES_SECRET,
-  endpoint: process.env.DO_ENDPOINT,
+const kraken = new Kraken({
+  api_key: process.env.KRAKEN_API_KEY,
+  api_secret: process.env.KRAKEN_API_SECRET,
 });
-
-interface ImageDetails {
-  size: number;
-  width: number;
-  height: number;
-  aspectRatio: number;
-}
 
 @Controller('media-library')
 @UseGuards(JwtAuthGuard)
@@ -57,78 +54,6 @@ export class MediaLibraryController {
     private tagsService: TagsService,
   ) {}
 
-  private getImageDetails(image): Promise<ImageDetails> {
-    return new Promise(async (res, rej) => {
-      const { stdout: dimRes, stderr: dimErr } = await execa('identify', [
-        '-ping',
-        '-format',
-        '"%w %h"',
-        image,
-      ]);
-      if (dimErr) return rej(dimErr);
-
-      const dimensionsStr = dimRes.replace(/"/g, '').split(' ');
-      const dimensions = {
-        width: parseInt(dimensionsStr[0]),
-        height: parseInt(dimensionsStr[1]),
-      };
-
-      const { stdout: sizeRes, stderr: sizeErr } = await execa('wc', [
-        '-c',
-        image,
-      ]);
-      if (sizeErr) return rej(sizeErr);
-      const fileSize = parseInt(sizeRes.trim().split(' ')[0]);
-
-      res({
-        size: fileSize,
-        aspectRatio: dimensions.width / dimensions.height,
-        width: dimensions.width,
-        height: dimensions.height,
-      });
-    });
-  }
-
-  private getColorsAmount(image): Promise<number> {
-    return new Promise((res, rej) => {
-      execa('identify', ['-format', '%k', image.path])
-        .then(({stdout}) => {
-          res(parseInt(stdout));
-        })
-        .catch(rej);
-    });
-  }
-
-  private resize(
-    image,
-    imageType,
-    fileSuffix: string,
-    result,
-  ): Promise<{ destination: string; filename: string }> {
-    const filename = `${fileSuffix}-${result.label}${imageType.extension}`;
-    const destination = `${process.env.UPLOAD_DESTINATION}/${filename}`;
-    return new Promise(async (res, rej) => {
-      const colorAmount = await this.getColorsAmount(image);
-      execa('convert', [
-        image.path,
-        '-resize',
-        `${result.width}x${result.height}\>`,
-        '-colors',
-        `${colorAmount + 10}`,
-        '-quality',
-        result.quality,
-        destination,
-      ])
-        .then(() => {
-          res({
-            destination,
-            filename,
-          });
-        })
-        .catch(rej);
-    });
-  }
-
   private removeFileFromDisk(file: string) {
     return new Promise((res, rej) => {
       execa('rm', [file])
@@ -137,22 +62,31 @@ export class MediaLibraryController {
     });
   }
 
-  private uploadFileToCDN(filename: string, path: string) {
+  private resize(imagePath: string, fileSuffix: string, imageType: ImageType) {
     return new Promise((res, rej) => {
-      readFile(path, (err, data) => {
-        if (err) rej(err);
-        const params = {
-          Bucket: process.env.DO_BUCKET,
-          Key: filename,
-          Body: data,
-          ContentType: 'image/jpeg',
-          ACL: 'public-read',
-        };
+      const resizeJobConfig = {
+        file: imagePath,
+        lossy: true,
+        wait: true,
+        resize: transformations.map(transformation => {
+          return {
+            ...transformation,
+            storage_path: `${fileSuffix}-${transformation.id}${imageType.extension}`,
+          };
+        }),
+        s3_store: {
+          key: process.env.AWS_S3_KEY,
+          secret: process.env.AWS_S3_SECRET,
+          bucket: process.env.AWS_S3_BUCKET,
+          region: 'sa-east-1',
+        },
+      };
 
-        s3.upload(params, function(err) {
-          if (err) return rej(err);
-          res();
-        });
+      kraken.upload(resizeJobConfig, (err, data) => {
+        if (err) return rej(err);
+        if (!data.success) rej('error on upload to kraken');
+        if (!data.results || !data.results.original) rej('unexpected error on upload to kraken');
+        res(data.results);
       });
     });
   }
@@ -175,56 +109,34 @@ export class MediaLibraryController {
     const fileSuffix = `${fileNameWithoutExtension}-${now}`;
 
     // resizing the image into different dimensions
-    const resizeJobs = defaultResults.map(result => {
-      return this.resize(file, imageType, fileSuffix, result);
-    });
-    const files = await Promise.all(resizeJobs);
-
-    // reading image details (dimensions and size)
-    const imageDetails = await this.getImageDetails(files[5].destination);
-
-    // upload the different versions of this image to the CDN
-    const uploadJobs = files.map(file =>
-      this.uploadFileToCDN(file.filename, file.destination),
-    );
-    await Promise.all(uploadJobs);
+    let resizedResult;
+    try {
+      resizedResult = await this.resize(file.path, fileSuffix, imageType);
+    } catch (err) {
+      // second try
+      resizedResult = await this.resize(file.path, fileSuffix, imageType);
+    }
+    const originalImage = resizedResult['original'];
 
     // removing from disk, as they have been uploaded to the CDN
-    const removeJobs = [file.path, ...files.map(file => file.destination)].map(
-      this.removeFileFromDisk,
-    );
-    await Promise.all(removeJobs);
+    await this.removeFileFromDisk(file.path);
 
     // recording everything into the database, for easier reference
     // ps. while uploading, the name of the file suffers a transformation similar to encodeURIComponent, so we use it
     const image: Image = {
-      mainFilename: `${encodeURIComponent(fileSuffix)}-original${
-        imageType.extension
-      }`,
+      mainFilename: `${fileSuffix}-original-${imageType.extension}`,
       originalFilename: file.originalname,
       mimetype: 'image/jpeg',
-      originalFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
-        fileSuffix,
-      )}-original${imageType.extension}`,
-      extraLargeFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
-        fileSuffix,
-      )}-extra-large${imageType.extension}`,
-      largeFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
-        fileSuffix,
-      )}-large${imageType.extension}`,
-      mediumFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
-        fileSuffix,
-      )}-medium${imageType.extension}`,
-      smallFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
-        fileSuffix,
-      )}-small${imageType.extension}`,
-      thumbnailFileURL: `https://${process.env.DO_BUCKET}/${encodeURIComponent(
-        fileSuffix,
-      )}-thumbnail${imageType.extension}`,
-      fileSize: imageDetails.size,
-      width: imageDetails.width,
-      height: imageDetails.height,
-      aspectRatio: imageDetails.aspectRatio,
+      originalFileURL: resizedResult['original'].kraked_url,
+      extraLargeFileURL: resizedResult['extra-large'].kraked_url,
+      largeFileURL: resizedResult['large'].kraked_url,
+      mediumFileURL: resizedResult['medium'].kraked_url,
+      smallFileURL: resizedResult['small'].kraked_url,
+      thumbnailFileURL: resizedResult['thumbnail'].kraked_url,
+      fileSize: originalImage.kraked_size,
+      aspectRatio: originalImage.original_width / originalImage.original_height,
+      width: originalImage.original_width,
+      height: originalImage.original_height,
     };
     return this.imagesService.save(image);
   }

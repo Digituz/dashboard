@@ -57,7 +57,7 @@ async function downloadImage(imageId) {
     const taggedImages = await getTaggedImages();
 
     // 3. download images from imagekit and pass down info about path, image name, and tags
-    const downloadJobs = taggedImages.slice(0, 3).map((taggedImage, idx) => {
+    const downloadJobs = taggedImages.slice(0, 30).map((taggedImage, idx) => {
       return new Promise((res) => {
         setTimeout(async () => {
           console.log(`downloading with ${idx * 400}ms delay`);
@@ -76,7 +76,7 @@ async function downloadImage(imageId) {
     const uploadJobs = results.map((downloadedImage, idx) => {
       return new Promise((res, rej) => {
         setTimeout(async () => {
-          console.log(downloadedImage.path);
+          console.log(`uploading ${downloadedImage.imageId}`);
           const file = fs.createReadStream(downloadedImage.path);
 
           const formData = new FormData();
@@ -91,6 +91,7 @@ async function downloadImage(imageId) {
               },
             }
           );
+          console.log(`${downloadedImage.imageId} uploaded`);
           await axios.post(
             `http://localhost:3000/v1/media-library/${persistedImage.id}`,
             downloadedImage.tags,
@@ -100,6 +101,7 @@ async function downloadImage(imageId) {
               },
             }
           );
+          console.log(`${downloadedImage.imageId} tagged`);
           res();
         }, idx * 400);
       });
