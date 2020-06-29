@@ -57,23 +57,30 @@ async function downloadImage(imageId) {
     const taggedImages = await getTaggedImages();
 
     // 3. download images from imagekit and pass down info about path, image name, and tags
-    const downloadJobs = taggedImages.slice(0, 30).map((taggedImage, idx) => {
+    const downloadJobs = taggedImages.map((taggedImage, idx) => {
       return new Promise((res) => {
         setTimeout(async () => {
-          console.log(`downloading with ${idx * 400}ms delay`);
-          const path = await downloadImage(taggedImage.imageId);
-          res({
-            imageId: taggedImage.imageId,
-            path: path,
-            tags: taggedImage.tags,
-          });
-        }, idx * 400);
+          try {
+            console.log(`downloading with ${idx * 200}ms delay`);
+            const path = await downloadImage(taggedImage.imageId);
+            res({
+              imageId: taggedImage.imageId,
+              path: path,
+              tags: taggedImage.tags,
+            });
+          } catch (err) {
+            console.error(`${taggedImage.imageId} not found!`);
+            res({
+              notFound: true,
+            });
+          }
+        }, idx * 200);
       });
     });
 
     // 4. upload images to Digituz and link tags
     const results = await Promise.all(downloadJobs);
-    const uploadJobs = results.map((downloadedImage, idx) => {
+    const uploadJobs = results.filter((res) => !res.notFound).map((downloadedImage, idx) => {
       return new Promise((res, rej) => {
         setTimeout(async () => {
           console.log(`uploading ${downloadedImage.imageId}`);
@@ -114,6 +121,12 @@ async function downloadImage(imageId) {
         console.log("something went wrong");
       });
   } catch (error) {
+    console.log(
+      "----------------------------------------------------- oh crap"
+    );
     console.log(error);
+    console.log(
+      "----------------------------------------------------- oh crap"
+    );
   }
 })();
