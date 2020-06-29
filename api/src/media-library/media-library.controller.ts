@@ -113,8 +113,15 @@ export class MediaLibraryController {
     try {
       resizedResult = await this.resize(file.path, fileSuffix, imageType);
     } catch (err) {
-      // second try
-      resizedResult = await this.resize(file.path, fileSuffix, imageType);
+      // second attempt
+      try {
+        console.log('=================================== second attemp');
+        resizedResult = await this.resize(file.path, fileSuffix, imageType);
+      } catch (err) {
+        // third and last attempt
+        console.log('=================================== third attemp');
+        resizedResult = await this.resize(file.path, fileSuffix, imageType);
+      }
     }
     const originalImage = resizedResult['original'];
 
