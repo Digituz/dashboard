@@ -14,22 +14,22 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let productImage of product.productImages">
+    <tr *ngFor="let selectedImage of selectedImages">
       <td>
         <div class="images-container">
           <div class="image">
             <div
               class="thumbnail-container"
-              [ngStyle]="{ 'background-image': 'url(' + productImage.image.smallFileURL + ')' }"
+              [ngStyle]="{ 'background-image': 'url(' + selectedImage.smallFileURL + ')' }"
             ></div>
             <div class="image-details">
               <p>
                 Nome da Imagem:
-                <a target="_blank" [href]="productImage.image.originalFileURL"
-                  >{{ productImage.image.originalFilename }} <i class="fal fa-external-link"></i
+                <a target="_blank" [href]="selectedImage.originalFileURL"
+                  >{{ selectedImage.originalFilename }} <i class="fal fa-external-link"></i
                 ></a>
               </p>
-              <p>Dimensões: {{ productImage.image.width }}x{{ productImage.image.height }}</p>
+              <p>Dimensões: {{ selectedImage.width }}x{{ selectedImage.height }}</p>
             </div>
           </div>
         </div>
@@ -57,11 +57,11 @@
   [draggable]="false"
   class="product-images"
 >
-  <div *ngIf="!images || images.length === 0" style="text-align: center; width: 200px; line-height: 25px;">
+  <div *ngIf="!availableImages || availableImages.length === 0" style="text-align: center; width: 200px; line-height: 25px;">
     Este produto não contém imagens registradas <a routerLink="/media-library">no acervo</a>.
   </div>
   <div class="images-container">
-    <div class="image" *ngFor="let image of images">
+    <div class="image" *ngFor="let image of availableImages">
       <div class="select-image">
         <p-checkbox name="selectedImages" [value]="image" [(ngModel)]="selectedImages"></p-checkbox>
       </div>
@@ -85,7 +85,7 @@
       class="ui-button-primary"
       (click)="saveProductImages()"
       label="Salvar"
-      [disabled]="!images || images.length === 0"
+      [disabled]="!selectedImages || selectedImages.length === 0"
     ></button>
   </p-footer>
 </p-dialog>
