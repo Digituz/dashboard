@@ -21,6 +21,7 @@ export class ProductImage {
     primary: true,
     nullable: false,
     onDelete: 'CASCADE',
+    eager: true
   })
   @JoinColumn({ name: 'image_id' })
   image: Image;

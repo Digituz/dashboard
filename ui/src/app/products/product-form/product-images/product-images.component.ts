@@ -8,7 +8,7 @@ import { ImageService } from '@app/media-library/image.service';
   templateUrl: './product-images.component.html',
   styleUrls: ['./product-images.component.scss'],
 })
-export class ProductImagesComponent implements OnInit {
+export class ProductImagesComponent {
   @Input()
   product: Product;
   isModalVisible: boolean = false;
@@ -19,10 +19,6 @@ export class ProductImagesComponent implements OnInit {
 
   constructor(private imageService: ImageService) {}
 
-  ngOnInit(): void {
-    console.log(this.product);
-  }
-
   openImagesDialog() {
     this.imageService.withTags(this.product.sku).subscribe((images) => {
       this.images = images;
@@ -32,13 +28,19 @@ export class ProductImagesComponent implements OnInit {
 
   saveProductImages() {
     const selectedImages = this.selectedImages;
+    this.product = {
+      ...this.product,
+      productImages: selectedImages.map((selectedImage, idx) => ({
+        order: idx,
+        image: selectedImage,
+      })),
+    };
     this.closeDialog();
     this.imagesSelected.emit(selectedImages);
   }
 
   closeDialog() {
     this.isModalVisible = false;
-    this.product = null;
     this.images = [];
     this.selectedImages = [];
   }

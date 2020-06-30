@@ -16,10 +16,26 @@
   <tbody>
     <tr *ngFor="let productImage of product.productImages">
       <td>
-        <div class="thumbnail-container" [ngStyle]="{ 'background-image': 'url(' + productImage.image.smallFileURL + ')' }"></div>
+        <div class="images-container">
+          <div class="image">
+            <div
+              class="thumbnail-container"
+              [ngStyle]="{ 'background-image': 'url(' + productImage.image.smallFileURL + ')' }"
+            ></div>
+            <div class="image-details">
+              <p>
+                Nome da Imagem:
+                <a target="_blank" [href]="productImage.image.originalFileURL"
+                  >{{ productImage.image.originalFilename }} <i class="fal fa-external-link"></i
+                ></a>
+              </p>
+              <p>Dimensões: {{ productImage.image.width }}x{{ productImage.image.height }}</p>
+            </div>
+          </div>
+        </div>
       </td>
       <td class="actions">
-        <button pButton type="button" label="Remover"></button>
+        <button pButton class="ui-button-danger" type="button" icon="fal fa-trash"></button>
       </td>
     </tr>
     <tr *ngIf="!product.productImages || product.productImages.length === 0">
@@ -52,7 +68,10 @@
       <div class="thumbnail-container" [ngStyle]="{ 'background-image': 'url(' + image.smallFileURL + ')' }"></div>
       <div class="image-details">
         <p>
-          Nome da Imagem: <a target="_blank" [href]="image.originalFileURL">{{ image.originalFilename }} <i class="fal fa-external-link"></i></a>
+          Nome da Imagem:
+          <a target="_blank" [href]="image.originalFileURL"
+            >{{ image.originalFilename }} <i class="fal fa-external-link"></i
+          ></a>
         </p>
         <p>Dimensões: {{ image.width }}x{{ image.height }}</p>
       </div>
