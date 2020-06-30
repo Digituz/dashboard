@@ -10,6 +10,7 @@ import { ProductImage } from './entities/product-image.entity';
 import { ProductVariation } from './entities/product-variation.entity';
 import { IPaginationOpts } from '../pagination/pagination';
 import { TagsService } from '../tags/tags.service';
+import { ImagesService } from '../media-library/images.service';
 
 @Injectable()
 export class ProductsService {
@@ -20,6 +21,7 @@ export class ProductsService {
     private productVariationsRepository: Repository<ProductVariation>,
     @InjectRepository(ProductImage)
     private productImagesRepository: Repository<ProductImage>,
+    private imagesService: ImagesService,
     private tagsService: TagsService,
   ) {}
 
@@ -89,20 +91,30 @@ export class ProductsService {
 
     // remove images that are not part of the DTO being passed
     const existingImages = product.productImages;
-    const newImages = productDTO.productImages;
-    const excludedImages = _.differenceBy(
-      existingImages,
-      newImages,
-      'id',
+    const newImagesDTO = productDTO.productImages;
+    const newImagesId = newImagesDTO.map(
+      productImageDTO => productImageDTO.imageId,
     );
+    const excludedImages =
+      existingImages?.filter(productImage => {
+        return !newImagesId.includes(productImage.image.id);
+      }) || [];
     this.productImagesRepository.remove(excludedImages);
+    const newImages = await this.imagesService.findByIds(newImagesId);
 
-    return this.productsRepository.save({
+    const updatedProduct = {
       id: product.id,
       ...productDTO,
+      productImages: newImages.map(newImage => ({
+        image: newImage,
+        order: newImagesDTO.find(imageDTO => imageDTO.imageId === newImage.id)
+          .order,
+      })),
       variationsSize: productDTO.productVariations?.length,
       imagesSize: productDTO.productImages?.length,
-    });
+    };
+
+    return this.productsRepository.save(updatedProduct);
   }
 
   async paginate(options: IPaginationOpts): Promise<Pagination<Product>> {

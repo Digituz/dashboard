@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
+import { Repository, In, InsertResult } from 'typeorm';
 import { Tag } from './tag.entity';
 
 @Injectable()
@@ -10,8 +10,14 @@ export class TagsService {
     private tagsRepository: Repository<Tag>,
   ) {}
 
-  async save(tag: Tag): Promise<Tag> {
-    return this.tagsRepository.save(tag);
+  async save(tag: Tag): Promise<InsertResult> {
+    return this.tagsRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Tag)
+      .values(tag)
+      .onConflict('("label") DO NOTHING')
+      .execute();
   }
 
   async query(query: string): Promise<Tag[]> {

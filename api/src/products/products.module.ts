@@ -6,10 +6,15 @@ import { Product } from './entities/product.entity';
 import { ProductVariation } from './entities/product-variation.entity';
 import { TagsModule } from '../tags/tags.module';
 import { ProductImage } from './entities/product-image.entity';
+import { MediaLibraryModule } from '../media-library/media-library.module';
 
 @Module({
-    imports: [TagsModule, TypeOrmModule.forFeature([Product, ProductVariation, ProductImage])],
-    providers: [ProductsService],
-    controllers: [ProductsController]
+  imports: [
+    TagsModule,
+    MediaLibraryModule,
+    TypeOrmModule.forFeature([Product, ProductVariation, ProductImage]),
+  ],
+  providers: [ProductsService],
+  controllers: [ProductsController],
 })
 export class ProductsModule {}

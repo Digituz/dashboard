@@ -97,6 +97,10 @@ export class Product extends BaseEntity {
   @OneToMany(
     type => ProductImage,
     image => image.product,
+    {
+      cascade: ['insert', 'update', 'remove'],
+      eager: true,
+    },
   )
   productImages?: ProductImage[];
 

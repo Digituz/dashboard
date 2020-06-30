@@ -17,9 +17,7 @@ export class ProductImagesComponent {
 
   @Output() imagesSelected = new EventEmitter<Image[]>();
 
-  constructor(
-    private imageService: ImageService
-  ) {}
+  constructor(private imageService: ImageService) {}
 
   openImagesDialog() {
     this.imageService.withTags(this.product.sku).subscribe((images) => {
@@ -29,10 +27,15 @@ export class ProductImagesComponent {
   }
 
   saveProductImages() {
-    console.log(this.selectedImages);
+    const selectedImages = this.selectedImages;
+    this.closeDialog();
+    this.imagesSelected.emit(selectedImages);
   }
 
   closeDialog() {
     this.isModalVisible = false;
+    this.product = null;
+    this.images = [];
+    this.selectedImages = [];
   }
 }

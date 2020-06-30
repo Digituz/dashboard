@@ -13,9 +13,10 @@ import { TagsModule } from '../tags/tags.module';
       dest: process.env.UPLOAD_DESTINATION,
     }),
     TypeOrmModule.forFeature([Image]),
-    TagsModule
+    TagsModule,
   ],
   controllers: [MediaLibraryController],
   providers: [ImagesService],
+  exports: [ImagesService],
 })
 export class MediaLibraryModule {}

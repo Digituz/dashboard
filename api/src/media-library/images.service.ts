@@ -21,8 +21,11 @@ export class ImagesService {
     });
   }
 
+  async findByIds(ids: number[]): Promise<Image[]> {
+    return this.imagesRepository.findByIds(ids);
+  }
+
   async findById(id: number): Promise<Image> {
-    // return this.imagesRepository.findOne(id);
     return this.imagesRepository
       .createQueryBuilder('image')
       .leftJoinAndSelect('image.tags', 'tags')

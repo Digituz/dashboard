@@ -4,6 +4,8 @@ import { ProductsService } from '../products.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import Product from '../product.entity';
 import { ProductVariation } from '../product-variation.entity';
+import { Image } from '../../media-library/image.entity';
+import { ProductImage } from '../product-image.entity';
 
 @Component({
   selector: 'app-product-form',
@@ -16,6 +18,7 @@ export class ProductFormComponent implements OnInit {
   productDetails: string;
   product: Product;
   variations: ProductVariation[];
+  images: ProductImage[];
   loading: boolean = true;
   isModalVisible: boolean = false;
   showRemoveButton: boolean = false;
@@ -34,11 +37,13 @@ export class ProductFormComponent implements OnInit {
     if (sku === 'new') {
       this.product = {};
       this.variations = [];
+      this.images = [];
       this.configureFormFields(this.product);
     } else {
       this.productService.loadProduct(sku).subscribe((product) => {
         product.productVariations = product.productVariations.map((v) => ({ ...v, parentSku: product.sku }));
         this.variations = product.productVariations;
+        this.images = product.productImages;
         this.product = product;
         this.configureFormFields(product);
       });
@@ -66,8 +71,10 @@ export class ProductFormComponent implements OnInit {
     const product = this.formFields.value;
     product.productDetails = this.productDetails;
     product.productVariations = this.variations;
+    product.productImages = this.images;
+
     this.productService.saveProduct(product).subscribe(() => {
-      this.router.navigate(['/products']);
+      // this.router.navigate(['/products']);
     });
   }
 
@@ -84,6 +91,13 @@ export class ProductFormComponent implements OnInit {
     this.isModalVisible = true;
     this.showRemoveButton = false;
     this.variationBeingEdited = null;
+  }
+
+  imagesSelected(images: Image[]): void {
+    this.images = images.map((image, idx) => ({
+      order: idx,
+      image,
+    }));
   }
 
   editProductVariation(productVariation: ProductVariation): void {

@@ -1,4 +1,5 @@
 import { ProductVariation } from './product-variation.entity';
+import { ProductImage } from './product-image.entity';
 
 export default class Product {
   id?: number;
@@ -15,4 +16,5 @@ export default class Product {
   ncm?: string;
   variationsSize?: number;
   productVariations?: ProductVariation[];
+  productImages?: ProductImage[];
 }

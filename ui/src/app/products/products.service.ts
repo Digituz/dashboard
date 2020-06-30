@@ -44,7 +44,13 @@ export class ProductsService implements IDataProvider<Product> {
   }
 
   public saveProduct(product: Product): Observable<void> {
-    return this.httpClient.post<void>(this.PRODUCTS_ENDPOINT, product);
+    return this.httpClient.post<void>(this.PRODUCTS_ENDPOINT, {
+      ...product,
+      productImages: product.productImages.map((productImage) => ({
+        imageId: productImage.image.id,
+        order: productImage.order,
+      }))
+    });
   }
 
   loadProduct(productId: string) {
