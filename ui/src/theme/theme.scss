@@ -185,3 +185,22 @@ input::placeholder {
   // color: transparent !important;
   color: #aaa;
 }
+
+div.no-data-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  color: #666;
+  background-color: #fff;
+
+  p {
+    line-height: 20px;
+    margin: 10px;
+  }
+
+  i {
+    font-size: 40px;
+  }
+}

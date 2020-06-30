@@ -1,11 +1,15 @@
 <div class="feature-header" style="margin-top: 30px;">
   <h2>Imagens do Produto</h2>
   <p>
-    <label>Este produto ainda não tem imagens vinculadas.</label>
+    <label>Utilize esta seção para definir quais imagens serão veiculadas com o produto.</label>
   </p>
   <div class="actions">
     <button pButton type="button" (click)="openImagesDialog()" label="Vincular Imagens"></button>
   </div>
+</div>
+<div class="no-data-container">
+  <i class="fal fa-inbox"></i>
+  <p>Este produto não contém nenhuma imagem adicionada.</p>
 </div>
 <p-dialog
   header="Acervo de Imagens"
