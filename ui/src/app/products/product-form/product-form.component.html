@@ -137,7 +137,12 @@
       </td>
     </tr>
     <tr *ngIf="!variations || variations.length === 0">
-      <td colspan="4" style="text-align: center;">Produto sem variações cadastradas.</td>
+      <td colspan="4">
+        <div class="no-variations">
+          <i class="fal fa-inbox"></i>
+          <p>Produto sem variações cadastradas.</p>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>
