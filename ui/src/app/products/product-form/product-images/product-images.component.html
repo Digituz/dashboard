@@ -7,10 +7,31 @@
     <button pButton type="button" (click)="openImagesDialog()" label="Vincular Imagens"></button>
   </div>
 </div>
-<div class="no-data-container">
-  <i class="fal fa-inbox"></i>
-  <p>Este produto não contém nenhuma imagem adicionada.</p>
-</div>
+<table class="digituz">
+  <thead>
+    <tr>
+      <th colspan="2">Imagens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let productImage of product.productImages">
+      <td>
+        <div class="thumbnail-container" [ngStyle]="{ 'background-image': 'url(' + productImage.image.smallFileURL + ')' }"></div>
+      </td>
+      <td class="actions">
+        <button pButton type="button" label="Remover"></button>
+      </td>
+    </tr>
+    <tr *ngIf="!product.productImages || product.productImages.length === 0">
+      <td colspan="2">
+        <div class="no-data-container">
+          <i class="fal fa-inbox"></i>
+          <p>Este produto não contém nenhuma imagem adicionada.</p>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
 <p-dialog
   header="Acervo de Imagens"
   [(visible)]="isModalVisible"

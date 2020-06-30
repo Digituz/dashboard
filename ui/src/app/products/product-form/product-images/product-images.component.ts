@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import Product from '@app/products/product.entity';
 import { Image } from '@app/media-library/image.entity';
 import { ImageService } from '@app/media-library/image.service';
@@ -8,7 +8,7 @@ import { ImageService } from '@app/media-library/image.service';
   templateUrl: './product-images.component.html',
   styleUrls: ['./product-images.component.scss'],
 })
-export class ProductImagesComponent {
+export class ProductImagesComponent implements OnInit {
   @Input()
   product: Product;
   isModalVisible: boolean = false;
@@ -18,6 +18,10 @@ export class ProductImagesComponent {
   @Output() imagesSelected = new EventEmitter<Image[]>();
 
   constructor(private imageService: ImageService) {}
+
+  ngOnInit(): void {
+    console.log(this.product);
+  }
 
   openImagesDialog() {
     this.imageService.withTags(this.product.sku).subscribe((images) => {
