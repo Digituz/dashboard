@@ -1,5 +1,6 @@
 import { Length, IsNotEmpty  } from 'class-validator';
 import { ProductVariationDTO } from './product-variation.dto';
+import { ProductImageDTO } from './product-image.dto';
 
 export class ProductDTO {
   @IsNotEmpty()
@@ -18,4 +19,5 @@ export class ProductDTO {
   weight: number;
   isActive: boolean;
   productVariations?: ProductVariationDTO[];
+  productImages?: ProductImageDTO[];
 }

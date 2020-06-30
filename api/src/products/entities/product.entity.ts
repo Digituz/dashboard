@@ -1,6 +1,7 @@
 import { Entity, Column, OneToMany } from 'typeorm';
 import { ProductVariation } from './product-variation.entity';
 import { BaseEntity } from '../../util/base-entity';
+import { ProductImage } from './product-image.entity';
 
 @Entity()
 export class Product extends BaseEntity {
@@ -92,4 +93,16 @@ export class Product extends BaseEntity {
     type: 'int',
   })
   variationsSize?: number;
+
+  @OneToMany(
+    type => ProductImage,
+    image => image.product,
+  )
+  productImages?: ProductImage[];
+
+  @Column({
+    name: 'images_size',
+    type: 'int',
+  })
+  imagesSize?: number;
 }

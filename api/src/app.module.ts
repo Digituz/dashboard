@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
 import { TagsModule } from './tags/tags.module';
 import { Tag } from './tags/tag.entity';
+import { ProductImage } from './products/entities/product-image.entity';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { Tag } from './tags/tag.entity';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [Product, ProductVariation, Image, User, Tag],
+      entities: [Product, ProductVariation, ProductImage, Image, User, Tag],
       synchronize: false,
       migrationsTableName: 'database_migrations',
       migrations: ['src/db-migrations/*.js'],

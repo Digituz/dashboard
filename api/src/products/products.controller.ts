@@ -10,7 +10,6 @@ import {
 import { Product } from './entities/product.entity';
 import { ProductsService } from './products.service';
 import { ProductDTO } from './dtos/product.dto';
-import { ProductVariationDTO } from './dtos/product-variation.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Pagination } from 'nestjs-typeorm-paginate';
 

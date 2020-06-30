@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import Product from '@app/products/product.entity';
 import { Image } from '@app/media-library/image.entity';
 import { ImageService } from '@app/media-library/image.service';
@@ -15,6 +15,8 @@ export class ProductImagesComponent {
   images: Image[] = [];
   selectedImages: Image[] = [];
 
+  @Output() imagesSelected = new EventEmitter<Image[]>();
+
   constructor(
     private imageService: ImageService
   ) {}
@@ -26,7 +28,9 @@ export class ProductImagesComponent {
     this.isModalVisible = true;
   }
 
-  saveProductImages() {}
+  saveProductImages() {
+    console.log(this.selectedImages);
+  }
 
   closeDialog() {
     this.isModalVisible = false;

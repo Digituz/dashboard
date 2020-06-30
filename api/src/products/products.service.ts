@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 
 import { Product } from './entities/product.entity';
 import { ProductDTO } from './dtos/product.dto';
+import { ProductImage } from './entities/product-image.entity';
 import { ProductVariation } from './entities/product-variation.entity';
 import { IPaginationOpts } from '../pagination/pagination';
 import { TagsService } from '../tags/tags.service';
@@ -17,6 +18,8 @@ export class ProductsService {
     private productsRepository: Repository<Product>,
     @InjectRepository(ProductVariation)
     private productVariationsRepository: Repository<ProductVariation>,
+    @InjectRepository(ProductImage)
+    private productImagesRepository: Repository<ProductImage>,
     private tagsService: TagsService,
   ) {}
 
@@ -60,6 +63,7 @@ export class ProductsService {
       product = await this.productsRepository.save({
         ...productDTO,
         variationsSize: productDTO.productVariations?.length,
+        imagesSize: productDTO.productImages?.length,
       });
     }
     this.tagsService.save({
@@ -73,10 +77,9 @@ export class ProductsService {
     product: Product,
     productDTO: ProductDTO,
   ): Promise<Product> {
+    // remove variations that are not part of the DTO being passed
     const existingVariations = product.productVariations;
     const newVariations = productDTO.productVariations;
-
-    // remove variations that are not part of the DTO being passed
     const excludedVariations = _.differenceBy(
       existingVariations,
       newVariations,
@@ -84,10 +87,21 @@ export class ProductsService {
     );
     this.productVariationsRepository.remove(excludedVariations);
 
+    // remove images that are not part of the DTO being passed
+    const existingImages = product.productImages;
+    const newImages = productDTO.productImages;
+    const excludedImages = _.differenceBy(
+      existingImages,
+      newImages,
+      'id',
+    );
+    this.productImagesRepository.remove(excludedImages);
+
     return this.productsRepository.save({
       id: product.id,
       ...productDTO,
       variationsSize: productDTO.productVariations?.length,
+      imagesSize: productDTO.productImages?.length,
     });
   }
 
@@ -102,6 +116,9 @@ export class ProductsService {
         break;
       case 'productVariations':
         orderColumn = 'variations_size';
+        break;
+      case 'productImages':
+        orderColumn = 'images_size';
         break;
       case 'isActive':
         orderColumn = 'is_active';
@@ -166,6 +183,7 @@ export class ProductsService {
             sku: item.sku,
           });
           item.productVariations = hydratedProduct.productVariations;
+          item.productImages = hydratedProduct.productImages;
           return item;
         }),
       ),
