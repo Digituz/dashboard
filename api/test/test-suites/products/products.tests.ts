@@ -3,6 +3,7 @@ import validFixtures from './valid-products.fixture.json';
 
 describe('products', () => {
   let accessToken: string;
+  let authorizedRequest: any;
 
   beforeAll(async () => {
     const validCrendetials = {
@@ -16,18 +17,39 @@ describe('products', () => {
     );
     accessToken = resp.data.access_token;
 
+    authorizedRequest = {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    };
+
     expect(accessToken).toBeDefined();
   });
 
   it('to be able to create valid products', async done => {
-    const postJobs = validFixtures.map(validFixture => {
+    const postJobs = validFixtures.map((validFixture, idx) => {
       return new Promise(async res => {
-        await axios.post('http://localhost:3000/v1/products', validFixture, {
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
-        });
-        res();
+        setTimeout(async () => {
+          await axios.post(
+            'http://localhost:3000/v1/products',
+            validFixture,
+            authorizedRequest,
+          );
+
+          const response = await axios.get(
+            `http://localhost:3000/v1/products/${validFixture.sku}`,
+            authorizedRequest,
+          );
+
+          expect(response.data.sku).toBe(validFixture.sku);
+          if (validFixture.productVariations) {
+            expect(response.data.productVariations.length).toBe(
+              validFixture.productVariations.length,
+            );
+          }
+
+          res();
+        }, idx * 250);
       });
     });
     await Promise.all(postJobs);
