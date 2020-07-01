@@ -19,19 +19,18 @@ describe('products', () => {
     expect(accessToken).toBeDefined();
   });
 
-  it('to be able to create valid products', done => {
+  it('to be able to create valid products', async done => {
     const postJobs = validFixtures.map(validFixture => {
-      return new Promise(async (res, rej) => {
-        await axios.post(
-          'http://localhost:3000/v1/sign-in',
-          validFixture,
-          {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
+      return new Promise(async res => {
+        await axios.post('http://localhost:3000/v1/products', validFixture, {
+          headers: {
+            authorization: `Bearer ${accessToken}`,
           },
-        );
+        });
+        res();
       });
     });
+    await Promise.all(postJobs);
+    done();
   });
 });

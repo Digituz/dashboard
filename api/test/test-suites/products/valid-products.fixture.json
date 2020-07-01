@@ -1,1 +1,3 @@
-[{ "sku": "LFK-00001", "title": "Máscara XYZ", "ncm": "1234.56.78" }]
+[
+    { "sku": "LFK-00001", "title": "Máscara XYZ", "ncm": "1234.56.78" }
+]
