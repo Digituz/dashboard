@@ -124,7 +124,7 @@ export class Image extends BaseEntity {
     unique: false,
     nullable: false,
   })
-  fileSize?: number = 0;
+  fileSize: number = 0;
 
   @Column({
     name: 'width',
@@ -132,7 +132,7 @@ export class Image extends BaseEntity {
     unique: false,
     nullable: false,
   })
-  width?: number = 0;
+  width: number = 0;
 
   @Column({
     name: 'height',
@@ -140,7 +140,7 @@ export class Image extends BaseEntity {
     unique: false,
     nullable: false,
   })
-  height?: number = 0;
+  height: number = 0;
 
   @Column({
     name: 'aspect_ratio',
@@ -148,5 +148,5 @@ export class Image extends BaseEntity {
     unique: false,
     nullable: false,
   })
-  aspectRatio?: number = 0;
+  aspectRatio: number = 0;
 }
