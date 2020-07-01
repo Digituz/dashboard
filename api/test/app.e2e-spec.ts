@@ -25,4 +25,6 @@ describe('AppController (e2e)', () => {
       expect(err).toBeDefined();
     }
   });
+
+  require('./authentication.tests');
 });

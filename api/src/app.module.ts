@@ -29,7 +29,7 @@ import { ProductImage } from './products/entities/product-image.entity';
       cli: {
         migrationsDir: 'src/db-migrations',
       },
-      logging: true,
+      logging: !!process.env.LOG_SQL_QUERIES,
     }),
     ProductsModule,
     MediaLibraryModule,
