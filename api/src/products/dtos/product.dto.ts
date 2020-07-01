@@ -11,14 +11,14 @@ export class ProductDTO {
   @Length(5, 60)
   title: string;
   ncm: string;
-  description: string;
-  productDetails: string;
-  sellingPrice: number;
-  height: number;
-  width: number;
-  length: number;
-  weight: number;
-  isActive: boolean;
+  description?: string;
+  productDetails?: string;
+  sellingPrice?: number;
+  height?: number;
+  width?: number;
+  length?: number;
+  weight?: number;
+  isActive?: boolean;
   productVariations?: ProductVariationDTO[];
   productImages?: ProductImageDTO[];
 }
