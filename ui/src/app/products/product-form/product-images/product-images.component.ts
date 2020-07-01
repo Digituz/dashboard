@@ -21,8 +21,8 @@ export class ProductImagesComponent implements OnInit {
   constructor(private imageService: ImageService) {}
 
   ngOnInit(): void {
-    this.selectedImages = this.product.productImages.map((productImage) => productImage.image);
-    this.selectedImagesIds = this.selectedImages.map((selectedImage) => selectedImage.id);
+    this.selectedImages = this.product.productImages?.map((productImage) => productImage.image);
+    this.selectedImagesIds = this.selectedImages?.map((selectedImage) => selectedImage.id);
   }
 
   openImagesDialog() {

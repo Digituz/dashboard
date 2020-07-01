@@ -10,6 +10,7 @@ export class ProductDTO {
   @IsNotEmpty()
   @Length(5, 60)
   title: string;
+  ncm: string;
   description: string;
   productDetails: string;
   sellingPrice: number;

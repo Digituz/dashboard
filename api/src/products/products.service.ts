@@ -81,40 +81,81 @@ export class ProductsService {
   ): Promise<Product> {
     // remove variations that are not part of the DTO being passed
     const existingVariations = product.productVariations;
-    const newVariations = productDTO.productVariations;
+    const newVariationsDTO = productDTO.productVariations;
     const excludedVariations = _.differenceBy(
       existingVariations,
-      newVariations,
+      newVariationsDTO,
       'sku',
     );
-    this.productVariationsRepository.remove(excludedVariations);
+
+    // instantiate array of variations (i.e., non-DTO objects)
+    const newVariations: ProductVariation[] =
+      newVariationsDTO?.map(newVariationDTO => {
+        const previousVariaton = existingVariations.find(
+          v => v.sku === newVariationDTO.sku,
+        );
+        return {
+          ...previousVariaton,
+          product: product,
+          sku: newVariationDTO.sku,
+          sellingPrice: newVariationDTO.sellingPrice,
+          description: newVariationDTO.description,
+        };
+      }) || [];
 
     // remove images that are not part of the DTO being passed
-    const existingImages = product.productImages;
+    // const existingImages = product.productImages;
     const newImagesDTO = productDTO.productImages;
-    const newImagesId = newImagesDTO.map(
-      productImageDTO => productImageDTO.imageId,
-    );
-    const excludedImages =
-      existingImages?.filter(productImage => {
-        return !newImagesId.includes(productImage.image.id);
-      }) || [];
-    this.productImagesRepository.remove(excludedImages);
+    const newImagesId =
+      newImagesDTO?.map(productImageDTO => productImageDTO.imageId) || [];
+    // const excludedImages =
+    //   existingImages?.filter(productImage => {
+    //     return !newImagesId.includes(productImage.image.id);
+    //   }) || [];
+    // const excludedImagesIds = excludedImages.map(
+    //   excludedImage => excludedImage.image.id,
+    // );
+    // this.productImagesRepository
+    //   .createQueryBuilder()
+    //   .delete()
+    //   .from(ProductImage)
+    //   .where('product_id = :productId and image_id in (:ids)', {
+    //     productId: product.id,
+    //     ids: excludedImagesIds,
+    //   })
+    //   .execute();
     const newImages = await this.imagesService.findByIds(newImagesId);
 
-    const updatedProduct = {
+    // instantiate new product object (i.e., non-DTO)
+    const updatedProduct: Product = {
       id: product.id,
-      ...productDTO,
-      productImages: newImages.map(newImage => ({
-        image: newImage,
-        order: newImagesDTO.find(imageDTO => imageDTO.imageId === newImage.id)
-          .order,
-      })),
+      sku: productDTO.sku,
+      title: productDTO.title,
+      description: productDTO.description,
+      productDetails: productDTO.productDetails,
+      sellingPrice: productDTO.sellingPrice,
+      height: productDTO.height,
+      width: productDTO.width,
+      length: productDTO.length,
+      weight: productDTO.weight,
+      isActive: productDTO.isActive,
+      ncm: productDTO.ncm,
+      productVariations: newVariations,
       variationsSize: productDTO.productVariations?.length,
       imagesSize: productDTO.productImages?.length,
     };
 
+    // updatedProduct.productImages = newImages.map(newImage => ({
+    //   image: newImage,
+    //   product: updatedProduct,
+    //   order: newImagesDTO.find(imageDTO => imageDTO.imageId === newImage.id)
+    //     .order,
+    // }));
+
     return this.productsRepository.save(updatedProduct);
+    // return new Promise(res => {
+    //   res(product);
+    // });
   }
 
   async paginate(options: IPaginationOpts): Promise<Pagination<Product>> {

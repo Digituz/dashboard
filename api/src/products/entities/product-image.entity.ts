@@ -12,7 +12,7 @@ export class ProductImage {
   @ManyToOne(
     type => Product,
     product => product.productImages,
-    { primary: true, nullable: false, onDelete: 'CASCADE' },
+    { primary: true, nullable: false },
   )
   @JoinColumn({ name: 'product_id' })
   product: Product;
@@ -20,8 +20,7 @@ export class ProductImage {
   @ManyToOne(type => Image, {
     primary: true,
     nullable: false,
-    onDelete: 'CASCADE',
-    eager: true
+    eager: true,
   })
   @JoinColumn({ name: 'image_id' })
   image: Image;

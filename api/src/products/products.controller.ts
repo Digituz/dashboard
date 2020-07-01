@@ -59,7 +59,7 @@ export class ProductsController {
   }
 
   @Post()
-  async save(@Body() productDTO: ProductDTO) {
-    this.productsService.save(productDTO);
+  async save(@Body() productDTO: ProductDTO): Promise<Product> {
+    return this.productsService.save(productDTO);
   }
 }

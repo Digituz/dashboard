@@ -98,8 +98,8 @@ export class Product extends BaseEntity {
     type => ProductImage,
     image => image.product,
     {
-      cascade: ['insert', 'update', 'remove'],
-      eager: true,
+      cascade: false,
+      eager: false,
     },
   )
   productImages?: ProductImage[];
