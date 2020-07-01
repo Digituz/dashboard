@@ -26,5 +26,6 @@ describe('AppController (e2e)', () => {
     }
   });
 
-  require('./authentication.tests');
+  require('./test-suites/authentication.tests');
+  require('./test-suites/products/products.tests');
 });
