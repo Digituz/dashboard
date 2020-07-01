@@ -57,6 +57,25 @@
     ]
   },
   {
+    "sku": "LFK-00002",
+    "title": "Anel Frida Kahlo Flor",
+    "ncm": "0001.02.03",
+    "productVariations": [
+      {
+        "sku": "LFK-00002-19",
+        "parentSku": "LFK-00002",
+        "description": "Tamanho:19",
+        "sellingPrice": 49.9
+      },
+      {
+        "sku": "LFK-00002-21",
+        "parentSku": "LFK-00002",
+        "description": "Tamanho:21",
+        "sellingPrice": 59.9
+      }
+    ]
+  },
+  {
     "sku": "LFK-00003",
     "title": "Máscara XYZ",
     "ncm": "1234.56.78",

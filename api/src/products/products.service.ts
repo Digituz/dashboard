@@ -88,6 +88,8 @@ export class ProductsService {
       'sku',
     );
 
+    await this.productVariationsRepository.remove(excludedVariations);
+
     // instantiate array of variations (i.e., non-DTO objects)
     const newVariations: ProductVariation[] =
       newVariationsDTO?.map(newVariationDTO => {
