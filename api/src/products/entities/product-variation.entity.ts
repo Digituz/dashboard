@@ -40,5 +40,5 @@ export class ProductVariation extends BaseEntity {
     },
   )
   @JoinColumn({ name: 'product_id' })
-  product: Product;
+  product?: Product;
 }

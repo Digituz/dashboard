@@ -15,7 +15,7 @@ export class ProductImage {
     { primary: true, nullable: false },
   )
   @JoinColumn({ name: 'product_id' })
-  product: Product;
+  product?: Product;
 
   @ManyToOne(type => Image, {
     primary: true,

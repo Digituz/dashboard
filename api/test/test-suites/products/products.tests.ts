@@ -9,7 +9,7 @@ import { executeQueries } from '../utils/queries';
 const validImagesFixtures: Image[] = imageFixtures;
 const validFixtures: ProductDTO[] = productFixtures;
 
-describe.only('products', () => {
+describe('products', () => {
   let authorizedRequest: any;
 
   beforeAll(async () => {

@@ -24,49 +24,49 @@ export class Product extends BaseEntity {
     type: 'text',
     default: '',
   })
-  description: string;
+  description?: string;
 
   @Column({
     name: 'product_details',
     type: 'text',
     default: '',
   })
-  productDetails: string;
+  productDetails?: string;
 
   @Column({
     name: 'selling_price',
     precision: 2,
     nullable: true,
   })
-  sellingPrice: number;
+  sellingPrice?: number;
 
   @Column({
     name: 'height',
     precision: 3,
     nullable: true,
   })
-  height: number;
+  height?: number;
 
   @Column({
     name: 'width',
     precision: 3,
     nullable: true,
   })
-  width: number;
+  width?: number;
 
   @Column({
     name: 'length',
     precision: 3,
     nullable: true,
   })
-  length: number;
+  length?: number;
 
   @Column({
     name: 'weight',
     precision: 3,
     nullable: true,
   })
-  weight: number;
+  weight?: number;
 
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
@@ -79,7 +79,7 @@ export class Product extends BaseEntity {
       eager: true,
     },
   )
-  productVariations: ProductVariation[];
+  productVariations?: ProductVariation[];
 
   @Column({
     type: 'varchar',
@@ -98,7 +98,7 @@ export class Product extends BaseEntity {
     type => ProductImage,
     image => image.product,
     {
-      cascade: ['insert', 'update', 'remove'],
+      cascade: false,
       eager: false,
     },
   )

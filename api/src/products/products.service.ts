@@ -48,13 +48,57 @@ export class ProductsService {
   }
 
   async findOneBySku(sku: string): Promise<Product> {
-    return this.productsRepository.findOne({
+    const product = await this.productsRepository.findOne({
       sku,
     });
+
+    if (!product) return null;
+
+    product.productImages = await this.productImagesRepository.find({
+      where: { product: product },
+    });
+
+    return product;
   }
 
   async remove(id: number): Promise<void> {
     await this.productsRepository.delete(id);
+  }
+
+  private async insertProduct(productDTO: ProductDTO) {
+    const newProduct: Product = {
+      sku: productDTO.sku,
+      title: productDTO.title,
+      ncm: productDTO.ncm,
+      description: productDTO.description,
+      productDetails: productDTO.productDetails,
+      sellingPrice: productDTO.sellingPrice,
+      height: productDTO.height,
+      width: productDTO.width,
+      length: productDTO.length,
+      weight: productDTO.weight,
+      isActive: productDTO.isActive,
+      variationsSize: productDTO.productVariations?.length,
+      imagesSize: productDTO.productImages?.length,
+      productVariations: productDTO.productVariations,
+    };
+
+    const persistedProduct = await this.productsRepository.save(newProduct);
+
+    // managing product images
+    const imagesIds =
+      productDTO.productImages?.map(productImage => productImage.imageId) || [];
+    const images = await this.imagesService.findByIds(imagesIds);
+    const productImages = productDTO.productImages?.map(productImage => ({
+      image: images.find(image => image.id === productImage.imageId),
+      order: productImage.order,
+      product: persistedProduct,
+    }));
+    if (productImages) {
+      await this.productImagesRepository.save(productImages);
+    }
+
+    return persistedProduct;
   }
 
   async save(productDTO: ProductDTO): Promise<Product> {
@@ -62,11 +106,7 @@ export class ProductsService {
     if (product) {
       product = await this.updateProduct(product, productDTO);
     } else {
-      product = await this.productsRepository.save({
-        ...productDTO,
-        variationsSize: productDTO.productVariations?.length,
-        imagesSize: productDTO.productImages?.length,
-      });
+      product = await this.insertProduct(productDTO);
     }
     this.tagsService.save({
       label: product.sku,
