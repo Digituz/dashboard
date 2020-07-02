@@ -1,6 +1,6 @@
 <table class="digituz" (click)="sortTable($event.target)">
   <ng-content select="thead"></ng-content>
-  <ng-content select="tbody"></ng-content>
+  <ng-content select="tbody" *ngIf="!loading"></ng-content>
 </table>
 <div class="dgz-table dgz-table-info digituz-loading-set" *ngIf="loading">
   <i class="fal fa-spinner"></i>

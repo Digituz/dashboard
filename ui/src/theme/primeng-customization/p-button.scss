@@ -45,4 +45,8 @@ body .ui-button {
   span.ui-button-icon-left {
     font-size: 12px;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
