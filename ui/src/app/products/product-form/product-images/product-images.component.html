@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let productImage of productImages">
+    <tr *ngFor="let productImage of productImages; index as i">
       <td>
         <div class="images-container">
           <div class="image">
@@ -35,7 +35,29 @@
         </div>
       </td>
       <td class="actions">
-        <button pButton class="ui-button-danger" type="button" icon="fal fa-trash" (click)="removeImage(productImage)"></button>
+        <button
+          pButton
+          class="ui-button-secondary"
+          type="button"
+          icon="fal fa-angle-up"
+          [disabled]="i === 0"
+          (click)="moveImageUp(productImage, i)"
+        ></button>
+        <button
+          pButton
+          class="ui-button-secondary"
+          type="button"
+          icon="fal fa-angle-down"
+          [disabled]="i === productImages.length - 1"
+          (click)="moveImageDown(productImage, i)"
+        ></button>
+        <button
+          pButton
+          class="ui-button-danger"
+          type="button"
+          icon="fal fa-trash"
+          (click)="removeImage(productImage)"
+        ></button>
       </td>
     </tr>
     <tr *ngIf="!productImages || productImages.length === 0">
@@ -57,7 +79,10 @@
   [draggable]="false"
   class="product-images"
 >
-  <div *ngIf="!availableImages || availableImages.length === 0" style="text-align: center; width: 200px; line-height: 25px;">
+  <div
+    *ngIf="!availableImages || availableImages.length === 0"
+    style="text-align: center; width: 200px; line-height: 25px;"
+  >
     Este produto não contém imagens registradas <a routerLink="/media-library">no acervo</a>.
   </div>
   <div class="images-container">

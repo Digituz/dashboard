@@ -42,6 +42,22 @@ export class ProductImagesComponent implements OnInit {
     this.productImagesIds = this.selectedImages?.map((selectedImage) => selectedImage.id);
   }
 
+  moveImageUp(productImage: Image, currentIndex: number) {
+    this.selectedImages = this.productImages;
+    let swappedImage = this.selectedImages[currentIndex - 1];
+    this.selectedImages[currentIndex - 1] = productImage;
+    this.selectedImages[currentIndex] = swappedImage;
+    this.updateImages();
+  }
+
+  moveImageDown(productImage: Image, currentIndex: number) {
+    this.selectedImages = this.productImages;
+    let swappedImage = this.selectedImages[currentIndex + 1];
+    this.selectedImages[currentIndex + 1] = productImage;
+    this.selectedImages[currentIndex] = swappedImage;
+    this.updateImages();
+  }
+
   removeImage(productImage: Image) {
     this.selectedImages = this.productImages.filter((selectedImage) => selectedImage.id !== productImage.id);
     this.updateImages();
