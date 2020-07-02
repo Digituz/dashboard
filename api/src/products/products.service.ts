@@ -146,27 +146,39 @@ export class ProductsService {
       }) || [];
 
     // remove images that are not part of the DTO being passed
-    // const existingImages = product.productImages;
+    const existingImages = product.productImages;
     const newImagesDTO = productDTO.productImages;
     const newImagesId =
       newImagesDTO?.map(productImageDTO => productImageDTO.imageId) || [];
-    // const excludedImages =
-    //   existingImages?.filter(productImage => {
-    //     return !newImagesId.includes(productImage.image.id);
-    //   }) || [];
-    // const excludedImagesIds = excludedImages.map(
-    //   excludedImage => excludedImage.image.id,
-    // );
-    // this.productImagesRepository
-    //   .createQueryBuilder()
-    //   .delete()
-    //   .from(ProductImage)
-    //   .where('product_id = :productId and image_id in (:ids)', {
-    //     productId: product.id,
-    //     ids: excludedImagesIds,
-    //   })
-    //   .execute();
-    const newImages = await this.imagesService.findByIds(newImagesId);
+    const excludedImages =
+      existingImages?.filter(productImage => {
+        return !newImagesId.includes(productImage.image.id);
+      }) || [];
+
+    if (excludedImages && excludedImages.length > 0) {
+      const excludedImagesIds = excludedImages
+        .map(excludedImage => excludedImage.image.id)
+        .join(',');
+
+      await this.productImagesRepository
+        .createQueryBuilder()
+        .delete()
+        .from(ProductImage)
+        .where(`product_id = ${product.id} and image_id in (${excludedImagesIds})`)
+        .execute();
+    }
+
+    // if (newImagesId) {
+    //   const newImages = await this.imagesService.findByIds(newImagesId);
+    //   const productImages = productDTO.productImages?.map(productImage => ({
+    //     image: newImages.find(image => image.id === productImage.imageId),
+    //     order: productImage.order,
+    //     product: product,
+    //   }));
+    //   if (productImages) {
+    //     await this.productImagesRepository.save(productImages);
+    //   }
+    // }
 
     // instantiate new product object (i.e., non-DTO)
     const updatedProduct: Product = {
@@ -187,17 +199,7 @@ export class ProductsService {
       imagesSize: productDTO.productImages?.length,
     };
 
-    // updatedProduct.productImages = newImages.map(newImage => ({
-    //   image: newImage,
-    //   product: updatedProduct,
-    //   order: newImagesDTO.find(imageDTO => imageDTO.imageId === newImage.id)
-    //     .order,
-    // }));
-
     return this.productsRepository.save(updatedProduct);
-    // return new Promise(res => {
-    //   res(product);
-    // });
   }
 
   async paginate(options: IPaginationOpts): Promise<Pagination<Product>> {

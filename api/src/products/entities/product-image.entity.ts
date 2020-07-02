@@ -12,7 +12,7 @@ export class ProductImage {
   @ManyToOne(
     type => Product,
     product => product.productImages,
-    { primary: true, nullable: false },
+    { primary: true, nullable: false, cascade: false },
   )
   @JoinColumn({ name: 'product_id' })
   product?: Product;
@@ -21,6 +21,7 @@ export class ProductImage {
     primary: true,
     nullable: false,
     eager: true,
+    cascade: false,
   })
   @JoinColumn({ name: 'image_id' })
   image: Image;
