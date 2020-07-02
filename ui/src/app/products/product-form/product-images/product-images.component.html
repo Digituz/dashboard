@@ -14,22 +14,22 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let selectedImage of selectedImages">
+    <tr *ngFor="let productImage of productImages">
       <td>
         <div class="images-container">
           <div class="image">
             <div
               class="thumbnail-container"
-              [ngStyle]="{ 'background-image': 'url(' + selectedImage.smallFileURL + ')' }"
+              [ngStyle]="{ 'background-image': 'url(' + productImage.smallFileURL + ')' }"
             ></div>
             <div class="image-details">
               <p>
                 Nome da Imagem:
-                <a target="_blank" [href]="selectedImage.originalFileURL"
-                  >{{ selectedImage.originalFilename }} <i class="fal fa-external-link"></i
+                <a target="_blank" [href]="productImage.originalFileURL"
+                  >{{ productImage.originalFilename }} <i class="fal fa-external-link"></i
                 ></a>
               </p>
-              <p>Dimensões: {{ selectedImage.width }}x{{ selectedImage.height }}</p>
+              <p>Dimensões: {{ productImage.width }}x{{ productImage.height }}</p>
             </div>
           </div>
         </div>

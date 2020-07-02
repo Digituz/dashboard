@@ -14,22 +14,23 @@ export class ProductImagesComponent implements OnInit {
   isModalVisible: boolean = false;
   availableImages: Image[] = [];
   selectedImages: Image[] = [];
-  selectedImagesIds: number[] = [];
+  productImages: Image[] = [];
+  productImagesIds: number[] = [];
 
   @Output() imagesSelected = new EventEmitter<Image[]>();
 
   constructor(private imageService: ImageService) {}
 
   ngOnInit(): void {
-    this.selectedImages = this.product.productImages?.map((productImage) => productImage.image);
-    this.selectedImagesIds = this.selectedImages?.map((selectedImage) => selectedImage.id);
+    this.productImages = this.product.productImages?.map((productImage) => productImage.image);
+    this.productImagesIds = this.productImages?.map((selectedImage) => selectedImage.id);
   }
 
   openImagesDialog() {
     this.imageService.withTags(this.product.sku).subscribe((availableImages) => {
       this.availableImages = availableImages;
       this.selectedImages = this.availableImages.filter((availableImage) => {
-        return this.selectedImagesIds.includes(availableImage.id);
+        return this.productImagesIds.includes(availableImage.id);
       });
     });
     this.isModalVisible = true;
@@ -37,11 +38,14 @@ export class ProductImagesComponent implements OnInit {
 
   saveProductImages() {
     this.imagesSelected.emit(this.selectedImages);
+    this.productImages = this.selectedImages || [];
+    this.productImagesIds = this.selectedImages?.map((selectedImage) => selectedImage.id);
     this.closeDialog();
   }
 
   closeDialog() {
     this.isModalVisible = false;
     this.availableImages = [];
+    this.selectedImages = [];
   }
 }

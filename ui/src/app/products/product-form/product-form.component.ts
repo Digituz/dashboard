@@ -74,7 +74,7 @@ export class ProductFormComponent implements OnInit {
     product.productImages = this.images;
 
     this.productService.saveProduct(product).subscribe(() => {
-      // this.router.navigate(['/products']);
+      this.router.navigate(['/products']);
     });
   }
 
