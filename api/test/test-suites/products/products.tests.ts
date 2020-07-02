@@ -48,12 +48,16 @@ describe('products', () => {
         expect(response.data.productVariations?.length).toBe(
           validFixture.productVariations.length,
         );
+      } else {
+        expect(response.data.productVariations).toBeOneOf([[], undefined]);
       }
 
       if (validFixture.productImages) {
         expect(response.data.productImages?.length).toBe(
           validFixture.productImages.length,
         );
+      } else {
+        expect(response.data.productImages).toBeOneOf([[], undefined]);
       }
 
       done();

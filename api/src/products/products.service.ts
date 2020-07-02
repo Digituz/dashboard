@@ -164,21 +164,23 @@ export class ProductsService {
         .createQueryBuilder()
         .delete()
         .from(ProductImage)
-        .where(`product_id = ${product.id} and image_id in (${excludedImagesIds})`)
+        .where(
+          `product_id = ${product.id} and image_id in (${excludedImagesIds})`,
+        )
         .execute();
     }
 
-    // if (newImagesId) {
-    //   const newImages = await this.imagesService.findByIds(newImagesId);
-    //   const productImages = productDTO.productImages?.map(productImage => ({
-    //     image: newImages.find(image => image.id === productImage.imageId),
-    //     order: productImage.order,
-    //     product: product,
-    //   }));
-    //   if (productImages) {
-    //     await this.productImagesRepository.save(productImages);
-    //   }
-    // }
+    if (newImagesId && newImagesId.length > 0) {
+      const newImages = await this.imagesService.findByIds(newImagesId);
+      const productImages = productDTO.productImages
+        .filter(productImage => newImagesId.includes(productImage.imageId))
+        .map(productImage => ({
+          image: newImages.find(image => image.id === productImage.imageId),
+          order: productImage.order,
+          product: product,
+        }));
+      await this.productImagesRepository.save(productImages);
+    }
 
     // instantiate new product object (i.e., non-DTO)
     const updatedProduct: Product = {

@@ -1,6 +1,12 @@
 [
   { "sku": "LFK-00001", "title": "Máscara XYZ", "ncm": "1234.56.78" },
   {
+    "sku": "LFK-00001",
+    "title": "Máscara XYZ",
+    "ncm": "1234.56.78",
+    "productImages": [{ "imageId": 3, "order": 1 }]
+  },
+  {
     "sku": "LFK-00002",
     "title": "Anel Frida Kahlo Flor",
     "ncm": "0001.02.03",
@@ -102,5 +108,16 @@
       { "imageId": 2, "order": 0 },
       { "imageId": 3, "order": 1 }
     ]
+  },
+  {
+    "sku": "LFK-00004",
+    "title": "Máscara Cinza",
+    "ncm": "1234.56.79",
+    "productImages": []
+  },
+  {
+    "sku": "LFK-00004",
+    "title": "Máscara Cinza",
+    "ncm": "1234.56.79"
   }
 ]
