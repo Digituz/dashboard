@@ -54,9 +54,10 @@ export class DgzTableComponent<T> implements OnInit, OnChanges {
 
   sortTable(target: Element) {
     let sortableItem = target;
-    while (!sortableItem.attributes || !sortableItem.attributes.getNamedItem('dgz-sortable')) {
+    while (!!sortableItem && (!sortableItem.attributes || !sortableItem.attributes.getNamedItem('dgz-sortable'))) {
       sortableItem = sortableItem.parentElement;
     }
+    if (!sortableItem) return;
     const newSortedAttribute = sortableItem.attributes.getNamedItem('dgz-sortable').value;
     this.sortDirectionAscending = newSortedAttribute !== this.sortedBy || this.sortDirectionAscending === false;
     this.sortedBy = newSortedAttribute;
