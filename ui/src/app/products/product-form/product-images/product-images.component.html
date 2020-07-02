@@ -35,10 +35,10 @@
         </div>
       </td>
       <td class="actions">
-        <button pButton class="ui-button-danger" type="button" icon="fal fa-trash"></button>
+        <button pButton class="ui-button-danger" type="button" icon="fal fa-trash" (click)="removeImage(productImage)"></button>
       </td>
     </tr>
-    <tr *ngIf="!product.productImages || product.productImages.length === 0">
+    <tr *ngIf="!productImages || productImages.length === 0">
       <td colspan="2">
         <div class="no-data-container">
           <i class="fal fa-inbox"></i>

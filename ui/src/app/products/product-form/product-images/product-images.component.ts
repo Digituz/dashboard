@@ -36,10 +36,19 @@ export class ProductImagesComponent implements OnInit {
     this.isModalVisible = true;
   }
 
-  saveProductImages() {
+  private updateImages() {
     this.imagesSelected.emit(this.selectedImages);
     this.productImages = this.selectedImages || [];
     this.productImagesIds = this.selectedImages?.map((selectedImage) => selectedImage.id);
+  }
+
+  removeImage(productImage: Image) {
+    this.selectedImages = this.productImages.filter((selectedImage) => selectedImage.id !== productImage.id);
+    this.updateImages();
+  }
+
+  saveProductImages() {
+    this.updateImages();
     this.closeDialog();
   }
 
