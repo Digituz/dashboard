@@ -5,6 +5,8 @@ import productFixtures from './valid-products.fixture.json';
 import { ProductDTO } from '../../../src/products/dtos/product.dto';
 import { Image } from '../../../src/media-library/image.entity';
 import { executeQueries } from '../utils/queries';
+import { ProductImageDTO } from '../../../src/products/dtos/product-image.dto';
+import { ProductImage } from '../../../src/products/entities/product-image.entity';
 
 const validImagesFixtures: Image[] = imageFixtures;
 const validFixtures: ProductDTO[] = productFixtures;
@@ -28,6 +30,17 @@ describe('products', () => {
     });
     await executeQueries(...insertImages);
   });
+
+  function validateImages(
+    currentImages: ProductImage[],
+    expectedImages: ProductImageDTO[],
+  ) {
+    expect(currentImages?.length).toBe(expectedImages.length);
+    expectedImages.forEach((expectedImage, idx) => {
+      expect(currentImages[idx].image.id).toBe(expectedImage.imageId);
+      expect(currentImages[idx].order).toBe(expectedImage.order);
+    });
+  }
 
   validFixtures.forEach((validFixture: ProductDTO) => {
     it(`to be able to create valid products (${validFixture.sku})`, async done => {
@@ -53,9 +66,7 @@ describe('products', () => {
       }
 
       if (validFixture.productImages) {
-        expect(response.data.productImages?.length).toBe(
-          validFixture.productImages.length,
-        );
+        validateImages(response.data.productImages, validFixture.productImages);
       } else {
         expect(response.data.productImages).toBeOneOf([[], undefined]);
       }

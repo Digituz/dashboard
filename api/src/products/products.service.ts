@@ -58,6 +58,10 @@ export class ProductsService {
       where: { product: product },
     });
 
+    product.productImages = product.productImages.sort((a, b) => {
+      return a.order - b.order;
+    });
+
     return product;
   }
 

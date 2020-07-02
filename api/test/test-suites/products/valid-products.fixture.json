@@ -113,6 +113,15 @@
     "sku": "LFK-00004",
     "title": "Máscara Cinza",
     "ncm": "1234.56.79",
+    "productImages": [
+      { "imageId": 3, "order": 0 },
+      { "imageId": 2, "order": 1 }
+    ]
+  },
+  {
+    "sku": "LFK-00004",
+    "title": "Máscara Cinza",
+    "ncm": "1234.56.79",
     "productImages": []
   },
   {
