@@ -49,7 +49,7 @@ describe('querying products', () => {
   });
 
   it('should sort by amount of product variations', async () => {
-    const response = await axios.get(
+    let response = await axios.get(
       'http://localhost:3000/v1/products?page=1&limit=3&sortedBy=productVariations',
       authorizedRequest,
     );
@@ -58,5 +58,25 @@ describe('querying products', () => {
     expect(response.data.items[0].sku).toBe('A-00');
     expect(response.data.items[1].sku).toBe('A-01');
     expect(response.data.items[2].sku).toBe('A-02');
+
+    response = await axios.get(
+      'http://localhost:3000/v1/products?page=1&limit=3&sortedBy=productVariations&sortDirectionAscending=true',
+      authorizedRequest,
+    );
+
+    expect(response.data.items.length).toBe(3);
+    expect(response.data.items[0].sku).toBe('A-00');
+    expect(response.data.items[1].sku).toBe('A-01');
+    expect(response.data.items[2].sku).toBe('A-02');
+
+    response = await axios.get(
+      'http://localhost:3000/v1/products?page=1&limit=3&sortedBy=productVariations&sortDirectionAscending=false',
+      authorizedRequest,
+    );
+
+    expect(response.data.items.length).toBe(3);
+    expect(response.data.items[0].sku).toBe('A-08');
+    expect(response.data.items[1].sku).toBe('A-07');
+    expect(response.data.items[2].sku).toBe('A-06');
   });
 });
