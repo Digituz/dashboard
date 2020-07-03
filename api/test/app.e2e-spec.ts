@@ -6,20 +6,10 @@ config({ path: `${__dirname}/.env` });
 
 import { bootstrap } from '../src/server';
 import { INestApplication } from '@nestjs/common';
-import { executeQueries } from './test-suites/utils/queries';
+import { cleanUpDatabase } from './test-suites/utils/queries';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
-
-  async function cleanUpDatabase() {
-    await executeQueries(
-      'delete from tag;',
-      'delete from product_image;',
-      'delete from product_variation;',
-      'delete from product;',
-      'delete from image;',
-    );
-  }
 
   beforeAll(async done => {
     const silentMode = true;
@@ -51,4 +41,5 @@ describe('AppController (e2e)', () => {
 
   require('./test-suites/authentication.tests');
   require('./test-suites/products/products.tests');
+  require('./test-suites/products/querying-products/querying-products.tests');
 });

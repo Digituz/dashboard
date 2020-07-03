@@ -11,7 +11,7 @@ import { ProductImage } from '../../../src/products/entities/product-image.entit
 const validImagesFixtures: Image[] = imageFixtures;
 const validFixtures: ProductDTO[] = productFixtures;
 
-describe('products', () => {
+describe('inserting products', () => {
   let authorizedRequest: any;
 
   beforeAll(async () => {

@@ -214,8 +214,10 @@ export class ProductsService {
     let orderColumn = '';
 
     switch (options.sortedBy?.trim()) {
+      case undefined:
       case null:
       case '':
+        orderColumn = 'title';
         break;
       case 'productVariations':
         orderColumn = 'variations_size';
@@ -272,10 +274,18 @@ export class ProductsService {
         }
       });
 
-    queryBuilder.orderBy(
-      orderColumn,
-      options.sortDirectionAscending === false ? 'DESC' : 'ASC',
-    );
+    let sortDirection;
+    switch (options.sortDirectionAscending) {
+      case undefined:
+      case null:
+      case true:
+        sortDirection = 'ASC';
+        break;
+      default:
+        sortDirection = 'DESC';
+    }
+
+    queryBuilder.orderBy(orderColumn, sortDirection);
 
     const results = await paginate<Product>(queryBuilder, options);
 

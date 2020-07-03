@@ -10,3 +10,13 @@ export async function executeQueries(...queries: string[]) {
 
   await client.end();
 }
+
+export async function cleanUpDatabase() {
+  await executeQueries(
+    'delete from tag;',
+    'delete from product_image;',
+    'delete from product_variation;',
+    'delete from product;',
+    'delete from image;',
+  );
+}
