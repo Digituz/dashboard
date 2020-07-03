@@ -12,6 +12,7 @@ import { User } from './users/user.entity';
 import { TagsModule } from './tags/tags.module';
 import { Tag } from './tags/tag.entity';
 import { ProductImage } from './products/entities/product-image.entity';
+import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { ProductImage } from './products/entities/product-image.entity';
     AuthModule,
     UsersModule,
     TagsModule,
+    InventoryModule,
   ],
   controllers: [],
   providers: [],
