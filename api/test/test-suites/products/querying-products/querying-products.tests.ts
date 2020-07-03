@@ -21,7 +21,7 @@ describe('querying products', () => {
     );
   });
 
-  it('should be query', async () => {
+  it('should sort results by title by default', async () => {
     const response = await axios.get(
       'http://localhost:3000/v1/products?page=1&limit=5',
       authorizedRequest,
@@ -33,5 +33,18 @@ describe('querying products', () => {
     expect(response.data.items[2].sku).toBe('A-02');
     expect(response.data.items[3].sku).toBe('A-03');
     expect(response.data.items[4].sku).toBe('A-04');
+  });
+
+  it('should paginate properly', async () => {
+    const response = await axios.get(
+      'http://localhost:3000/v1/products?page=2&limit=5',
+      authorizedRequest,
+    );
+
+    expect(response.data.items.length).toBe(4);
+    expect(response.data.items[0].sku).toBe('A-05');
+    expect(response.data.items[1].sku).toBe('A-06');
+    expect(response.data.items[2].sku).toBe('A-07');
+    expect(response.data.items[3].sku).toBe('A-08');
   });
 });
