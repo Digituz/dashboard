@@ -3,54 +3,63 @@
     "sku": "A-07",
     "title": "Product A-07",
     "ncm": "1234.56.78",
-    "variations_size": 6
+    "variations_size": 7,
+    "images_size": 7
   },
   {
     "sku": "A-04",
     "title": "Product A-04",
     "ncm": "1234.56.78",
-    "variations_size": 3
+    "variations_size": 4,
+    "images_size": 4
   },
   {
     "sku": "A-01",
     "title": "Product A-01",
     "ncm": "1234.56.78",
-    "variations_size": 0
+    "variations_size": 1,
+    "images_size": 1
   },
   {
     "sku": "A-00",
     "title": "Product A-00",
     "ncm": "1234.56.78",
-    "variations_size": null
+    "variations_size": 0,
+    "images_size": 0
   },
   {
     "sku": "A-06",
     "title": "Product A-06",
     "ncm": "1234.56.78",
-    "variations_size": 5
+    "variations_size": 6,
+    "images_size": 6
   },
   {
     "sku": "A-03",
     "title": "Product A-03",
     "ncm": "1234.56.78",
-    "variations_size": 2
+    "variations_size": 3,
+    "images_size": 3
   },
   {
     "sku": "A-02",
     "title": "Product A-02",
     "ncm": "1234.56.78",
-    "variations_size": 1
+    "variations_size": 2,
+    "images_size": 2
   },
   {
     "sku": "A-05",
     "title": "Product A-05",
     "ncm": "1234.56.78",
-    "variations_size": 4
+    "variations_size": 5,
+    "images_size": 5
   },
   {
     "sku": "A-08",
     "title": "Product A-08",
     "ncm": "1234.56.78",
-    "variations_size": 7
+    "variations_size": 8,
+    "images_size": 8
   }
 ]

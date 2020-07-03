@@ -92,7 +92,7 @@ export class Product extends BaseEntity {
     name: 'variations_size',
     type: 'int',
   })
-  variationsSize?: number;
+  variationsSize: number = 0;
 
   @OneToMany(
     type => ProductImage,
@@ -108,5 +108,5 @@ export class Product extends BaseEntity {
     name: 'images_size',
     type: 'int',
   })
-  imagesSize?: number;
+  imagesSize: number = 0;
 }
