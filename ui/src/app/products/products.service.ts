@@ -24,7 +24,7 @@ export class ProductsService implements IDataProvider<Product> {
     if (sortedBy) {
       query += `&sortedBy=${sortedBy}`;
     }
-    if (sortDirectionAscending) {
+    if (sortDirectionAscending !== undefined) {
       query += `&sortDirectionAscending=${sortDirectionAscending}`;
     }
 
