@@ -53,10 +53,7 @@ export class ProductsController {
 
   @Get(':sku')
   findOne(@Param('sku') sku: string): Promise<Product> {
-    return new Promise(async res => {
-      const product = await this.productsService.findOneBySku(sku);
-      res(product);
-    });
+    return this.productsService.findOneBySku(sku);
   }
 
   @Post()
