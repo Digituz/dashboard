@@ -275,17 +275,20 @@ export class ProductsService {
       });
 
     let sortDirection;
+    let sortNulls;
     switch (options.sortDirectionAscending) {
       case undefined:
       case null:
       case true:
         sortDirection = 'ASC';
+        sortNulls = 'NULLS FIRST';
         break;
       default:
         sortDirection = 'DESC';
+        sortNulls = 'NULLS LAST';
     }
 
-    queryBuilder.orderBy(orderColumn, sortDirection);
+    queryBuilder.orderBy(orderColumn, sortDirection, sortNulls);
 
     const results = await paginate<Product>(queryBuilder, options);
 
