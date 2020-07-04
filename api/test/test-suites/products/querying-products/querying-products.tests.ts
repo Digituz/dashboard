@@ -1,8 +1,8 @@
 import axios from 'axios';
-import persistedProducts from './querying-products.fixture.json';
 
-import { executeQueries, cleanUpDatabase } from '../../utils/queries';
+import { cleanUpDatabase } from '../../utils/queries';
 import { getCredentials } from '../../utils/credentials';
+import { insertFixtures } from '../products-fixtures/products.fixture';
 
 describe('querying products', () => {
   let authorizedRequest: any;
@@ -12,13 +12,7 @@ describe('querying products', () => {
 
     authorizedRequest = await getCredentials();
 
-    await executeQueries(
-      ...persistedProducts.map(
-        p =>
-          `insert into product (sku, title, ncm, variations_size, images_size)
-           values ('${p.sku}', '${p.title}', '${p.ncm}', ${p.variations_size}, ${p.images_size});`,
-      ),
-    );
+    await insertFixtures();
   });
 
   it('should sort results by title by default', async () => {
