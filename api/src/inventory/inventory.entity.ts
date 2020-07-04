@@ -11,7 +11,7 @@ export class Inventory extends BaseEntity {
     { primary: true, nullable: false, cascade: false },
   )
   @JoinColumn({ name: 'product_id' })
-  product?: Product;
+  product: Product;
 
   @Column({
     type: 'int',

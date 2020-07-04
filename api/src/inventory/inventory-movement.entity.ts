@@ -10,7 +10,7 @@ export class InventoryMovement extends BaseEntity {
     { primary: true, nullable: false, cascade: false },
   )
   @JoinColumn({ name: 'inventory_id' })
-  inventory?: Inventory;
+  inventory: Inventory;
 
   amount: number;
 

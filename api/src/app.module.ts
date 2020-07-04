@@ -13,6 +13,8 @@ import { TagsModule } from './tags/tags.module';
 import { Tag } from './tags/tag.entity';
 import { ProductImage } from './products/entities/product-image.entity';
 import { InventoryModule } from './inventory/inventory.module';
+import { Inventory } from './inventory/inventory.entity';
+import { InventoryMovement } from './inventory/inventory-movement.entity';
 
 @Module({
   imports: [
@@ -23,7 +25,16 @@ import { InventoryModule } from './inventory/inventory.module';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [Product, ProductVariation, ProductImage, Image, User, Tag],
+      entities: [
+        Inventory,
+        InventoryMovement,
+        Product,
+        ProductVariation,
+        ProductImage,
+        Image,
+        User,
+        Tag,
+      ],
       synchronize: false,
       migrationsTableName: 'database_migrations',
       migrations: ['src/db-migrations/*.js'],
