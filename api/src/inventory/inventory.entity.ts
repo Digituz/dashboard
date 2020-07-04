@@ -14,6 +14,7 @@ export class Inventory extends BaseEntity {
   product: Product;
 
   @Column({
+    name: 'current_position',
     type: 'int',
     nullable: false,
   })

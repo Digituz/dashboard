@@ -1,0 +1,9 @@
+[
+  { "sku": "A-01", "amount": 1, "description": "Adding one item" },
+  { "sku": "A-02", "amount": 2, "description": "Adding two items" },
+  { "sku": "A-02", "amount": 3, "description": "Adding three item" },
+  { "sku": "A-02", "amount": 2, "description": "Adding more two items" },
+  { "sku": "A-02", "amount": -1, "description": "Subtracting one item" },
+  { "sku": "A-03", "amount": 20, "description": "Adding twenty items" },
+  { "sku": "A-03", "amount": -8, "description": "Subtracting eight items" }
+]

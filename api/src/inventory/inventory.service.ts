@@ -87,12 +87,18 @@ export class InventoryService {
     return this.inventoryRepository.findOne(id);
   }
 
+  findBySku(sku: string): Promise<Inventory> {
+    return this.inventoryRepository
+      .createQueryBuilder('i')
+      .leftJoinAndSelect('i.product', 'p')
+      .where('p.sku = :sku', { sku })
+      .getOne();
+  }
+
   async saveMovement(
     inventoryMovementDTO: InventoryMovementDTO,
   ): Promise<InventoryMovement> {
-    const inventory = await this.inventoryRepository.findOne(
-      inventoryMovementDTO.inventoryId,
-    );
+    const inventory = await this.findBySku(inventoryMovementDTO.sku);
     inventory.currentPosition += inventoryMovementDTO.amount;
     await this.inventoryRepository.save(inventory);
 
@@ -101,6 +107,7 @@ export class InventoryService {
       amount: inventoryMovementDTO.amount,
       description: inventoryMovementDTO.description,
     };
+
     return this.inventoryMovementRepository.save(movement);
   }
 

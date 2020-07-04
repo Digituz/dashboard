@@ -37,7 +37,7 @@ export class InventoryController {
     return this.inventoryService.findById(id);
   }
 
-  @Post('/movemnt')
+  @Post('/movement')
   async save(
     @Body() inventoryMovementDTO: InventoryMovementDTO,
   ): Promise<InventoryMovement> {

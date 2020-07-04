@@ -14,6 +14,8 @@ export async function executeQueries(...queries: string[]) {
 export async function cleanUpDatabase() {
   await executeQueries(
     'delete from tag;',
+    'delete from inventory_movement;',
+    'delete from inventory;',
     'delete from product_image;',
     'delete from product_variation;',
     'delete from product;',

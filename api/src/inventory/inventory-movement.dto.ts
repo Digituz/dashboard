@@ -2,7 +2,7 @@ import { IsNotEmpty } from 'class-validator';
 
 export class InventoryMovementDTO {
   @IsNotEmpty()
-  inventoryId: number;
+  sku: string;
 
   @IsNotEmpty()
   amount: number;

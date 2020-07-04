@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, ManyToOne, JoinColumn, Column } from 'typeorm';
 import { BaseEntity } from '../util/base-entity';
 import { Inventory } from './inventory.entity';
 
@@ -12,7 +12,9 @@ export class InventoryMovement extends BaseEntity {
   @JoinColumn({ name: 'inventory_id' })
   inventory: Inventory;
 
+  @Column()
   amount: number;
 
+  @Column()
   description: string;
 }
