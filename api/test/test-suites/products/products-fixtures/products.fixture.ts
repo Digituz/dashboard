@@ -2,7 +2,7 @@ import products from './products.fixtures.json';
 
 import { executeQueries } from '../../utils/queries';
 
-export async function insertFixtures() {
+export async function insertProductFixtures() {
   await executeQueries(
     ...products.map(
       p =>
@@ -12,7 +12,7 @@ export async function insertFixtures() {
   );
 }
 
-export async function cleanUpFixtures() {
+export async function cleanUpProductFixtures() {
   const skus = products.map(p => `'${p.sku}'`).join(', ');
   await executeQueries(
     ...products.map(p => `delete from product where sku in values (${skus});`),

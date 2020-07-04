@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { cleanUpDatabase } from '../../utils/queries';
 import { getCredentials } from '../../utils/credentials';
-import { insertFixtures } from '../products-fixtures/products.fixture';
+import { insertProductFixtures } from '../products-fixtures/products.fixture';
 
 describe('querying products', () => {
   let authorizedRequest: any;
@@ -12,7 +12,7 @@ describe('querying products', () => {
 
     authorizedRequest = await getCredentials();
 
-    await insertFixtures();
+    await insertProductFixtures();
   });
 
   it('should sort results by title by default', async () => {
