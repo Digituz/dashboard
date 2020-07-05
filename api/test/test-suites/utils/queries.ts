@@ -1,5 +1,16 @@
 import { Client } from 'pg';
 
+export async function executeQuery(query: string) {
+  const client = new Client();
+  await client.connect();
+
+  const queryResult = await client.query(query);
+
+  await client.end();
+
+  return queryResult.rows;
+}
+
 export async function executeQueries(...queries: string[]) {
   const client = new Client();
   await client.connect();
