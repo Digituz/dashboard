@@ -11,6 +11,8 @@ import { ProductVariation } from './entities/product-variation.entity';
 import { IPaginationOpts } from '../pagination/pagination';
 import { TagsService } from '../tags/tags.service';
 import { ImagesService } from '../media-library/images.service';
+import { Inventory } from '../inventory/inventory.entity';
+import { InventoryService } from '../inventory/inventory.service';
 
 @Injectable()
 export class ProductsService {
@@ -21,6 +23,7 @@ export class ProductsService {
     private productVariationsRepository: Repository<ProductVariation>,
     @InjectRepository(ProductImage)
     private productImagesRepository: Repository<ProductImage>,
+    private inventoryService: InventoryService,
     private imagesService: ImagesService,
     private tagsService: TagsService,
   ) {}
@@ -101,6 +104,14 @@ export class ProductsService {
     if (productImages) {
       await this.productImagesRepository.save(productImages);
     }
+
+    // starting the inventory info
+    const inventory: Inventory = {
+      product: persistedProduct,
+      currentPosition: 0,
+      movements: [],
+    };
+    await this.inventoryService.save(inventory);
 
     return persistedProduct;
   }

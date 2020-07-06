@@ -43,4 +43,5 @@ describe('AppController (e2e)', () => {
   require('./test-suites/products/products.tests');
   require('./test-suites/products/querying-products/querying-products.tests');
   require('./test-suites/inventory/moving-inventory/moving-inventory.tests');
+  require('./test-suites/inventory/querying-inventory/querying-inventory.tests');
 });

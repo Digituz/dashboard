@@ -12,15 +12,25 @@
             "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
             "sourceMaps": true,
             "cwd": "${workspaceRoot}/api",
-            "protocol": "inspector"
+            "protocol": "inspector",
+            "console": "integratedTerminal"
         },
         {
             "type": "node",
             "request": "launch",
-            "name": "Run Bling Migration",
-            "args": ["${workspaceFolder}/bin/src/migrate-products-from-bling.js"],
-            "cwd": "${workspaceRoot}/bin",
-            "protocol": "inspector"
+            "name": "Debug API Tests",
+            "runtimeArgs": [
+                "--inspect-brk",
+                "${workspaceRoot}/api/node_modules/.bin/jest",
+                "--config",
+                "${workspaceRoot}/api/test/jest-e2e.json",
+                "--runInBand"
+            ],
+            "sourceMaps": true,
+            "cwd": "${workspaceRoot}/api",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "port": 9229
         }
     ]
 }

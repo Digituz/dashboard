@@ -7,9 +7,11 @@ import { ProductVariation } from './entities/product-variation.entity';
 import { TagsModule } from '../tags/tags.module';
 import { ProductImage } from './entities/product-image.entity';
 import { MediaLibraryModule } from '../media-library/media-library.module';
+import { InventoryModule } from '../inventory/inventory.module';
 
 @Module({
   imports: [
+    InventoryModule,
     TagsModule,
     MediaLibraryModule,
     TypeOrmModule.forFeature([Product, ProductVariation, ProductImage]),

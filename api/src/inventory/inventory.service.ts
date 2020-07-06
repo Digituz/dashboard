@@ -54,9 +54,9 @@ export class InventoryService {
             queryBuilder.andWhere(
               new Brackets(qb => {
                 qb.where(`lower(p.title) like :query`, {
-                  query: `%${queryParam.value}%`,
+                  query: `%${queryParam.value.toString().toLowerCase()}%`,
                 }).orWhere(`lower(p.sku) like :query`, {
-                  query: `%${queryParam.value}%`,
+                  query: `%${queryParam.value.toString().toLowerCase()}%`,
                 });
               }),
             );

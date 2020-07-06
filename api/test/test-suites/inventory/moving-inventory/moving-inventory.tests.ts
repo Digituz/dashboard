@@ -15,11 +15,6 @@ describe('moving inventory', () => {
     await cleanUpDatabase();
 
     await insertProductFixtures();
-
-    await executeQueries(`
-      insert into inventory (product_id, current_position, created_at, updated_at, version)
-        select id, 0, now(), now(), 1 from product;
-    `);
   });
 
   movingScenarios.forEach((movement: InventoryMovementDTO, idx: number) => {
