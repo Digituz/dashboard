@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Pagination, IDataProvider, QueryParam } from '@app/util/pagination';
 import { Inventory } from '@app/inventory/inventory.entity';
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
+import { MoveInventoryDialogComponent } from '../move-inventory-dialog/move-inventory-dialog.component';
 
 @Component({
   selector: 'app-inventory-list',
@@ -12,6 +13,7 @@ import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 })
 export class InventoryListComponent implements OnInit, IDataProvider<Inventory> {
   @ViewChild('inventoryTable') appFoo: DgzTableComponent<Inventory>;
+  @ViewChild("movementDialog") movementDialog: MoveInventoryDialogComponent;
   inventory: Inventory[];
   query: string;
   queryParams: QueryParam[] = [];
@@ -33,5 +35,9 @@ export class InventoryListComponent implements OnInit, IDataProvider<Inventory> 
     this.queryParams = [
       { key: 'query', value: this.query },
     ];
+  }
+
+  openMovementDialog() {
+    this.movementDialog.openDialog();
   }
 }

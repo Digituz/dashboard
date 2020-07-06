@@ -18,7 +18,7 @@
     <label>Controle o estoque dos seus produtos.</label>
   </p>
   <div class="actions">
-    <button pButton type="button" label="Nova Movimentação"></button>
+    <button pButton type="button" label="Nova Movimentação" (click)="openMovementDialog()"></button>
   </div>
 </div>
 <dgz-table #inventoryTable [dataProvider]="this" [queryParams]="queryParams">
@@ -41,3 +41,4 @@
     </tr>
   </tbody>
 </dgz-table>
+<app-move-inventory-dialog #movementDialog ></app-move-inventory-dialog>

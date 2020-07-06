@@ -1,0 +1,58 @@
+<p-dialog
+  header="Movimentação de Estoque"
+  [(visible)]="isModalVisible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [resizable]="false"
+  [draggable]="false"
+  [contentStyle]="{'overflow':'visible'}"
+>
+  <form nz-form [formGroup]="formFields" (ngSubmit)="submitMovement()" *ngIf="isModalVisible">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="variationSku">Produto</label>
+        <p-autoComplete
+          formControlName="sku"
+          [suggestions]="products"
+          (completeMethod)="search($event)"
+          [multiple]="true"
+          field="label"
+        >
+          <ng-template let-tag pTemplate="item">
+            <div>{{ tag.label }} - {{ tag.description }}</div>
+          </ng-template>
+        </p-autoComplete>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="variationDescription">Descrição</label>
+        <input
+          pInputText
+          name="variationDescription"
+          id="variationDescription"
+          placeholder="Descrição da variação"
+          formControlName="description"
+        />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="variationSellingPrice">Quantidade</label>
+        <p-inputNumber formControlName="amount" [min]="-100" [max]="100"></p-inputNumber>
+      </div>
+      <div class="p-field p-col-6">
+        <label for="variationSellingPrice">Tipo</label>
+        <p-inputNumber formControlName="amount" [min]="-100" [max]="100"></p-inputNumber>
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <button pButton type="button" class="ui-button-secondary" (click)="handleCancel()" label="Cancelar"></button>
+    <button
+      pButton
+      type="button"
+      class="ui-button-danger"
+      (click)="removeMovement()"
+      *ngIf="showRemoveButton"
+      label="Remover"
+    ></button>
+    <button pButton type="button" class="ui-button-primary" (click)="submitMovement()" label="Salvar"></button>
+  </p-footer>
+</p-dialog>
