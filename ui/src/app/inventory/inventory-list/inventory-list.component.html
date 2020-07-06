@@ -1,0 +1,43 @@
+<div class="search-container">
+  <form (ngSubmit)="queryInventory()">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="query">Pesquisa</label>
+        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <button pButton type="submit" label="Pesquisar"></button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="feature-header">
+  <p>
+    <label>Controle o estoque dos seus produtos.</label>
+  </p>
+  <div class="actions">
+    <button pButton type="button" label="Nova Movimentação"></button>
+  </div>
+</div>
+<dgz-table #inventoryTable [dataProvider]="this" [queryParams]="queryParams">
+  <thead>
+    <tr>
+      <th dgz-sortable="sku">SKU</th>
+      <th dgz-sortable="title">Título</th>
+      <th dgz-sortable="currentPosition">Estoque</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let inventory of inventoryTable.currentData">
+      <td>{{ inventory.product.sku }}</td>
+      <td>{{ inventory.product.title }}</td>
+      <td class="currency">{{ inventory.currentPosition }}</td>
+      <td class="actions">
+        <a [routerLink]="'/inventory/' + inventory.id"><button pButton type="button" label="Movimentações"></button></a>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>
