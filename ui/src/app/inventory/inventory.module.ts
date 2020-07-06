@@ -5,8 +5,10 @@ import { SharedModule } from '@app/@shared';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 import { InventoryRoutingModule } from '@app/inventory/inventory-routing.module';
 import { InventoryListComponent } from '@app/inventory/inventory-list/inventory-list.component';
@@ -23,8 +25,10 @@ import { MoveInventoryDialogComponent } from '@app/inventory/move-inventory-dial
     AutoCompleteModule,
     ButtonModule,
     DialogModule,
+    DropdownModule,
     InputNumberModule,
     InputTextModule,
+    SelectButtonModule,
     CommonModule,
     InventoryRoutingModule,
     BreadcrumbsModule,

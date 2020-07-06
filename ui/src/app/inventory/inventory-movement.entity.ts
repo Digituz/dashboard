@@ -1,7 +1,7 @@
-import { Inventory } from '@app/inventory/inventory.entity';
+import Product from '@app/products/product.entity';
 
 export class InventoryMovement {
-  inventory: Inventory;
+  product: Product;
   amount: number;
   description: string;
 }

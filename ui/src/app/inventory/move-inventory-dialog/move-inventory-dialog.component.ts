@@ -4,6 +4,11 @@ import { InventoryMovement } from '@app/inventory/inventory-movement.entity';
 import { ProductsService } from '@app/products/products.service';
 import Product from '@app/products/product.entity';
 
+interface MovementType {
+  label: string;
+  value: string;
+}
+
 @Component({
   selector: 'app-move-inventory-dialog',
   templateUrl: './move-inventory-dialog.component.html',
@@ -15,6 +20,10 @@ export class MoveInventoryDialogComponent implements OnInit {
   isModalVisible: boolean = false;
   showRemoveButton: boolean = false;
   products: Product[] = [];
+  movementTypes: MovementType[] = [
+    { label: 'Entrada', value: 'INPUT' },
+    { label: 'Saída', value: 'OUTPUT' },
+  ];
 
   constructor(private fb: FormBuilder, private productsService: ProductsService) {}
 
@@ -22,9 +31,10 @@ export class MoveInventoryDialogComponent implements OnInit {
 
   private configureFormFields(inventoryMovement: InventoryMovement) {
     this.formFields = this.fb.group({
-      sku: [inventoryMovement?.inventory.product.sku || ''],
+      product: [inventoryMovement?.product || null],
       description: [inventoryMovement?.description || ''],
-      amount: [inventoryMovement?.amount || ''],
+      amount: [inventoryMovement ? Math.abs(inventoryMovement.amount) : ''],
+      movementType: [inventoryMovement?.amount < 0 ? this.movementTypes[1] : this.movementTypes[0]],
     });
     this.loading = false;
   }
@@ -34,7 +44,16 @@ export class MoveInventoryDialogComponent implements OnInit {
     this.configureFormFields(null);
   }
 
-  submitMovement() {}
+  submitMovement() {
+    const formValue = this.formFields.value;
+    const input = formValue.movementType === 'INPUT';
+    const movement: InventoryMovement = {
+      product: formValue.product,
+      description: formValue.description,
+      amount: formValue.amount * (input ? 1 : -1),
+    };
+    console.log(movement);
+  }
 
   handleCancel() {}
 
