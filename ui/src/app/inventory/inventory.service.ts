@@ -3,12 +3,14 @@ import { IDataProvider, QueryParam, Pagination } from '@app/util/pagination';
 import { Inventory } from '@app/inventory/inventory.entity';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { InventoryMovement } from './inventory-movement.entity';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InventoryService implements IDataProvider<Inventory> {
   private INVENTORY_ENDPOINT = '/inventory';
+  private INVENTORY_MOVEMENT_ENDPOINT = '/inventory/movement';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -51,5 +53,13 @@ export class InventoryService implements IDataProvider<Inventory> {
 
   loadInventory(inventoryId: string) {
     return this.httpClient.get<Inventory>(`${this.INVENTORY_ENDPOINT}/${inventoryId}`);
+  }
+
+  addMovement(inventoryMovement: InventoryMovement): Observable<void> {
+    return this.httpClient.post<void>(this.INVENTORY_MOVEMENT_ENDPOINT, {
+      sku: inventoryMovement.product.sku,
+      amount: inventoryMovement.amount,
+      description: inventoryMovement.description,
+    });
   }
 }
