@@ -1,0 +1,46 @@
+[
+    { 
+        "cpf": "00962285048",
+        "name": "Bruno Krebs"
+    },
+    {
+        "cpf": "00000000000",
+        "name": "Jose da Silva"
+    },
+    {
+        "cpf": "11111111111",
+        "name": "Maria da Silva",
+        "phoneNumber": "51999999999"
+    },
+    {
+        "cpf": "22222222222",
+        "name": "Maria da Silva",
+        "phoneNumber": "51999999999"
+    },
+    {
+        "cpf": "33333333333",
+        "name": "Pingo Krebs",
+        "phoneNumber": "11987654321",
+        "email": "pingo@spam4.me",
+        "birthday": "2019-01-20",
+        "zipAddress": "91420560",
+        "state": "RS",
+        "city": "Porto Alegre",
+        "neighborhood": "Bom Jesus",
+        "streetAddress": "Rua São Simão",
+        "streetNumber": "99",
+        "streetNumber2": "401"
+    },
+    {
+        "cpf": "44444444444",
+        "name": "Minhoca Krebs",
+        "phoneNumber": "21998877665",
+        "email": "minhoca@spam4.me",
+        "zipAddress": "91420560",
+        "state": "RS",
+        "city": "Porto Alegre",
+        "neighborhood": "Bom Jesus",
+        "streetAddress": "Rua São Simão",
+        "streetNumber": "99"
+    }
+]

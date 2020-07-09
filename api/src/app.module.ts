@@ -15,6 +15,8 @@ import { ProductImage } from './products/entities/product-image.entity';
 import { InventoryModule } from './inventory/inventory.module';
 import { Inventory } from './inventory/inventory.entity';
 import { InventoryMovement } from './inventory/inventory-movement.entity';
+import { CustomersModule } from './customers/customers.module';
+import { Customer } from './customers/customer.entity';
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import { InventoryMovement } from './inventory/inventory-movement.entity';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [
+        Customer,
         Inventory,
         InventoryMovement,
         Product,
@@ -49,6 +52,7 @@ import { InventoryMovement } from './inventory/inventory-movement.entity';
     UsersModule,
     TagsModule,
     InventoryModule,
+    CustomersModule,
   ],
   controllers: [],
   providers: [],
