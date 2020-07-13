@@ -3,7 +3,7 @@ import axios from 'axios';
 import { insertProductFixtures } from '../products/products-fixtures/products.fixture';
 import productsFixtures from '../products/products-fixtures/products.fixtures.json';
 import { getCredentials } from '../utils/credentials';
-import { InventoryMovementDTO } from 'src/inventory/inventory-movement.dto';
+import { InventoryMovementDTO } from '../../../src/inventory/inventory-movement.dto';
 
 export async function insertInventoryFixtures() {
   const authorizedRequest = await getCredentials();

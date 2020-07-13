@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { getCredentials } from '../../utils/credentials';
 import { insertProductFixtures } from '../../products/products-fixtures/products.fixture';
-import { executeQueries, cleanUpDatabase, executeQuery } from '../../../test-suites/utils/queries';
+import { cleanUpDatabase, executeQuery } from '../../../test-suites/utils/queries';
 
 import movingScenarios from './moving-inventory.scenarios.json';
-import { InventoryMovementDTO } from 'src/inventory/inventory-movement.dto';
+import { InventoryMovementDTO } from '../../../../src/inventory/inventory-movement.dto';
 
 describe('moving inventory', () => {
   let authorizedRequest: any;

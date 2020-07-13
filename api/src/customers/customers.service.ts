@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from './customer.entity';
 import { Repository, Brackets } from 'typeorm';
-import { IPaginationOpts } from 'src/pagination/pagination';
+import { IPaginationOpts } from '../pagination/pagination';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 
 @Injectable()

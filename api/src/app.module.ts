@@ -17,6 +17,9 @@ import { Inventory } from './inventory/inventory.entity';
 import { InventoryMovement } from './inventory/inventory-movement.entity';
 import { CustomersModule } from './customers/customers.module';
 import { Customer } from './customers/customer.entity';
+import { SalesOrderModule } from './sales-order/sales-order.module';
+import { SaleOrderItem } from './sales-order/entities/sale-order-item.entity';
+import { SaleOrder } from './sales-order/entities/sale-order.entity';
 
 @Module({
   imports: [
@@ -36,6 +39,8 @@ import { Customer } from './customers/customer.entity';
         ProductImage,
         Image,
         User,
+        SaleOrder,
+        SaleOrderItem,
         Tag,
       ],
       synchronize: false,
@@ -53,6 +58,7 @@ import { Customer } from './customers/customer.entity';
     TagsModule,
     InventoryModule,
     CustomersModule,
+    SalesOrderModule,
   ],
   controllers: [],
   providers: [],
