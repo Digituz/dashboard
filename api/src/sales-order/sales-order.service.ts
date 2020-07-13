@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 import { SaleOrder } from './entities/sale-order.entity';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { SaleOrderDTO } from './sale-order.dto';
 import { SaleOrderItem } from './entities/sale-order-item.entity';
 import { CustomersService } from '../customers/customers.service';
@@ -19,6 +19,8 @@ export class SalesOrderService {
   constructor(
     @InjectRepository(SaleOrder)
     private salesOrderRepository: Repository<SaleOrder>,
+    @InjectRepository(SaleOrderItem)
+    private salesOrderItemRepository: Repository<SaleOrderItem>,
     private customersService: CustomersService,
     private productsService: ProductsService,
   ) {}
@@ -72,7 +74,7 @@ export class SalesOrderService {
       shippingNeighborhood: saleOrderDTO.shippingNeighborhood,
       shippingCity: saleOrderDTO.shippingCity,
       shippingState: saleOrderDTO.shippingState,
-      shippingZipAddress: saleOrderDTO.shippingZipAddress.replace(/\D/g,''),
+      shippingZipAddress: saleOrderDTO.shippingZipAddress.replace(/\D/g, ''),
     };
 
     const saleOrder: SaleOrder = {
@@ -84,7 +86,26 @@ export class SalesOrderService {
       shipmentDetails,
     };
 
-    return this.salesOrderRepository.save(saleOrder);
+    if (saleOrderDTO.id) {
+      const oldItems = await this.salesOrderItemRepository.find({
+        where: {
+          id: In(items.map(item => item.id)),
+        },
+      });
+      await this.salesOrderItemRepository.remove(oldItems);
+    }
+
+    const persistedSaleOrder = await this.salesOrderRepository.save(saleOrder);
+    const persistedItems = await this.salesOrderItemRepository.save(
+      items.map(item => ({
+        saleOrder: persistedSaleOrder,
+        ...item,
+      })),
+    );
+
+    persistedSaleOrder.items = persistedItems;
+    
+    return Promise.resolve(persistedSaleOrder);
   }
 
   save(saleOrderDTO: SaleOrderDTO): Promise<SaleOrder> {

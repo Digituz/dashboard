@@ -36,6 +36,11 @@ describe('creating sale orders', () => {
       expect(saleOrderCreated.referenceCode.length).toBe(36);
       expect(saleOrderCreated.customer.name).toBe(saleOrder.customer.name);
       expect(saleOrderCreated.items.length).toBe(saleOrder.items.length);
+
+      for (const item of saleOrderCreated.items) {
+        expect(item.id).toBeDefined();
+      }
+
       expect(saleOrderCreated.paymentDetails.discount).toBe(saleOrder.discount);
       expect(saleOrderCreated.paymentDetails.paymentType).toBe(saleOrder.paymentType);
       expect(saleOrderCreated.paymentDetails.paymentStatus).toBe(saleOrder.paymentStatus);
@@ -50,6 +55,14 @@ describe('creating sale orders', () => {
       expect(saleOrderCreated.shipmentDetails.shippingCity).toBe(saleOrder.shippingCity);
       expect(saleOrderCreated.shipmentDetails.shippingState).toBe(saleOrder.shippingState);
       expect(saleOrderCreated.shipmentDetails.shippingZipAddress).toBe(saleOrder.shippingZipAddress.replace(/\D/g,''));
+
+      const countSaleOrderRows = await executeQuery(`select count(1) as total from sale_order;`);
+      const numberOfRows = parseInt(countSaleOrderRows[0].total);
+      expect(numberOfRows).toBe(idx + 1);
+
+      const countSaleOrderItem = await executeQuery(`select count(1) as total from sale_order_item where sale_order_id = ${saleOrderCreated.id};`);
+      const numberOfSaleOrderItems = parseInt(countSaleOrderItem[0].total);
+      expect(numberOfSaleOrderItems).toBe(saleOrder.items.length);
     });
   });
 });

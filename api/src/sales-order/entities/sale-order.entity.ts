@@ -1,4 +1,6 @@
+import { Transform } from 'class-transformer';
 import { Entity, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+
 import { BaseEntity } from '../../util/base-entity';
 import { SaleOrderShipment } from './sale-order-shipment.entity';
 import { SaleOrderPayment } from './sale-order-payment.entity';
@@ -7,6 +9,11 @@ import { SaleOrderItem } from './sale-order-item.entity';
 
 @Entity()
 export class SaleOrder extends BaseEntity {
+  constructor(partial: Partial<SaleOrder>) {
+    super();
+    Object.assign(this, partial);
+  }
+
   @Column({
     name: 'reference_code',
     type: 'varchar',
@@ -16,10 +23,11 @@ export class SaleOrder extends BaseEntity {
   })
   referenceCode: string;
 
-  @ManyToOne(
-    type => Customer,
-    { primary: true, nullable: false, cascade: false },
-  )
+  @ManyToOne(type => Customer, {
+    primary: true,
+    nullable: false,
+    cascade: false,
+  })
   @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
@@ -27,6 +35,15 @@ export class SaleOrder extends BaseEntity {
     type => SaleOrderItem,
     item => item.saleOrder,
     { cascade: false },
+  )
+  @Transform(items =>
+    items.map(item => ({
+      id: item.id,
+      product: item.product,
+      amount: item.amount,
+      price: item.price,
+      discount: item.discount,
+    })),
   )
   items: SaleOrderItem[];
 

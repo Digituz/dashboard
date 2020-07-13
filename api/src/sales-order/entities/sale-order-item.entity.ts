@@ -36,7 +36,7 @@ export class SaleOrderItem extends BaseEntity {
   discount: number;
 
   @Column({
-    name: 'images_size',
+    name: 'amount',
     type: 'int',
     nullable: false,
   })
