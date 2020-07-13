@@ -1,0 +1,61 @@
+[
+  {
+    "customer": {
+        "email": "pingo@spam4.me",
+        "name": "Pingo Krebs",
+        "cpf": "111.111.111-11",
+        "mobile": "(51) 98121-8604",
+        "birthday": "2019-01-20T06:00:00.000Z"
+    },
+    "items": [
+      {
+        "sku": "A-01",
+        "price": 10,
+        "discount": 0,
+        "amount": 1
+      }
+    ],
+    "discount": 0,
+    "paymentType": "CREDIT_CARD",
+    "paymentStatus": "IN_PROCESS",
+    "installments": 1,
+    "shippingType": "PAC",
+    "shippingPrice": 9.90,
+    "customerName": "Pingo Krebs",
+    "shippingStreetAddress": "Rua São Simão",
+    "shippingStreetNumber": "99",
+    "shippingStreetNumber2": "401",
+    "shippingNeighborhood": "Bom Jesus",
+    "shippingCity": "Porto Alegre",
+    "shippingState": "RS",
+    "shippingZipAddress": "91420-560"
+  },
+  {
+    "customer": {
+        "cpf": "222.222.222-22",
+        "name": "Cliente Dafiti"
+    },
+    "items": [
+      {
+        "sku": "A-02",
+        "price": 20,
+        "discount": 0,
+        "amount": 1
+      }
+    ],
+    "discount": 0,
+    "paymentType": "BANK_SLIP",
+    "paymentStatus": "IN_PROCESS",
+    "installments": 1,
+    "shippingType": "PAC",
+    "shippingPrice": 9.90,
+    "customerName": "Pingo Krebs",
+    "shippingStreetAddress": "Rua São Simão",
+    "shippingStreetNumber": "99",
+    "shippingStreetNumber2": "401",
+    "shippingNeighborhood": "Bom Jesus",
+    "shippingCity": "Porto Alegre",
+    "shippingState": "RS",
+    "shippingZipAddress": "91420-560"
+  }
+]

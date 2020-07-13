@@ -3,27 +3,13 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 export class salesOrder1594583375504 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-        create table sale_order_item (
-            id serial primary key,
-            created_at timestamp with time zone,
-            updated_at timestamp with time zone,
-            deleted_at timestamp with time zone,
-            version integer,
-            product_id integer not null,
-            price decimal(15,2),
-            discount decimal(15,2),
-            amount decimal(15,2),
-            constraint sale_order_item_product foreign key (product_id) references product(id)
-        );
-    `);
-
-    await queryRunner.query(`
         create table sale_order (
             id serial primary key,
             created_at timestamp with time zone,
             updated_at timestamp with time zone,
             deleted_at timestamp with time zone,
             version integer,
+            reference_code varchar(36) not null,
             customer_id integer not null,
             discount decimal(15,2) not null,
             total decimal(15,2) not null,
@@ -41,6 +27,23 @@ export class salesOrder1594583375504 implements MigrationInterface {
             shipping_state varchar(2) not null,
             shipping_zip_address varchar(8) not null,
             constraint sale_order_customer foreign key (customer_id) references customer(id)
+        );
+    `);
+
+    await queryRunner.query(`
+        create table sale_order_item (
+            id serial primary key,
+            created_at timestamp with time zone,
+            updated_at timestamp with time zone,
+            deleted_at timestamp with time zone,
+            version integer,
+            product_id integer not null,
+            sale_order_id integer not null,
+            price decimal(15,2),
+            discount decimal(15,2),
+            amount decimal(15,2),
+            constraint sale_order_item_product foreign key (product_id) references product(id),
+            constraint sale_order_item_sale_order foreign key (sale_order_id) references sale_order(id)
         );
     `);
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate, Pagination } from 'nestjs-typeorm-paginate';
-import { Repository, Brackets } from 'typeorm';
+import { Repository, Brackets, In } from 'typeorm';
 import * as _ from 'lodash';
 
 import { Product } from './entities/product.entity';
@@ -44,6 +44,12 @@ export class ProductsService {
       .orderBy('product.title')
       .limit(10)
       .getMany();
+  }
+
+  async findBySkus(skus: string[]): Promise<Product[]> {
+    return this.productsRepository.find({
+      "sku": In(skus),
+    });
   }
 
   async findOne(id: number): Promise<Product> {

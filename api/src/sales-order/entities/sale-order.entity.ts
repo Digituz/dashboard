@@ -1,15 +1,4 @@
-// ## properties
-// discount
-// payment terms
-// shippment
-// shipping details
-//
-// ## relations
-// list of products, which will actually be SaleOrderProduct so we can override a few properties
-// a customer
-//
-
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { BaseEntity } from '../../util/base-entity';
 import { SaleOrderShipment } from './sale-order-shipment.entity';
 import { SaleOrderPayment } from './sale-order-payment.entity';
@@ -18,21 +7,32 @@ import { SaleOrderItem } from './sale-order-item.entity';
 
 @Entity()
 export class SaleOrder extends BaseEntity {
+  @Column({
+    name: 'reference_code',
+    type: 'varchar',
+    length: 36,
+    unique: true,
+    nullable: false,
+  })
+  referenceCode: string;
+
   @ManyToOne(
     type => Customer,
     { primary: true, nullable: false, cascade: false },
   )
+  @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
-  @ManyToOne(
+  @OneToMany(
     type => SaleOrderItem,
-    { primary: true, nullable: false, cascade: false },
+    item => item.saleOrder,
+    { cascade: false },
   )
-  items: SaleOrderItem;
+  items: SaleOrderItem[];
 
-  @Column(type => SaleOrderPayment)
+  @Column(type => SaleOrderPayment, { prefix: false })
   paymentDetails: SaleOrderPayment;
 
-  @Column(type => SaleOrderShipment)
+  @Column(type => SaleOrderShipment, { prefix: false })
   shipmentDetails: SaleOrderShipment;
 }

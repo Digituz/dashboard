@@ -1,6 +1,7 @@
 import { BaseEntity } from '../../util/base-entity';
-import { Entity, ManyToOne, Column } from 'typeorm';
+import { Entity, ManyToOne, Column, JoinColumn } from 'typeorm';
 import { Product } from '../../products/entities/product.entity';
+import { SaleOrder } from './sale-order.entity';
 
 @Entity()
 export class SaleOrderItem extends BaseEntity {
@@ -9,7 +10,16 @@ export class SaleOrderItem extends BaseEntity {
     nullable: false,
     cascade: false,
   })
+  @JoinColumn({ name: 'product_id' })
   product: Product;
+
+  @ManyToOne(type => SaleOrder, {
+    primary: true,
+    nullable: false,
+    cascade: false,
+  })
+  @JoinColumn({ name: 'sale_order_id' })
+  saleOrder?: SaleOrder;
 
   @Column({
     name: 'price',
