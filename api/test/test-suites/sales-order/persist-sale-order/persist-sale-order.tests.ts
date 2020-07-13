@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { getCredentials } from '../../utils/credentials';
 import { insertProductFixtures } from '../../products/products-fixtures/products.fixture';
-import { cleanUpDatabase, executeQuery } from '../../../test-suites/utils/queries';
+import { cleanUpDatabase, executeQuery } from '../../utils/queries';
 
 import saleOrderScenarios from '../sales-order.scenarios.json';
 import { SaleOrderDTO } from '../../../../src/sales-order/sale-order.dto';
 import { SaleOrder } from '../../../../src/sales-order/entities/sale-order.entity';
 
-describe('creating sale orders', () => {
+describe('persist sale orders', () => {
   let authorizedRequest: any;
 
   beforeAll(async () => {
@@ -19,7 +19,7 @@ describe('creating sale orders', () => {
   });
 
   saleOrderScenarios.forEach((saleOrder: SaleOrderDTO, idx: number) => {
-    it(`should create sale orders (scenario #${idx})`, async () => {
+    it(`should persist sale orders (scenario #${idx})`, async () => {
       const response = await axios.post(
         'http://localhost:3000/v1/sales-order',
         saleOrder,
