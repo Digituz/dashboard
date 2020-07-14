@@ -13,6 +13,18 @@
         "price": 10,
         "discount": 0,
         "amount": 1
+      },
+      {
+        "sku": "A-04",
+        "price": 40,
+        "discount": 0,
+        "amount": 4
+      },
+      {
+        "sku": "A-05",
+        "price": 50,
+        "discount": 0,
+        "amount": 5
       }
     ],
     "discount": 0,
@@ -39,6 +51,12 @@
       {
         "sku": "A-02",
         "price": 20,
+        "discount": 0,
+        "amount": 1
+      },
+      {
+        "sku": "A-03",
+        "price": 30,
         "discount": 0,
         "amount": 1
       }
