@@ -108,4 +108,23 @@ export class SalesOrderService {
   save(saleOrderDTO: SaleOrderDTO): Promise<SaleOrder> {
     return this.createOrUpdateSaleOrder(saleOrderDTO);
   }
+
+  async updateStatus(
+    referenceCode: string,
+    status: PaymentStatus,
+  ): Promise<SaleOrder> {
+    await this.salesOrderRepository
+      .createQueryBuilder()
+      .update(SaleOrder)
+      .set({
+        paymentDetails: {
+          paymentStatus: status,
+        },
+      })
+      .where('referenceCode = :referenceCode', { referenceCode: referenceCode })
+      .execute();
+    return this.salesOrderRepository.findOne({
+      where: { referenceCode },
+    });
+  }
 }
