@@ -56,7 +56,6 @@ export class SalesOrderService {
     const total =
       itemsTotal - saleOrderDTO.discount + saleOrderDTO.shippingPrice;
 
-    const referenceCode = uuidv4();
     const paymentDetails: SaleOrderPayment = {
       discount: saleOrderDTO.discount,
       total,
@@ -79,20 +78,18 @@ export class SalesOrderService {
 
     const saleOrder: SaleOrder = {
       id: saleOrderDTO.id || null,
-      referenceCode,
+      referenceCode: saleOrderDTO.referenceCode || uuidv4(),
       customer,
       items,
       paymentDetails,
       shipmentDetails,
     };
 
-    if (saleOrderDTO.id) {
-      const oldItems = await this.salesOrderItemRepository.find({
-        where: {
-          id: In(items.map(item => item.id)),
-        },
-      });
-      await this.salesOrderItemRepository.remove(oldItems);
+    if (saleOrder.id) {
+      await this.salesOrderItemRepository.query(
+        'delete from sale_order_item where sale_order_id = $1;',
+        [saleOrder.id],
+      );
     }
 
     const persistedSaleOrder = await this.salesOrderRepository.save(saleOrder);
@@ -104,7 +101,7 @@ export class SalesOrderService {
     );
 
     persistedSaleOrder.items = persistedItems;
-    
+
     return Promise.resolve(persistedSaleOrder);
   }
 

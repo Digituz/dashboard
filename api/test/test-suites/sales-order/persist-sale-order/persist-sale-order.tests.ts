@@ -63,6 +63,24 @@ describe('persist sale orders', () => {
       const countSaleOrderItem = await executeQuery(`select count(1) as total from sale_order_item where sale_order_id = ${saleOrderCreated.id};`);
       const numberOfSaleOrderItems = parseInt(countSaleOrderItem[0].total);
       expect(numberOfSaleOrderItems).toBe(saleOrder.items.length);
+
+      const updateResponse = await axios.post(
+        'http://localhost:3000/v1/sales-order',
+        {
+          ...saleOrder,
+          id: saleOrderCreated.id,
+          referenceCode: saleOrderCreated.referenceCode,
+          customerName: 'Someone else',
+        },
+        authorizedRequest,
+      );
+      
+      const countSaleOrderAfterUpdateRows = await executeQuery(`select count(1) as total from sale_order;`);
+      const numberOfRowsAfterUpdate = parseInt(countSaleOrderAfterUpdateRows[0].total);
+      expect(numberOfRowsAfterUpdate).toBe(idx + 1);
+
+      const updatedOrder: SaleOrder = updateResponse.data;
+      expect(updatedOrder.id).toBe(saleOrderCreated.id);
     });
   });
 });

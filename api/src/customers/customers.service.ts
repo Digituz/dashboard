@@ -70,7 +70,7 @@ export class CustomersService {
   }
 
   async findOrCreate(customer: Customer): Promise<Customer> {
-    const existingCustomer = await this.findByCPF(customer.cpf);
+    const existingCustomer = await this.findByCPF(customer.cpf.replace(/\D/g,''));
     if (existingCustomer) return Promise.resolve(existingCustomer);
     return this.save(customer);
   }
