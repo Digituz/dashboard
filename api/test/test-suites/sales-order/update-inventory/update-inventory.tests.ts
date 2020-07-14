@@ -77,6 +77,25 @@ describe('sale orders must update inventory', () => {
     };
   }
 
+  function checkInventoryMovements(
+    items,
+    previousPositions,
+    currentPositions,
+  ) {
+    for (const currentPosition of currentPositions) {
+      // validate that the position was properly update
+      const previousPosition = previousPositions.find(
+        position => position.sku === currentPosition.sku,
+      );
+      const item = items.find(
+        item => item.sku === currentPosition.sku,
+      );
+      expect(currentPosition.position).toBe(
+        previousPosition.position - item.amount,
+      );
+    }
+  }
+
   it('should subtract from inventory on creation', async () => {
     const saleOrderDTO: SaleOrderDTO = saleOrderScenarios[0];
 
@@ -89,18 +108,75 @@ describe('sale orders must update inventory', () => {
       saleOrderDTO.items,
     );
 
-    for (const positionAfterCreating of positionsAfterCreating) {
-      // validate that the position was properly update
-      const initialPosition = initialPositions.find(
-        position => position.sku === positionAfterCreating.sku,
-      );
-      const item = saleOrderDTO.items.find(
-        item => item.sku === positionAfterCreating.sku,
-      );
-      expect(positionAfterCreating.position).toBe(
-        initialPosition.position - item.amount,
-      );
-    }
+    checkInventoryMovements(
+      saleOrderDTO.items,
+      initialPositions,
+      positionsAfterCreating,
+    );
+  });
+
+  it('should not change positions when items remain the same', async () => {
+    const saleOrderDTO: SaleOrderDTO = saleOrderScenarios[0];
+
+    const { positions: initialPositions, saleOrder } = await persistSaleOrder(
+      saleOrderDTO,
+    );
+
+    const { positions: positionBeforeUpdate } = await persistSaleOrder({
+      ...saleOrderDTO,
+      id: saleOrder.id,
+      customerName: 'John Doe',
+    });
+
+    checkInventoryMovements(
+      saleOrderDTO.items,
+      initialPositions,
+      positionBeforeUpdate,
+    );
+  });
+
+  it('should amend inventory when items change', async () => {
+    const saleOrderDTO: SaleOrderDTO = saleOrderScenarios[0];
+
+    const { saleOrder } = await persistSaleOrder(
+      saleOrderDTO,
+    );
+
+    const newItems = [
+      {
+        sku: 'A-01',
+        price: 10,
+        discount: 0,
+        amount: 1,
+      },
+      {
+        sku: 'A-03',
+        price: 30,
+        discount: 0,
+        amount: 3,
+      },
+      {
+        sku: 'A-05',
+        price: 50,
+        discount: 0,
+        amount: 7,
+      },
+    ];
+
+    const { positions: previousPositions } = await persistSaleOrder({
+      ...saleOrderDTO,
+      id: saleOrder.id,
+      customerName: 'John Doe',
+      items: newItems,
+    });
+
+    const positionsAfterUpdate = await getCurrentPositions(newItems);
+
+    checkInventoryMovements(
+      newItems,
+      previousPositions,
+      positionsAfterUpdate,
+    );
   });
 
   // it('should amend inventory on update', async () => {

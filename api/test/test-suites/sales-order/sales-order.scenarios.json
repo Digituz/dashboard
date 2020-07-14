@@ -25,6 +25,12 @@
         "price": 50,
         "discount": 0,
         "amount": 5
+      },
+      {
+        "sku": "A-08",
+        "price": 80,
+        "discount": 0,
+        "amount": 8
       }
     ],
     "discount": 0,
