@@ -13,6 +13,8 @@ import { PaymentStatus } from './entities/payment-status.enum';
 import { ShippingType } from './entities/shipping-type.enum';
 import { SaleOrderPayment } from './entities/sale-order-payment.entity';
 import { SaleOrderShipment } from './entities/sale-order-shipment.entity';
+import { InventoryService } from '../inventory/inventory.service';
+import { InventoryMovementDTO } from '../inventory/inventory-movement.dto';
 
 @Injectable()
 export class SalesOrderService {
@@ -23,6 +25,7 @@ export class SalesOrderService {
     private salesOrderItemRepository: Repository<SaleOrderItem>,
     private customersService: CustomersService,
     private productsService: ProductsService,
+    private inventoryService: InventoryService,
   ) {}
 
   private async buildItemsList(
@@ -46,6 +49,7 @@ export class SalesOrderService {
   private async createOrUpdateSaleOrder(
     saleOrderDTO: SaleOrderDTO,
   ): Promise<SaleOrder> {
+    const isANewSaleOrder = !saleOrderDTO.id;
     const items = await this.buildItemsList(saleOrderDTO);
     const customer = await this.customersService.findOrCreate(
       saleOrderDTO.customer,
@@ -85,7 +89,8 @@ export class SalesOrderService {
       shipmentDetails,
     };
 
-    if (saleOrder.id) {
+    if (!isANewSaleOrder) {
+      // remove previous items (the new ones will be created below)
       await this.salesOrderItemRepository.query(
         'delete from sale_order_item where sale_order_id = $1;',
         [saleOrder.id],
@@ -93,6 +98,8 @@ export class SalesOrderService {
     }
 
     const persistedSaleOrder = await this.salesOrderRepository.save(saleOrder);
+
+    // create the new items
     const persistedItems = await this.salesOrderItemRepository.save(
       items.map(item => ({
         saleOrder: persistedSaleOrder,
@@ -101,6 +108,23 @@ export class SalesOrderService {
     );
 
     persistedSaleOrder.items = persistedItems;
+
+    // updating the inventory ...
+    if (isANewSaleOrder) {
+      // ... for new sale orders
+      const movementJobs = persistedItems.map((item) => {
+        return new Promise(async (res, rej) => {
+          const movement: InventoryMovementDTO = {
+            sku: item.product.sku,
+            amount: -item.amount,
+            description: `${saleOrder.id}`,
+          };
+          await this.inventoryService.saveMovement(movement);
+          res();
+        });
+      });
+      await Promise.all(movementJobs);
+    }
 
     return Promise.resolve(persistedSaleOrder);
   }

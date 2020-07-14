@@ -6,11 +6,13 @@ import { SalesOrderController } from './sales-order.controller';
 import { SalesOrderService } from './sales-order.service';
 import { ProductsModule } from '../products/products.module';
 import { CustomersModule } from '../customers/customers.module';
+import { InventoryModule } from '../inventory/inventory.module';
 
 @Module({
   imports: [
     ProductsModule,
     CustomersModule,
+    InventoryModule,
     TypeOrmModule.forFeature([SaleOrder, SaleOrderItem]),
   ],
   providers: [SalesOrderService],

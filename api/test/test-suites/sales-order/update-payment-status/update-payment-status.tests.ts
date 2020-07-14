@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getCredentials } from '../../utils/credentials';
 import { cleanUpDatabase, executeQuery } from '../../utils/queries';
 import { createSaleOrders } from '../sales-order.fixtures';
-import { SaleOrder } from 'src/sales-order/entities/sale-order.entity';
+import { SaleOrder } from '../../../../src/sales-order/entities/sale-order.entity';
 
 describe('update sale order payment status', () => {
   let authorizedRequest: any;
