@@ -207,13 +207,30 @@ describe('sale orders must update inventory', () => {
   it('should revert movements when payment status change to CANCELLED', async () => {
     const order: SaleOrderDTO = saleOrderScenarios[1];
 
-    const { saleOrder, positions: initialPositions } = await persistSaleOrder(order);
+    const { saleOrder, positions: initialPositions } = await persistSaleOrder(
+      order,
+    );
 
     await changeOrderStatus(saleOrder.referenceCode, 'CANCELLED');
 
     const positionsAfterUpdate = await getCurrentPositions(order.items);
 
     expect(checkEqual(initialPositions, positionsAfterUpdate)).toBe(true);
+  });
+
+  it('should not accept changes to status after being CANCELLED', async () => {
+    const order: SaleOrderDTO = saleOrderScenarios[1];
+
+    const { saleOrder, positions: initialPositions } = await persistSaleOrder(
+      order,
+    );
+
+    await changeOrderStatus(saleOrder.referenceCode, 'CANCELLED');
+
+    try {
+      await changeOrderStatus(saleOrder.referenceCode, 'APPROVED');
+      fail('should have raised an error');
+    } catch (err) {}
   });
 
   // it('should amend inventory on update', async () => {

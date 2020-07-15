@@ -115,8 +115,8 @@ export class SalesOrderService {
     }
 
     // creating movements to update inventory position
-    const movementJobs = persistedItems.map((item) => {
-      return new Promise(async (res) => {
+    const movementJobs = persistedItems.map(item => {
+      return new Promise(async res => {
         const movement: InventoryMovementDTO = {
           sku: item.product.sku,
           amount: -item.amount,
@@ -139,24 +139,21 @@ export class SalesOrderService {
     referenceCode: string,
     status: PaymentStatus,
   ): Promise<SaleOrder> {
-    await this.salesOrderRepository
-      .createQueryBuilder()
-      .update(SaleOrder)
-      .set({
-        paymentDetails: {
-          paymentStatus: status,
-        },
-      })
-      .where('referenceCode = :referenceCode', { referenceCode: referenceCode })
-      .execute();
-    if (status === PaymentStatus.CANCELLED) {
-      const saleOrder = await this.salesOrderRepository.findOne({
-        where: { referenceCode }
-      });
-      await this.inventoryService.cleanUpMovements(saleOrder);
-    }
-    return this.salesOrderRepository.findOne({
+    const saleOrder = await this.salesOrderRepository.findOne({
       where: { referenceCode },
     });
+
+    if (saleOrder.paymentDetails.paymentStatus === PaymentStatus.CANCELLED) {
+      throw new Error('Sale order was cancelled already.');
+    }
+
+    if (status === PaymentStatus.CANCELLED) {
+      // we must remove movements when payment gets cancelled
+      await this.inventoryService.cleanUpMovements(saleOrder);
+    }
+
+    saleOrder.paymentDetails.paymentStatus = status;
+    await this.salesOrderRepository.save(saleOrder);
+    return Promise.resolve(saleOrder);
   }
 }

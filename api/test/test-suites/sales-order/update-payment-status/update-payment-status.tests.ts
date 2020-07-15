@@ -37,10 +37,10 @@ describe('update sale order payment status', () => {
       `select reference_code as reference from sale_order;`,
     );
 
-    await changeOrderStatus(orders[0].reference, 'CANCELLED');
-    await changeOrderStatus(orders[1].reference, 'CANCELLED');
-
     await changeOrderStatus(orders[0].reference, 'APPROVED');
     await changeOrderStatus(orders[1].reference, 'APPROVED');
+
+    await changeOrderStatus(orders[0].reference, 'CANCELLED');
+    await changeOrderStatus(orders[1].reference, 'CANCELLED');
   });
 });
