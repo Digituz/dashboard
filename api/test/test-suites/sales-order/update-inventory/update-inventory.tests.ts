@@ -1,10 +1,12 @@
 import axios from 'axios';
+import { isEqual, differenceWith } from 'lodash';
 import { getCredentials } from '../../utils/credentials';
 import { cleanUpDatabase, executeQuery } from '../../utils/queries';
 import { insertProductFixtures } from '../../products/products-fixtures/products.fixture';
 import saleOrderScenarios from '../sales-order.scenarios.json';
 import { SaleOrderDTO } from '../../../../src/sales-order/sale-order.dto';
 import { SaleOrder } from '../../../../src/sales-order/entities/sale-order.entity';
+import { assert } from 'console';
 
 interface ItemPosition {
   sku: string;
@@ -87,23 +89,23 @@ describe('sale orders must update inventory', () => {
     };
   }
 
-  function checkInventoryMovements(
-    items,
-    previousPositions,
-    currentPositions,
-  ) {
+  function checkInventoryMovements(items, previousPositions, currentPositions) {
     for (const currentPosition of currentPositions) {
       // validate that the position was properly update
       const previousPosition = previousPositions.find(
         position => position.sku === currentPosition.sku,
       );
-      const item = items.find(
-        item => item.sku === currentPosition.sku,
-      );
+      const item = items.find(item => item.sku === currentPosition.sku);
       expect(currentPosition.position).toBe(
         previousPosition.position - item.amount,
       );
     }
+  }
+
+  function checkEqual(previousPositions, currentPositions) {
+    return (
+      differenceWith(previousPositions, currentPositions, isEqual).length === 0
+    );
   }
 
   it('should subtract from inventory on creation', async () => {
@@ -125,7 +127,9 @@ describe('sale orders must update inventory', () => {
     );
 
     const sumOfMovements = await getSumOfMovements(saleOrder.id);
-    expect(sumOfMovements).toBe(saleOrderDTO.items.reduce((total, item) => (total - item.amount), 0));
+    expect(sumOfMovements).toBe(
+      saleOrderDTO.items.reduce((total, item) => total - item.amount, 0),
+    );
   });
 
   it('should not change positions when items remain the same', async () => {
@@ -151,9 +155,7 @@ describe('sale orders must update inventory', () => {
   it('should amend inventory when items change', async () => {
     const saleOrderDTO: SaleOrderDTO = saleOrderScenarios[0];
 
-    const { saleOrder } = await persistSaleOrder(
-      saleOrderDTO,
-    );
+    const { saleOrder } = await persistSaleOrder(saleOrderDTO);
 
     const newItems = [
       {
@@ -185,11 +187,33 @@ describe('sale orders must update inventory', () => {
 
     const positionsAfterUpdate = await getCurrentPositions(newItems);
 
-    checkInventoryMovements(
-      newItems,
-      previousPositions,
-      positionsAfterUpdate,
-    );
+    checkInventoryMovements(newItems, previousPositions, positionsAfterUpdate);
+  });
+
+  it('should not change inventory when payment status change to APPROVED', async () => {
+    const order: SaleOrderDTO = saleOrderScenarios[0];
+
+    const { saleOrder } = await persistSaleOrder(order);
+
+    const positionsAfterCreation = await getCurrentPositions(order.items);
+
+    await changeOrderStatus(saleOrder.referenceCode, 'APPROVED');
+
+    const positionsAfterUpdate = await getCurrentPositions(order.items);
+
+    expect(checkEqual(positionsAfterCreation, positionsAfterUpdate)).toBe(true);
+  });
+
+  it('should revert movements when payment status change to CANCELLED', async () => {
+    const order: SaleOrderDTO = saleOrderScenarios[1];
+
+    const { saleOrder, positions: initialPositions } = await persistSaleOrder(order);
+
+    await changeOrderStatus(saleOrder.referenceCode, 'CANCELLED');
+
+    const positionsAfterUpdate = await getCurrentPositions(order.items);
+
+    expect(checkEqual(initialPositions, positionsAfterUpdate)).toBe(true);
   });
 
   // it('should amend inventory on update', async () => {

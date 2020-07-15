@@ -149,6 +149,12 @@ export class SalesOrderService {
       })
       .where('referenceCode = :referenceCode', { referenceCode: referenceCode })
       .execute();
+    if (status === PaymentStatus.CANCELLED) {
+      const saleOrder = await this.salesOrderRepository.findOne({
+        where: { referenceCode }
+      });
+      await this.inventoryService.cleanUpMovements(saleOrder);
+    }
     return this.salesOrderRepository.findOne({
       where: { referenceCode },
     });
