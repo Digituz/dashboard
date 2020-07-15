@@ -25,7 +25,6 @@ describe('AppController (e2e)', () => {
   });
 
   afterAll(async done => {
-    await cleanUpDatabase();
     await app.close();
     done();
   });

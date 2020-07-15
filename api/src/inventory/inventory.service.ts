@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Brackets } from 'typeorm';
 import { IPaginationOpts } from '../pagination/pagination';
 import { InventoryMovementDTO } from './inventory-movement.dto';
+import { SaleOrder } from 'src/sales-order/entities/sale-order.entity';
 
 @Injectable()
 export class InventoryService {
@@ -95,8 +96,24 @@ export class InventoryService {
       .getOne();
   }
 
+  async cleanUpMovements(saleOrder: SaleOrder) {
+    const movements = await this.inventoryMovementRepository.find({
+      saleOrder: saleOrder,
+    });
+    const removeMovementJobs = movements.map((movement) => {
+      return new Promise((res) => {
+        const inventory = movement.inventory;
+        inventory.currentPosition -= movement.amount;
+        this.inventoryRepository.save(inventory);
+        res();
+      });
+    });
+    await Promise.all(removeMovementJobs);
+  }
+
   async saveMovement(
     inventoryMovementDTO: InventoryMovementDTO,
+    saleOrder?: SaleOrder,
   ): Promise<InventoryMovement> {
     const inventory = await this.findBySku(inventoryMovementDTO.sku);
     inventory.currentPosition += inventoryMovementDTO.amount;
@@ -106,6 +123,7 @@ export class InventoryService {
       inventory,
       amount: inventoryMovementDTO.amount,
       description: inventoryMovementDTO.description,
+      saleOrder: saleOrder,
     };
 
     return this.inventoryMovementRepository.save(movement);

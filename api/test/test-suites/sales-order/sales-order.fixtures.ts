@@ -1,7 +1,7 @@
 import saleOrderScenarios from './sales-order.scenarios.json';
 import axios from 'axios';
 import { getCredentials } from '../utils/credentials';
-import { SaleOrderDTO } from 'src/sales-order/sale-order.dto';
+import { SaleOrderDTO } from '../../../src/sales-order/sale-order.dto';
 
 export async function createSaleOrders(): Promise<unknown> {
   const authorizedRequest = await getCredentials();

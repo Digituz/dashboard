@@ -23,16 +23,21 @@ export async function executeQueries(...queries: string[]) {
 }
 
 export async function cleanUpDatabase() {
-  await executeQueries(
-    'delete from sale_order_item;',
-    'delete from sale_order;',
-    'delete from customer;',
-    'delete from tag;',
-    'delete from inventory_movement;',
-    'delete from inventory;',
-    'delete from product_image;',
-    'delete from product_variation;',
-    'delete from product;',
-    'delete from image;',
-  );
+  try {
+    await executeQueries(
+      'delete from sale_order_item;',
+      'delete from inventory_movement;',
+      'delete from sale_order;',
+      'delete from customer;',
+      'delete from tag;',
+      'delete from inventory;',
+      'delete from product_image;',
+      'delete from product_variation;',
+      'delete from product;',
+      'delete from image;',
+    );
+  } catch (err) {
+    console.error('unable to clean up database, check the sequence of the delete commands;');
+    process.exit(1);
+  }
 }

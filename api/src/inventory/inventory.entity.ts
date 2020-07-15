@@ -8,7 +8,7 @@ export class Inventory extends BaseEntity {
   @ManyToOne(
     type => Product,
     product => product.productImages,
-    { primary: true, nullable: false, cascade: false },
+    { nullable: false, cascade: false },
   )
   @JoinColumn({ name: 'product_id' })
   product: Product;

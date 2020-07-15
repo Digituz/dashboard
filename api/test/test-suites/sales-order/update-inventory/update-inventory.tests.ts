@@ -4,6 +4,7 @@ import { cleanUpDatabase, executeQuery } from '../../utils/queries';
 import { insertProductFixtures } from '../../products/products-fixtures/products.fixture';
 import saleOrderScenarios from '../sales-order.scenarios.json';
 import { SaleOrderDTO } from '../../../../src/sales-order/sale-order.dto';
+import { SaleOrder } from '../../../../src/sales-order/entities/sale-order.entity';
 
 interface ItemPosition {
   sku: string;
@@ -13,7 +14,7 @@ interface ItemPosition {
 describe('sale orders must update inventory', () => {
   let authorizedRequest: any;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     authorizedRequest = await getCredentials();
 
     await cleanUpDatabase();
@@ -31,6 +32,15 @@ describe('sale orders must update inventory', () => {
     expect(response).toBeDefined();
     expect(response.data).toBeDefined();
     expect(response.status).toBe(201);
+  }
+
+  async function getSumOfMovements(orderId: number) {
+    const movementTotalRes = await executeQuery(
+      `select sum(amount) as amount
+        from inventory_movement
+        where sale_order_id = ${orderId};`,
+    );
+    return parseInt(movementTotalRes[0].amount);
   }
 
   async function getCurrentPosition(sku: String): Promise<number> {
@@ -72,7 +82,7 @@ describe('sale orders must update inventory', () => {
     expect(response.status).toBe(201);
 
     return {
-      saleOrder: response.data,
+      saleOrder: response.data as SaleOrder,
       positions: initialPositions,
     };
   }
@@ -99,7 +109,7 @@ describe('sale orders must update inventory', () => {
   it('should subtract from inventory on creation', async () => {
     const saleOrderDTO: SaleOrderDTO = saleOrderScenarios[0];
 
-    const { positions: initialPositions } = await persistSaleOrder(
+    const { positions: initialPositions, saleOrder } = await persistSaleOrder(
       saleOrderDTO,
     );
 
@@ -113,6 +123,9 @@ describe('sale orders must update inventory', () => {
       initialPositions,
       positionsAfterCreating,
     );
+
+    const sumOfMovements = await getSumOfMovements(saleOrder.id);
+    expect(sumOfMovements).toBe(saleOrderDTO.items.reduce((total, item) => (total - item.amount), 0));
   });
 
   it('should not change positions when items remain the same', async () => {

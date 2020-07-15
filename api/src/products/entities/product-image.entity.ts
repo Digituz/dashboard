@@ -1,9 +1,12 @@
-import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { Product } from './product.entity';
 import { Image } from '../../media-library/image.entity';
 
 @Entity()
 export class ProductImage {
+  @PrimaryGeneratedColumn()
+  id?: number;
+
   @Column({
     name: 'image_order',
   })
@@ -12,13 +15,12 @@ export class ProductImage {
   @ManyToOne(
     type => Product,
     product => product.productImages,
-    { primary: true, nullable: false, cascade: false },
+    { nullable: false, cascade: false },
   )
   @JoinColumn({ name: 'product_id' })
   product?: Product;
 
   @ManyToOne(type => Image, {
-    primary: true,
     nullable: false,
     eager: true,
     cascade: false,

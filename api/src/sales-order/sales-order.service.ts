@@ -109,22 +109,24 @@ export class SalesOrderService {
 
     persistedSaleOrder.items = persistedItems;
 
-    // updating the inventory ...
-    if (isANewSaleOrder) {
-      // ... for new sale orders
-      const movementJobs = persistedItems.map((item) => {
-        return new Promise(async (res, rej) => {
-          const movement: InventoryMovementDTO = {
-            sku: item.product.sku,
-            amount: -item.amount,
-            description: `${saleOrder.id}`,
-          };
-          await this.inventoryService.saveMovement(movement);
-          res();
-        });
-      });
-      await Promise.all(movementJobs);
+    // removing old movements
+    if (!isANewSaleOrder) {
+      await this.inventoryService.cleanUpMovements(persistedSaleOrder);
     }
+
+    // creating movements to update inventory position
+    const movementJobs = persistedItems.map((item) => {
+      return new Promise(async (res) => {
+        const movement: InventoryMovementDTO = {
+          sku: item.product.sku,
+          amount: -item.amount,
+          description: `${saleOrder.id}`,
+        };
+        await this.inventoryService.saveMovement(movement, persistedSaleOrder);
+        res();
+      });
+    });
+    await Promise.all(movementJobs);
 
     return Promise.resolve(persistedSaleOrder);
   }

@@ -24,7 +24,6 @@ export class SaleOrder extends BaseEntity {
   referenceCode: string;
 
   @ManyToOne(type => Customer, {
-    primary: true,
     nullable: false,
     cascade: false,
   })

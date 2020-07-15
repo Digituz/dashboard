@@ -6,7 +6,6 @@ import { SaleOrder } from './sale-order.entity';
 @Entity()
 export class SaleOrderItem extends BaseEntity {
   @ManyToOne(type => Product, {
-    primary: true,
     nullable: false,
     cascade: false,
   })
@@ -14,7 +13,6 @@ export class SaleOrderItem extends BaseEntity {
   product: Product;
 
   @ManyToOne(type => SaleOrder, {
-    primary: true,
     nullable: false,
     cascade: false,
   })
