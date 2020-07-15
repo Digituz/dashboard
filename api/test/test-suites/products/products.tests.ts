@@ -4,18 +4,20 @@ import imageFixtures from './images.fixture.json';
 import productFixtures from './valid-products.fixture.json';
 import { ProductDTO } from '../../../src/products/dtos/product.dto';
 import { Image } from '../../../src/media-library/image.entity';
-import { executeQueries } from '../utils/queries';
+import { executeQueries, cleanUpDatabase } from '../utils/queries';
 import { ProductImageDTO } from '../../../src/products/dtos/product-image.dto';
 import { ProductImage } from '../../../src/products/entities/product-image.entity';
 
 const validImagesFixtures: Image[] = imageFixtures;
 const validFixtures: ProductDTO[] = productFixtures;
 
-describe.skip('inserting products', () => {
+describe('inserting products', () => {
   let authorizedRequest: any;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     authorizedRequest = await getCredentials();
+
+    await cleanUpDatabase();
 
     const insertImages: string[] = validImagesFixtures.map(image => {
       return `insert into image (id, main_filename, original_filename, mimetype, original_file_url,
