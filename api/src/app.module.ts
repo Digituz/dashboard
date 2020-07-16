@@ -20,6 +20,7 @@ import { Customer } from './customers/customer.entity';
 import { SalesOrderModule } from './sales-order/sales-order.module';
 import { SaleOrderItem } from './sales-order/entities/sale-order-item.entity';
 import { SaleOrder } from './sales-order/entities/sale-order.entity';
+import { BlingModule } from './bling/bling.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { SaleOrder } from './sales-order/entities/sale-order.entity';
     InventoryModule,
     CustomersModule,
     SalesOrderModule,
+    BlingModule,
   ],
   controllers: [],
   providers: [],
