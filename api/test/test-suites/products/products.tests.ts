@@ -2,6 +2,7 @@ import axios from 'axios';
 import { getCredentials } from '../utils/credentials';
 import imageFixtures from './images.fixture.json';
 import productFixtures from './valid-products.fixture.json';
+import productVersions from './update-products.scenarios.json';
 import { ProductDTO } from '../../../src/products/dtos/product.dto';
 import { Image } from '../../../src/media-library/image.entity';
 import { executeQueries, cleanUpDatabase } from '../utils/queries';
@@ -11,7 +12,7 @@ import { ProductImage } from '../../../src/products/entities/product-image.entit
 const validImagesFixtures: Image[] = imageFixtures;
 const validFixtures: ProductDTO[] = productFixtures;
 
-describe.only('inserting products', () => {
+describe('persisting products', () => {
   let authorizedRequest: any;
 
   beforeEach(async () => {
@@ -44,42 +45,51 @@ describe.only('inserting products', () => {
     });
   }
 
+  it('should be able to update products', async (done) => {
+    for (const productVersion of productVersions) {
+      await persistProduct(productVersion);
+    }
+    done();
+  });
+
+  async function persistProduct(productDTO: ProductDTO) {
+    await axios.post(
+      'http://localhost:3000/v1/products',
+      productDTO,
+      authorizedRequest,
+    );
+
+    const response = await axios.get(
+      `http://localhost:3000/v1/products/${productDTO.sku}`,
+      authorizedRequest,
+    );
+
+    const productCreated = response.data;
+
+    expect(productCreated.sku).toBe(productDTO.sku);
+
+    if (productDTO.productVariations?.length > 0) {
+      expect(productCreated.productVariations?.length).toBe(
+        productDTO.productVariations.length,
+      );
+      expect(productCreated.withoutVariation).toBe(false);
+    } else {
+      expect(productCreated.productVariations?.length).toBe(1);
+      const noVariation = productCreated.productVariations[0];
+      expect(noVariation.sku).toBe(productDTO.sku);
+      expect(noVariation.noVariation).toBe(true);
+    }
+
+    if (productDTO.productImages) {
+      validateImages(productCreated.productImages, productDTO.productImages);
+    } else {
+      expect(productCreated.productImages).toBeOneOf([[], undefined]);
+    }
+  }
+
   validFixtures.forEach((validFixture: ProductDTO) => {
-    it(`to be able to create valid products (${validFixture.sku})`, async done => {
-      await axios.post(
-        'http://localhost:3000/v1/products',
-        validFixture,
-        authorizedRequest,
-      );
-
-      const response = await axios.get(
-        `http://localhost:3000/v1/products/${validFixture.sku}`,
-        authorizedRequest,
-      );
-
-      const productCreated = response.data;
-
-      expect(productCreated.sku).toBe(validFixture.sku);
-
-      if (validFixture.productVariations?.length > 0) {
-        expect(productCreated.productVariations?.length).toBe(
-          validFixture.productVariations.length,
-        );
-        expect(productCreated.withoutVariation).toBe(false);
-      } else {
-        expect(productCreated.productVariations?.length).toBe(1);
-        const noVariation = productCreated.productVariations[0];
-        expect(noVariation.sku).toBe(validFixture.sku);
-        expect(noVariation.noVariation).toBe(true);
-      }
-
-      if (validFixture.productImages) {
-        validateImages(productCreated.productImages, validFixture.productImages);
-      } else {
-        expect(productCreated.productImages).toBeOneOf([[], undefined]);
-      }
-
-      done();
+    it(`to be able to create valid products (${validFixture.sku})`, async () => {
+      await persistProduct(validFixture);
     });
   });
 });

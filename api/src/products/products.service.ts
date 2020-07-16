@@ -156,7 +156,7 @@ export class ProductsService {
   ): Promise<Product> {
     const containsRealVariations =
       productDTO.productVariations?.length > 0 ? true : false;
-    const variations: ProductVariation[] = productDTO.productVariations || [];
+    const variations: ProductVariation[] = [];
 
     // remove variations that are not part of the DTO being passed
     const existingVariations = product.productVariations;
@@ -194,41 +194,26 @@ export class ProductsService {
       });
     }
 
-    // remove images that are not part of the DTO being passed
-    const existingImages = product.productImages;
-    const newImagesDTO = productDTO.productImages;
-    const newImagesId =
-      newImagesDTO?.map(productImageDTO => productImageDTO.imageId) || [];
-    const excludedImages =
-      existingImages?.filter(productImage => {
-        return !newImagesId.includes(productImage.image.id);
-      }) || [];
+    // remove all images
+    await this.productImagesRepository
+      .createQueryBuilder()
+      .delete()
+      .from(ProductImage)
+      .where(`product_id = ${product.id}`)
+      .execute();
 
-    if (excludedImages && excludedImages.length > 0) {
-      const excludedImagesIds = excludedImages
-        .map(excludedImage => excludedImage.image.id)
-        .join(',');
-
-      await this.productImagesRepository
-        .createQueryBuilder()
-        .delete()
-        .from(ProductImage)
-        .where(
-          `product_id = ${product.id} and image_id in (${excludedImagesIds})`,
-        )
-        .execute();
-    }
-
-    if (newImagesId && newImagesId.length > 0) {
+    // recreate images (if needed)
+    if (productDTO.productImages && productDTO.productImages.length > 0) {
+      const { productImages } = productDTO;
+      const newImagesId = productImages.map(pI => pI.imageId);
       const newImages = await this.imagesService.findByIds(newImagesId);
-      const productImages = productDTO.productImages
-        .filter(productImage => newImagesId.includes(productImage.imageId))
+      const newProductImages = productDTO.productImages
         .map(productImage => ({
           image: newImages.find(image => image.id === productImage.imageId),
           order: productImage.order,
           product: product,
         }));
-      await this.productImagesRepository.save(productImages);
+      await this.productImagesRepository.save(newProductImages);
     }
 
     // instantiate new product object (i.e., non-DTO)
