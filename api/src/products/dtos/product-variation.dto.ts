@@ -14,4 +14,6 @@ export class ProductVariationDTO {
   description: string;
 
   sellingPrice: number;
+
+  noVariation?: boolean = false;
 }

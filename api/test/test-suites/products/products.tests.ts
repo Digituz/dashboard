@@ -11,7 +11,7 @@ import { ProductImage } from '../../../src/products/entities/product-image.entit
 const validImagesFixtures: Image[] = imageFixtures;
 const validFixtures: ProductDTO[] = productFixtures;
 
-describe('inserting products', () => {
+describe.only('inserting products', () => {
   let authorizedRequest: any;
 
   beforeEach(async () => {
@@ -57,20 +57,26 @@ describe('inserting products', () => {
         authorizedRequest,
       );
 
-      expect(response.data.sku).toBe(validFixture.sku);
+      const productCreated = response.data;
 
-      if (validFixture.productVariations) {
-        expect(response.data.productVariations?.length).toBe(
+      expect(productCreated.sku).toBe(validFixture.sku);
+
+      if (validFixture.productVariations?.length > 0) {
+        expect(productCreated.productVariations?.length).toBe(
           validFixture.productVariations.length,
         );
+        expect(productCreated.withoutVariation).toBe(false);
       } else {
-        expect(response.data.productVariations).toBeOneOf([[], undefined]);
+        expect(productCreated.productVariations?.length).toBe(1);
+        const noVariation = productCreated.productVariations[0];
+        expect(noVariation.sku).toBe(validFixture.sku);
+        expect(noVariation.noVariation).toBe(true);
       }
 
       if (validFixture.productImages) {
-        validateImages(response.data.productImages, validFixture.productImages);
+        validateImages(productCreated.productImages, validFixture.productImages);
       } else {
-        expect(response.data.productImages).toBeOneOf([[], undefined]);
+        expect(productCreated.productImages).toBeOneOf([[], undefined]);
       }
 
       done();

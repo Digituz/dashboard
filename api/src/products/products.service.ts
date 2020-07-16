@@ -48,7 +48,7 @@ export class ProductsService {
 
   async findBySkus(skus: string[]): Promise<Product[]> {
     return this.productsRepository.find({
-      "sku": In(skus),
+      sku: In(skus),
     });
   }
 
@@ -79,6 +79,19 @@ export class ProductsService {
   }
 
   private async insertProduct(productDTO: ProductDTO) {
+    const containsRealVariations =
+      productDTO.productVariations?.length > 0 ? true : false;
+    const variations: ProductVariation[] = productDTO.productVariations || [];
+
+    if (!containsRealVariations) {
+      variations.push({
+        sku: productDTO.sku,
+        description: 'Tamanho Único',
+        sellingPrice: productDTO.sellingPrice,
+        noVariation: true,
+      });
+    }
+
     const newProduct: Product = {
       sku: productDTO.sku,
       title: productDTO.title,
@@ -93,7 +106,8 @@ export class ProductsService {
       isActive: productDTO.isActive,
       variationsSize: productDTO.productVariations?.length,
       imagesSize: productDTO.productImages?.length,
-      productVariations: productDTO.productVariations,
+      withoutVariation: !containsRealVariations,
+      productVariations: variations,
     };
 
     const persistedProduct = await this.productsRepository.save(newProduct);
@@ -140,6 +154,10 @@ export class ProductsService {
     product: Product,
     productDTO: ProductDTO,
   ): Promise<Product> {
+    const containsRealVariations =
+      productDTO.productVariations?.length > 0 ? true : false;
+    const variations: ProductVariation[] = productDTO.productVariations || [];
+
     // remove variations that are not part of the DTO being passed
     const existingVariations = product.productVariations;
     const newVariationsDTO = productDTO.productVariations;
@@ -151,20 +169,30 @@ export class ProductsService {
 
     await this.productVariationsRepository.remove(excludedVariations);
 
-    // instantiate array of variations (i.e., non-DTO objects)
-    const newVariations: ProductVariation[] =
-      newVariationsDTO?.map(newVariationDTO => {
-        const previousVariaton = existingVariations.find(
-          v => v.sku === newVariationDTO.sku,
-        );
-        return {
-          ...previousVariaton,
-          product: product,
-          sku: newVariationDTO.sku,
-          sellingPrice: newVariationDTO.sellingPrice,
-          description: newVariationDTO.description,
-        };
-      }) || [];
+    // populate array of variations (i.e., non-DTO objects)
+    if (containsRealVariations) {
+      variations.push(
+        ...newVariationsDTO.map(newVariationDTO => {
+          const previousVariaton = existingVariations.find(
+            v => v.sku === newVariationDTO.sku,
+          );
+          return {
+            ...previousVariaton,
+            product: product,
+            sku: newVariationDTO.sku,
+            sellingPrice: newVariationDTO.sellingPrice,
+            description: newVariationDTO.description,
+          };
+        }),
+      );
+    } else {
+      variations.push({
+        sku: productDTO.sku,
+        description: 'Tamanho Único',
+        sellingPrice: productDTO.sellingPrice,
+        noVariation: true,
+      });
+    }
 
     // remove images that are not part of the DTO being passed
     const existingImages = product.productImages;
@@ -217,8 +245,9 @@ export class ProductsService {
       weight: productDTO.weight,
       isActive: productDTO.isActive,
       ncm: productDTO.ncm,
-      productVariations: newVariations,
+      productVariations: variations,
       variationsSize: productDTO.productVariations?.length,
+      withoutVariation: !productDTO.productVariations ? true : false,
       imagesSize: productDTO.productImages?.length,
     };
 

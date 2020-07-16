@@ -11,6 +11,7 @@ export class ProductDTO {
   @Length(5, 60)
   title: string;
   ncm: string;
+  noVariation?: boolean = false;
   description?: string;
   productDetails?: string;
   sellingPrice?: number;

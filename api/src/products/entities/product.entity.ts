@@ -71,6 +71,9 @@ export class Product extends BaseEntity {
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
+  @Column({ name: 'without_variation', default: true })
+  withoutVariation: boolean = true;
+
   @OneToMany(
     type => ProductVariation,
     productVariation => productVariation.product,
