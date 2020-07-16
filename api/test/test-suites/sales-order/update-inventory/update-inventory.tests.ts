@@ -6,7 +6,6 @@ import { insertProductFixtures } from '../../products/products-fixtures/products
 import saleOrderScenarios from '../sales-order.scenarios.json';
 import { SaleOrderDTO } from '../../../../src/sales-order/sale-order.dto';
 import { SaleOrder } from '../../../../src/sales-order/entities/sale-order.entity';
-import { assert } from 'console';
 
 interface ItemPosition {
   sku: string;
@@ -49,7 +48,7 @@ describe('sale orders must update inventory', () => {
     const currrentPositionRows = await executeQuery(
       `select current_position
         from inventory i
-        left join product p on i.product_id = p.id
+        left join product_variation p on i.product_variation_id = p.id
         where p.sku = '${sku}';`,
     );
     return parseInt(currrentPositionRows[0].current_position);
@@ -159,22 +158,28 @@ describe('sale orders must update inventory', () => {
 
     const newItems = [
       {
-        sku: 'A-01',
+        sku: 'A-01-15',
         price: 10,
         discount: 0,
         amount: 1,
       },
       {
-        sku: 'A-03',
+        sku: 'A-02-16',
         price: 30,
         discount: 0,
         amount: 3,
       },
       {
-        sku: 'A-05',
+        sku: 'A-07-19',
         price: 50,
         discount: 0,
         amount: 7,
+      },
+      {
+        sku: 'A-07-20',
+        price: 60,
+        discount: 0,
+        amount: 8,
       },
     ];
 

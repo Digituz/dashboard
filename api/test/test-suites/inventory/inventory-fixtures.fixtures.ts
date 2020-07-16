@@ -9,8 +9,14 @@ export async function insertInventoryFixtures() {
   const authorizedRequest = await getCredentials();
 
   await insertProductFixtures();
+  
+  const productVariations = [];
+  for (const product of productsFixtures) {
+    if (!product.productVariations) return;
+    productVariations.push(...product.productVariations);
+  }
 
-  const moveInventoryJobs = productsFixtures.map((p, index) => {
+  const moveInventoryJobs = productVariations.map((p, index) => {
     return new Promise(async (res) => {
       const movement: InventoryMovementDTO = {
         sku: p.sku,

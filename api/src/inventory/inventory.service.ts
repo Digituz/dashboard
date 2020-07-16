@@ -7,6 +7,7 @@ import { Repository, Brackets } from 'typeorm';
 import { IPaginationOpts } from '../pagination/pagination';
 import { InventoryMovementDTO } from './inventory-movement.dto';
 import { SaleOrder } from 'src/sales-order/entities/sale-order.entity';
+import { ProductVariation } from 'src/products/entities/product-variation.entity';
 
 @Injectable()
 export class InventoryService {
@@ -20,17 +21,13 @@ export class InventoryService {
   async paginate(options: IPaginationOpts): Promise<Pagination<Inventory>> {
     const queryBuilder = this.inventoryRepository.createQueryBuilder('i');
 
-    queryBuilder.leftJoinAndSelect('i.product', 'p');
+    queryBuilder.leftJoinAndSelect('i.productVariation', 'p');
 
     let orderColumn = '';
 
     switch (options.sortedBy?.trim()) {
       case undefined:
       case null:
-      case 'title':
-      case '':
-        orderColumn = 'p.title';
-        break;
       case 'sku':
         orderColumn = 'p.sku';
         break;
@@ -54,9 +51,7 @@ export class InventoryService {
           case 'query':
             queryBuilder.andWhere(
               new Brackets(qb => {
-                qb.where(`lower(p.title) like :query`, {
-                  query: `%${queryParam.value.toString().toLowerCase()}%`,
-                }).orWhere(`lower(p.sku) like :query`, {
+                qb.where(`lower(p.sku) like :query`, {
                   query: `%${queryParam.value.toString().toLowerCase()}%`,
                 });
               }),
@@ -91,7 +86,7 @@ export class InventoryService {
   findBySku(sku: string): Promise<Inventory> {
     return this.inventoryRepository
       .createQueryBuilder('i')
-      .leftJoinAndSelect('i.product', 'p')
+      .leftJoinAndSelect('i.productVariation', 'p')
       .where('p.sku = :sku', { sku })
       .getOne();
   }
@@ -100,8 +95,8 @@ export class InventoryService {
     const movements = await this.inventoryMovementRepository.find({
       saleOrder: saleOrder,
     });
-    const removeMovementJobs = movements.map((movement) => {
-      return new Promise((res) => {
+    const removeMovementJobs = movements.map(movement => {
+      return new Promise(res => {
         const inventory = movement.inventory;
         inventory.currentPosition -= movement.amount;
         this.inventoryRepository.save(inventory);
@@ -109,6 +104,25 @@ export class InventoryService {
       });
     });
     await Promise.all(removeMovementJobs);
+  }
+
+  async removeInventoryAndMovements(productVariations: ProductVariation[]) {
+    const removeJobs = productVariations.map(productVariation => {
+      return new Promise(async res => {
+        const inventory = await this.inventoryRepository.findOne({
+          where: { productVariation },
+        });
+        await this.inventoryMovementRepository
+          .createQueryBuilder()
+          .delete()
+          .from(InventoryMovement)
+          .where(`inventory_id = ${inventory.id}`)
+          .execute();
+        await this.inventoryRepository.delete(inventory);
+        res();
+      });
+    });
+    await Promise.all(removeJobs);
   }
 
   async saveMovement(

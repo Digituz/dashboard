@@ -22,7 +22,7 @@ describe('moving inventory', () => {
       const currentPositionQuery = `
         select current_position
         from inventory i
-        left join product p on p.id = i.product_id
+        left join product_variation p on p.id = i.product_variation_id
         where p.sku = '${movement.sku}'
       `;
       const resultsBefore = await executeQuery(currentPositionQuery);
@@ -42,7 +42,7 @@ describe('moving inventory', () => {
       expect(movementCreated.id).toBeDefined();
       expect(movementCreated.amount).toBe(movement.amount);
       expect(movementCreated.description).toBe(movement.description);
-      expect(movementCreated.inventory.product.sku).toBe(movement.sku);
+      expect(movementCreated.inventory.productVariation.sku).toBe(movement.sku);
 
       const resultsAfter = await executeQuery(currentPositionQuery);
       const currentPositionAfter = resultsAfter[0].current_position;

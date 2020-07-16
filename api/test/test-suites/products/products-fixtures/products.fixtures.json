@@ -1,26 +1,5 @@
 [
   {
-    "sku": "A-07",
-    "title": "Product A-07",
-    "ncm": "1234.56.78",
-    "variations_size": 7,
-    "images_size": 7
-  },
-  {
-    "sku": "A-04",
-    "title": "Product A-04",
-    "ncm": "1234.56.78",
-    "variations_size": 4,
-    "images_size": 4
-  },
-  {
-    "sku": "A-01",
-    "title": "Product A-01",
-    "ncm": "1234.56.78",
-    "variations_size": 1,
-    "images_size": 1
-  },
-  {
     "sku": "A-00",
     "title": "Product A-00",
     "ncm": "1234.56.78",
@@ -28,38 +7,354 @@
     "images_size": 0
   },
   {
-    "sku": "A-06",
-    "title": "Product A-06",
+    "sku": "A-01",
+    "title": "Product A-01",
     "ncm": "1234.56.78",
-    "variations_size": 6,
-    "images_size": 6
-  },
-  {
-    "sku": "A-03",
-    "title": "Product A-03",
-    "ncm": "1234.56.78",
-    "variations_size": 3,
-    "images_size": 3
+    "variations_size": 1,
+    "productVariations": [
+      {
+        "sku": "A-01-15",
+        "parentSku": "A-01",
+        "description": "Tamanho:15",
+        "sellingPrice": 39.9
+      }
+    ],
+    "images_size": 1
   },
   {
     "sku": "A-02",
     "title": "Product A-02",
     "ncm": "1234.56.78",
     "variations_size": 2,
-    "images_size": 2
+    "images_size": 2,
+    "productVariations": [
+      {
+        "sku": "A-02-15",
+        "parentSku": "A-02",
+        "description": "Tamanho:15",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-02-16",
+        "parentSku": "A-02",
+        "description": "Tamanho:16",
+        "sellingPrice": 39.9
+      }
+    ]
+  },
+  {
+    "sku": "A-03",
+    "title": "Product A-03",
+    "ncm": "1234.56.78",
+    "variations_size": 3,
+    "images_size": 3,
+    "productVariations": [
+      {
+        "sku": "A-03-15",
+        "parentSku": "A-03",
+        "description": "Tamanho:15",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-03-16",
+        "parentSku": "A-03",
+        "description": "Tamanho:16",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-03-17",
+        "parentSku": "A-03",
+        "description": "Tamanho:17",
+        "sellingPrice": 39.9
+      }
+    ]
+  },
+  {
+    "sku": "A-04",
+    "title": "Product A-04",
+    "ncm": "1234.56.78",
+    "variations_size": 4,
+    "images_size": 4,
+    "productVariations": [
+      {
+        "sku": "A-04-15",
+        "parentSku": "A-04",
+        "description": "Tamanho:15",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-04-16",
+        "parentSku": "A-04",
+        "description": "Tamanho:16",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-04-17",
+        "parentSku": "A-04",
+        "description": "Tamanho:17",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-04-18",
+        "parentSku": "A-04",
+        "description": "Tamanho:18",
+        "sellingPrice": 39.9
+      }
+    ]
   },
   {
     "sku": "A-05",
     "title": "Product A-05",
     "ncm": "1234.56.78",
     "variations_size": 5,
-    "images_size": 5
+    "images_size": 5,
+    "productVariations": [
+      {
+        "sku": "A-05-15",
+        "parentSku": "A-05",
+        "description": "Tamanho:15",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-05-16",
+        "parentSku": "A-05",
+        "description": "Tamanho:16",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-05-17",
+        "parentSku": "A-05",
+        "description": "Tamanho:17",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-05-18",
+        "parentSku": "A-05",
+        "description": "Tamanho:18",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-05-19",
+        "parentSku": "A-05",
+        "description": "Tamanho:19",
+        "sellingPrice": 39.9
+      }
+    ]
+  },
+  {
+    "sku": "A-06",
+    "title": "Product A-06",
+    "ncm": "1234.56.78",
+    "variations_size": 6,
+    "images_size": 6,
+    "productVariations": [
+      {
+        "sku": "A-06-15",
+        "parentSku": "A-06",
+        "description": "Tamanho:15",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-06-16",
+        "parentSku": "A-06",
+        "description": "Tamanho:16",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-06-17",
+        "parentSku": "A-06",
+        "description": "Tamanho:17",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-06-18",
+        "parentSku": "A-06",
+        "description": "Tamanho:18",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-06-19",
+        "parentSku": "A-06",
+        "description": "Tamanho:19",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-06-20",
+        "parentSku": "A-06",
+        "description": "Tamanho:20",
+        "sellingPrice": 39.9
+      }
+    ]
+  },
+  {
+    "sku": "A-07",
+    "title": "Product A-07",
+    "ncm": "1234.56.78",
+    "variations_size": 7,
+    "images_size": 7,
+    "productVariations": [
+      {
+        "sku": "A-07-15",
+        "parentSku": "A-07",
+        "description": "Tamanho:15",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-07-16",
+        "parentSku": "A-07",
+        "description": "Tamanho:16",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-07-17",
+        "parentSku": "A-07",
+        "description": "Tamanho:17",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-07-18",
+        "parentSku": "A-07",
+        "description": "Tamanho:18",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-07-19",
+        "parentSku": "A-07",
+        "description": "Tamanho:19",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-07-20",
+        "parentSku": "A-07",
+        "description": "Tamanho:20",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-07-21",
+        "parentSku": "A-07",
+        "description": "Tamanho:21",
+        "sellingPrice": 39.9
+      }
+    ]
   },
   {
     "sku": "A-08",
     "title": "Product A-08",
     "ncm": "1234.56.78",
     "variations_size": 8,
-    "images_size": 8
+    "images_size": 8,
+    "productVariations": [
+      {
+        "sku": "A-08-15",
+        "parentSku": "A-08",
+        "description": "Tamanho:15",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-08-16",
+        "parentSku": "A-08",
+        "description": "Tamanho:16",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-08-17",
+        "parentSku": "A-08",
+        "description": "Tamanho:17",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-08-18",
+        "parentSku": "A-08",
+        "description": "Tamanho:18",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-08-19",
+        "parentSku": "A-08",
+        "description": "Tamanho:19",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-08-20",
+        "parentSku": "A-08",
+        "description": "Tamanho:20",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-08-21",
+        "parentSku": "A-08",
+        "description": "Tamanho:21",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-08-22",
+        "parentSku": "A-08",
+        "description": "Tamanho:22",
+        "sellingPrice": 39.9
+      }
+    ]
+  },
+  {
+    "sku": "A-09",
+    "title": "Product A-09",
+    "ncm": "1234.56.78",
+    "variations_size": 9,
+    "images_size": 9,
+    "productVariations": [
+      {
+        "sku": "A-09-15",
+        "parentSku": "A-09",
+        "description": "Tamanho:15",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-09-16",
+        "parentSku": "A-09",
+        "description": "Tamanho:16",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-09-17",
+        "parentSku": "A-09",
+        "description": "Tamanho:17",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-09-18",
+        "parentSku": "A-09",
+        "description": "Tamanho:18",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-09-19",
+        "parentSku": "A-09",
+        "description": "Tamanho:19",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-09-20",
+        "parentSku": "A-09",
+        "description": "Tamanho:20",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-09-21",
+        "parentSku": "A-09",
+        "description": "Tamanho:21",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-09-22",
+        "parentSku": "A-09",
+        "description": "Tamanho:22",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "A-09-23",
+        "parentSku": "A-09",
+        "description": "Tamanho:23",
+        "sellingPrice": 39.9
+      }
+    ]
   }
 ]

@@ -32,15 +32,15 @@ export class SalesOrderService {
     saleOrderDTO: SaleOrderDTO,
   ): Promise<SaleOrderItem[]> {
     const skus = saleOrderDTO.items.map(item => item.sku);
-    const products = await this.productsService.findBySkus(skus);
+    const productsVariations = await this.productsService.findVariationsBySkus(skus);
 
-    return products.map(product => {
-      const item = saleOrderDTO.items.find(item => item.sku === product.sku);
+    return productsVariations.map(productVariation => {
+      const item = saleOrderDTO.items.find(item => item.sku === productVariation.sku);
       const saleOrderItem = {
         price: item.price,
         discount: item.discount,
         amount: item.amount,
-        product: product,
+        productVariation: productVariation,
       };
       return saleOrderItem;
     });
@@ -118,7 +118,7 @@ export class SalesOrderService {
     const movementJobs = persistedItems.map(item => {
       return new Promise(async res => {
         const movement: InventoryMovementDTO = {
-          sku: item.product.sku,
+          sku: item.productVariation.sku,
           amount: -item.amount,
           description: `${saleOrder.id}`,
         };

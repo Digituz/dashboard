@@ -46,8 +46,8 @@ export class ProductsService {
       .getMany();
   }
 
-  async findBySkus(skus: string[]): Promise<Product[]> {
-    return this.productsRepository.find({
+  async findVariationsBySkus(skus: string[]): Promise<ProductVariation[]> {
+    return this.productVariationsRepository.find({
       sku: In(skus),
     });
   }
@@ -76,6 +76,23 @@ export class ProductsService {
 
   async remove(id: number): Promise<void> {
     await this.productsRepository.delete(id);
+  }
+
+  async createInventories(variations: ProductVariation[]) {
+    // starting the inventory info
+    const inventoryCreationJob = variations.map(variation => {
+      return new Promise(async res => {
+        const inventory: Inventory = {
+          productVariation: variation,
+          currentPosition: 0,
+          movements: [],
+        };
+        await this.inventoryService.save(inventory);
+        res();
+      });
+    });
+
+    await Promise.all(inventoryCreationJob);
   }
 
   private async insertProduct(productDTO: ProductDTO) {
@@ -125,13 +142,7 @@ export class ProductsService {
       await this.productImagesRepository.save(productImages);
     }
 
-    // starting the inventory info
-    const inventory: Inventory = {
-      product: persistedProduct,
-      currentPosition: 0,
-      movements: [],
-    };
-    await this.inventoryService.save(inventory);
+    await this.createInventories(variations);
 
     return persistedProduct;
   }
@@ -167,6 +178,7 @@ export class ProductsService {
       'sku',
     );
 
+    await this.inventoryService.removeInventoryAndMovements(excludedVariations);
     await this.productVariationsRepository.remove(excludedVariations);
 
     // populate array of variations (i.e., non-DTO objects)
@@ -207,12 +219,11 @@ export class ProductsService {
       const { productImages } = productDTO;
       const newImagesId = productImages.map(pI => pI.imageId);
       const newImages = await this.imagesService.findByIds(newImagesId);
-      const newProductImages = productDTO.productImages
-        .map(productImage => ({
-          image: newImages.find(image => image.id === productImage.imageId),
-          order: productImage.order,
-          product: product,
-        }));
+      const newProductImages = productDTO.productImages.map(productImage => ({
+        image: newImages.find(image => image.id === productImage.imageId),
+        order: productImage.order,
+        product: product,
+      }));
       await this.productImagesRepository.save(newProductImages);
     }
 
@@ -236,7 +247,17 @@ export class ProductsService {
       imagesSize: productDTO.productImages?.length,
     };
 
-    return this.productsRepository.save(updatedProduct);
+    const persistedProduct = await this.productsRepository.save(updatedProduct);
+
+    // create new inventories
+    if (newVariationsDTO && newVariationsDTO.length > 0) {
+      const newVariationsSKUs = newVariationsDTO.map(v => v.sku);
+      await this.createInventories(
+        variations.filter(v => newVariationsSKUs.includes(v.sku)),
+      );
+    }
+
+    return Promise.resolve(persistedProduct);
   }
 
   async paginate(options: IPaginationOpts): Promise<Pagination<Product>> {

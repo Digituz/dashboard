@@ -1,9 +1,6 @@
 import axios from 'axios';
 import { getCredentials } from '../../utils/credentials';
-import {
-  cleanUpDatabase,
-  executeQuery,
-} from '../../../test-suites/utils/queries';
+import { cleanUpDatabase } from '../../../test-suites/utils/queries';
 
 import { insertInventoryFixtures } from '../inventory-fixtures.fixtures';
 
@@ -30,9 +27,9 @@ describe('querying inventory', () => {
 
     const result = response.data;
     expect(result.items.length).toBe(3);
-    expect(result.items[0].product.sku).toBe('A-00');
-    expect(result.items[1].product.sku).toBe('A-01');
-    expect(result.items[2].product.sku).toBe('A-02');
+    expect(result.items[0].productVariation.sku).toBe('A-00');
+    expect(result.items[1].productVariation.sku).toBe('A-01-15');
+    expect(result.items[2].productVariation.sku).toBe('A-02-15');
 
     const responsePage2 = await axios.get(
       'http://localhost:3000/v1/inventory?page=2&limit=3',
@@ -45,9 +42,9 @@ describe('querying inventory', () => {
 
     const resultPage2 = responsePage2.data;
     expect(resultPage2.items.length).toBe(3);
-    expect(resultPage2.items[0].product.sku).toBe('A-03');
-    expect(resultPage2.items[1].product.sku).toBe('A-04');
-    expect(resultPage2.items[2].product.sku).toBe('A-05');
+    expect(resultPage2.items[0].productVariation.sku).toBe('A-02-16');
+    expect(resultPage2.items[1].productVariation.sku).toBe('A-03-15');
+    expect(resultPage2.items[2].productVariation.sku).toBe('A-03-16');
   });
 
   it('should be able to query inventory sorting results', async () => {
@@ -62,9 +59,9 @@ describe('querying inventory', () => {
 
     const result = response.data;
     expect(result.items.length).toBe(3);
-    expect(result.items[0].product.sku).toBe('A-08');
-    expect(result.items[1].product.sku).toBe('A-07');
-    expect(result.items[2].product.sku).toBe('A-06');
+    expect(result.items[0].productVariation.sku).toBe('A-09-23');
+    expect(result.items[1].productVariation.sku).toBe('A-09-22');
+    expect(result.items[2].productVariation.sku).toBe('A-09-21');
 
     const responsePage2 = await axios.get(
       'http://localhost:3000/v1/inventory?page=2&limit=3&order=currentPosition&sortDirectionAscending=false',
@@ -77,9 +74,9 @@ describe('querying inventory', () => {
 
     const resultPage2 = responsePage2.data;
     expect(resultPage2.items.length).toBe(3);
-    expect(resultPage2.items[0].product.sku).toBe('A-05');
-    expect(resultPage2.items[1].product.sku).toBe('A-04');
-    expect(resultPage2.items[2].product.sku).toBe('A-03');
+    expect(resultPage2.items[0].productVariation.sku).toBe('A-09-20');
+    expect(resultPage2.items[1].productVariation.sku).toBe('A-09-19');
+    expect(resultPage2.items[2].productVariation.sku).toBe('A-09-18');
   });
 
   it('should be able to query inventory sorting and querying results', async () => {
@@ -94,6 +91,6 @@ describe('querying inventory', () => {
 
     const result = response.data;
     expect(result.items.length).toBe(1);
-    expect(result.items[0].product.sku).toBe('A-01');
+    expect(result.items[0].productVariation.sku).toBe('A-01-15');
   });
 });

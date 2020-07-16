@@ -3,6 +3,7 @@ import axios from 'axios';
 import { cleanUpDatabase } from '../../utils/queries';
 import { getCredentials } from '../../utils/credentials';
 import { insertProductFixtures } from '../products-fixtures/products.fixture';
+import productsFixtures from '../products-fixtures/products.fixtures.json';
 
 describe('querying products', () => {
   let authorizedRequest: any;
@@ -30,12 +31,13 @@ describe('querying products', () => {
   });
 
   it('should paginate properly', async () => {
+    const limit = 5;
     const response = await axios.get(
-      'http://localhost:3000/v1/products?page=2&limit=5',
+      `http://localhost:3000/v1/products?page=2&limit=${limit}`,
       authorizedRequest,
     );
 
-    expect(response.data.items.length).toBe(4);
+    expect(response.data.items.length).toBe(productsFixtures.length - limit);
     expect(response.data.items[0].sku).toBe('A-05');
     expect(response.data.items[1].sku).toBe('A-06');
     expect(response.data.items[2].sku).toBe('A-07');
@@ -69,9 +71,9 @@ describe('querying products', () => {
     );
 
     expect(response.data.items.length).toBe(3);
-    expect(response.data.items[0].sku).toBe('A-08');
-    expect(response.data.items[1].sku).toBe('A-07');
-    expect(response.data.items[2].sku).toBe('A-06');
+    expect(response.data.items[0].sku).toBe('A-09');
+    expect(response.data.items[1].sku).toBe('A-08');
+    expect(response.data.items[2].sku).toBe('A-07');
   });
 
   it('should sort by amount of product images', async () => {
@@ -101,8 +103,8 @@ describe('querying products', () => {
     );
 
     expect(response.data.items.length).toBe(3);
-    expect(response.data.items[0].sku).toBe('A-08');
-    expect(response.data.items[1].sku).toBe('A-07');
-    expect(response.data.items[2].sku).toBe('A-06');
+    expect(response.data.items[0].sku).toBe('A-09');
+    expect(response.data.items[1].sku).toBe('A-08');
+    expect(response.data.items[2].sku).toBe('A-07');
   });
 });

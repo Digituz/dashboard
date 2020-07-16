@@ -9,25 +9,25 @@
     },
     "items": [
       {
-        "sku": "A-01",
-        "price": 10,
-        "discount": 0,
-        "amount": 1
-      },
-      {
-        "sku": "A-04",
+        "sku": "A-00",
         "price": 40,
         "discount": 0,
         "amount": 4
       },
       {
-        "sku": "A-05",
+        "sku": "A-01-15",
+        "price": 10,
+        "discount": 0,
+        "amount": 1
+      },
+      {
+        "sku": "A-05-17",
         "price": 50,
         "discount": 0,
         "amount": 5
       },
       {
-        "sku": "A-08",
+        "sku": "A-08-20",
         "price": 80,
         "discount": 0,
         "amount": 8
@@ -55,13 +55,13 @@
     },
     "items": [
       {
-        "sku": "A-02",
+        "sku": "A-00",
         "price": 20,
         "discount": 0,
         "amount": 1
       },
       {
-        "sku": "A-03",
+        "sku": "A-03-17",
         "price": 30,
         "discount": 0,
         "amount": 1

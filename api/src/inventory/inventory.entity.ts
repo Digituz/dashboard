@@ -1,17 +1,16 @@
 import { Entity, ManyToOne, JoinColumn, OneToMany, Column } from 'typeorm';
-import { Product } from '../products/entities/product.entity';
 import { BaseEntity } from '../util/base-entity';
 import { InventoryMovement } from './inventory-movement.entity';
+import { ProductVariation } from '../products/entities/product-variation.entity';
 
 @Entity()
 export class Inventory extends BaseEntity {
   @ManyToOne(
-    type => Product,
-    product => product.productImages,
+    type => ProductVariation,
     { nullable: false, cascade: false },
   )
-  @JoinColumn({ name: 'product_id' })
-  product: Product;
+  @JoinColumn({ name: 'product_variation_id' })
+  productVariation: ProductVariation;
 
   @Column({
     name: 'current_position',
