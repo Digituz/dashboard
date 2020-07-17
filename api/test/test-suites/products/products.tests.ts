@@ -5,9 +5,14 @@ import productFixtures from './valid-products.fixture.json';
 import productVersions from './update-products.scenarios.json';
 import { ProductDTO } from '../../../src/products/dtos/product.dto';
 import { Image } from '../../../src/media-library/image.entity';
-import { executeQueries, cleanUpDatabase } from '../utils/queries';
+import {
+  executeQueries,
+  cleanUpDatabase,
+  executeQuery,
+} from '../utils/queries';
 import { ProductImageDTO } from '../../../src/products/dtos/product-image.dto';
 import { ProductImage } from '../../../src/products/entities/product-image.entity';
+import { differenceWith, isEqual } from 'lodash';
 
 const validImagesFixtures: Image[] = imageFixtures;
 const validFixtures: ProductDTO[] = productFixtures;
@@ -45,7 +50,54 @@ describe('persisting products', () => {
     });
   }
 
-  it('should be able to update products', async (done) => {
+  it("should not recreate inventory for variations that don't change", async () => {
+    const product = productVersions.find(p => p.productVariations?.length > 1);
+
+    product.productVariations = product.productVariations.sort((pv1, pv2) => (pv1.sku.localeCompare(pv2.sku)));
+
+    // create product
+    await persistProduct(product);
+    const rowsOnCreate = await executeQuery(
+      'select i.id, product_variation_id from inventory i left join product_variation pv on pv.id = product_variation_id order by pv.sku',
+    );
+    expect(rowsOnCreate.length).toBe(product.productVariations.length);
+
+    // update product without changing variations
+    await persistProduct(product);
+    const rowsOnUpdateWithoutChanges = await executeQuery(
+      'select i.id, product_variation_id from inventory i left join product_variation pv on pv.id = product_variation_id order by pv.sku',
+    );
+    expect(rowsOnUpdateWithoutChanges.length).toBe(
+      product.productVariations.length,
+    );
+
+    // compare ids on creation and on change
+    expect(
+      differenceWith(rowsOnCreate, rowsOnUpdateWithoutChanges, isEqual).length,
+    ).toBe(0);
+
+    // reomve one variation and update product
+    const newProductVersion = {
+      ...product,
+      productVariations: product.productVariations.slice(
+        0,
+        product.productVariations.length - 1,
+      ),
+    };
+    await persistProduct(newProductVersion);
+    const rowsOnUpdateWithChanges = await executeQuery(
+      'select i.id, product_variation_id from inventory i left join product_variation pv on pv.id = product_variation_id order by pv.sku',
+    );
+    expect(rowsOnUpdateWithChanges.length).toBe(
+      product.productVariations.length - 1,
+    );
+
+    // compare ids on creation and on last change
+    const different = differenceWith(rowsOnCreate.slice(0, rowsOnCreate.length - 1), rowsOnUpdateWithChanges, isEqual).length > 0;
+    expect(different).toBe(false);
+  });
+
+  it('should be able to update products', async done => {
     for (const productVersion of productVersions) {
       await persistProduct(productVersion);
     }
