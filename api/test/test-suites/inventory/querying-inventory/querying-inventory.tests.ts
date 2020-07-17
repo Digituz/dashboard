@@ -27,9 +27,9 @@ describe('querying inventory', () => {
 
     const result = response.data;
     expect(result.items.length).toBe(3);
-    expect(result.items[0].productVariation.sku).toBe('A-00');
-    expect(result.items[1].productVariation.sku).toBe('A-01-15');
-    expect(result.items[2].productVariation.sku).toBe('A-02-15');
+    expect(result.items[0].productVariationDetails.sku).toBe('A-00');
+    expect(result.items[1].productVariationDetails.sku).toBe('A-01-15');
+    expect(result.items[2].productVariationDetails.sku).toBe('A-02-15');
 
     const responsePage2 = await axios.get(
       'http://localhost:3000/v1/inventory?page=2&limit=3',
@@ -42,9 +42,9 @@ describe('querying inventory', () => {
 
     const resultPage2 = responsePage2.data;
     expect(resultPage2.items.length).toBe(3);
-    expect(resultPage2.items[0].productVariation.sku).toBe('A-02-16');
-    expect(resultPage2.items[1].productVariation.sku).toBe('A-03-15');
-    expect(resultPage2.items[2].productVariation.sku).toBe('A-03-16');
+    expect(resultPage2.items[0].productVariationDetails.sku).toBe('A-02-16');
+    expect(resultPage2.items[1].productVariationDetails.sku).toBe('A-03-15');
+    expect(resultPage2.items[2].productVariationDetails.sku).toBe('A-03-16');
   });
 
   it('should be able to query inventory sorting results', async () => {
@@ -59,9 +59,9 @@ describe('querying inventory', () => {
 
     const result = response.data;
     expect(result.items.length).toBe(3);
-    expect(result.items[0].productVariation.sku).toBe('A-09-23');
-    expect(result.items[1].productVariation.sku).toBe('A-09-22');
-    expect(result.items[2].productVariation.sku).toBe('A-09-21');
+    expect(result.items[0].productVariationDetails.sku).toBe('A-09-23');
+    expect(result.items[1].productVariationDetails.sku).toBe('A-09-22');
+    expect(result.items[2].productVariationDetails.sku).toBe('A-09-21');
 
     const responsePage2 = await axios.get(
       'http://localhost:3000/v1/inventory?page=2&limit=3&order=currentPosition&sortDirectionAscending=false',
@@ -74,9 +74,9 @@ describe('querying inventory', () => {
 
     const resultPage2 = responsePage2.data;
     expect(resultPage2.items.length).toBe(3);
-    expect(resultPage2.items[0].productVariation.sku).toBe('A-09-20');
-    expect(resultPage2.items[1].productVariation.sku).toBe('A-09-19');
-    expect(resultPage2.items[2].productVariation.sku).toBe('A-09-18');
+    expect(resultPage2.items[0].productVariationDetails.sku).toBe('A-09-20');
+    expect(resultPage2.items[1].productVariationDetails.sku).toBe('A-09-19');
+    expect(resultPage2.items[2].productVariationDetails.sku).toBe('A-09-18');
   });
 
   it('should be able to query inventory sorting and querying results', async () => {
@@ -91,6 +91,6 @@ describe('querying inventory', () => {
 
     const result = response.data;
     expect(result.items.length).toBe(1);
-    expect(result.items[0].productVariation.sku).toBe('A-01-15');
+    expect(result.items[0].productVariationDetails.sku).toBe('A-01-15');
   });
 });

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import Product from './product.entity';
 import { Observable } from 'rxjs';
 import { IDataProvider, Pagination, QueryParam } from '@app/util/pagination';
+import { ProductVariationDetailsDTO } from './product-variation-details.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,10 @@ export class ProductsService implements IDataProvider<Product> {
 
   public findProducts(query: string): Observable<Pagination<Product>> {
     return this.httpClient.get<Pagination<Product>>(`${this.PRODUCTS_ENDPOINT}?page=1&limit=10&query=${query}`);
+  }
+
+  public findProductVariations(query: string): Observable<ProductVariationDetailsDTO[]> {
+    return this.httpClient.get<ProductVariationDetailsDTO[]>(`${this.PRODUCTS_ENDPOINT}/variations?query=${query}`);
   }
 
   public saveProduct(product: Product): Observable<void> {

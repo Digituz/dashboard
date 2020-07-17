@@ -12,15 +12,15 @@
       <div class="p-field p-col-12">
         <label for="variationSku">Produto</label>
         <p-autoComplete
-          formControlName="product"
-          [suggestions]="products"
+          formControlName="productVariation"
+          [suggestions]="productVariations"
           (completeMethod)="search($event)"
           [multiple]="false"
           field="title"
           placeholder="Selecione um produto"
         >
-          <ng-template let-product pTemplate="item">
-            <div>{{ product.sku }} - {{ product.title }}</div>
+          <ng-template let-productVariation pTemplate="item">
+            <div>{{ productVariation.sku }} - {{ productVariation.title }}</div>
           </ng-template>
         </p-autoComplete>
       </div>

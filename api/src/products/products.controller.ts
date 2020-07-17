@@ -13,11 +13,19 @@ import { ProductDTO } from './dtos/product.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { parseBoolean } from '../util/parsers';
 import { Pagination } from 'nestjs-typeorm-paginate';
+import { ProductVariationDetailsDTO } from './dtos/product-variation-details.dto';
 
 @Controller('products')
 @UseGuards(JwtAuthGuard)
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
+
+  @Get('/variations')
+  findProductVariations(
+    @Query('query') query: string,
+  ): Promise<ProductVariationDetailsDTO[]> {
+    return this.productsService.findVariations(query);
+  }
 
   @Get()
   findAll(

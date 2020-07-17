@@ -1,8 +1,8 @@
-import Product from '@app/products/product.entity';
+import { ProductVariation } from '@app/products/product-variation.entity';
 
 export class Inventory {
   id?: number;
-  product: Product;
+  productVariation: ProductVariation;
   currentPosition: number;
   movements?: [];
 }

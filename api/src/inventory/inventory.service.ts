@@ -6,8 +6,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Brackets } from 'typeorm';
 import { IPaginationOpts } from '../pagination/pagination';
 import { InventoryMovementDTO } from './inventory-movement.dto';
-import { SaleOrder } from 'src/sales-order/entities/sale-order.entity';
-import { ProductVariation } from 'src/products/entities/product-variation.entity';
+import { SaleOrder } from '../sales-order/entities/sale-order.entity';
+import { ProductVariation } from '../products/entities/product-variation.entity';
 
 @Injectable()
 export class InventoryService {
@@ -21,7 +21,9 @@ export class InventoryService {
   async paginate(options: IPaginationOpts): Promise<Pagination<Inventory>> {
     const queryBuilder = this.inventoryRepository.createQueryBuilder('i');
 
-    queryBuilder.leftJoinAndSelect('i.productVariation', 'p');
+    queryBuilder
+      .leftJoinAndSelect('i.productVariation', 'pv')
+      .leftJoinAndSelect('pv.product', 'p');
 
     let orderColumn = '';
 
@@ -29,7 +31,7 @@ export class InventoryService {
       case undefined:
       case null:
       case 'sku':
-        orderColumn = 'p.sku';
+        orderColumn = 'pv.sku';
         break;
       case 'currentPosition':
         orderColumn = 'i.current_position';
@@ -51,7 +53,7 @@ export class InventoryService {
           case 'query':
             queryBuilder.andWhere(
               new Brackets(qb => {
-                qb.where(`lower(p.sku) like :query`, {
+                qb.where(`lower(pv.sku) like :query`, {
                   query: `%${queryParam.value.toString().toLowerCase()}%`,
                 });
               }),

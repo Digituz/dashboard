@@ -13,6 +13,7 @@ import { TagsService } from '../tags/tags.service';
 import { ImagesService } from '../media-library/images.service';
 import { Inventory } from '../inventory/inventory.entity';
 import { InventoryService } from '../inventory/inventory.service';
+import { ProductVariationDetailsDTO } from './dtos/product-variation-details.dto';
 
 @Injectable()
 export class ProductsService {
@@ -252,19 +253,69 @@ export class ProductsService {
 
     // managing variations and inventories
     const previousVariations = previousProductVersion.productVariations;
-    if (!previousProductVersion.withoutVariation && persistedProduct.withoutVariation) {
-      const newVariations = [{
-        sku: productDTO.sku,
-        description: 'Tamanho Único',
-        sellingPrice: productDTO.sellingPrice,
-        noVariation: true,
-      }];
-      await this.updateVariations(persistedProduct, newVariations, previousVariations);
+    if (
+      !previousProductVersion.withoutVariation &&
+      persistedProduct.withoutVariation
+    ) {
+      const newVariations = [
+        {
+          sku: productDTO.sku,
+          description: 'Tamanho Único',
+          sellingPrice: productDTO.sellingPrice,
+          noVariation: true,
+        },
+      ];
+      await this.updateVariations(
+        persistedProduct,
+        newVariations,
+        previousVariations,
+      );
     } else if (!persistedProduct.withoutVariation) {
-      await this.updateVariations(persistedProduct, productDTO.productVariations, previousVariations);
+      await this.updateVariations(
+        persistedProduct,
+        productDTO.productVariations,
+        previousVariations,
+      );
     }
 
     return Promise.resolve(persistedProduct);
+  }
+
+  async findVariations(query: string): Promise<ProductVariationDetailsDTO[]> {
+    const queryBuilder = this.productVariationsRepository
+      .createQueryBuilder('pV')
+      .leftJoinAndSelect('pV.product', 'p')
+      .where('lower(p.sku) like :query', {
+        query: `%${query.toLowerCase()}%`,
+      })
+      .orWhere('lower(pV.sku) like :query', {
+        query: `%${query.toLowerCase()}%`,
+      })
+      .orWhere('lower(p.title) like :query', {
+        query: `%${query.toLowerCase()}%`,
+      })
+      .orWhere('lower(pV.description) like :query', {
+        query: `%${query.toLowerCase()}%`,
+      })
+      .orderBy('p.title')
+      .orderBy('pV.sku')
+      .orderBy('pV.description')
+      .limit(10);
+
+    const productVariations: ProductVariation[] = await queryBuilder.getMany();
+
+    return Promise.resolve(
+      productVariations.map(productVariation => {
+        return {
+          parentSku: productVariation.product.sku,
+          title: productVariation.product.title,
+          sku: productVariation.sku,
+          description: productVariation.description,
+          sellingPrice: productVariation.sellingPrice,
+          noVariation: productVariation.product.withoutVariation,
+        };
+      }),
+    );
   }
 
   async paginate(options: IPaginationOpts): Promise<Pagination<Product>> {

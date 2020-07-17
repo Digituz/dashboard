@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { InventoryMovement } from '@app/inventory/inventory-movement.entity';
 import { ProductsService } from '@app/products/products.service';
-import Product from '@app/products/product.entity';
 import { InventoryService } from '../inventory.service';
+import { ProductVariationDetailsDTO } from '@app/products/product-variation-details.dto';
 
 interface MovementType {
   label: string;
@@ -20,7 +20,7 @@ export class MoveInventoryDialogComponent implements OnInit {
   loading: boolean = false;
   isModalVisible: boolean = false;
   showRemoveButton: boolean = false;
-  products: Product[] = [];
+  productVariations: ProductVariationDetailsDTO[] = [];
   movementTypes: MovementType[] = [
     { label: 'Entrada', value: 'INPUT' },
     { label: 'Saída', value: 'OUTPUT' },
@@ -37,7 +37,7 @@ export class MoveInventoryDialogComponent implements OnInit {
   private configureFormFields(inventoryMovement: InventoryMovement) {
     const movementType = inventoryMovement?.amount < 0 ? this.movementTypes[1] : this.movementTypes[0];
     this.formFields = this.fb.group({
-      product: [inventoryMovement?.product || null],
+      productVariation: [inventoryMovement?.productVariation || null],
       description: [inventoryMovement?.description || ''],
       amount: [inventoryMovement ? Math.abs(inventoryMovement.amount) : ''],
       movementType: [movementType.value],
@@ -54,7 +54,7 @@ export class MoveInventoryDialogComponent implements OnInit {
     const formValue = this.formFields.value;
     const input = formValue.movementType === 'INPUT';
     const movement: InventoryMovement = {
-      product: formValue.product,
+      productVariation: formValue.productVariation,
       description: formValue.description,
       amount: formValue.amount * (input ? 1 : -1),
     };
@@ -68,14 +68,14 @@ export class MoveInventoryDialogComponent implements OnInit {
     this.isModalVisible = false;
     this.formFields = null;
     this.showRemoveButton = false;
-    this.products = [];
+    this.productVariations = [];
   }
 
   removeMovement() {}
 
   search(event: any) {
-    this.productsService.findProducts(event.query).subscribe((results) => {
-      this.products = results.items;
+    this.productsService.findProductVariations(event.query).subscribe((results) => {
+      this.productVariations = results;
     });
   }
 }

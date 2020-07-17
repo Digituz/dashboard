@@ -57,7 +57,7 @@ export class InventoryService implements IDataProvider<Inventory> {
 
   addMovement(inventoryMovement: InventoryMovement): Observable<void> {
     return this.httpClient.post<void>(this.INVENTORY_MOVEMENT_ENDPOINT, {
-      sku: inventoryMovement.product.sku,
+      sku: inventoryMovement.productVariation.sku,
       amount: inventoryMovement.amount,
       description: inventoryMovement.description,
     });

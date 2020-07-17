@@ -32,8 +32,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let inventory of inventoryTable.currentData">
-      <td>{{ inventory.product.sku }}</td>
-      <td>{{ inventory.product.title }}</td>
+      <td>{{ inventory.productVariationDetails.sku }}</td>
+      <td>{{ inventory.productVariationDetails.title }}</td>
       <td class="currency">{{ inventory.currentPosition }}</td>
       <td class="actions">
         <a [routerLink]="'/inventory/' + inventory.id"><button pButton type="button" label="Detalhes"></button></a>

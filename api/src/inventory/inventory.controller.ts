@@ -5,20 +5,21 @@ import { InventoryService } from './inventory.service';
 import { Inventory } from './inventory.entity';
 import { InventoryMovementDTO } from './inventory-movement.dto';
 import { InventoryMovement } from './inventory-movement.entity';
+import { InventoryDTO } from './inventory.dto';
 
 @Controller('inventory')
 export class InventoryController {
   constructor(private inventoryService: InventoryService) {}
 
   @Get()
-  findAll(
+  async findAll(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
     @Query('sortedBy') sortedBy: string,
     @Query('sortDirectionAscending') sortDirectionAscending: string,
     @Query('query') query: string,
-  ): Promise<Pagination<Inventory>> {
-    return this.inventoryService.paginate({
+  ): Promise<Pagination<InventoryDTO>> {
+    const result = await this.inventoryService.paginate({
       page,
       limit,
       sortedBy,
@@ -30,6 +31,24 @@ export class InventoryController {
         },
       ],
     });
+    const paginatedResults = {
+      ...result,
+      items: result.items.map(inventory => {
+        return {
+          id: inventory.id,
+          productVariationDetails: {
+            parentSku: inventory.productVariation.product.sku,
+            sku: inventory.productVariation.sku,
+            sellingPrice: inventory.productVariation.sellingPrice,
+            title: inventory.productVariation.product.title,
+            description: inventory.productVariation.description,
+            noVariation: inventory.productVariation.product.withoutVariation,
+          },
+          currentPosition: inventory.currentPosition,
+        }
+      }),
+    }
+    return Promise.resolve(paginatedResults);
   }
 
   @Get(':id')

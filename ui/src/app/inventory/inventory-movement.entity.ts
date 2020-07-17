@@ -1,7 +1,7 @@
-import Product from '@app/products/product.entity';
+import { ProductVariation } from '@app/products/product-variation.entity';
 
 export class InventoryMovement {
-  product: Product;
+  productVariation: ProductVariation;
   amount: number;
   description: string;
 }
