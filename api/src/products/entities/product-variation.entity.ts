@@ -1,9 +1,4 @@
-import {
-  Entity,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Product } from './product.entity';
 import { BaseEntity } from '../../util/base-entity';
 
@@ -36,7 +31,7 @@ export class ProductVariation extends BaseEntity {
     product => product.productVariations,
     {
       nullable: false,
-      onDelete: 'CASCADE',
+      cascade: false,
     },
   )
   @JoinColumn({ name: 'product_id' })

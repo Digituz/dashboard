@@ -5,5 +5,40 @@
     "title": "Máscara XYZ",
     "ncm": "1234.56.78",
     "productImages": [{ "imageId": 3, "order": 1 }]
-  }
+  },
+  {
+    "sku": "LFK-00001",
+    "title": "Máscara XYZ",
+    "ncm": "1234.56.78",
+    "productImages": [{ "imageId": 3, "order": 1 }],
+    "productVariations": [
+      {
+        "sku": "LFK-00001-15",
+        "parentSku": "LFK-00001",
+        "description": "Tamanho:15",
+        "sellingPrice": 39.9
+      },
+      {
+        "sku": "LFK-00001-16",
+        "parentSku": "LFK-00001",
+        "description": "Tamanho:16",
+        "sellingPrice": 39.9
+      }
+    ]
+  },
+  {
+    "sku": "LFK-00001",
+    "title": "Máscara XYZ",
+    "ncm": "1234.56.78",
+    "productImages": [{ "imageId": 3, "order": 1 }],
+    "productVariations": [
+      {
+        "sku": "LFK-00001-16",
+        "parentSku": "LFK-00001",
+        "description": "Tamanho:16",
+        "sellingPrice": 39.9
+      }
+    ]
+  },
+  { "sku": "LFK-00001", "title": "Máscara XYZ", "ncm": "1234.56.78" }
 ]

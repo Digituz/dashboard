@@ -77,10 +77,7 @@ export class Product extends BaseEntity {
   @OneToMany(
     type => ProductVariation,
     productVariation => productVariation.product,
-    {
-      cascade: ['insert', 'update', 'remove'],
-      eager: true,
-    },
+    { cascade: false, eager: true },
   )
   productVariations?: ProductVariation[];
 
@@ -100,10 +97,7 @@ export class Product extends BaseEntity {
   @OneToMany(
     type => ProductImage,
     image => image.product,
-    {
-      cascade: false,
-      eager: false,
-    },
+    { cascade: false, eager: false },
   )
   productImages?: ProductImage[];
 

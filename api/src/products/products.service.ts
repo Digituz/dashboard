@@ -124,10 +124,19 @@ export class ProductsService {
       variationsSize: productDTO.productVariations?.length,
       imagesSize: productDTO.productImages?.length,
       withoutVariation: !containsRealVariations,
-      productVariations: variations,
     };
 
     const persistedProduct = await this.productsRepository.save(newProduct);
+
+    // inserting variations
+    const insertVariationJobs = variations.map(variation => {
+      return new Promise(async res => {
+        variation.product = persistedProduct;
+        await this.productVariationsRepository.save(variation);
+        res();
+      });
+    });
+    await Promise.all(insertVariationJobs);
 
     // managing product images
     const imagesIds =
@@ -147,6 +156,40 @@ export class ProductsService {
     return persistedProduct;
   }
 
+  private async updateVariations(
+    product: Product,
+    newVariations: ProductVariation[] = [],
+    oldVariations: ProductVariation[] = [],
+  ) {
+    const variationsToBeInserted = _.differenceBy(
+      newVariations,
+      oldVariations,
+      'sku',
+    );
+    const variationsToBeRemoved = _.differenceBy(
+      oldVariations,
+      newVariations,
+      'sku',
+    );
+
+    if (variationsToBeRemoved.length > 0) {
+      await this.inventoryService.removeInventoryAndMovements(
+        variationsToBeRemoved,
+      );
+      await this.productVariationsRepository.remove(variationsToBeRemoved);
+    }
+
+    if (variationsToBeInserted) {
+      variationsToBeInserted.forEach(variation => {
+        variation.product = product;
+      });
+      const persistedVariations = await this.productVariationsRepository.save(
+        variationsToBeInserted,
+      );
+      await this.createInventories(persistedVariations);
+    }
+  }
+
   async save(productDTO: ProductDTO): Promise<Product> {
     let product = await this.findOneBySku(productDTO.sku);
     if (product) {
@@ -162,56 +205,15 @@ export class ProductsService {
   }
 
   private async updateProduct(
-    product: Product,
+    previousProductVersion: Product,
     productDTO: ProductDTO,
   ): Promise<Product> {
-    const containsRealVariations =
-      productDTO.productVariations?.length > 0 ? true : false;
-    const variations: ProductVariation[] = [];
-
-    // remove variations that are not part of the DTO being passed
-    const existingVariations = product.productVariations;
-    const newVariationsDTO = productDTO.productVariations;
-    const excludedVariations = _.differenceBy(
-      existingVariations,
-      newVariationsDTO,
-      'sku',
-    );
-
-    await this.inventoryService.removeInventoryAndMovements(excludedVariations);
-    await this.productVariationsRepository.remove(excludedVariations);
-
-    // populate array of variations (i.e., non-DTO objects)
-    if (containsRealVariations) {
-      variations.push(
-        ...newVariationsDTO.map(newVariationDTO => {
-          const previousVariaton = existingVariations.find(
-            v => v.sku === newVariationDTO.sku,
-          );
-          return {
-            ...previousVariaton,
-            product: product,
-            sku: newVariationDTO.sku,
-            sellingPrice: newVariationDTO.sellingPrice,
-            description: newVariationDTO.description,
-          };
-        }),
-      );
-    } else {
-      variations.push({
-        sku: productDTO.sku,
-        description: 'Tamanho Único',
-        sellingPrice: productDTO.sellingPrice,
-        noVariation: true,
-      });
-    }
-
     // remove all images
     await this.productImagesRepository
       .createQueryBuilder()
       .delete()
       .from(ProductImage)
-      .where(`product_id = ${product.id}`)
+      .where(`product_id = ${previousProductVersion.id}`)
       .execute();
 
     // recreate images (if needed)
@@ -222,14 +224,14 @@ export class ProductsService {
       const newProductImages = productDTO.productImages.map(productImage => ({
         image: newImages.find(image => image.id === productImage.imageId),
         order: productImage.order,
-        product: product,
+        product: previousProductVersion,
       }));
       await this.productImagesRepository.save(newProductImages);
     }
 
     // instantiate new product object (i.e., non-DTO)
     const updatedProduct: Product = {
-      id: product.id,
+      id: previousProductVersion.id,
       sku: productDTO.sku,
       title: productDTO.title,
       description: productDTO.description,
@@ -241,7 +243,6 @@ export class ProductsService {
       weight: productDTO.weight,
       isActive: productDTO.isActive,
       ncm: productDTO.ncm,
-      productVariations: variations,
       variationsSize: productDTO.productVariations?.length,
       withoutVariation: !productDTO.productVariations ? true : false,
       imagesSize: productDTO.productImages?.length,
@@ -249,12 +250,18 @@ export class ProductsService {
 
     const persistedProduct = await this.productsRepository.save(updatedProduct);
 
-    // create new inventories
-    if (newVariationsDTO && newVariationsDTO.length > 0) {
-      const newVariationsSKUs = newVariationsDTO.map(v => v.sku);
-      await this.createInventories(
-        variations.filter(v => newVariationsSKUs.includes(v.sku)),
-      );
+    // managing variations and inventories
+    const previousVariations = previousProductVersion.productVariations;
+    if (!previousProductVersion.withoutVariation && persistedProduct.withoutVariation) {
+      const newVariations = [{
+        sku: productDTO.sku,
+        description: 'Tamanho Único',
+        sellingPrice: productDTO.sellingPrice,
+        noVariation: true,
+      }];
+      await this.updateVariations(persistedProduct, newVariations, previousVariations);
+    } else if (!persistedProduct.withoutVariation) {
+      await this.updateVariations(persistedProduct, productDTO.productVariations, previousVariations);
     }
 
     return Promise.resolve(persistedProduct);
