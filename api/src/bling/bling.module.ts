@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Module, HttpModule } from '@nestjs/common';
 import { BlingService } from './bling.service';
 
 @Module({
-  providers: [BlingService]
+  imports: [HttpModule],
+  providers: [BlingService],
 })
 export class BlingModule {}
