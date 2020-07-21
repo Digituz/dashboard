@@ -33,7 +33,8 @@ describe('persist sale orders', () => {
       const saleOrderCreated: SaleOrder = response.data;
       expect(saleOrderCreated.id).toBeDefined();
       expect(saleOrderCreated.referenceCode).toBeDefined();
-      expect(saleOrderCreated.referenceCode.length).toBe(36);
+      expect(saleOrderCreated.referenceCode.length).toBe(10);
+      expect(parseInt(saleOrderCreated.referenceCode).toString().length).toBe(10);
       expect(saleOrderCreated.customer.name).toBe(saleOrder.customer.name);
       expect(saleOrderCreated.items.length).toBe(saleOrder.items.length);
 

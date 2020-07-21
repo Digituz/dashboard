@@ -8,11 +8,15 @@ import { PaymentStatus } from '../sales-order/entities/payment-status.enum';
 
 @Injectable()
 export class BlingService {
+  parser = new XMLParser({});
+
   constructor(private httpService: HttpService) {}
 
   async createPurchaseOrder(saleOrder: SaleOrder) {
     if (saleOrder.paymentDetails.paymentStatus !== PaymentStatus.APPROVED) {
-      throw new Error('We should only create purchase orders that have payment approved.');
+      throw new Error(
+        'We should only create purchase orders that have payment approved.',
+      );
     }
 
     const { customer, shipmentDetails, items } = saleOrder;
@@ -90,8 +94,7 @@ export class BlingService {
       });
     }
 
-    const parser = new XMLParser({});
-    const xml = parser.parse({
+    const xml = this.parser.parse({
       pedido: order,
     });
 
@@ -100,6 +103,32 @@ export class BlingService {
       apikey: process.env.BLING_APIKEY,
     };
 
-    return this.httpService.post('https://bling.com.br/Api/v2/pedido/json/', qs.stringify(data));
+    return this.httpService.post(
+      'https://bling.com.br/Api/v2/pedido/json/',
+      qs.stringify(data),
+    );
+  }
+
+  async cancelPurchaseOrder(saleOrder: SaleOrder) {
+    const { paymentStatus } = saleOrder.paymentDetails;
+    if (
+      paymentStatus !== PaymentStatus.CANCELLED &&
+      paymentStatus !== PaymentStatus.REFUNDED
+    ) {
+      throw new Error('Invalid sale order status on cancel operation.');
+    }
+
+    const xml = this.parser.parse({
+      pedido: {
+        idSituacao: 12, // more info: https://ajuda.bling.com.br/hc/pt-br/articles/360046304394-GET-situacao-m%C3%B3dulo-
+      },
+    });
+
+    const data = {
+      xml: xml,
+      apikey: process.env.BLING_APIKEY,
+    };
+
+    return this.httpService.put(`https://bling.com.br/Api/v2/pedido/${saleOrder.referenceCode}/json/`, qs.stringify(data));
   }
 }

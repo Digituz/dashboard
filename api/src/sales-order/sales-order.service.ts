@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { v4 as uuidv4 } from 'uuid';
+import randomize from 'randomatic';
 
 import { SaleOrder } from './entities/sale-order.entity';
-import { Repository, In } from 'typeorm';
+import { Repository } from 'typeorm';
 import { SaleOrderDTO } from './sale-order.dto';
 import { SaleOrderItem } from './entities/sale-order-item.entity';
 import { CustomersService } from '../customers/customers.service';
@@ -82,7 +82,7 @@ export class SalesOrderService {
 
     const saleOrder: SaleOrder = {
       id: saleOrderDTO.id || null,
-      referenceCode: saleOrderDTO.referenceCode || uuidv4(),
+      referenceCode: saleOrderDTO.referenceCode || randomize('0', 10),
       customer,
       items,
       paymentDetails,

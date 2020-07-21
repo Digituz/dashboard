@@ -1,6 +1,5 @@
 [
   {
-    "referenceCode": "abc123",
     "customer": {
       "email": "pingo@spam4.me",
       "name": "Pingo Krebs",
