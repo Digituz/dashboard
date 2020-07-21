@@ -5,12 +5,48 @@ import qs from 'qs';
 
 import { SaleOrder } from '../sales-order/entities/sale-order.entity';
 import { PaymentStatus } from '../sales-order/entities/payment-status.enum';
+import { ProductVariation } from '../products/entities/product-variation.entity';
 
 @Injectable()
 export class BlingService {
   parser = new XMLParser({});
 
   constructor(private httpService: HttpService) {}
+
+  async removeProduct(productVariation: ProductVariation) {
+    const data = {
+      apikey: process.env.BLING_APIKEY,
+    };
+
+    return this.httpService.delete(
+      `https://bling.com.br/Api/v2/produto/${productVariation.sku}`,
+      {
+        data: qs.stringify(data),
+      },
+    );
+  }
+
+  async createOrUpdateProduct(productVariation: ProductVariation) {
+    const xml = this.parser.parse({
+      produto: {
+        codigo: productVariation.sku,
+        descricao: `${productVariation.product.title} ${productVariation.description}`,
+        class_fiscal: productVariation.product.ncm,
+        un: 'Un',
+        vlr_unit: productVariation.sellingPrice,
+      },
+    });
+
+    const data = {
+      xml: xml,
+      apikey: process.env.BLING_APIKEY,
+    };
+
+    return this.httpService.post(
+      'https://bling.com.br/Api/v2/produto/json/',
+      qs.stringify(data),
+    );
+  }
 
   async createPurchaseOrder(saleOrder: SaleOrder) {
     if (saleOrder.paymentDetails.paymentStatus !== PaymentStatus.APPROVED) {
@@ -129,6 +165,9 @@ export class BlingService {
       apikey: process.env.BLING_APIKEY,
     };
 
-    return this.httpService.put(`https://bling.com.br/Api/v2/pedido/${saleOrder.referenceCode}/json/`, qs.stringify(data));
+    return this.httpService.put(
+      `https://bling.com.br/Api/v2/pedido/${saleOrder.referenceCode}/json/`,
+      qs.stringify(data),
+    );
   }
 }
