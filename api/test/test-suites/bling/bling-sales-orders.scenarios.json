@@ -9,14 +9,6 @@
     },
     "items": [
       {
-        "productVariation": {
-          "sku": "A-00",
-          "description": "Sem Variação",
-          "sellingPrice": 40,
-          "product": {
-            "title": "Produto Teste"
-          }
-        },
         "price": 40,
         "discount": 0,
         "amount": 4

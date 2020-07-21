@@ -34,6 +34,7 @@ export class BlingService {
         class_fiscal: productVariation.product.ncm,
         un: 'Un',
         vlr_unit: productVariation.sellingPrice,
+        origem: 0, // origem conforme ICMS (0 = nacional ...) TODO cadastrar origem nos produtos
       },
     });
 

@@ -34,7 +34,7 @@ describe('persist sale orders', () => {
       expect(saleOrderCreated.id).toBeDefined();
       expect(saleOrderCreated.referenceCode).toBeDefined();
       expect(saleOrderCreated.referenceCode.length).toBe(10);
-      expect(parseInt(saleOrderCreated.referenceCode).toString().length).toBe(saleOrderCreated.referenceCode.length);
+      expect(/^\d+$/.test(saleOrderCreated.referenceCode)).toBe(true);
       expect(saleOrderCreated.customer.name).toBe(saleOrder.customer.name);
       expect(saleOrderCreated.items.length).toBe(saleOrder.items.length);
 
