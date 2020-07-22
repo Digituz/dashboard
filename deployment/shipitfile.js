@@ -27,6 +27,7 @@ module.exports = (shipit) => {
   shipit.blTask("digituz:build-api", async () => {
     const commands = [
       `cd ${shipit.releasePath}/api`,
+      "mv ormconfig.env .env",
       "npm install --prooduction",
       "npm run build",
       "npx ts-node ./node_modules/typeorm/cli.js migration:run",
