@@ -7,14 +7,13 @@
     "sqltools.connections": [
         {
             "askForPassword": false,
-            "database": "digituz-dashboard",
+            "database": "digituz",
             "driver": "PostgreSQL",
             "name": "dashboard",
-            "password": "myextremellysecretpassword",
             "port": 5432,
             "previewLimit": 50,
             "server": "localhost",
-            "username": "digituz-dashboard"
+            "username": "brunokrebs"
         }
     ]
 }
