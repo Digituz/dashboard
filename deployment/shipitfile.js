@@ -36,7 +36,8 @@ module.exports = (shipit) => {
       "npm install --prooduction",
       "npm run build",
       "npx ts-node ./node_modules/typeorm/cli.js migration:run",
-      "npm run start:prod",
+      "pm2 start npm --name 'app name' -- run start:prod",
+      "pm2 save",
     ];
     await shipit.remote(commands.join(" && "));
   });
