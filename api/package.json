@@ -95,7 +95,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "git secret hide"
+      "pre-commit": "git secret hide -m"
     }
   }
 }

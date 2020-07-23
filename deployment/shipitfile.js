@@ -25,9 +25,12 @@ module.exports = (shipit) => {
   });
 
   shipit.blTask("digituz:build-api", async () => {
+    await shipit.local("cd ../ && git secret reveal")
+
+    await shipit.copyToRemote('../api/production.env', `${shipit.releasePath}/api`);
+
     const commands = [
       `cd ${shipit.releasePath}`,
-      "git secret reveal",
       `cd ${shipit.releasePath}/api`,
       "mv production.env .env",
       "npm install --prooduction",
