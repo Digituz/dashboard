@@ -26,6 +26,7 @@ module.exports = (shipit) => {
 
   shipit.blTask("digituz:build-api", async () => {
     const commands = [
+      `cd ${shipit.releasePath}`,
       "git secret reveal",
       `cd ${shipit.releasePath}/api`,
       "mv production.env .env",
