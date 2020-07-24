@@ -43,7 +43,19 @@ module.exports = (shipit) => {
     await shipit.remote(commands.join(" && "));
   });
 
+  shipit.blTask("digituz:build-ui", async() => {
+    const commands = [
+      `cd ${shipit.releasePath}/ui`,
+      "npm install",
+      "npm run build",
+      'rm -r /var/www/digituz.com.br/html/*',
+      'cp -r ${shipit.releasePath}/ui/dist/* /var/www/digituz.com.br/html/'
+    ];
+    await shipit.remote(commands.join(" && "));
+  });
+
   shipit.on("published", function () {
     shipit.start("digituz:build-api");
+    shipit.start("digituz:build-ui");
   });
 };
