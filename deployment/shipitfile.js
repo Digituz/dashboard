@@ -25,9 +25,12 @@ module.exports = (shipit) => {
   });
 
   shipit.blTask("digituz:build-api", async () => {
-    await shipit.local("cd ../ && git secret reveal")
+    await shipit.local("cd ../ && git secret reveal");
 
-    await shipit.copyToRemote('../api/production.env', `${shipit.releasePath}/api`);
+    await shipit.copyToRemote(
+      "../api/production.env",
+      `${shipit.releasePath}/api`
+    );
 
     const commands = [
       `cd ${shipit.releasePath}`,
@@ -43,13 +46,13 @@ module.exports = (shipit) => {
     await shipit.remote(commands.join(" && "));
   });
 
-  shipit.blTask("digituz:build-ui", async() => {
+  shipit.blTask("digituz:build-ui", async () => {
     const commands = [
       `cd ${shipit.releasePath}/ui`,
       "npm install",
       "npm run build",
-      'rm -r /var/www/digituz.com.br/html/*',
-      'cp -r ${shipit.releasePath}/ui/dist/* /var/www/digituz.com.br/html/'
+      "rm -rfv /var/www/digituz.com.br/html/*",
+      `cp -r ${shipit.releasePath}/ui/dist/* /var/www/digituz.com.br/html/`,
     ];
     await shipit.remote(commands.join(" && "));
   });
