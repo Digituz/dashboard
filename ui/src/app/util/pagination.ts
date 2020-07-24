@@ -86,12 +86,12 @@ export declare class Pagination<PaginationObject> {
   );
 }
 
-interface QueryParam {
+export interface QueryParam {
   key: string;
   value: string | number | boolean;
 }
 
-interface IDataProvider<DataType> {
+export interface IDataProvider<DataType> {
   loadData(
     pageNumber: number,
     pageSize: number,
