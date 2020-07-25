@@ -45,7 +45,11 @@
       <td>{{ product.sku }}</td>
       <td>{{ product.title }}</td>
       <td class="currency">{{ product.sellingPrice | reais }}</td>
-      <td class="centered">{{ product.productVariations.length || '' }}</td>
+      <td class="centered">
+        <div *ngIf="!product.withoutVariation">
+          {{ product.productVariations.length }}
+        </div>
+      </td>
       <td class="centered">
         <i class="fal fa-check" style="color: #67c167" *ngIf="product.isActive"></i>
         <i class="fal fa-times" style="color: #df6666" *ngIf="!product.isActive"></i>
