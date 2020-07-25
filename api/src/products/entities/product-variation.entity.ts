@@ -1,6 +1,7 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Product } from './product.entity';
 import { BaseEntity } from '../../util/base-entity';
+import { NumericTransformer } from '../../util/numeric-transformer';
 
 @Entity()
 export class ProductVariation extends BaseEntity {
@@ -23,6 +24,7 @@ export class ProductVariation extends BaseEntity {
     name: 'selling_price',
     precision: 2,
     nullable: true,
+    transformer: new NumericTransformer(),
   })
   sellingPrice: number;
 

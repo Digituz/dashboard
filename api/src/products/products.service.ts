@@ -101,6 +101,7 @@ export class ProductsService {
       productDTO.productVariations?.length > 0 ? true : false;
     const variations: ProductVariation[] = productDTO.productVariations || [];
 
+    let sellingPrice;
     if (!containsRealVariations) {
       variations.push({
         sku: productDTO.sku,
@@ -108,6 +109,13 @@ export class ProductsService {
         sellingPrice: productDTO.sellingPrice,
         noVariation: true,
       });
+
+      sellingPrice = productDTO.sellingPrice;
+    } else {
+      const sortedByMinimumPrice = productDTO.productVariations.sort(
+        (p1, p2) => p1.sellingPrice - p2.sellingPrice,
+      );
+      sellingPrice = sortedByMinimumPrice[0].sellingPrice;
     }
 
     const newProduct: Product = {
@@ -116,7 +124,7 @@ export class ProductsService {
       ncm: productDTO.ncm,
       description: productDTO.description,
       productDetails: productDTO.productDetails,
-      sellingPrice: productDTO.sellingPrice,
+      sellingPrice: sellingPrice,
       height: productDTO.height,
       width: productDTO.width,
       length: productDTO.length,
@@ -230,6 +238,16 @@ export class ProductsService {
       await this.productImagesRepository.save(newProductImages);
     }
 
+    let sellingPrice;
+    if (productDTO.productVariations && productDTO.productVariations.length > 0) {
+      const sortedByMinimumPrice = productDTO.productVariations.sort(
+        (p1, p2) => p1.sellingPrice - p2.sellingPrice,
+      );
+      sellingPrice = sortedByMinimumPrice[0].sellingPrice;
+    } else {
+      sellingPrice = productDTO.sellingPrice || null;
+    }
+
     // instantiate new product object (i.e., non-DTO)
     const updatedProduct: Product = {
       id: previousProductVersion.id,
@@ -237,7 +255,7 @@ export class ProductsService {
       title: productDTO.title,
       description: productDTO.description,
       productDetails: productDTO.productDetails,
-      sellingPrice: productDTO.sellingPrice,
+      sellingPrice: sellingPrice,
       height: productDTO.height,
       width: productDTO.width,
       length: productDTO.length,

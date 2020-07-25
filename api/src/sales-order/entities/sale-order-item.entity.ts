@@ -2,6 +2,7 @@ import { BaseEntity } from '../../util/base-entity';
 import { Entity, ManyToOne, Column, JoinColumn } from 'typeorm';
 import { SaleOrder } from './sale-order.entity';
 import { ProductVariation } from '../../products/entities/product-variation.entity';
+import { NumericTransformer } from '../../util/numeric-transformer';
 
 @Entity()
 export class SaleOrderItem extends BaseEntity {
@@ -23,6 +24,7 @@ export class SaleOrderItem extends BaseEntity {
     name: 'price',
     precision: 2,
     nullable: false,
+    transformer: new NumericTransformer(),
   })
   price: number;
 
@@ -30,13 +32,15 @@ export class SaleOrderItem extends BaseEntity {
     name: 'discount',
     precision: 2,
     nullable: false,
+    transformer: new NumericTransformer(),
   })
   discount: number;
 
   @Column({
     name: 'amount',
-    type: 'int',
+    precision: 2,
     nullable: false,
+    transformer: new NumericTransformer(),
   })
   amount: number;
 }

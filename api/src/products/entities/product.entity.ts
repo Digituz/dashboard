@@ -2,6 +2,7 @@ import { Entity, Column, OneToMany } from 'typeorm';
 import { ProductVariation } from './product-variation.entity';
 import { BaseEntity } from '../../util/base-entity';
 import { ProductImage } from './product-image.entity';
+import { NumericTransformer } from '../../util/numeric-transformer';
 
 @Entity()
 export class Product extends BaseEntity {
@@ -37,6 +38,7 @@ export class Product extends BaseEntity {
     name: 'selling_price',
     precision: 2,
     nullable: true,
+    transformer: new NumericTransformer(),
   })
   sellingPrice?: number;
 
@@ -44,6 +46,7 @@ export class Product extends BaseEntity {
     name: 'height',
     precision: 3,
     nullable: true,
+    transformer: new NumericTransformer(),
   })
   height?: number;
 
@@ -51,6 +54,7 @@ export class Product extends BaseEntity {
     name: 'width',
     precision: 3,
     nullable: true,
+    transformer: new NumericTransformer(),
   })
   width?: number;
 
@@ -58,6 +62,7 @@ export class Product extends BaseEntity {
     name: 'length',
     precision: 3,
     nullable: true,
+    transformer: new NumericTransformer(),
   })
   length?: number;
 
@@ -65,6 +70,7 @@ export class Product extends BaseEntity {
     name: 'weight',
     precision: 3,
     nullable: true,
+    transformer: new NumericTransformer(),
   })
   weight?: number;
 

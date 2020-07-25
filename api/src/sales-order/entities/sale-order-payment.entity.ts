@@ -1,12 +1,14 @@
 import { PaymentType } from './payment-type.enum';
 import { PaymentStatus } from './payment-status.enum';
 import { Column } from 'typeorm';
+import { NumericTransformer } from '../../util/numeric-transformer';
 
 export class SaleOrderPayment {
   @Column({
     name: 'discount',
     precision: 2,
     nullable: false,
+    transformer: new NumericTransformer(),
   })
   discount: number;
 
@@ -14,6 +16,7 @@ export class SaleOrderPayment {
     name: 'total',
     precision: 2,
     nullable: false,
+    transformer: new NumericTransformer(),
   })
   total: number;
 

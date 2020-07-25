@@ -53,7 +53,9 @@ describe('persisting products', () => {
   it("should not recreate inventory for variations that don't change", async () => {
     const product = productVersions.find(p => p.productVariations?.length > 1);
 
-    product.productVariations = product.productVariations.sort((pv1, pv2) => (pv1.sku.localeCompare(pv2.sku)));
+    product.productVariations = product.productVariations.sort((pv1, pv2) =>
+      pv1.sku.localeCompare(pv2.sku),
+    );
 
     // create product
     await persistProduct(product);
@@ -93,7 +95,12 @@ describe('persisting products', () => {
     );
 
     // compare ids on creation and on last change
-    const different = differenceWith(rowsOnCreate.slice(0, rowsOnCreate.length - 1), rowsOnUpdateWithChanges, isEqual).length > 0;
+    const different =
+      differenceWith(
+        rowsOnCreate.slice(0, rowsOnCreate.length - 1),
+        rowsOnUpdateWithChanges,
+        isEqual,
+      ).length > 0;
     expect(different).toBe(false);
   });
 
@@ -125,11 +132,25 @@ describe('persisting products', () => {
         productDTO.productVariations.length,
       );
       expect(productCreated.withoutVariation).toBe(false);
+
+      const sortedByMinimumPrice = productDTO.productVariations.sort(
+        (p1, p2) => p1.sellingPrice - p2.sellingPrice,
+      );
+      const minimumPriceVariation = sortedByMinimumPrice[0];
+
+      expect(productCreated.sellingPrice).toBe(
+        minimumPriceVariation.sellingPrice,
+      );
     } else {
       expect(productCreated.productVariations?.length).toBe(1);
       const noVariation = productCreated.productVariations[0];
       expect(noVariation.sku).toBe(productDTO.sku);
       expect(noVariation.noVariation).toBe(true);
+
+      const expectedPrice = productDTO.sellingPrice
+        ? productDTO.sellingPrice
+        : null;
+      expect(productCreated.sellingPrice).toBe(expectedPrice);
     }
 
     if (productDTO.productImages) {

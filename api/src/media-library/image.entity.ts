@@ -1,17 +1,7 @@
-// {
-//     fieldname: 'file',
-//     originalname: 'logo-320.jpg',
-//     encoding: '7bit',
-//     mimetype: 'image/jpeg',
-//     destination: '/tmp/uploaded-files',
-//     filename: '6a54f1865a75a1fe70b69696073a6d78',
-//     path: '/tmp/uploaded-files/6a54f1865a75a1fe70b69696073a6d78',
-//     size: 20343
-// }
-
 import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { BaseEntity } from '../util/base-entity';
 import { Tag } from '../tags/tag.entity';
+import { NumericTransformer } from '../util/numeric-transformer';
 
 @Entity()
 export class Image extends BaseEntity {
@@ -147,6 +137,7 @@ export class Image extends BaseEntity {
     type: 'integer',
     unique: false,
     nullable: false,
+    transformer: new NumericTransformer(),
   })
   aspectRatio: number = 0;
 }

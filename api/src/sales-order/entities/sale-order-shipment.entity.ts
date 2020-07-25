@@ -1,5 +1,6 @@
 import { Column } from 'typeorm';
 import { ShippingType } from './shipping-type.enum';
+import { NumericTransformer } from '../../util/numeric-transformer';
 
 export class SaleOrderShipment {
   @Column({
@@ -14,6 +15,7 @@ export class SaleOrderShipment {
     name: 'shipping_price',
     precision: 2,
     nullable: false,
+    transformer: new NumericTransformer(),
   })
   shippingPrice: number;
 

@@ -38,7 +38,7 @@ export class SalesOrderService {
       const item = saleOrderDTO.items.find(item => item.sku === productVariation.sku);
       const saleOrderItem = {
         price: item.price,
-        discount: item.discount,
+        discount: item.discount || 0,
         amount: item.amount,
         productVariation: productVariation,
       };
@@ -58,10 +58,10 @@ export class SalesOrderService {
       return (item.price - item.discount) * item.amount + currentValue;
     }, 0);
     const total =
-      itemsTotal - saleOrderDTO.discount + saleOrderDTO.shippingPrice;
+      itemsTotal - (saleOrderDTO.discount || 0) + saleOrderDTO.shippingPrice;
 
     const paymentDetails: SaleOrderPayment = {
-      discount: saleOrderDTO.discount,
+      discount: saleOrderDTO.discount || 0,
       total,
       paymentType: PaymentType[saleOrderDTO.paymentType],
       paymentStatus: PaymentStatus[saleOrderDTO.paymentStatus],
