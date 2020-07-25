@@ -34,7 +34,10 @@ export class InventoryService {
         orderColumn = 'pv.sku';
         break;
       case 'currentPosition':
-        orderColumn = 'i.current_position';
+        orderColumn = 'i.currentPosition';
+        break;
+      case 'title':
+        orderColumn = 'p.title';
         break;
       default:
         orderColumn = options.sortedBy;
