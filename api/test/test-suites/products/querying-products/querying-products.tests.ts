@@ -16,6 +16,30 @@ describe('querying products', () => {
     await insertProductFixtures();
   });
 
+  it('should be able to retrieve all products with variations, images, and inventory', async () => {
+    const response = await axios.get(
+      'http://localhost:3000/v1/products/all',
+      authorizedRequest,
+    );
+    expect(response.data.length).toBe(productsFixtures.length);
+    for (const product of response.data) {
+      expect(product.productVariations).toBeDefined();
+
+      const { sku } = product;
+      const productFixture = productsFixtures.find((p) => (p.sku === sku));
+      
+      if (productFixture.productVariations) {
+        expect(product.productVariations.length).toBe(productFixture.productVariations.length);
+      } else {
+        expect(product.productVariations.length).toBe(1);
+      }
+
+      for (const variation of product.productVariations) {
+        expect(variation.currentPosition).toBeDefined();
+      }
+    }
+  });
+
   it('should sort results by title by default', async () => {
     const response = await axios.get(
       'http://localhost:3000/v1/products?page=1&limit=5',

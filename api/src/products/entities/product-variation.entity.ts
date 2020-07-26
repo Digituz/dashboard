@@ -41,4 +41,7 @@ export class ProductVariation extends BaseEntity {
 
   @Column({ name: 'no_variation' })
   noVariation?: boolean = false;
+
+  // transient/helper
+  currentPosition?: number;
 }

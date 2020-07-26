@@ -30,7 +30,23 @@ export class ProductsService {
   ) {}
 
   async findAll(): Promise<Product[]> {
-    return this.productsRepository.find();
+    const products = await this.productsRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.productVariations', 'pv')
+      .leftJoinAndSelect('product.productImages', 'pi')
+      .leftJoinAndSelect('pi.image', 'i')
+      .getMany();
+
+    const productVariations: ProductVariation[] = products.reduce((variations, product) => {
+      variations.push(...product.productVariations);
+      return variations;
+    }, []);
+
+    for (const variation of productVariations) {
+      const inventory = await this.inventoryService.findBySku(variation.sku);
+      variation.currentPosition = inventory.currentPosition;
+    }
+    return Promise.resolve(products);
   }
 
   async findByQuery(query: string): Promise<Product[]> {
@@ -239,7 +255,10 @@ export class ProductsService {
     }
 
     let sellingPrice;
-    if (productDTO.productVariations && productDTO.productVariations.length > 0) {
+    if (
+      productDTO.productVariations &&
+      productDTO.productVariations.length > 0
+    ) {
       const sortedByMinimumPrice = productDTO.productVariations.sort(
         (p1, p2) => p1.sellingPrice - p2.sellingPrice,
       );
