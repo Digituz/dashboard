@@ -8,8 +8,14 @@
             "type": "node",
             "request": "launch",
             "name": "Debug Nest Framework",
-            "args": ["${workspaceFolder}/api/src/main.ts"],
-            "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+            "args": [
+                "${workspaceFolder}/api/src/main.ts"
+            ],
+            "runtimeArgs": [
+                "--nolazy",
+                "-r",
+                "ts-node/register"
+            ],
             "sourceMaps": true,
             "cwd": "${workspaceRoot}/api",
             "protocol": "inspector",
@@ -31,6 +37,12 @@
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",
             "port": 9229
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Step 03",
+            "program": "${workspaceFolder}/bin/src/03-link-images-to-products.js"
         }
     ]
 }
