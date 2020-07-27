@@ -1,6 +1,7 @@
 import { Length, IsNotEmpty  } from 'class-validator';
 import { ProductVariationDTO } from './product-variation.dto';
 import { ProductImageDTO } from './product-image.dto';
+import { ProductCategory } from '../entities/product-category.enum';
 
 export class ProductDTO {
   @IsNotEmpty()
@@ -22,4 +23,5 @@ export class ProductDTO {
   isActive?: boolean;
   productVariations?: ProductVariationDTO[];
   productImages?: ProductImageDTO[];
+  category?: ProductCategory | string;
 }

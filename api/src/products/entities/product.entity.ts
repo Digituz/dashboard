@@ -3,6 +3,7 @@ import { ProductVariation } from './product-variation.entity';
 import { BaseEntity } from '../../util/base-entity';
 import { ProductImage } from './product-image.entity';
 import { NumericTransformer } from '../../util/numeric-transformer';
+import { ProductCategory } from './product-category.enum';
 
 @Entity()
 export class Product extends BaseEntity {
@@ -20,6 +21,14 @@ export class Product extends BaseEntity {
     nullable: false,
   })
   title: string;
+
+  @Column({
+    name: 'category',
+    type: 'varchar',
+    length: 60,
+    nullable: false,
+  })
+  category?: ProductCategory;
 
   @Column({
     type: 'text',

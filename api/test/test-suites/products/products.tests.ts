@@ -111,6 +111,26 @@ describe('persisting products', () => {
     done();
   });
 
+  async function updateAndTestCategory(product, category) {
+    product.category = category;
+    await persistProduct(product);
+    const response = await axios.get(
+      `http://localhost:3000/v1/products/${product.sku}`,
+      authorizedRequest,
+    );
+    const productCreated = response.data;
+    expect(productCreated.category).toBe(category);
+  }
+
+  it('should be able to add and update categories', async () => {
+    // persist product with some category (must be a valid category)
+    const product: ProductDTO = productVersions[0];
+    await updateAndTestCategory(product, 'BERLOQUES');
+    await updateAndTestCategory(product, 'ANEIS');
+    await updateAndTestCategory(product, null);
+    await updateAndTestCategory(product, 'COLARES');
+  });
+
   async function persistProduct(productDTO: ProductDTO) {
     await axios.post(
       'http://localhost:3000/v1/products',

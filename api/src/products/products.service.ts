@@ -14,6 +14,7 @@ import { ImagesService } from '../media-library/images.service';
 import { Inventory } from '../inventory/inventory.entity';
 import { InventoryService } from '../inventory/inventory.service';
 import { ProductVariationDetailsDTO } from './dtos/product-variation-details.dto';
+import { ProductCategory } from './entities/product-category.enum';
 
 @Injectable()
 export class ProductsService {
@@ -149,6 +150,7 @@ export class ProductsService {
       variationsSize: productDTO.productVariations?.length,
       imagesSize: productDTO.productImages?.length,
       withoutVariation: !containsRealVariations,
+      category: productDTO.category ? ProductCategory[productDTO.category] : null,
     };
 
     const persistedProduct = await this.productsRepository.save(newProduct);
@@ -284,6 +286,7 @@ export class ProductsService {
       variationsSize: productDTO.productVariations?.length,
       withoutVariation: !productDTO.productVariations ? true : false,
       imagesSize: productDTO.productImages?.length,
+      category: productDTO.category ? ProductCategory[productDTO.category] : null,
     };
 
     const persistedProduct = await this.productsRepository.save(updatedProduct);
