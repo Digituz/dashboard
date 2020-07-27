@@ -43,6 +43,12 @@
             "request": "launch",
             "name": "Launch Step 03",
             "program": "${workspaceFolder}/bin/src/03-link-images-to-products.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Step 04",
+            "program": "${workspaceFolder}/bin/src/04-feed-product-inventory.js"
         }
     ]
 }

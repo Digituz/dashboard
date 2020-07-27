@@ -10,7 +10,7 @@ const converter = new showdown.Converter();
 const turndownService = new TurndownService();
 
 const BLING_APIKEY =
-  "b147523f150783ffd260159239a1a6271ab233749c4c016c0a9320ad85ff60426824fe07";
+  "50c467c88f5cb2b8021c7f8818a8d4b22df7a80dc29fbe1f533b0ce6c2e1cfaa7581fbc8";
 
 const allProductsExcludingVariations = [];
 
