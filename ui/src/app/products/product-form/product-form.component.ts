@@ -6,6 +6,12 @@ import Product from '../product.entity';
 import { ProductVariation } from '../product-variation.entity';
 import { Image } from '../../media-library/image.entity';
 import { ProductImage } from '../product-image.entity';
+import { ProductCategory } from '../product-category.enum';
+
+interface Category {
+  label: string;
+  value: ProductCategory;
+}
 
 @Component({
   selector: 'app-product-form',
@@ -23,6 +29,16 @@ export class ProductFormComponent implements OnInit {
   isModalVisible: boolean = false;
   showRemoveButton: boolean = false;
   variationBeingEdited: ProductVariation;
+  categories: Category[] = [
+    { label: 'Acessórios', value: ProductCategory.ACESSORIOS },
+    { label: 'Anéis', value: ProductCategory.ANEIS },
+    { label: 'Berloques', value: ProductCategory.BERLOQUES },
+    { label: 'Brincos', value: ProductCategory.BRINCOS },
+    { label: 'Camisetas', value: ProductCategory.CAMISETAS },
+    { label: 'Colares', value: ProductCategory.COLARES },
+    { label: 'Decoração', value: ProductCategory.DECORACAO },
+    { label: 'Pulseiras', value: ProductCategory.PULSEIRAS },
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -62,6 +78,7 @@ export class ProductFormComponent implements OnInit {
       length: [product.length || null],
       weight: [product.weight || null],
       isActive: [product.isActive || false],
+      category: [product.category || false],
     });
     this.productDetails = product.productDetails || '';
     this.loading = false;

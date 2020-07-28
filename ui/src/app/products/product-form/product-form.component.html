@@ -33,7 +33,7 @@
           placeholder="Título do seu produto"
         />
       </div>
-      <div class="p-field p-col-6">
+      <div class="p-field p-col">
         <label for="sellingPrice">Preço de venda</label>
         <input
           id="sellingPrice"
@@ -43,6 +43,10 @@
           pInputText
           placeholder="Preço de venda do produto"
         />
+      </div>
+      <div class="p-field p-col">
+        <label for="sellingPrice">Categoria</label>
+        <p-dropdown [options]="categories" formControlName="category" placeholder="Selecione uma categoria" [showClear]="true"></p-dropdown>
       </div>
       <div class="p-field p-col-6">
         <label for="height">Altura do Produto (m)</label>

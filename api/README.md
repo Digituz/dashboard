@@ -29,7 +29,7 @@ docker run --name digituz-dashboard-postgres \
     -p 5432:5432 \
     -e POSTGRES_DB=digituz-dashboard \
     -e POSTGRES_USER=digituz-dashboard \
-    -e POSTGRES_PASSWORD=myextremellysecretpassword \
+    -e POSTGRES_PASSWORD=123 \
     -d postgres:12.3-alpine
 
 docker stop digituz-dashboard-postgres
