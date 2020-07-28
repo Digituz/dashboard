@@ -5,24 +5,14 @@ const showdown = require("showdown");
 const TurndownService = require("turndown");
 
 const getToken = require("./util/auth");
+const { getProductsFromBling } = require("./util/products");
 
 const converter = new showdown.Converter();
 const turndownService = new TurndownService();
 
-const BLING_APIKEY =
-  "50c467c88f5cb2b8021c7f8818a8d4b22df7a80dc29fbe1f533b0ce6c2e1cfaa7581fbc8";
-
 const allProductsExcludingVariations = [];
 
 const digituzProducts = [];
-
-async function getMoreProducts(page) {
-  const response = await got(
-    `https://bling.com.br/Api/v2/produtos/page=${page}/json/?imagem=S&estoque=S&apikey=${BLING_APIKEY}`
-  );
-  const responseObject = JSON.parse(response.body);
-  return responseObject.retorno.produtos.map((produto) => produto.produto);
-}
 
 async function insertProduct(token, product, delay) {
   if (product.variations) {
@@ -53,18 +43,7 @@ async function insertProduct(token, product, delay) {
 
 (async () => {
   try {
-    let allProductsIncludingVariations = [];
-    const pages = [0, 1, 2, 3, 4];
-    const getProductsJob = pages.map((page) => getMoreProducts(page));
-    const resultsFromJobs = await Promise.all(getProductsJob);
-    resultsFromJobs.forEach((result) =>
-      allProductsIncludingVariations.push(...result)
-    );
-
-    allProductsIncludingVariations = _.uniqBy(
-      allProductsIncludingVariations,
-      (p) => p.codigo
-    );
+    const allProductsIncludingVariations = await getProductsFromBling();
 
     allProductsExcludingVariations.push(
       ...allProductsIncludingVariations.filter((p) => !p.codigoPai)
