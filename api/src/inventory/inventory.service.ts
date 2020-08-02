@@ -101,10 +101,11 @@ export class InventoryService {
       saleOrder: saleOrder,
     });
     const removeMovementJobs = movements.map(movement => {
-      return new Promise(res => {
+      return new Promise(async (res) => {
         const inventory = movement.inventory;
         inventory.currentPosition -= movement.amount;
-        this.inventoryRepository.save(inventory);
+        await this.inventoryRepository.save(inventory);
+        await this.inventoryMovementRepository.delete(movement.id);
         res();
       });
     });

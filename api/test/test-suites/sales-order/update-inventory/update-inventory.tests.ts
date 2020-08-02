@@ -44,6 +44,17 @@ describe('sale orders must update inventory', () => {
     return parseInt(movementTotalRes[0].amount);
   }
 
+  async function getSumOfMovementsBasedOnInventoryMovements(sku: string) {
+    const movementTotalRes = await executeQuery(
+      `select sum(amount) as amount
+        from inventory_movement im
+        left join inventory i on im.inventory_id = i.id
+        left join product_variation pv on pv.id = i.product_variation_id
+        where pv.sku = '${sku}';`,
+    );
+    return parseInt(movementTotalRes[0].amount || 0);
+  }
+
   async function getCurrentPosition(sku: String): Promise<number> {
     const currrentPositionRows = await executeQuery(
       `select current_position
@@ -221,6 +232,15 @@ describe('sale orders must update inventory', () => {
     const positionsAfterUpdate = await getCurrentPositions(order.items);
 
     expect(checkEqual(initialPositions, positionsAfterUpdate)).toBe(true);
+
+    const validateInventoryMovementsJob = initialPositions.map(initialPosition => {
+      return new Promise(async (res) => {
+        const skuPosition = await getSumOfMovementsBasedOnInventoryMovements(initialPosition.sku);
+        expect(skuPosition).toBe(initialPosition.position);
+        res();
+      });
+    });
+    await Promise.all(validateInventoryMovementsJob);
   });
 
   it('should not accept changes to status after being CANCELLED', async () => {
