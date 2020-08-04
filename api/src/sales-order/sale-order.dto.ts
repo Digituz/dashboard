@@ -9,6 +9,7 @@ export class SaleOrderDTO {
     referenceCode?: string;
     customer: Customer;
     items: SaleOrderItemDTO[];
+    total: number;
     discount: number;
     paymentType: PaymentType | string;
     paymentStatus: PaymentStatus | string;
@@ -23,4 +24,7 @@ export class SaleOrderDTO {
     shippingCity: string;
     shippingState: string;
     shippingZipAddress: string;
+    creationDate?: Date;
+    approvalDate?: Date;
+    cancellationDate?: Date;
 }

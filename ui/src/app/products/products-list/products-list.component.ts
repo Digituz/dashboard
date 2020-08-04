@@ -4,7 +4,6 @@ import { ProductsService } from '../products.service';
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import { IDataProvider, Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
-import { FormGroup, FormBuilder } from '@angular/forms';
 
 interface IsActiveOption {
   label: string;
@@ -39,7 +38,7 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
   isActive: IsActiveOption = this.isActiveOptions[0];
   queryParams: QueryParam[] = [];
 
-  constructor(private productsService: ProductsService, private fb: FormBuilder) {}
+  constructor(private productsService: ProductsService) {}
 
   loadData(
     pageNumber: number,

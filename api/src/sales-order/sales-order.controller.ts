@@ -45,12 +45,12 @@ export class SalesOrderController {
 
     return {
       ...results,
-      items: results.items.map((saleOrder) => {
+      items: results.items.map(saleOrder => {
         return {
           id: saleOrder.id,
           referenceCode: saleOrder.referenceCode,
           customer: saleOrder.customer,
-          items: saleOrder.items.map((item) => ({
+          items: saleOrder.items.map(item => ({
             sku: item.productVariation.sku,
             price: item.price,
             discount: item.discount,
@@ -63,16 +63,22 @@ export class SalesOrderController {
           shippingType: saleOrder.shipmentDetails.shippingType,
           shippingPrice: saleOrder.shipmentDetails.shippingPrice,
           customerName: saleOrder.shipmentDetails.customerName,
-          shippingStreetAddress: saleOrder.shipmentDetails.shippingStreetAddress,
+          shippingStreetAddress:
+            saleOrder.shipmentDetails.shippingStreetAddress,
           shippingStreetNumber: saleOrder.shipmentDetails.shippingStreetNumber,
-          shippingStreetNumber2: saleOrder.shipmentDetails.shippingStreetNumber2,
+          shippingStreetNumber2:
+            saleOrder.shipmentDetails.shippingStreetNumber2,
           shippingNeighborhood: saleOrder.shipmentDetails.shippingNeighborhood,
           shippingCity: saleOrder.shipmentDetails.shippingCity,
           shippingState: saleOrder.shipmentDetails.shippingState,
           shippingZipAddress: saleOrder.shipmentDetails.shippingZipAddress,
-        }
-      })
-    }
+          creationDate: saleOrder.creationDate,
+          approvalDate: saleOrder.approvalDate,
+          cancellationDate: saleOrder.cancellationDate,
+          total: saleOrder.paymentDetails.total,
+        };
+      }),
+    };
   }
 
   @Post()
