@@ -54,7 +54,7 @@ export class SaleOrder extends BaseEntity {
 
   @Column({
     name: 'creation_date',
-    type: 'date',
+    type: 'timestamp',
     unique: false,
     nullable: true,
   })
@@ -62,7 +62,7 @@ export class SaleOrder extends BaseEntity {
 
   @Column({
     name: 'approval_date',
-    type: 'date',
+    type: 'timestamp',
     unique: false,
     nullable: true,
   })
@@ -70,7 +70,7 @@ export class SaleOrder extends BaseEntity {
 
   @Column({
     name: 'cancellation_date',
-    type: 'date',
+    type: 'timestamp',
     unique: false,
     nullable: true,
   })

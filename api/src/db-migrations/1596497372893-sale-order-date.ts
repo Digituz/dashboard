@@ -3,13 +3,13 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 export class saleOrderDate1596497372893 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      'alter table sale_order add column creation_date date;',
+      'alter table sale_order add column creation_date timestamp;',
     );
     await queryRunner.query(
-      'alter table sale_order add column approval_date date;',
+      'alter table sale_order add column approval_date timestamp;',
     );
     await queryRunner.query(
-      'alter table sale_order add column cancellation_date date;',
+      'alter table sale_order add column cancellation_date timestamp;',
     );
   }
 

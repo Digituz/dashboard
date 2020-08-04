@@ -17,6 +17,7 @@ import { InventoryService } from '../inventory/inventory.service';
 import { InventoryMovementDTO } from '../inventory/inventory-movement.dto';
 import { IPaginationOpts } from '../pagination/pagination';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
+import { isNullOrUndefined } from '../util/numeric-transformer';
 
 @Injectable()
 export class SalesOrderService {
@@ -44,6 +45,9 @@ export class SalesOrderService {
       case undefined:
       case null:
       case 'date':
+        if (isNullOrUndefined(options.sortDirectionAscending)) {
+          options.sortDirectionAscending = false;
+        }
         orderColumn = 'so.creationDate';
         break;
       case 'name':
