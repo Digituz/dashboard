@@ -16,6 +16,7 @@ describe('update sale order payment status', () => {
   });
 
   async function changeOrderStatus(reference, status) {
+    const beforeRequest = Date.now();
     const response = await axios.post(
       `http://localhost:3000/v1/sales-order/${reference}`,
       { status },
@@ -30,6 +31,16 @@ describe('update sale order payment status', () => {
     expect(saleOrderCreated.id).toBeDefined();
     expect(saleOrderCreated.referenceCode).toBe(reference);
     expect(saleOrderCreated.paymentDetails.paymentStatus).toBe(status);
+
+    if (status === 'CANCELLED') {
+      expect(saleOrderCreated.cancellationDate.toString()).toBeDefined();
+      expect(Date.parse(saleOrderCreated.cancellationDate.toString())).toBeGreaterThan(beforeRequest);
+    }
+
+    if (status === 'APPROVED') {
+      expect(saleOrderCreated.approvalDate.toString()).toBeDefined();
+      expect(Date.parse(saleOrderCreated.approvalDate.toString())).toBeGreaterThan(beforeRequest);
+    }
   }
 
   it('should update sale order payment status', async () => {

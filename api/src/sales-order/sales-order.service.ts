@@ -97,6 +97,10 @@ export class SalesOrderService {
       );
     }
 
+    if (isANewSaleOrder) {
+      saleOrder.creationDate = new Date();
+    }
+
     const persistedSaleOrder = await this.salesOrderRepository.save(saleOrder);
 
     // create the new items
@@ -149,7 +153,12 @@ export class SalesOrderService {
 
     if (status === PaymentStatus.CANCELLED) {
       // we must remove movements when payment gets cancelled
+      saleOrder.cancellationDate = new Date();
       await this.inventoryService.cleanUpMovements(saleOrder);
+    }
+
+    if (status === PaymentStatus.APPROVED) {
+      saleOrder.approvalDate = new Date();
     }
 
     saleOrder.paymentDetails.paymentStatus = status;

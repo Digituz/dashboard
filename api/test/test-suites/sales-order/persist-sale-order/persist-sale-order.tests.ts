@@ -20,6 +20,7 @@ describe('persist sale orders', () => {
 
   saleOrderScenarios.forEach((saleOrder: SaleOrderDTO, idx: number) => {
     it(`should persist sale orders (scenario #${idx})`, async () => {
+      const beforePersisting = Date.now();
       const response = await axios.post(
         'http://localhost:3000/v1/sales-order',
         saleOrder,
@@ -56,6 +57,7 @@ describe('persist sale orders', () => {
       expect(saleOrderCreated.shipmentDetails.shippingCity).toBe(saleOrder.shippingCity);
       expect(saleOrderCreated.shipmentDetails.shippingState).toBe(saleOrder.shippingState);
       expect(saleOrderCreated.shipmentDetails.shippingZipAddress).toBe(saleOrder.shippingZipAddress.replace(/\D/g,''));
+      expect(Date.parse(saleOrderCreated.creationDate.toString())).toBeGreaterThan(beforePersisting);
 
       const countSaleOrderRows = await executeQuery(`select count(1) as total from sale_order;`);
       const numberOfRows = parseInt(countSaleOrderRows[0].total);

@@ -51,4 +51,28 @@ export class SaleOrder extends BaseEntity {
 
   @Column(type => SaleOrderShipment, { prefix: false })
   shipmentDetails: SaleOrderShipment;
+
+  @Column({
+    name: 'creation_date',
+    type: 'date',
+    unique: false,
+    nullable: true,
+  })
+  creationDate?: Date;
+
+  @Column({
+    name: 'approval_date',
+    type: 'date',
+    unique: false,
+    nullable: true,
+  })
+  approvalDate?: Date;
+
+  @Column({
+    name: 'cancellation_date',
+    type: 'date',
+    unique: false,
+    nullable: true,
+  })
+  cancellationDate?: Date;
 }
