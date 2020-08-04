@@ -48,7 +48,7 @@ export class SaleOrderShipment {
     type: 'varchar',
     length: 20,
   })
-  shippingStreetNumber2: string;
+  shippingStreetNumber2?: string;
 
   @Column({
     name: 'shipping_neighborhood',

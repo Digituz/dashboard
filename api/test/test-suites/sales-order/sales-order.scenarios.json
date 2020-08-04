@@ -73,7 +73,108 @@
     "installments": 1,
     "shippingType": "PAC",
     "shippingPrice": 9.90,
-    "customerName": "Pingo Krebs",
+    "customerName": "Cliente Dafiti",
+    "shippingStreetAddress": "Rua São Simão",
+    "shippingStreetNumber": "99",
+    "shippingStreetNumber2": "401",
+    "shippingNeighborhood": "Bom Jesus",
+    "shippingCity": "Porto Alegre",
+    "shippingState": "RS",
+    "shippingZipAddress": "91420-560"
+  },
+  {
+    "customer": {
+        "cpf": "222.222.222-22",
+        "name": "Cliente Dafiti"
+    },
+    "items": [
+      {
+        "sku": "A-02-15",
+        "price": 15,
+        "discount": 5,
+        "amount": 2
+      }
+    ],
+    "discount": 0,
+    "paymentType": "CREDIT_CARD",
+    "paymentStatus": "APPROVED",
+    "installments": 2,
+    "shippingType": "PAC",
+    "shippingPrice": 14.90,
+    "customerName": "Cliente Dafiti",
+    "shippingStreetAddress": "Rua Augusta",
+    "shippingStreetNumber": "514",
+    "shippingNeighborhood": "Consolação",
+    "shippingCity": "São Paulo",
+    "shippingState": "SP",
+    "shippingZipAddress": "01305-000"
+  },
+  {
+    "customer": {
+        "email": "bruno@spam4.me",
+        "name": "Bruno Krebs",
+        "cpf": "009.622.850-48",
+        "mobile": "(51) 98121-8604",
+        "birthday": "1984-10-20T06:00:00.000Z"
+    },
+    "items": [
+      {
+        "sku": "A-06-15",
+        "price": 60,
+        "discount": 10,
+        "amount": 1
+      },
+      {
+        "sku": "A-07-19",
+        "price": 70,
+        "discount": 0,
+        "amount": 2
+      },
+      {
+        "sku": "A-08-21",
+        "price": 80,
+        "discount": 15,
+        "amount": 3
+      }
+    ],
+    "discount": 0,
+    "paymentType": "CREDIT_CARD",
+    "paymentStatus": "APPROVED",
+    "installments": 1,
+    "shippingType": "PAC",
+    "shippingPrice": 14.90,
+    "customerName": "Bruno Krebs",
+    "shippingStreetAddress": "Rua Sacadura Cabral",
+    "shippingStreetNumber": "242",
+    "shippingStreetNumber2": "702",
+    "shippingNeighborhood": "Petrópolis",
+    "shippingCity": "Porto Alegre",
+    "shippingState": "RS",
+    "shippingZipAddress": "90690-420"
+  },
+  {
+    "customer": {
+        "email": "lena@spam4.me",
+        "name": "Maria Helena Vettoretti",
+        "cpf": "651.012.600-10",
+        "mobile": "(51) 99996-2642",
+        "birthday": "1973-01-04T06:00:00.000Z"
+    },
+    "items": [
+      {
+        "sku": "A-03-17",
+        "price": 30,
+        "discount": 5,
+        "amount": 3
+      }
+    ],
+    "discount": 0,
+    "paymentType": "CREDIT_CARD",
+    "paymentStatus": "CANCELLED",
+    "installments": 1,
+    "shippingType": "SEDEX",
+    "shippingPrice": 34.90,
+    "customerName": "Maria Helena Vettoretti",
     "shippingStreetAddress": "Rua São Simão",
     "shippingStreetNumber": "99",
     "shippingStreetNumber2": "401",

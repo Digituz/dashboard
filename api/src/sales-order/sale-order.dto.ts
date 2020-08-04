@@ -18,7 +18,7 @@ export class SaleOrderDTO {
     customerName: string;
     shippingStreetAddress: string;
     shippingStreetNumber: string;
-    shippingStreetNumber2: string;
+    shippingStreetNumber2?: string;
     shippingNeighborhood: string;
     shippingCity: string;
     shippingState: string;
