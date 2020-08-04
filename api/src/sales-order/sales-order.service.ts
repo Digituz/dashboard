@@ -50,11 +50,17 @@ export class SalesOrderService {
         }
         orderColumn = 'so.creationDate';
         break;
+      case 'referenceCode':
+        orderColumn = 'so.referenceCode';
+        break;
       case 'name':
         orderColumn = 'c.name';
         break;
       case 'total':
-        orderColumn = 'so.paymentDetails.total';
+        orderColumn = 'so.total';
+        break;
+      case 'status':
+        orderColumn = 'so.paymentStatus';
         break;
       default:
         orderColumn = options.sortedBy;
