@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import randomize from 'randomatic';
 
 import { SaleOrder } from './entities/sale-order.entity';
-import { Repository } from 'typeorm';
+import { Repository, Brackets } from 'typeorm';
 import { SaleOrderDTO } from './sale-order.dto';
 import { SaleOrderItem } from './entities/sale-order-item.entity';
 import { CustomersService } from '../customers/customers.service';
@@ -15,6 +15,8 @@ import { SaleOrderPayment } from './entities/sale-order-payment.entity';
 import { SaleOrderShipment } from './entities/sale-order-shipment.entity';
 import { InventoryService } from '../inventory/inventory.service';
 import { InventoryMovementDTO } from '../inventory/inventory-movement.dto';
+import { IPaginationOpts } from '../pagination/pagination';
+import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class SalesOrderService {
@@ -28,14 +30,87 @@ export class SalesOrderService {
     private inventoryService: InventoryService,
   ) {}
 
+  async paginate(options: IPaginationOpts): Promise<Pagination<SaleOrder>> {
+    const queryBuilder = this.salesOrderRepository.createQueryBuilder('so');
+
+    queryBuilder
+      .leftJoinAndSelect('so.customer', 'c')
+      .leftJoinAndSelect('so.items', 'i')
+      .leftJoinAndSelect('i.productVariation', 'pv');
+
+    let orderColumn = '';
+
+    switch (options.sortedBy?.trim()) {
+      case undefined:
+      case null:
+      case 'date':
+        orderColumn = 'so.creationDate';
+        break;
+      case 'name':
+        orderColumn = 'c.name';
+        break;
+      case 'total':
+        orderColumn = 'so.paymentDetails.total';
+        break;
+      default:
+        orderColumn = options.sortedBy;
+    }
+
+    options.queryParams
+      .filter(queryParam => {
+        return (
+          queryParam !== null &&
+          queryParam.value !== null &&
+          queryParam.value !== undefined
+        );
+      })
+      .forEach(queryParam => {
+        switch (queryParam.key) {
+          case 'query':
+            queryBuilder.andWhere(
+              new Brackets(qb => {
+                qb.where(`lower(c.name) like :query`, {
+                  query: `%${queryParam.value.toString().toLowerCase()}%`,
+                }).orWhere(`lower(c.cpf) like :query`, {
+                  query: `%${queryParam.value.toString().toLowerCase()}%`,
+                });
+              }),
+            );
+            break;
+        }
+      });
+
+    let sortDirection;
+    let sortNulls;
+    switch (options.sortDirectionAscending) {
+      case undefined:
+      case null:
+      case true:
+        sortDirection = 'ASC';
+        sortNulls = 'NULLS FIRST';
+        break;
+      default:
+        sortDirection = 'DESC';
+        sortNulls = 'NULLS LAST';
+    }
+
+    queryBuilder.orderBy(orderColumn, sortDirection, sortNulls);
+
+    return paginate<SaleOrder>(queryBuilder, options);
+  }
+
   private async buildItemsList(
     saleOrderDTO: SaleOrderDTO,
   ): Promise<SaleOrderItem[]> {
     const skus = saleOrderDTO.items.map(item => item.sku);
-    const productsVariations = await this.productsService.findVariationsBySkus(skus);
+    const productsVariations = await this.productsService.findVariationsBySkus(
+      skus,
+    );
 
     return productsVariations.map(productVariation => {
-      const item = saleOrderDTO.items.find(item => item.sku === productVariation.sku);
+      const item = saleOrderDTO.items.find(
+        item => item.sku === productVariation.sku,
+      );
       const saleOrderItem = {
         price: item.price,
         discount: item.discount || 0,
