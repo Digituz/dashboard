@@ -29,6 +29,7 @@ export class SalesOrderController {
     @Query('sortedBy') sortedBy: string,
     @Query('sortDirectionAscending') sortDirectionAscending: string,
     @Query('query') query: string,
+    @Query('paymentStatus') paymentStatus: string,
   ): Promise<Pagination<SaleOrderDTO>> {
     const results = await this.salesOrderService.paginate({
       page,
@@ -39,6 +40,10 @@ export class SalesOrderController {
         {
           key: 'query',
           value: query,
+        },
+        {
+          key: 'paymentStatus',
+          value: PaymentStatus[paymentStatus],
         },
       ],
     });

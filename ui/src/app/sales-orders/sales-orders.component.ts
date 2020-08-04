@@ -6,7 +6,7 @@ import { SalesOrdersService } from './sales-orders.service';
 import { IDataProvider, Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 
-interface IsApprovedOption {
+interface PaymentStatusOption {
   label: string;
   value: string;
 }
@@ -20,12 +20,13 @@ export class SalesOrdersComponent implements OnInit, IDataProvider<SalesOrderDTO
   @ViewChild('salesOrdersTable') salesOrdersTable: DgzTableComponent<SalesOrderDTO>;
   queryParams: QueryParam[] = [];
   query: string;
-  isApprovedOptions: IsApprovedOption[] = [
+  paymentStatusOptions: PaymentStatusOption[] = [
     { label: "Todas", value: null },
-    { label: "Aprovadas", value: "true" },
-    { label: "Canceladas", value: "false" },
+    { label: "Aprovadas", value: "APPROVED" },
+    { label: "Canceladas", value: "CANCELLED" },
+    { label: "Em Processamento", value: "IN_PROCESS" },
   ];
-  isApproved: IsApprovedOption = this.isApprovedOptions[0];
+  paymentStatus: PaymentStatusOption = this.paymentStatusOptions[0];
 
   constructor(private breadcrumbsService: BreadcrumbsService, private salesOrdersService: SalesOrdersService) {}
 
@@ -45,7 +46,7 @@ export class SalesOrdersComponent implements OnInit, IDataProvider<SalesOrderDTO
   querySalesOrders() {
     this.queryParams = [
       { key: 'query', value: this.query },
-      { key: 'isApproved', value: this.isApproved.value },
+      { key: 'paymentStatus', value: this.paymentStatus.value },
     ];
   }
 }

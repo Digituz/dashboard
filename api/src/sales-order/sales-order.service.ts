@@ -81,6 +81,11 @@ export class SalesOrderService {
               }),
             );
             break;
+          case 'paymentStatus':
+            queryBuilder.andWhere(`so.paymentDetails.paymentStatus = :status`, {
+              status: queryParam.value,
+            });
+            break;
         }
       });
 
