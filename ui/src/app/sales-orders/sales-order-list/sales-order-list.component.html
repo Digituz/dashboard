@@ -1,0 +1,62 @@
+<div class="search-container">
+  <form (ngSubmit)="querySalesOrders()">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <label for="query">Pesquisa</label>
+        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+      <div class="p-field p-col">
+        <label for="isApproved">Aprovadas</label>
+        <p-dropdown
+          name="paymentStatus"
+          [options]="paymentStatusOptions"
+          [(ngModel)]="paymentStatus"
+          optionLabel="label"
+        ></p-dropdown>
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <button pButton type="submit" label="Pesquisar"></button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="feature-header">
+  <p>
+    <label>Controle as suas vendas de forma simplificada.</label>
+  </p>
+  <div class="actions">
+    <a title="Nova Venda" routerLink="/sales-orders/new"><button pButton type="button" label="Nova Venda"></button></a>
+  </div>
+</div>
+<dgz-table #salesOrdersTable [dataProvider]="this" [queryParams]="queryParams">
+  <thead>
+    <tr>
+      <th dgz-sortable="date">Data</th>
+      <th dgz-sortable="referenceCode">Cód. Referência</th>
+      <th dgz-sortable="name">Cliente</th>
+      <th dgz-sortable="total">Total</th>
+      <th dgz-sortable="status">Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let salesOrder of salesOrdersTable.currentData">
+      <td class="centered">{{ salesOrder.creationDate | date:'dd/MM HH:mm' }}</td>
+      <td class="centered">{{ salesOrder.referenceCode }}</td>
+      <td>{{ salesOrder.customerName }}</td>
+      <td class="currency">{{ salesOrder.total | reais }}</td>
+      <td class="centered">
+        <i class="fal fa-check" style="color: #67c167;" *ngIf="salesOrder.paymentStatus === 'APPROVED'" title="Aprovada"></i>
+        <i class="fal fa-times" style="color: #df6666;" *ngIf="salesOrder.paymentStatus === 'CANCELLED'" title="Cancelada"></i>
+        <i class="fal fa-sync" style="color: #aaaaaa;" *ngIf="salesOrder.paymentStatus === 'IN_PROCESS'" title="Em Processamento"></i>
+      </td>
+      <td class="actions">
+        <a [title]="'Venda'" [routerLink]="'/sales-orders/' + salesOrder.id"
+          ><button pButton type="button" label="Editar"></button
+        ></a>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>
