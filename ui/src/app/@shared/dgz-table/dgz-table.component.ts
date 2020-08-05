@@ -47,7 +47,7 @@ export class DgzTableComponent<T> implements OnInit, OnChanges {
       .subscribe((response) => {
         this.currentData = response.items;
         this.totalItems = response.meta.totalItems;
-        this.numberOfPages = Math.floor(this.totalItems / this.pageSize);
+        this.numberOfPages = Math.ceil(this.totalItems / this.pageSize);
         this.loading = false;
       });
   }
