@@ -70,15 +70,22 @@ export class CustomersService {
   }
 
   async findOrCreate(customer: Customer): Promise<Customer> {
-    const existingCustomer = await this.findByCPF(customer.cpf.replace(/\D/g,''));
+    const existingCustomer = await this.findByCPF(
+      customer.cpf.replace(/\D/g, ''),
+    );
     if (existingCustomer) return Promise.resolve(existingCustomer);
     return this.save(customer);
   }
 
   save(customer: Customer): Promise<Customer> {
-    customer.cpf = customer.cpf?.replace(/\D/g,'');
-    customer.phoneNumber = customer.phoneNumber?.replace(/\D/g,'');
-    customer.zipAddress = customer.zipAddress?.replace(/\D/g,'');
+    customer.cpf = customer.cpf?.replace(/\D/g, '');
+    customer.phoneNumber = customer.phoneNumber?.replace(/\D/g, '');
+    customer.zipAddress = customer.zipAddress?.replace(/\D/g, '');
     return this.customerRepository.save(customer);
+  }
+
+  update(id: number, customer: Customer): Promise<Customer> {
+    customer.id = id;
+    return this.save(customer);
   }
 }

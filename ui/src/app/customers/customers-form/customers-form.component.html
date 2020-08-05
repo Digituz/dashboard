@@ -1,1 +1,63 @@
-<p>customers-form works!</p>
+<div class="feature-header">
+  <p>
+    <label>Atualize os dados do cliente no formulário abaixo.</label>
+  </p>
+  <div class="actions">
+    <a routerLink="/customers"><button pButton type="button" class="ui-button-secondary" label="Voltar"></button></a>
+    <button (click)="submitCustomer()" pButton type="button" label="Salvar"></button>
+  </div>
+</div>
+<p-card>
+  <form [formGroup]="formFields" (ngSubmit)="submitCustomer()" *ngIf="!loading">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <label for="cpf">CPF</label>
+        <input id="cpf" name="cpf" type="text" formControlName="cpf" pInputText placeholder="ex. 123.456.789-00" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="name">Nome</label>
+        <input id="name" name="name" type="text" formControlName="name" pInputText placeholder="Ex. Joana Maria da Silva" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="phoneNumber">Telefone</label>
+        <input id="phoneNumber" name="phoneNumber" type="text" formControlName="phoneNumber" pInputText placeholder="Ex. (11) 98765-4321" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" formControlName="email" pInputText placeholder="Ex. joanasilva@gmail.com" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="birthday">Data de Nascimento</label>
+        <input id="birthday" name="birthday" type="text" formControlName="birthday" pInputText placeholder="Ex. 23/11/1970" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="zipAddress">CEP</label>
+        <input id="zipAddress" name="zipAddress" type="text" formControlName="zipAddress" pInputText placeholder="Ex. 01305-000" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="state">UF</label>
+        <input id="state" name="state" type="text" formControlName="state" pInputText placeholder="Ex. SP" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="city">Cidade</label>
+        <input id="city" name="city" type="text" formControlName="city" pInputText placeholder="Ex. São Paulo" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="neighborhood">Bairro</label>
+        <input id="neighborhood" name="neighborhood" type="text" formControlName="neighborhood" pInputText placeholder="Ex. Consolação" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="streetAddress">Logradouro</label>
+        <input id="streetAddress" name="streetAddress" type="text" formControlName="streetAddress" pInputText placeholder="Ex. Rua Augusta" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="streetNumber">Número</label>
+        <input id="streetNumber" name="streetNumber" type="text" formControlName="streetNumber" pInputText placeholder="Ex. 123" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="streetNumber2">Complemento</label>
+        <input id="streetNumber2" name="streetNumber2" type="text" formControlName="streetNumber2" pInputText placeholder="Ex. Apto. 403" />
+      </div>
+    </div>
+  </form>
+</p-card>

@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CustomersService implements IDataProvider<Customer> {
   private CUSTOMERS_ENDPOINT = '/customers';
@@ -37,5 +37,16 @@ export class CustomersService implements IDataProvider<Customer> {
       });
 
     return this.httpClient.get<Pagination<Customer>>(query);
+  }
+
+  public saveCustomer(customer: Customer): Observable<void> {
+    if (customer.id) {
+      return this.httpClient.put<void>(`${this.CUSTOMERS_ENDPOINT}/${customer.id}`, customer);
+    }
+    return this.httpClient.post<void>(this.CUSTOMERS_ENDPOINT, customer);
+  }
+
+  loadCustomer(id: string) {
+    return this.httpClient.get<Customer>(`${this.CUSTOMERS_ENDPOINT}/${id}`);
   }
 }

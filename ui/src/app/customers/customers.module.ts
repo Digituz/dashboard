@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
 import { CustomersRoutingModule } from './customers-routing.module';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [CustomersListComponent, CustomersFormComponent, CustomersComponent],
@@ -17,6 +18,7 @@ import { CustomersRoutingModule } from './customers-routing.module';
     ReactiveFormsModule,
     SharedModule,
     ButtonModule,
+    CardModule,
     SharedModule,
     InputTextModule,
     BreadcrumbsModule,

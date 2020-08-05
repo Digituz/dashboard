@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Param, Put } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Customer } from './customer.entity';
 import { parseBoolean } from '../util/parsers';
@@ -31,12 +31,17 @@ export class CustomersController {
   }
 
   @Get(':id')
-  findOne(@Param('cpf') cpf: string): Promise<Customer> {
-    return this.customersService.findByCPF(cpf);
+  findOne(@Param('id') id: number): Promise<Customer> {
+    return this.customersService.findById(id);
   }
 
   @Post('/')
   async save(@Body() customer: Customer): Promise<Customer> {
     return this.customersService.save(customer);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: number, @Body() customer: Customer): Promise<Customer> {
+    return this.customersService.update(id, customer);
   }
 }
