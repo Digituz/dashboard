@@ -1,1 +1,45 @@
-<p>customers-list works!</p>
+<div class="search-container">
+  <form (ngSubmit)="queryCustomers()">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="query">Pesquisa</label>
+        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <button pButton type="submit" label="Pesquisar"></button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="feature-header">
+  <p>
+    <label>Controle seus clientes de forma simplificada.</label>
+  </p>
+  <div class="actions">
+    <a title="Novo Cliente" routerLink="/customers/new"><button pButton type="button" label="Novo Cliente"></button></a>
+  </div>
+</div>
+<dgz-table #customersTable [dataProvider]="this" [queryParams]="queryParams">
+  <thead>
+    <tr>
+      <th dgz-sortable="name">Nome</th>
+      <th dgz-sortable="city">Cidade</th>
+      <th dgz-sortable="phoneNumber">Telefone</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let customer of customersTable.currentData">
+      <td>{{ customer.name }}</td>
+      <td>{{ customer.city }} / {{customer.state}}</td>
+      <td class="centered">{{ customer.phoneNumber }}</td>
+      <td class="actions">
+        <a [title]="'Cliente'" [routerLink]="'/customers/' + customer.id"
+          ><button pButton type="button" label="Editar"></button
+        ></a>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>
