@@ -32,6 +32,21 @@ export class SalesOrderFormComponent implements OnInit {
     { label: 'Rejeitada', value: PaymentStatus.REJECTED },
   ];
 
+  installments: ComboBoxOption[] = [
+    { label: '1x', value: '1' },
+    { label: '2x', value: '2' },
+    { label: '3x', value: '3' },
+    { label: '4x', value: '4' },
+    { label: '5x', value: '5' },
+    { label: '6x', value: '6' },
+    { label: '7x', value: '7' },
+    { label: '8x', value: '8' },
+    { label: '9x', value: '9' },
+    { label: '10x', value: '10' },
+    { label: '11x', value: '11' },
+    { label: '12x', value: '12' },
+  ];
+
   customers: Customer[] = [];
 
   constructor(
@@ -63,7 +78,7 @@ export class SalesOrderFormComponent implements OnInit {
       discount: [salesOrderDTO.discount || 0],
       paymentType: [salesOrderDTO.paymentType || null],
       paymentStatus: [salesOrderDTO.paymentStatus || null],
-      installments: [salesOrderDTO.installments || 0],
+      installments: [salesOrderDTO.installments || '1'],
       shippingType: [salesOrderDTO.shippingType || null],
       shippingPrice: [salesOrderDTO.shippingPrice || 0],
       customerName: [salesOrderDTO.customerName || ''],

@@ -36,7 +36,7 @@
           </ng-template>
         </p-autoComplete>
       </div>
-      <div class="p-field p-col-4">
+      <div class="p-field p-col-3">
         <label for="total">Total</label>
         <input
           type="text"
@@ -46,7 +46,7 @@
           [value]="salesOrder.total || 0 | reais"
         />
       </div>
-      <div class="p-field p-col-4">
+      <div class="p-field p-col-3">
         <label for="name">Forma de Pagamento</label>
         <p-dropdown
           [options]="paymentTypes"
@@ -55,13 +55,20 @@
           [showClear]="true"
         ></p-dropdown>
       </div>
-      <div class="p-field p-col-4">
+      <div class="p-field p-col-3">
         <label for="name">Status de Pagamento</label>
         <p-dropdown
           [options]="paymentStatus"
           formControlName="paymentStatus"
           placeholder="Selecione um status de pagamento"
           [showClear]="true"
+        ></p-dropdown>
+      </div>
+      <div class="p-field p-col-3">
+        <label for="installments">Parcelas</label>
+        <p-dropdown
+          [options]="installments"
+          formControlName="installments"
         ></p-dropdown>
       </div>
     </div>
