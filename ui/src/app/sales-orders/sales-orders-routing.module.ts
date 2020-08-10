@@ -26,7 +26,7 @@ const routes: Routes = [
           },
         },
         {
-          path: ':id',
+          path: ':referenceCode',
           component: SalesOrderFormComponent,
           data: {
             title: 'Editar Venda',

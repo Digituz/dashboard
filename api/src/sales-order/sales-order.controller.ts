@@ -103,4 +103,9 @@ export class SalesOrderController {
     );
     return Promise.resolve(new SaleOrder(saleOrderPersisted));
   }
+
+  @Get(':referenceCode')
+  async getOne(@Param('referenceCode') referenceCode: string) {
+    return this.salesOrderService.getByReferenceCode(referenceCode);
+  }
 }

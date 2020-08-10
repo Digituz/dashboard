@@ -38,4 +38,8 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
 
     return this.httpClient.get<Pagination<SalesOrderDTO>>(query);
   }
+
+  loadSalesOrder(referenceCode: string): Observable<SalesOrderDTO> {
+    return this.httpClient.get<SalesOrderDTO>(`${this.SALES_ORDERS_ENDPOINT}/${referenceCode}`);
+  }
 }

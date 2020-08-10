@@ -1,1 +1,23 @@
-<p>sales-order-form works!</p>
+<div class="feature-header">
+  <p>
+    <label>Atualize os pedidos de venda através do formulário abaixo.</label>
+  </p>
+  <div class="actions">
+    <a routerLink="/sales-orders"><button pButton type="button" class="ui-button-secondary" label="Voltar"></button></a>
+    <button (click)="submitSalesOrder()" pButton type="button" label="Salvar"></button>
+  </div>
+</div>
+<p-card>
+  <form [formGroup]="formFields" (ngSubmit)="submitSalesOrder()" *ngIf="!loading">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <label for="referenceCode">Referência</label>
+        <input id="referenceCode" name="referenceCode" type="text" formControlName="referenceCode" pInputText placeholder="ex. 123456789" />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="name">Cliente</label>
+        <input type="text" placeholder="Clique para selecionar" pInputText disabled />
+      </div>
+    </div>
+  </form>
+</p-card>

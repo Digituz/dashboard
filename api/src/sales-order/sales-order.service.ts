@@ -255,4 +255,10 @@ export class SalesOrderService {
     await this.salesOrderRepository.save(saleOrder);
     return Promise.resolve(saleOrder);
   }
+
+  async getByReferenceCode(referenceCode: string) {
+    return this.salesOrderRepository.findOne({
+      referenceCode,
+    });
+  }
 }

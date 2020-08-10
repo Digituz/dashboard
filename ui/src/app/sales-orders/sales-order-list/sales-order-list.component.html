@@ -6,7 +6,7 @@
         <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
       </div>
       <div class="p-field p-col">
-        <label for="isApproved">Aprovadas</label>
+        <label for="isApproved">Status Pagamento</label>
         <p-dropdown
           name="paymentStatus"
           [options]="paymentStatusOptions"
@@ -37,7 +37,7 @@
       <th dgz-sortable="referenceCode">Cód. Referência</th>
       <th dgz-sortable="name">Cliente</th>
       <th dgz-sortable="total">Total</th>
-      <th dgz-sortable="status">Status</th>
+      <th dgz-sortable="status">Status Pgto.</th>
       <th></th>
     </tr>
   </thead>
@@ -53,7 +53,7 @@
         <i class="fal fa-sync" style="color: #aaaaaa;" *ngIf="salesOrder.paymentStatus === 'IN_PROCESS'" title="Em Processamento"></i>
       </td>
       <td class="actions">
-        <a [title]="'Venda'" [routerLink]="'/sales-orders/' + salesOrder.id"
+        <a [title]="'Venda'" [routerLink]="'/sales-orders/' + salesOrder.referenceCode"
           ><button pButton type="button" label="Editar"></button
         ></a>
       </td>
