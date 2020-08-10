@@ -39,7 +39,7 @@ describe('inserting customers', () => {
     });
   });
 
-  it.only('should be able to update customers', async () => {
+  it('should be able to update customers', async () => {
     const customer: Customer = {
       cpf: '444.444.444-44',
       name: 'Some Other Customer',

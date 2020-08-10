@@ -9,7 +9,7 @@ export class SaleOrderDTO {
     referenceCode?: string;
     customer: Customer;
     items: SaleOrderItemDTO[];
-    total: number;
+    total?: number;
     discount: number;
     paymentType: PaymentType | string;
     paymentStatus: PaymentStatus | string;
