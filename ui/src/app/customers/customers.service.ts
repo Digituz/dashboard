@@ -12,6 +12,10 @@ export class CustomersService implements IDataProvider<Customer> {
 
   constructor(private httpClient: HttpClient) {}
 
+  findCustomers(query: string): Observable<Pagination<Customer>> {
+    return this.httpClient.get<Pagination<Customer>>(`${this.CUSTOMERS_ENDPOINT}?page=1&limit=10&query=${query}`);
+  }
+
   loadData(
     pageNumber: number,
     pageSize: number,

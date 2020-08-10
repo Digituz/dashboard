@@ -12,11 +12,57 @@
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
         <label for="referenceCode">Referência</label>
-        <input id="referenceCode" name="referenceCode" type="text" formControlName="referenceCode" pInputText placeholder="ex. 123456789" />
+        <input
+          id="referenceCode"
+          name="referenceCode"
+          type="text"
+          formControlName="referenceCode"
+          pInputText
+          placeholder="ex. 123456789"
+        />
       </div>
       <div class="p-field p-col-6">
         <label for="name">Cliente</label>
-        <input type="text" placeholder="Clique para selecionar" pInputText disabled />
+        <p-autoComplete
+          formControlName="customer"
+          [suggestions]="customers"
+          (completeMethod)="search($event)"
+          [multiple]="false"
+          field="name"
+          placeholder="Selecione um cliente"
+        >
+          <ng-template let-customer pTemplate="item">
+            <div>{{ customer.name }} ({{ customer.cpf }})</div>
+          </ng-template>
+        </p-autoComplete>
+      </div>
+      <div class="p-field p-col-4">
+        <label for="total">Total</label>
+        <input
+          type="text"
+          placeholder="Clique para selecionar"
+          pInputText
+          disabled
+          [value]="salesOrder.total || 0 | reais"
+        />
+      </div>
+      <div class="p-field p-col-4">
+        <label for="name">Forma de Pagamento</label>
+        <p-dropdown
+          [options]="paymentTypes"
+          formControlName="paymentType"
+          placeholder="Selecione uma forma de pagamento"
+          [showClear]="true"
+        ></p-dropdown>
+      </div>
+      <div class="p-field p-col-4">
+        <label for="name">Status de Pagamento</label>
+        <p-dropdown
+          [options]="paymentStatus"
+          formControlName="paymentStatus"
+          placeholder="Selecione um status de pagamento"
+          [showClear]="true"
+        ></p-dropdown>
       </div>
     </div>
   </form>

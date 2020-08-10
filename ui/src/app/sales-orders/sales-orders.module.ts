@@ -10,12 +10,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SalesOrderFormComponent } from './sales-order-form/sales-order-form.component';
 import { SalesOrderListComponent } from './sales-order-list/sales-order-list.component';
 import { CardModule } from 'primeng/card';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [SalesOrdersComponent, SalesOrderFormComponent, SalesOrderListComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,
+    AutoCompleteModule,
     ButtonModule,
     CardModule,
     DropdownModule,
