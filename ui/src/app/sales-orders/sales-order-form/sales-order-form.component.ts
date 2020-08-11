@@ -154,9 +154,11 @@ export class SalesOrderFormComponent implements OnInit {
     itemsTotal -= saleOrderDiscount;
 
     const shippingPrice = this.formFields.get('shippingPrice').value || 0;
-    itemsTotal -= shippingPrice;
+    itemsTotal += shippingPrice;
 
-    this.salesOrder.total = itemsTotal;
+    this.formFields.patchValue({
+      total: itemsTotal,
+    });
   }
 
   createItem(): FormGroup {
