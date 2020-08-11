@@ -11,6 +11,7 @@ import { SalesOrderFormComponent } from './sales-order-form/sales-order-form.com
 import { SalesOrderListComponent } from './sales-order-list/sales-order-list.component';
 import { CardModule } from 'primeng/card';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [SalesOrdersComponent, SalesOrderFormComponent, SalesOrderListComponent],
@@ -22,6 +23,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     CardModule,
     DropdownModule,
     InputTextModule,
+    InputNumberModule,
     SharedModule,
     CommonModule,
     SalesOrdersRoutingModule,

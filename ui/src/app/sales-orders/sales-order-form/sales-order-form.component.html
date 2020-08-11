@@ -38,7 +38,18 @@
       </div>
       <div class="p-field p-col-3">
         <label for="total">Total</label>
-        <input type="text" pInputText disabled [value]="salesOrder.total || 0 | reais" />
+        <p-inputNumber
+          id="total"
+          name="total"
+          formControlName="total"
+          currency="BRL"
+          mode="currency"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          disabled="true"
+          placeholder="ex. R$ 10,00"
+        ></p-inputNumber>
       </div>
       <div class="p-field p-col-3">
         <label for="name">Forma de Pagamento</label>
@@ -63,15 +74,19 @@
         <p-dropdown [options]="installments" formControlName="installments"></p-dropdown>
       </div>
       <div class="p-field p-col-3">
-        <label for="referenceCode">Desconto (R$)</label>
-        <input
+        <label for="discount">Desconto (R$)</label>
+        <p-inputNumber
+          id="discount"
           name="discount"
-          type="number"
           formControlName="discount"
-          pInputText
-          placeholder="ex. R$ 10,00"
+          currency="BRL"
+          mode="currency"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
           (change)="updatePrice()"
-        />
+          placeholder="ex. R$ 10,00"
+        ></p-inputNumber>
       </div>
     </div>
   </form>
@@ -152,6 +167,79 @@
               (click)="removeItem(i)"
             ></button>
           </div>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>
+<div style="margin-top: 20px;">
+  <p-card>
+    <div class="product-variation-description">
+      <p>Informe os detalhes sobre a entrega.</p>
+    </div>
+    <form [formGroup]="formFields" (ngSubmit)="submitSalesOrder()" *ngIf="!loading">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-3">
+          <label for="name">Forma de Envio</label>
+          <p-dropdown
+            [options]="shippingTypes"
+            formControlName="shippingType"
+            placeholder="Selecione uma forma de envio"
+            [showClear]="true"
+          ></p-dropdown>
+        </div>
+        <div class="p-field p-col-3">
+          <label for="name">Frete (R$)</label>
+          <p-inputNumber
+            formControlName="shippingPrice"
+            currency="BRL"
+            mode="currency"
+            locale="pt-BR"
+            [minFractionDigits]="2"
+            [maxFractionDigits]="2"
+          ></p-inputNumber>
+        </div>
+        <div class="p-field p-col-6">
+          <label for="referenceCode">Destinatário</label>
+          <input
+            name="customerName"
+            type="text"
+            formControlName="customerName"
+            pInputText
+            placeholder="ex. Maria da Silva"
+          />
+        </div>
+        <div class="p-field p-col-6">
+          <label for="referenceCode">Logradouro</label>
+          <input
+            name="shippingStreetAddress"
+            type="text"
+            formControlName="shippingStreetAddress"
+            pInputText
+            placeholder="ex. Av. Paulista"
+          />
+        </div>
+        <div class="p-field p-col-3">
+          <label for="name">Número</label>
+          <input
+            name="shippingStreetNumber"
+            type="text"
+            formControlName="shippingStreetNumber"
+            pInputText
+            placeholder="ex. 99"
+            (change)="updatePrice()"
+          />
+        </div>
+        <div class="p-field p-col-3">
+          <label for="name">Complemento</label>
+          <input
+            name="shippingStreetNumber2"
+            type="text"
+            formControlName="shippingStreetNumber2"
+            pInputText
+            placeholder="ex. Bloco B, 403"
+            (change)="updatePrice()"
+          />
         </div>
       </div>
     </form>

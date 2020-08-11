@@ -10,6 +10,7 @@ import { Customer } from '@app/customers/customer.entity';
 import { CustomersService } from '@app/customers/customers.service';
 import { ProductsService } from '@app/products/products.service';
 import { ProductVariationDetailsDTO } from '@app/products/product-variation-details.dto';
+import { ShippingType } from '../shipping-type.enum';
 
 @Component({
   selector: 'app-sales-order-form',
@@ -49,6 +50,12 @@ export class SalesOrderFormComponent implements OnInit {
     { label: '10x', value: '10' },
     { label: '11x', value: '11' },
     { label: '12x', value: '12' },
+  ];
+
+  shippingTypes: ComboBoxOption[] = [
+    { label: 'PAC', value: `Correios - ${ShippingType.PAC}` },
+    { label: 'SEDEX', value: `Correios - ${ShippingType.SEDEX}` },
+    { label: 'Motoboy', value: ShippingType.SAME_DAY },
   ];
 
   customers: Customer[] = [];
@@ -133,6 +140,9 @@ export class SalesOrderFormComponent implements OnInit {
 
     const saleOrderDiscount = this.formFields.get('discount').value || 0;
     itemsTotal -= saleOrderDiscount;
+
+    const shippingPrice = this.formFields.get('shippingPrice').value || 0;
+    itemsTotal -= shippingPrice;
 
     this.salesOrder.total = itemsTotal;
   }
