@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { SalesOrderDTO } from '../sales-order.dto';
 import { SalesOrdersService } from '../sales-orders.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,6 +8,8 @@ import { PaymentStatus } from '../payment-status.enum';
 import { PaymentType } from '../payment-type.enum';
 import { Customer } from '@app/customers/customer.entity';
 import { CustomersService } from '@app/customers/customers.service';
+import { ProductsService } from '@app/products/products.service';
+import { ProductVariationDetailsDTO } from '@app/products/product-variation-details.dto';
 
 @Component({
   selector: 'app-sales-order-form',
@@ -18,6 +20,8 @@ export class SalesOrderFormComponent implements OnInit {
   formFields: FormGroup;
   salesOrder: SalesOrderDTO;
   loading: boolean = true;
+  productVariations: ProductVariationDetailsDTO[] = [];
+  total: number;
 
   paymentTypes: ComboBoxOption[] = [
     { label: 'Boleto', value: PaymentType.BANK_SLIP },
@@ -52,6 +56,7 @@ export class SalesOrderFormComponent implements OnInit {
   constructor(
     private customersService: CustomersService,
     private salesOrdersService: SalesOrdersService,
+    private productsService: ProductsService,
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute
@@ -93,8 +98,53 @@ export class SalesOrderFormComponent implements OnInit {
       approvalDate: [salesOrderDTO.approvalDate || null],
       cancellationDate: [salesOrderDTO.cancellationDate || null],
       total: [salesOrderDTO.total || 0],
+      items: this.fb.array([this.createItem()]),
     });
     this.loading = false;
+  }
+
+  addItem(): void {
+    const items = this.formFields.get('items') as FormArray;
+    items.push(this.createItem());
+  }
+
+  removeItem(index: number) {
+    const items = this.formFields.get('items') as FormArray;
+    items.removeAt(index);
+  }
+
+  selectProductVariation(value: ProductVariationDetailsDTO, index: number) {
+    const items = this.formFields.get('items') as FormArray;
+    const formGroup = items.at(index) as FormGroup;
+    formGroup.patchValue({ price: value.sellingPrice });
+    this.updatePrice();
+  }
+
+  updatePrice() {
+    const items = this.formFields.get('items') as FormArray;
+    let itemsTotal = 0;
+    for (let index = 0; index < items.length; index++) {
+      const formGroup = items.at(index) as FormGroup;
+      const itemValue = formGroup.get('price').value;
+      const itemDiscount = formGroup.get('discount').value;
+      const itemAmount = formGroup.get('amount').value;
+      itemsTotal += (itemValue - itemDiscount) * itemAmount;
+    }
+
+    this.salesOrder.total = itemsTotal;
+  }
+
+  createItem(): FormGroup {
+    return this.fb.group({
+      productVariation: null,
+      price: 0,
+      discount: 0,
+      amount: 1,
+    });
+  }
+
+  get items(): FormArray {
+    return this.formFields.get('items') as FormArray;
   }
 
   submitSalesOrder() {}
@@ -102,6 +152,12 @@ export class SalesOrderFormComponent implements OnInit {
   search(event: any) {
     this.customersService.findCustomers(event.query).subscribe((results) => {
       this.customers = results.items;
+    });
+  }
+
+  searchProductVariations(event: any) {
+    this.productsService.findProductVariations(event.query).subscribe((results) => {
+      this.productVariations = results;
     });
   }
 }

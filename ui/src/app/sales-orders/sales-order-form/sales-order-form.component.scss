@@ -1,0 +1,10 @@
+.product-variation-description {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+
+  p {
+    line-height: 30px;
+    flex-grow: 2;
+  }
+}

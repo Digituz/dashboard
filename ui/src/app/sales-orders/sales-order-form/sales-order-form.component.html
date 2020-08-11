@@ -38,13 +38,7 @@
       </div>
       <div class="p-field p-col-3">
         <label for="total">Total</label>
-        <input
-          type="text"
-          placeholder="Clique para selecionar"
-          pInputText
-          disabled
-          [value]="salesOrder.total || 0 | reais"
-        />
+        <input type="text" pInputText disabled [value]="salesOrder.total || 0 | reais" />
       </div>
       <div class="p-field p-col-3">
         <label for="name">Forma de Pagamento</label>
@@ -66,11 +60,91 @@
       </div>
       <div class="p-field p-col-3">
         <label for="installments">Parcelas</label>
-        <p-dropdown
-          [options]="installments"
-          formControlName="installments"
-        ></p-dropdown>
+        <p-dropdown [options]="installments" formControlName="installments"></p-dropdown>
       </div>
     </div>
   </form>
 </p-card>
+<div style="margin-top: 20px;">
+  <p-card>
+    <div class="product-variation-description">
+      <p>Selecione os produtos a serem vendidos.</p>
+      <button pButton label="Adicionar Item" (click)="addItem()"></button>
+    </div>
+    <form [formGroup]="formFields" (ngSubmit)="submitSalesOrder()" *ngIf="!loading">
+      <div class="p-fluid p-grid">
+        <div class="p-col-5">
+          <label>Produto</label>
+        </div>
+        <div class="p-col-2">
+          <label>Preço</label>
+        </div>
+        <div class="p-col-2">
+          <label>Desconto</label>
+        </div>
+        <div class="p-col-2">
+          <label>Quantidade</label>
+        </div>
+      </div>
+      <div formArrayName="items" *ngFor="let item of items.controls; let i = index">
+        <div [formGroupName]="i" class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col-5">
+            <p-autoComplete
+              formControlName="productVariation"
+              [suggestions]="productVariations"
+              (completeMethod)="searchProductVariations($event)"
+              (onSelect)="selectProductVariation($event, i)"
+              [multiple]="false"
+              field="title"
+              placeholder="Selecione um produto"
+            >
+              <ng-template let-productVariation pTemplate="item">
+                <div>{{ productVariation.sku }} - {{ productVariation.title }}</div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+          <div class="p-field p-col-2">
+            <input
+              type="text"
+              placeholder="Ex. R$ 119,90"
+              pInputText
+              disabled
+              [value]="item.get('price').value || 0 | reais"
+            />
+          </div>
+          <div class="p-field p-col-2">
+            <input
+              [name]="'discount' + i"
+              type="number"
+              formControlName="discount"
+              pInputText
+              placeholder="ex. R$ 10,00"
+              (blur)="updatePrice()"
+              (change)="updatePrice()"
+            />
+          </div>
+          <div class="p-field p-col-2">
+            <input
+              [name]="'amount' + i"
+              type="number"
+              formControlName="amount"
+              pInputText
+              placeholder="ex. 3"
+              (blur)="updatePrice()"
+              (change)="updatePrice()"
+            />
+          </div>
+          <div class="p-field p-col-1">
+            <button
+              pButton
+              label="Remover"
+              class="ui-button-danger"
+              style="width: 100%;"
+              (click)="removeItem(i)"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>
