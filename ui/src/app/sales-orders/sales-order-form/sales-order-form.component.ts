@@ -1,6 +1,6 @@
 import * as cep from 'cep-promise';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { SalesOrderDTO } from '../sales-order.dto';
 import { SalesOrdersService } from '../sales-orders.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -20,6 +20,7 @@ import { ShippingType } from '../shipping-type.enum';
 })
 export class SalesOrderFormComponent implements OnInit {
   formFields: FormGroup;
+  formSubmitted: boolean = false;
   salesOrder: SalesOrderDTO;
   loading: boolean = true;
   productVariations: ProductVariationDetailsDTO[] = [];
@@ -86,27 +87,27 @@ export class SalesOrderFormComponent implements OnInit {
 
   private configureFormFields(salesOrderDTO: SalesOrderDTO) {
     this.formFields = this.fb.group({
-      referenceCode: [salesOrderDTO.referenceCode || ''],
-      customer: [salesOrderDTO.customer || null],
+      referenceCode: [salesOrderDTO.referenceCode || '', [Validators.required, Validators.minLength(1), Validators.maxLength(36)]],
+      customer: [salesOrderDTO.customer || null, [Validators.required]],
       discount: [salesOrderDTO.discount || 0],
-      paymentType: [salesOrderDTO.paymentType || null],
-      paymentStatus: [salesOrderDTO.paymentStatus || null],
-      installments: [salesOrderDTO.installments || '1'],
-      shippingType: [salesOrderDTO.shippingType || null],
-      shippingPrice: [salesOrderDTO.shippingPrice || 0],
-      customerName: [salesOrderDTO.customerName || ''],
-      shippingStreetAddress: [salesOrderDTO.shippingStreetAddress || ''],
-      shippingStreetNumber: [salesOrderDTO.shippingStreetNumber || ''],
+      paymentType: [salesOrderDTO.paymentType || null, [Validators.required]],
+      paymentStatus: [salesOrderDTO.paymentStatus || null, [Validators.required]],
+      installments: [salesOrderDTO.installments || '1', [Validators.required]],
+      shippingType: [salesOrderDTO.shippingType || null, [Validators.required]],
+      shippingPrice: [salesOrderDTO.shippingPrice || 0, [Validators.required]],
+      customerName: [salesOrderDTO.customerName || '', [Validators.required]],
+      shippingStreetAddress: [salesOrderDTO.shippingStreetAddress || '', [Validators.required]],
+      shippingStreetNumber: [salesOrderDTO.shippingStreetNumber || '', [Validators.required]],
       shippingStreetNumber2: [salesOrderDTO.shippingStreetNumber2 || ''],
-      shippingNeighborhood: [salesOrderDTO.shippingNeighborhood || ''],
-      shippingCity: [salesOrderDTO.shippingCity || ''],
-      shippingState: [salesOrderDTO.shippingState || ''],
-      shippingZipAddress: [salesOrderDTO.shippingZipAddress || ''],
+      shippingNeighborhood: [salesOrderDTO.shippingNeighborhood || '', [Validators.required]],
+      shippingCity: [salesOrderDTO.shippingCity || '', [Validators.required]],
+      shippingState: [salesOrderDTO.shippingState || '', [Validators.required]],
+      shippingZipAddress: [salesOrderDTO.shippingZipAddress || '', [Validators.required]],
       creationDate: [salesOrderDTO.creationDate || null],
       approvalDate: [salesOrderDTO.approvalDate || null],
       cancellationDate: [salesOrderDTO.cancellationDate || null],
       total: [salesOrderDTO.total || 0],
-      items: this.fb.array([this.createItem()]),
+      items: this.fb.array([this.createItem()], [Validators.required, Validators.minLength(1)]),
     });
     this.loading = false;
   }
@@ -163,10 +164,10 @@ export class SalesOrderFormComponent implements OnInit {
 
   createItem(): FormGroup {
     return this.fb.group({
-      productVariation: null,
-      price: 0,
-      discount: 0,
-      amount: 1,
+      productVariation: [null, [Validators.required]],
+      price: [0, [Validators.required]],
+      discount: [0, [Validators.required]],
+      amount: [1, [Validators.required]],
     });
   }
 
@@ -174,7 +175,18 @@ export class SalesOrderFormComponent implements OnInit {
     return this.formFields.get('items') as FormArray;
   }
 
-  submitSalesOrder() {}
+  submitSalesOrder() {
+    this.formSubmitted = true;
+
+    if (!this.formFields.valid) {
+      return;
+    }
+
+    const saleOrder = this.formFields.value;
+    this.salesOrdersService.save(saleOrder).subscribe(() => {
+      this.router.navigate(['/sales-orders']);
+    });
+  }
 
   search(event: any) {
     this.customersService.findCustomers(event.query).subscribe((results) => {

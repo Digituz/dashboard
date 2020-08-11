@@ -42,4 +42,8 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
   loadSalesOrder(referenceCode: string): Observable<SalesOrderDTO> {
     return this.httpClient.get<SalesOrderDTO>(`${this.SALES_ORDERS_ENDPOINT}/${referenceCode}`);
   }
+
+  save(saleOrder: SalesOrderDTO): Observable<void> {
+    return this.httpClient.post<void>(this.SALES_ORDERS_ENDPOINT, saleOrder);
+  }
 }

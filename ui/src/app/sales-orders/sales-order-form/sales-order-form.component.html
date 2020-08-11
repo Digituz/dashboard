@@ -1,3 +1,10 @@
+<div class="form-error" *ngIf="formSubmitted && !formFields.valid">
+  <p>Por favor, verifique:</p>
+  <ul>
+    <li>os campos obrigatórios (com asterísco)</li>
+    <li>e se você adicionou um ou mais itens ao pedido.</li>
+  </ul>
+</div>
 <div class="feature-header">
   <p>
     <label>Atualize o pedido de venda através do formulário abaixo.</label>
@@ -11,7 +18,7 @@
   <form [formGroup]="formFields" (ngSubmit)="submitSalesOrder()" *ngIf="!loading">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
-        <label for="name">Cliente</label>
+        <label class="input-label" for="name">Cliente <i class="fal fa-asterisk"></i></label>
         <p-autoComplete
           id="customer"
           name="customer"
@@ -28,7 +35,7 @@
         </p-autoComplete>
       </div>
       <div class="p-field p-col-3">
-        <label for="referenceCode">Referência</label>
+        <label class="input-label" for="referenceCode">Referência <i class="fal fa-asterisk"></i></label>
         <input
           id="referenceCode"
           name="referenceCode"
@@ -36,6 +43,8 @@
           formControlName="referenceCode"
           pInputText
           placeholder="ex. 123456789"
+          required="true"
+          maxlength="36"
         />
       </div>
       <div class="p-field p-col-3">
@@ -54,7 +63,7 @@
         ></p-inputNumber>
       </div>
       <div class="p-field p-col-3">
-        <label for="paymentType">Forma de Pagamento</label>
+        <label class="input-label" for="paymentType">Forma de Pagamento <i class="fal fa-asterisk"></i></label>
         <p-dropdown
           id="paymentType"
           name="paymentType"
@@ -65,7 +74,7 @@
         ></p-dropdown>
       </div>
       <div class="p-field p-col-3">
-        <label for="paymentStatus">Status de Pagamento</label>
+        <label class="input-label" for="paymentStatus">Status de Pagamento <i class="fal fa-asterisk"></i></label>
         <p-dropdown
           id="paymentStatus"
           name="paymentStatus"
@@ -76,11 +85,11 @@
         ></p-dropdown>
       </div>
       <div class="p-field p-col-3">
-        <label for="installments">Parcelas</label>
+        <label class="input-label" for="installments">Parcelas <i class="fal fa-asterisk"></i></label>
         <p-dropdown [options]="installments" formControlName="installments"></p-dropdown>
       </div>
       <div class="p-field p-col-3">
-        <label for="discount">Desconto (R$)</label>
+        <label class="input-label" for="discount">Desconto (R$) <i class="fal fa-asterisk"></i></label>
         <p-inputNumber
           id="discount"
           name="discount"
@@ -90,7 +99,7 @@
           locale="pt-BR"
           [minFractionDigits]="2"
           [maxFractionDigits]="2"
-          (change)="updatePrice()"
+          (onBlur)="updatePrice()"
           placeholder="ex. R$ 10,00"
         ></p-inputNumber>
       </div>
@@ -106,16 +115,16 @@
     <form [formGroup]="formFields" (ngSubmit)="submitSalesOrder()" *ngIf="!loading">
       <div class="p-fluid p-grid">
         <div class="p-col-5">
-          <label>Produto</label>
+          <label class="input-label">Produto <i class="fal fa-asterisk"></i></label>
         </div>
         <div class="p-col-2">
-          <label>Preço</label>
+          <label class="input-label">Preço <i class="fal fa-asterisk"></i></label>
         </div>
         <div class="p-col-2">
-          <label>Desconto (R$)</label>
+          <label class="input-label">Desconto (R$) <i class="fal fa-asterisk"></i></label>
         </div>
         <div class="p-col-2">
-          <label>Quantidade</label>
+          <label class="input-label">Quantidade <i class="fal fa-asterisk"></i></label>
         </div>
       </div>
       <div formArrayName="items" *ngFor="let item of items.controls; let i = index">
@@ -145,14 +154,18 @@
             />
           </div>
           <div class="p-field p-col-2">
-            <input
+            <p-inputNumber
+              [id]="'discount' + i"
               [name]="'discount' + i"
-              type="number"
               formControlName="discount"
-              pInputText
+              currency="BRL"
+              mode="currency"
+              locale="pt-BR"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              (onBlur)="updatePrice()"
               placeholder="ex. R$ 10,00"
-              (change)="updatePrice()"
-            />
+            ></p-inputNumber>
           </div>
           <div class="p-field p-col-2">
             <input
@@ -186,7 +199,7 @@
     <form [formGroup]="formFields" (ngSubmit)="submitSalesOrder()" *ngIf="!loading">
       <div class="p-fluid p-formgrid p-grid">
         <div class="p-field p-col-3">
-          <label for="name">Forma de Envio</label>
+          <label class="input-label" for="name">Forma de Envio <i class="fal fa-asterisk"></i></label>
           <p-dropdown
             id="name"
             name="name"
@@ -197,7 +210,7 @@
           ></p-dropdown>
         </div>
         <div class="p-field p-col-3">
-          <label for="shippingPrice">Frete (R$)</label>
+          <label class="input-label" for="shippingPrice">Frete (R$) <i class="fal fa-asterisk"></i></label>
           <p-inputNumber
             id="shippingPrice"
             name="shippingPrice"
@@ -211,7 +224,7 @@
           ></p-inputNumber>
         </div>
         <div class="p-field p-col-6">
-          <label for="customerName">Destinatário</label>
+          <label class="input-label" for="customerName">Destinatário <i class="fal fa-asterisk"></i></label>
           <input
             name="customerName"
             type="text"
@@ -221,7 +234,7 @@
           />
         </div>
         <div class="p-field p-col-2">
-          <label for="shippingZipAddress">CEP</label>
+          <label class="input-label" for="shippingZipAddress">CEP <i class="fal fa-asterisk"></i></label>
           <div class="ui-inputgroup">
             <input
               type="text"
@@ -234,7 +247,7 @@
           </div>
         </div>
         <div class="p-field p-col-2">
-          <label for="shippingCity">Cidade</label>
+          <label class="input-label" for="shippingCity">Cidade <i class="fal fa-asterisk"></i></label>
           <input
             name="shippingCity"
             type="text"
@@ -244,11 +257,11 @@
           />
         </div>
         <div class="p-field p-col-2">
-          <label for="shippingState">Estado</label>
+          <label class="input-label" for="shippingState">Estado <i class="fal fa-asterisk"></i></label>
           <input name="shippingState" type="text" formControlName="shippingState" pInputText placeholder="ex. SP" />
         </div>
         <div class="p-field p-col-6">
-          <label for="shippingStreetAddress">Logradouro</label>
+          <label class="input-label" for="shippingStreetAddress">Logradouro <i class="fal fa-asterisk"></i></label>
           <input
             name="shippingStreetAddress"
             type="text"
@@ -258,7 +271,7 @@
           />
         </div>
         <div class="p-field p-col-2">
-          <label for="shippingStreetNumber">Número</label>
+          <label class="input-label" for="shippingStreetNumber">Número <i class="fal fa-asterisk"></i></label>
           <input
             name="shippingStreetNumber"
             type="text"
@@ -278,7 +291,7 @@
           />
         </div>
         <div class="p-field p-col-5">
-          <label for="shippingNeighborhood">Bairro</label>
+          <label class="input-label" for="shippingNeighborhood">Bairro <i class="fal fa-asterisk"></i></label>
           <input
             name="shippingNeighborhood"
             type="text"
