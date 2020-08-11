@@ -13,6 +13,8 @@
       <div class="p-field p-col-6">
         <label for="name">Cliente</label>
         <p-autoComplete
+          id="customer"
+          name="customer"
           formControlName="customer"
           [suggestions]="customers"
           (completeMethod)="search($event)"
@@ -52,8 +54,10 @@
         ></p-inputNumber>
       </div>
       <div class="p-field p-col-3">
-        <label for="name">Forma de Pagamento</label>
+        <label for="paymentType">Forma de Pagamento</label>
         <p-dropdown
+          id="paymentType"
+          name="paymentType"
           [options]="paymentTypes"
           formControlName="paymentType"
           placeholder="Selecione uma forma de pagamento"
@@ -61,8 +65,10 @@
         ></p-dropdown>
       </div>
       <div class="p-field p-col-3">
-        <label for="name">Status de Pagamento</label>
+        <label for="paymentStatus">Status de Pagamento</label>
         <p-dropdown
+          id="paymentStatus"
+          name="paymentStatus"
           [options]="paymentStatus"
           formControlName="paymentStatus"
           placeholder="Selecione um status de pagamento"
@@ -182,6 +188,8 @@
         <div class="p-field p-col-3">
           <label for="name">Forma de Envio</label>
           <p-dropdown
+            id="name"
+            name="name"
             [options]="shippingTypes"
             formControlName="shippingType"
             placeholder="Selecione uma forma de envio"
@@ -189,8 +197,10 @@
           ></p-dropdown>
         </div>
         <div class="p-field p-col-3">
-          <label for="name">Frete (R$)</label>
+          <label for="shippingPrice">Frete (R$)</label>
           <p-inputNumber
+            id="shippingPrice"
+            name="shippingPrice"
             formControlName="shippingPrice"
             currency="BRL"
             mode="currency"
@@ -200,7 +210,7 @@
           ></p-inputNumber>
         </div>
         <div class="p-field p-col-6">
-          <label for="referenceCode">Destinatário</label>
+          <label for="customerName">Destinatário</label>
           <input
             name="customerName"
             type="text"
@@ -209,8 +219,35 @@
             placeholder="ex. Maria da Silva"
           />
         </div>
+        <div class="p-field p-col-2">
+          <label for="shippingZipAddress">CEP</label>
+          <div class="ui-inputgroup">
+            <input
+              type="text"
+              pInputText
+              placeholder="ex. 01305-000"
+              name="shippingZipAddress"
+              formControlName="shippingZipAddress"
+            />
+            <button pButton type="button" icon="fal fa-search" (click)="loadAddress()"></button>
+          </div>
+        </div>
+        <div class="p-field p-col-2">
+          <label for="shippingCity">Cidade</label>
+          <input
+            name="shippingCity"
+            type="text"
+            formControlName="shippingCity"
+            pInputText
+            placeholder="ex. São Paulo"
+          />
+        </div>
+        <div class="p-field p-col-2">
+          <label for="shippingState">Estado</label>
+          <input name="shippingState" type="text" formControlName="shippingState" pInputText placeholder="ex. SP" />
+        </div>
         <div class="p-field p-col-6">
-          <label for="referenceCode">Logradouro</label>
+          <label for="shippingStreetAddress">Logradouro</label>
           <input
             name="shippingStreetAddress"
             type="text"
@@ -219,26 +256,34 @@
             placeholder="ex. Av. Paulista"
           />
         </div>
-        <div class="p-field p-col-3">
-          <label for="name">Número</label>
+        <div class="p-field p-col-2">
+          <label for="shippingStreetNumber">Número</label>
           <input
             name="shippingStreetNumber"
             type="text"
             formControlName="shippingStreetNumber"
             pInputText
             placeholder="ex. 99"
-            (change)="updatePrice()"
           />
         </div>
-        <div class="p-field p-col-3">
-          <label for="name">Complemento</label>
+        <div class="p-field p-col-5">
+          <label for="shippingStreetNumber2">Complemento</label>
           <input
             name="shippingStreetNumber2"
             type="text"
             formControlName="shippingStreetNumber2"
             pInputText
             placeholder="ex. Bloco B, 403"
-            (change)="updatePrice()"
+          />
+        </div>
+        <div class="p-field p-col-5">
+          <label for="shippingNeighborhood">Bairro</label>
+          <input
+            name="shippingNeighborhood"
+            type="text"
+            formControlName="shippingNeighborhood"
+            pInputText
+            placeholder="ex. Consolação"
           />
         </div>
       </div>

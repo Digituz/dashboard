@@ -1,3 +1,4 @@
+import * as cep from 'cep-promise';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { SalesOrderDTO } from '../sales-order.dto';
@@ -108,6 +109,17 @@ export class SalesOrderFormComponent implements OnInit {
       items: this.fb.array([this.createItem()]),
     });
     this.loading = false;
+  }
+
+  async loadAddress() {
+    const zipAddress = this.formFields.get('shippingZipAddress').value;
+    const address = await cep(zipAddress.replace(/\D/g, ''));
+    this.formFields.patchValue({
+      shippingStreetAddress: address.street,
+      shippingCity: address.city,
+      shippingNeighborhood: address.neighborhood,
+      shippingState: address.state,
+    });
   }
 
   addItem(): void {
