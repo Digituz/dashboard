@@ -131,6 +131,9 @@ export class SalesOrderFormComponent implements OnInit {
       itemsTotal += (itemValue - itemDiscount) * itemAmount;
     }
 
+    const saleOrderDiscount = this.formFields.get('discount').value || 0;
+    itemsTotal -= saleOrderDiscount;
+
     this.salesOrder.total = itemsTotal;
   }
 
