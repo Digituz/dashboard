@@ -12,7 +12,7 @@ import { CustomersService } from '@app/customers/customers.service';
 import { ProductsService } from '@app/products/products.service';
 import { ProductVariationDetailsDTO } from '@app/products/product-variation-details.dto';
 import { ShippingType } from '../shipping-type.enum';
-import { customerValidator } from './sales-order-form.validators';
+import { customerValidator, productItemValidator } from './sales-order-form.validators';
 
 @Component({
   selector: 'app-sales-order-form',
@@ -165,7 +165,7 @@ export class SalesOrderFormComponent implements OnInit {
 
   createItem(): FormGroup {
     return this.fb.group({
-      productVariation: [null, [Validators.required]],
+      productVariation: [null, [Validators.required, productItemValidator]],
       price: [0, [Validators.required]],
       discount: [0, [Validators.required]],
       amount: [1, [Validators.required]],
