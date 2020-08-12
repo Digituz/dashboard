@@ -88,7 +88,10 @@ export class SalesOrderFormComponent implements OnInit {
 
   private configureFormFields(salesOrderDTO: SalesOrderDTO) {
     this.formFields = this.fb.group({
-      referenceCode: [salesOrderDTO.referenceCode || '', [Validators.required, Validators.minLength(1), Validators.maxLength(36)]],
+      referenceCode: [
+        salesOrderDTO.referenceCode || '',
+        [Validators.required, Validators.minLength(1), Validators.maxLength(36)],
+      ],
       customer: [salesOrderDTO.customer || null, [Validators.required, customerValidator]],
       discount: [salesOrderDTO.discount || 0],
       paymentType: [salesOrderDTO.paymentType || null, [Validators.required]],
@@ -183,7 +186,14 @@ export class SalesOrderFormComponent implements OnInit {
       return;
     }
 
-    const saleOrder = this.formFields.value;
+    const saleOrder: SalesOrderDTO = this.formFields.value;
+    saleOrder.items = saleOrder.items.map((item: any) => ({
+      sku: item.productVariation.sku,
+      discount: item.discount,
+      amount: item.amount,
+      price: item.price,
+    }));
+
     this.salesOrdersService.save(saleOrder).subscribe(() => {
       this.router.navigate(['/sales-orders']);
     });
