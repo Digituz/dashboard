@@ -1,0 +1,24 @@
+.ui-toast .ui-toast-message-text-content {
+  margin-left: 15px;
+}
+
+body .ui-toast div.ui-toast-message.ui-toast-message-error {
+  .ui-toast-close-icon {
+    font-size: 10px;
+    color: #884646;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+
+  .ui-toast-icon {
+    font-size: 12px;
+    margin-top: 10px;
+    margin-left: 5px;
+  }
+
+  div.ui-toast-message-content {
+    background-color: #ffd0d0;
+    border: 1px solid #d5a8a8;
+    color: #884646;
+  }
+}

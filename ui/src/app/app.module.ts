@@ -12,6 +12,8 @@ import { SharedModule } from '@shared';
 import { ShellModule } from './shell/shell.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ToastModule } from 'primeng/toast';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   imports: [
@@ -23,12 +25,13 @@ import { AppRoutingModule } from './app-routing.module';
       developmentMode: !environment.production,
     }),
     TranslateModule.forRoot(),
+    ToastModule,
     CoreModule,
     SharedModule,
     ShellModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, MessagesComponent],
   providers: [],
   bootstrap: [AppComponent],
 })

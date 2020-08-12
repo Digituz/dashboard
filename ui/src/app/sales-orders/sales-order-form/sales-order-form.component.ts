@@ -55,8 +55,8 @@ export class SalesOrderFormComponent implements OnInit {
   ];
 
   shippingTypes: ComboBoxOption[] = [
-    { label: 'PAC', value: `Correios - ${ShippingType.PAC}` },
-    { label: 'SEDEX', value: `Correios - ${ShippingType.SEDEX}` },
+    { label: `Correios - ${ShippingType.PAC}`, value: 'PAC' },
+    { label: `Correios - ${ShippingType.SEDEX}`, value: 'SEDEX' },
     { label: 'Motoboy', value: ShippingType.SAME_DAY },
   ];
 
