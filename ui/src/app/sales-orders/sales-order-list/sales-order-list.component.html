@@ -45,7 +45,7 @@
     <tr *ngFor="let salesOrder of salesOrdersTable.currentData">
       <td class="centered">{{ salesOrder.creationDate | date:'dd/MM HH:mm' }}</td>
       <td class="centered">{{ salesOrder.referenceCode }}</td>
-      <td>{{ salesOrder.customerName }}</td>
+      <td>{{ salesOrder.customer.name }}</td>
       <td class="currency">{{ salesOrder.total | reais }}</td>
       <td class="centered">
         <i class="fal fa-check" style="color: #67c167;" *ngIf="salesOrder.paymentStatus === 'APPROVED'" title="Aprovada"></i>

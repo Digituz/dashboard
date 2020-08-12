@@ -12,6 +12,7 @@ import { CustomersService } from '@app/customers/customers.service';
 import { ProductsService } from '@app/products/products.service';
 import { ProductVariationDetailsDTO } from '@app/products/product-variation-details.dto';
 import { ShippingType } from '../shipping-type.enum';
+import { customerValidator } from './sales-order-form.validators';
 
 @Component({
   selector: 'app-sales-order-form',
@@ -88,7 +89,7 @@ export class SalesOrderFormComponent implements OnInit {
   private configureFormFields(salesOrderDTO: SalesOrderDTO) {
     this.formFields = this.fb.group({
       referenceCode: [salesOrderDTO.referenceCode || '', [Validators.required, Validators.minLength(1), Validators.maxLength(36)]],
-      customer: [salesOrderDTO.customer || null, [Validators.required]],
+      customer: [salesOrderDTO.customer || null, [Validators.required, customerValidator]],
       discount: [salesOrderDTO.discount || 0],
       paymentType: [salesOrderDTO.paymentType || null, [Validators.required]],
       paymentStatus: [salesOrderDTO.paymentStatus || null, [Validators.required]],
