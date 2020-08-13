@@ -257,8 +257,14 @@ export class SalesOrderService {
   }
 
   async getByReferenceCode(referenceCode: string) {
-    return this.salesOrderRepository.findOne({
-      referenceCode,
-    });
+    return this.salesOrderRepository
+      .createQueryBuilder('so')
+      .leftJoinAndSelect('so.customer', 'c')
+      .leftJoinAndSelect('so.items', 'i')
+      .leftJoinAndSelect('i.productVariation', 'pv')
+      .where('so.referenceCode = :referenceCode', {
+        referenceCode,
+      })
+      .getOne();
   }
 }

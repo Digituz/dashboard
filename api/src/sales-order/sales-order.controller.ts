@@ -105,7 +105,38 @@ export class SalesOrderController {
   }
 
   @Get(':referenceCode')
-  async getOne(@Param('referenceCode') referenceCode: string) {
-    return this.salesOrderService.getByReferenceCode(referenceCode);
+  async getOne(@Param('referenceCode') referenceCode: string): Promise<SaleOrderDTO> {
+    const saleOrder = await this.salesOrderService.getByReferenceCode(referenceCode);
+    return {
+      id: saleOrder.id,
+      referenceCode: saleOrder.referenceCode,
+      customer: saleOrder.customer,
+      items: saleOrder.items.map(item => ({
+        sku: item.productVariation.sku,
+        price: item.price,
+        discount: item.discount,
+        amount: item.amount,
+      })),
+      discount: saleOrder.paymentDetails.discount,
+      paymentType: saleOrder.paymentDetails.paymentType,
+      paymentStatus: saleOrder.paymentDetails.paymentStatus,
+      installments: saleOrder.paymentDetails.installments,
+      shippingType: saleOrder.shipmentDetails.shippingType,
+      shippingPrice: saleOrder.shipmentDetails.shippingPrice,
+      customerName: saleOrder.shipmentDetails.customerName,
+      shippingStreetAddress:
+        saleOrder.shipmentDetails.shippingStreetAddress,
+      shippingStreetNumber: saleOrder.shipmentDetails.shippingStreetNumber,
+      shippingStreetNumber2:
+        saleOrder.shipmentDetails.shippingStreetNumber2,
+      shippingNeighborhood: saleOrder.shipmentDetails.shippingNeighborhood,
+      shippingCity: saleOrder.shipmentDetails.shippingCity,
+      shippingState: saleOrder.shipmentDetails.shippingState,
+      shippingZipAddress: saleOrder.shipmentDetails.shippingZipAddress,
+      creationDate: saleOrder.creationDate,
+      approvalDate: saleOrder.approvalDate,
+      cancellationDate: saleOrder.cancellationDate,
+      total: saleOrder.paymentDetails.total,
+    };
   }
 }
