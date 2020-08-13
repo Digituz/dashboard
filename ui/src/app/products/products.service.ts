@@ -4,6 +4,7 @@ import Product from './product.entity';
 import { Observable } from 'rxjs';
 import { IDataProvider, Pagination, QueryParam } from '@app/util/pagination';
 import { ProductVariationDetailsDTO } from './product-variation-details.dto';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +46,16 @@ export class ProductsService implements IDataProvider<Product> {
   }
 
   public findProductVariations(query: string): Observable<ProductVariationDetailsDTO[]> {
-    return this.httpClient.get<ProductVariationDetailsDTO[]>(`${this.PRODUCTS_ENDPOINT}/variations?query=${query}`);
+    return this.httpClient
+      .get<ProductVariationDetailsDTO[]>(`${this.PRODUCTS_ENDPOINT}/variations?query=${query}`)
+      .pipe(
+        map((variations) => {
+          return variations.map((variation) => ({
+            ...variation,
+            completeDescription: `${variation.sku} - ${variation.title} ${variation.description}`,
+          }));
+        })
+      );
   }
 
   public saveProduct(product: Product): Observable<void> {
@@ -54,7 +64,7 @@ export class ProductsService implements IDataProvider<Product> {
       productImages: product.productImages?.map((productImage) => ({
         imageId: productImage.image.id,
         order: productImage.order,
-      }))
+      })),
     });
   }
 
