@@ -13,6 +13,7 @@ import { ProductsService } from '@app/products/products.service';
 import { ProductVariationDetailsDTO } from '@app/products/product-variation-details.dto';
 import { ShippingType } from '../shipping-type.enum';
 import { customerValidator, productItemValidator } from './sales-order-form.validators';
+import { SaleOrderItemDTO } from '../sale-order-item.dto';
 
 @Component({
   selector: 'app-sales-order-form',
@@ -23,6 +24,7 @@ export class SalesOrderFormComponent implements OnInit {
   formFields: FormGroup;
   formSubmitted: boolean = false;
   salesOrder: SalesOrderDTO;
+  salesOrderId?: number;
   loading: boolean = true;
   productVariations: ProductVariationDetailsDTO[] = [];
   total: number;
@@ -81,12 +83,24 @@ export class SalesOrderFormComponent implements OnInit {
     } else {
       this.salesOrdersService.loadSalesOrder(referenceCode).subscribe((salesOrder) => {
         this.salesOrder = salesOrder;
+        this.salesOrderId = salesOrder.id;
         this.configureFormFields(salesOrder);
       });
     }
   }
 
+  private createItemsForSalesOrder(salesOrderDTO: SalesOrderDTO): FormArray {
+    return this.fb.array(
+      salesOrderDTO.items.map((item) => this.createItem(item)),
+      [Validators.required, Validators.minLength(1)]
+    );
+  }
+
   private configureFormFields(salesOrderDTO: SalesOrderDTO) {
+    const itemsField = salesOrderDTO
+      ? this.createItemsForSalesOrder(salesOrderDTO)
+      : this.fb.array([this.createItem()], [Validators.required, Validators.minLength(1)]);
+
     this.formFields = this.fb.group({
       referenceCode: [
         salesOrderDTO.referenceCode || '',
@@ -111,7 +125,7 @@ export class SalesOrderFormComponent implements OnInit {
       approvalDate: [salesOrderDTO.approvalDate || null],
       cancellationDate: [salesOrderDTO.cancellationDate || null],
       total: [salesOrderDTO.total || 0],
-      items: this.fb.array([this.createItem()], [Validators.required, Validators.minLength(1)]),
+      items: itemsField,
     });
     this.loading = false;
   }
@@ -166,12 +180,12 @@ export class SalesOrderFormComponent implements OnInit {
     });
   }
 
-  createItem(): FormGroup {
+  createItem(salesOrderItem?: SaleOrderItemDTO): FormGroup {
     return this.fb.group({
-      productVariation: [null, [Validators.required, productItemValidator]],
-      price: [0, [Validators.required]],
-      discount: [0, [Validators.required]],
-      amount: [1, [Validators.required]],
+      productVariation: [salesOrderItem || null, [Validators.required, productItemValidator]],
+      price: [salesOrderItem ? salesOrderItem.price : 0, [Validators.required]],
+      discount: [salesOrderItem ? salesOrderItem.discount : 0, [Validators.required]],
+      amount: [salesOrderItem ? salesOrderItem.amount : 1, [Validators.required]],
     });
   }
 
@@ -186,15 +200,19 @@ export class SalesOrderFormComponent implements OnInit {
       return;
     }
 
-    const saleOrder: SalesOrderDTO = this.formFields.value;
-    saleOrder.items = saleOrder.items.map((item: any) => ({
+    const salesOrder: SalesOrderDTO = this.formFields.value;
+    salesOrder.items = salesOrder.items.map((item: any) => ({
       sku: item.productVariation.sku,
       discount: item.discount,
       amount: item.amount,
       price: item.price,
     }));
 
-    this.salesOrdersService.save(saleOrder).subscribe(() => {
+    if (this.salesOrderId) {
+      salesOrder.id = this.salesOrderId;
+    }
+
+    this.salesOrdersService.save(salesOrder).subscribe(() => {
       this.router.navigate(['/sales-orders']);
     });
   }

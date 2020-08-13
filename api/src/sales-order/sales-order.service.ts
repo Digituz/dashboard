@@ -262,6 +262,7 @@ export class SalesOrderService {
       .leftJoinAndSelect('so.customer', 'c')
       .leftJoinAndSelect('so.items', 'i')
       .leftJoinAndSelect('i.productVariation', 'pv')
+      .leftJoinAndSelect('pv.product', 'p')
       .where('so.referenceCode = :referenceCode', {
         referenceCode,
       })

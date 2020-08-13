@@ -113,6 +113,7 @@ export class SalesOrderController {
       customer: saleOrder.customer,
       items: saleOrder.items.map(item => ({
         sku: item.productVariation.sku,
+        completeDescription: `${item.productVariation.sku} - ${item.productVariation.product.title} (${item.productVariation.description})`,
         price: item.price,
         discount: item.discount,
         amount: item.amount,

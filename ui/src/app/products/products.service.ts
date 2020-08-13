@@ -52,7 +52,7 @@ export class ProductsService implements IDataProvider<Product> {
         map((variations) => {
           return variations.map((variation) => ({
             ...variation,
-            completeDescription: `${variation.sku} - ${variation.title} ${variation.description}`,
+            completeDescription: `${variation.sku} - ${variation.title} (${variation.description})`,
           }));
         })
       );
