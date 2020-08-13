@@ -9,12 +9,34 @@ import { PaymentType } from '../../../src/sales-order/entities/payment-type.enum
 import { ShippingType } from '../../../src/sales-order/entities/shipping-type.enum';
 import { Product } from '../../../src/products/entities/product.entity';
 import { ProductVariation } from '../../../src/products/entities/product-variation.entity';
+import { SalesOrderService } from '../../../src/sales-order/sales-order.service';
+import { SaleOrderBlingStatus } from '../../../src/sales-order/entities/sale-order-bling-status.enum';
+
+// this service is used by BlingService to update the status of the
+class SalesOrderServiceMock extends SalesOrderService {
+  constructor() {
+    super(null, null, null, null, null);
+  }
+
+  updateBlingStatus(
+    referenceCode: string,
+    saleOrderBlingStatus: SaleOrderBlingStatus,
+  ): Promise<any> {
+    return Promise.resolve();
+  }
+}
 
 describe('Bling integration', () => {
-  const realBlingService = new BlingService(new HttpService(axios));
+  const salesOrderServiceMock = new SalesOrderServiceMock();
+  const realBlingService = new BlingService(
+    new HttpService(axios),
+    salesOrderServiceMock,
+  );
 
   async function createOrUpdateProduct(productVariation: ProductVariation) {
-    const httpResponse = await realBlingService.createOrUpdateProduct(productVariation);
+    const httpResponse = await realBlingService.createOrUpdateProduct(
+      productVariation,
+    );
     const response = await httpResponse.toPromise();
     expect(response).toBeDefined();
     expect(response.data).toBeDefined();
@@ -23,11 +45,15 @@ describe('Bling integration', () => {
   }
 
   async function removeProduct(productVariation: ProductVariation) {
-    const removeHttpResponse = await realBlingService.removeProduct(productVariation);
+    const removeHttpResponse = await realBlingService.removeProduct(
+      productVariation,
+    );
     const removeResponse = await removeHttpResponse.toPromise();
     expect(removeResponse).toBeDefined();
     expect(removeResponse.data).toBeDefined();
-    expect(removeResponse.data.indexOf('deletado com sucesso')).toBeGreaterThan(0);
+    expect(removeResponse.data.indexOf('deletado com sucesso')).toBeGreaterThan(
+      0,
+    );
     expect(removeResponse.status).toBe(200);
   }
 
@@ -41,7 +67,7 @@ describe('Bling integration', () => {
       imagesSize: 0,
       variationsSize: 1,
       withoutVariation: false,
-    }
+    };
 
     const productVariation: ProductVariation = {
       product: product,
@@ -67,7 +93,7 @@ describe('Bling integration', () => {
       imagesSize: 0,
       variationsSize: 1,
       withoutVariation: false,
-    }
+    };
 
     const productVariation: ProductVariation = {
       product: product,
@@ -96,7 +122,7 @@ describe('Bling integration', () => {
       imagesSize: 0,
       variationsSize: 1,
       withoutVariation: false,
-    }
+    };
 
     const productVariation: ProductVariation = {
       product: product,
@@ -121,7 +147,9 @@ describe('Bling integration', () => {
     saleOrder.items[0].productVariation = productVariation;
 
     // create the order on Bling
-    const createHttpResponse = await realBlingService.createPurchaseOrder(saleOrder);
+    const createHttpResponse = await realBlingService.createPurchaseOrder(
+      saleOrder,
+    );
     const createResponse = await createHttpResponse.toPromise();
     expect(createResponse).toBeDefined();
     expect(createResponse.data).toBeDefined();
@@ -130,7 +158,9 @@ describe('Bling integration', () => {
 
     // cancel the order on Bling
     saleOrder.paymentDetails.paymentStatus = PaymentStatus.CANCELLED;
-    const cancelHttpResponse = await realBlingService.cancelPurchaseOrder(saleOrder);
+    const cancelHttpResponse = await realBlingService.cancelPurchaseOrder(
+      saleOrder,
+    );
     const cacnelResponse = await cancelHttpResponse.toPromise();
     expect(cacnelResponse).toBeDefined();
     expect(cacnelResponse.data).toBeDefined();

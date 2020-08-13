@@ -18,6 +18,7 @@ import { InventoryMovementDTO } from '../inventory/inventory-movement.dto';
 import { IPaginationOpts } from '../pagination/pagination';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 import { isNullOrUndefined } from '../util/numeric-transformer';
+import { SaleOrderBlingStatus } from './entities/sale-order-bling-status.enum';
 
 @Injectable()
 export class SalesOrderService {
@@ -227,6 +228,20 @@ export class SalesOrderService {
 
   save(saleOrderDTO: SaleOrderDTO): Promise<SaleOrder> {
     return this.createOrUpdateSaleOrder(saleOrderDTO);
+  }
+
+  async updateBlingStatus(
+    referenceCode: string,
+    saleOrderBlingStatus: SaleOrderBlingStatus,
+  ) {
+    return this.salesOrderRepository.update(
+      {
+        referenceCode,
+      },
+      {
+        blingStatus: saleOrderBlingStatus,
+      },
+    );
   }
 
   async updateStatus(

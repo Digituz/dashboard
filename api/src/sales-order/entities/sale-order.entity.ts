@@ -6,6 +6,7 @@ import { SaleOrderShipment } from './sale-order-shipment.entity';
 import { SaleOrderPayment } from './sale-order-payment.entity';
 import { Customer } from '../../customers/customer.entity';
 import { SaleOrderItem } from './sale-order-item.entity';
+import { SaleOrderBlingStatus } from './sale-order-bling-status.enum';
 
 @Entity()
 export class SaleOrder extends BaseEntity {
@@ -22,6 +23,15 @@ export class SaleOrder extends BaseEntity {
     nullable: false,
   })
   referenceCode: string;
+
+  @Column({
+    name: 'bling_status',
+    type: 'varchar',
+    length: 30,
+    unique: false,
+    nullable: true,
+  })
+  blingStatus?: SaleOrderBlingStatus;
 
   @ManyToOne(type => Customer, {
     nullable: false,
