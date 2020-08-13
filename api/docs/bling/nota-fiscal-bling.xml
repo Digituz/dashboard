@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pedido>
+    <cliente>
+        <nome>Pingo Krebs</nome>
+        <tipoPessoa>F</tipoPessoa>
+        <cpf_cnpj>00962285048</cpf_cnpj>
+        <endereco>Rua São Simão</endereco>
+        <numero>99</numero>
+        <complemento>Apartamento 401</complemento>
+        <bairro>Bom Jesus</bairro>
+        <cep>91.420-560</cep>
+        <cidade>Porto Alegre</cidade>
+        <uf>RS</uf>
+        <fone>54 981218-8604</fone>
+        <email>krebs.bruno@gmail.com</email>
+    </cliente>
+    <transporte>
+        <transportadora>Correios</transportadora>
+        <cpf_cnpj></cpf_cnpj>
+        <endereco>Rua São Simão, 401</endereco>
+        <cidade>Porto Alegre</cidade>
+        <uf>RS</uf>
+        <tipo_frete>D</tipo_frete>
+        <qtde_volumes>1</qtde_volumes>
+        <especie>Volumes</especie>
+        <numero>425</numero>
+        <peso_bruto>300</peso_bruto>
+        <peso_liquido>300</peso_liquido>
+        <servico_correios>PAC</servico_correios>
+        <dados_etiqueta>
+            <nome>Endereço de entrega</nome>
+            <endereco>Rua Visconde de São Gabriel</endereco>
+            <numero>392</numero>
+            <complemento>Sala 59</complemento>
+            <municipio>Bento Gonçalves</municipio>
+            <uf>RS</uf>
+            <cep>95.700-000</cep>
+            <bairro>Cidade Alta</bairro>
+        </dados_etiqueta>
+        <volumes>
+            <volume>
+                <servico>SEDEX - CONTRATO</servico>
+                <codigoRastreamento></codigoRastreamento>
+            </volume>
+            <volume>
+                <servico>PAC - CONTRATO</servico>
+                <codigoRastreamento></codigoRastreamento>
+            </volume>
+        </volumes>
+     </transporte>
+     <itens>
+          <item>
+              <codigo>001</codigo>
+              <descricao>Caneta 001</descricao>
+              <un>Pç</un>
+              <qtde>10</qtde>
+              <vlr_unit>1.68</vlr_unit>
+              <tipo>P</tipo>
+              <peso_bruto>0.2</peso_bruto>
+              <peso_liq>0.18</peso_liq>
+              <class_fiscal>1000.00.10</class_fiscal>
+              <origem>0</origem>
+          </item>
+     </itens>
+     <parcelas>
+         <parcela>
+             <dias>10</dias>
+             <data>01/09/2020</data>
+             <vlr>50</vlr>
+             <obs></obs>
+         </parcela>
+         <parcela>
+             <dias>40</dias>
+             <data>01/10/2020</data>
+             <vlr>50</vlr>
+             <obs></obs>
+         </parcela>
+         <parcela>
+             <dias>70</dias>
+             <data>01/11/2020</data>
+             <vlr>50</vlr>
+             <obs></obs>
+         </parcela>
+     </parcelas>
+     <vlr_frete>14.9</vlr_frete>
+     <vlr_seguro>0</vlr_seguro>
+     <vlr_despesas>0</vlr_despesas>
+     <vlr_desconto>0</vlr_desconto>
+</pedido>
