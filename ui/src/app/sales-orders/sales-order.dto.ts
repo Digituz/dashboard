@@ -3,6 +3,7 @@ import { SaleOrderItemDTO } from './sale-order-item.dto';
 import { PaymentType } from './payment-type.enum';
 import { PaymentStatus } from './payment-status.enum';
 import { ShippingType } from './shipping-type.enum';
+import { SaleOrderBlingStatus } from './sale-order-bling-status.enum';
 
 export class SalesOrderDTO {
   id?: number;
@@ -27,4 +28,5 @@ export class SalesOrderDTO {
   approvalDate?: Date;
   cancellationDate?: Date;
   total?: number;
+  blingStatus?: SaleOrderBlingStatus | string;
 }

@@ -43,19 +43,43 @@
   </thead>
   <tbody>
     <tr *ngFor="let salesOrder of salesOrdersTable.currentData">
-      <td class="centered">{{ salesOrder.creationDate | date:'dd/MM HH:mm' }}</td>
+      <td class="centered">{{ salesOrder.creationDate | date: 'dd/MM HH:mm' }}</td>
       <td class="centered">{{ salesOrder.referenceCode }}</td>
       <td>{{ salesOrder.customer.name }}</td>
       <td class="currency">{{ salesOrder.total | reais }}</td>
       <td class="centered">
-        <i class="fal fa-check" style="color: #67c167;" *ngIf="salesOrder.paymentStatus === 'APPROVED'" title="Aprovada"></i>
-        <i class="fal fa-times" style="color: #df6666;" *ngIf="salesOrder.paymentStatus === 'CANCELLED'" title="Cancelada"></i>
-        <i class="fal fa-sync" style="color: #aaaaaa;" *ngIf="salesOrder.paymentStatus === 'IN_PROCESS'" title="Em Processamento"></i>
+        <i
+          class="fal fa-check"
+          style="color: #67c167;"
+          *ngIf="salesOrder.paymentStatus === 'APPROVED'"
+          title="Aprovada"
+        ></i>
+        <i
+          class="fal fa-times"
+          style="color: #df6666;"
+          *ngIf="salesOrder.paymentStatus === 'CANCELLED'"
+          title="Cancelada"
+        ></i>
+        <i
+          class="fal fa-sync"
+          style="color: #aaaaaa;"
+          *ngIf="salesOrder.paymentStatus === 'IN_PROCESS'"
+          title="Em Processamento"
+        ></i>
       </td>
       <td class="actions">
         <a [title]="'Venda'" [routerLink]="'/sales-orders/' + salesOrder.referenceCode"
-          ><button pButton type="button" label="Editar"></button
-        ></a>
+          ><button pButton type="button" label="Editar" [disabled]="!!salesOrder.blingStatus"></button>
+        </a>
+        <button
+            pButton
+            type="button"
+            icon="fal fa-exchange"
+            pTooltip="Sincronizar com Bling (apenas para vendas aprovadas)."
+            tooltipPosition="bottom"
+            (click)="syncWithBling(salesOrder)"
+            [disabled]="!!salesOrder.blingStatus || salesOrder.paymentStatus !== 'APPROVED'"
+          ></button>
       </td>
     </tr>
   </tbody>

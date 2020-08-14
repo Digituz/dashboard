@@ -97,7 +97,7 @@ export class SalesOrderFormComponent implements OnInit {
   }
 
   private configureFormFields(salesOrderDTO: SalesOrderDTO) {
-    const itemsField = salesOrderDTO
+    const itemsField = salesOrderDTO.items
       ? this.createItemsForSalesOrder(salesOrderDTO)
       : this.fb.array([this.createItem()], [Validators.required, Validators.minLength(1)]);
 

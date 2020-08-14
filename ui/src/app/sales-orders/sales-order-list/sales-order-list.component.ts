@@ -10,17 +10,17 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-sales-order-list',
   templateUrl: './sales-order-list.component.html',
-  styleUrls: ['./sales-order-list.component.scss']
+  styleUrls: ['./sales-order-list.component.scss'],
 })
 export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrderDTO> {
   @ViewChild('salesOrdersTable') salesOrdersTable: DgzTableComponent<SalesOrderDTO>;
   queryParams: QueryParam[] = [];
   query: string;
   paymentStatusOptions: ComboBoxOption[] = [
-    { label: "Todas", value: null },
-    { label: "Aprovadas", value: "APPROVED" },
-    { label: "Canceladas", value: "CANCELLED" },
-    { label: "Em Processamento", value: "IN_PROCESS" },
+    { label: 'Todas', value: null },
+    { label: 'Aprovadas', value: 'APPROVED' },
+    { label: 'Canceladas', value: 'CANCELLED' },
+    { label: 'Em Processamento', value: 'IN_PROCESS' },
   ];
   paymentStatus: ComboBoxOption = this.paymentStatusOptions[0];
 
@@ -44,5 +44,12 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
       { key: 'query', value: this.query },
       { key: 'paymentStatus', value: this.paymentStatus.value },
     ];
+  }
+
+  syncWithBling(salesOrder: SalesOrderDTO) {
+    console.log(salesOrder);
+    this.salesOrdersService.syncWithBling(salesOrder).subscribe(() => {
+      console.log('done');
+    });
   }
 }
