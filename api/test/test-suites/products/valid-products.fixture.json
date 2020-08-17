@@ -148,5 +148,11 @@
     "sku": "LFK-00004",
     "title": "Máscara Cinza",
     "ncm": "1234.56.79"
+  },
+  {
+    "sku": "LFK-00005",
+    "title": "Produto Composto",
+    "ncm": "1234.56.79",
+    "productComposition": ["LFK-00004", "LFK-00003"]
   }
 ]

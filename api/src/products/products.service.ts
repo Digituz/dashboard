@@ -15,6 +15,7 @@ import { Inventory } from '../inventory/inventory.entity';
 import { InventoryService } from '../inventory/inventory.service';
 import { ProductVariationDetailsDTO } from './dtos/product-variation-details.dto';
 import { ProductCategory } from './entities/product-category.enum';
+import { ProductComposition } from './entities/product-composition.entity';
 
 @Injectable()
 export class ProductsService {
@@ -25,6 +26,8 @@ export class ProductsService {
     private productVariationsRepository: Repository<ProductVariation>,
     @InjectRepository(ProductImage)
     private productImagesRepository: Repository<ProductImage>,
+    @InjectRepository(ProductComposition)
+    private productCompositionRepository: Repository<ProductComposition>,
     private inventoryService: InventoryService,
     private imagesService: ImagesService,
     private tagsService: TagsService,
@@ -38,10 +41,13 @@ export class ProductsService {
       .leftJoinAndSelect('pi.image', 'i')
       .getMany();
 
-    const productVariations: ProductVariation[] = products.reduce((variations, product) => {
-      variations.push(...product.productVariations);
-      return variations;
-    }, []);
+    const productVariations: ProductVariation[] = products.reduce(
+      (variations, product) => {
+        variations.push(...product.productVariations);
+        return variations;
+      },
+      [],
+    );
 
     for (const variation of productVariations) {
       const inventory = await this.inventoryService.findBySku(variation.sku);
@@ -98,8 +104,8 @@ export class ProductsService {
 
   async createInventories(variations: ProductVariation[]) {
     // starting the inventory info
-    const inventoryCreationJob = variations.map(variation => {
-      return new Promise(async res => {
+    const inventoryCreationJob = variations.map((variation) => {
+      return new Promise(async (res) => {
         const inventory: Inventory = {
           productVariation: variation,
           currentPosition: 0,
@@ -150,14 +156,16 @@ export class ProductsService {
       variationsSize: productDTO.productVariations?.length,
       imagesSize: productDTO.productImages?.length,
       withoutVariation: !containsRealVariations,
-      category: productDTO.category ? ProductCategory[productDTO.category] : null,
+      category: productDTO.category
+        ? ProductCategory[productDTO.category]
+        : null,
     };
 
     const persistedProduct = await this.productsRepository.save(newProduct);
 
     // inserting variations
-    const insertVariationJobs = variations.map(variation => {
-      return new Promise(async res => {
+    const insertVariationJobs = variations.map((variation) => {
+      return new Promise(async (res) => {
         variation.product = persistedProduct;
         await this.productVariationsRepository.save(variation);
         res();
@@ -167,15 +175,43 @@ export class ProductsService {
 
     // managing product images
     const imagesIds =
-      productDTO.productImages?.map(productImage => productImage.imageId) || [];
+      productDTO.productImages?.map((productImage) => productImage.imageId) ||
+      [];
     const images = await this.imagesService.findByIds(imagesIds);
-    const productImages = productDTO.productImages?.map(productImage => ({
-      image: images.find(image => image.id === productImage.imageId),
+    const productImages = productDTO.productImages?.map((productImage) => ({
+      image: images.find((image) => image.id === productImage.imageId),
       order: productImage.order,
       product: persistedProduct,
     }));
     if (productImages) {
       await this.productImagesRepository.save(productImages);
+    }
+
+    if (
+      productDTO.productComposition &&
+      productDTO.productComposition.length > 0
+    ) {
+      const productVariations = await this.productVariationsRepository.find({
+        sku: In(productDTO.productComposition),
+      });
+
+      // no automated tests here for the moment, but a product composition cannot point to itself
+      const belongsToCurrentProduct = productVariations.find(
+        (variation) => variation.product === persistedProduct,
+      );
+      if (belongsToCurrentProduct) {
+        throw new Error(
+          'Composite product cannot use variations that belong to itself.',
+        );
+      }
+
+      const productCompositions: ProductComposition[] = productVariations.map(
+        (variation) => ({
+          product: persistedProduct,
+          productVariation: variation,
+        }),
+      );
+      this.productCompositionRepository.insert(productCompositions);
     }
 
     await this.createInventories(variations);
@@ -207,7 +243,7 @@ export class ProductsService {
     }
 
     if (variationsToBeInserted) {
-      variationsToBeInserted.forEach(variation => {
+      variationsToBeInserted.forEach((variation) => {
         variation.product = product;
       });
       const persistedVariations = await this.productVariationsRepository.save(
@@ -246,10 +282,10 @@ export class ProductsService {
     // recreate images (if needed)
     if (productDTO.productImages && productDTO.productImages.length > 0) {
       const { productImages } = productDTO;
-      const newImagesId = productImages.map(pI => pI.imageId);
+      const newImagesId = productImages.map((pI) => pI.imageId);
       const newImages = await this.imagesService.findByIds(newImagesId);
-      const newProductImages = productDTO.productImages.map(productImage => ({
-        image: newImages.find(image => image.id === productImage.imageId),
+      const newProductImages = productDTO.productImages.map((productImage) => ({
+        image: newImages.find((image) => image.id === productImage.imageId),
         order: productImage.order,
         product: previousProductVersion,
       }));
@@ -286,7 +322,9 @@ export class ProductsService {
       variationsSize: productDTO.productVariations?.length,
       withoutVariation: !productDTO.productVariations ? true : false,
       imagesSize: productDTO.productImages?.length,
-      category: productDTO.category ? ProductCategory[productDTO.category] : null,
+      category: productDTO.category
+        ? ProductCategory[productDTO.category]
+        : null,
     };
 
     const persistedProduct = await this.productsRepository.save(updatedProduct);
@@ -345,7 +383,7 @@ export class ProductsService {
     const productVariations: ProductVariation[] = await queryBuilder.getMany();
 
     return Promise.resolve(
-      productVariations.map(productVariation => {
+      productVariations.map((productVariation) => {
         return {
           parentSku: productVariation.product.sku,
           title: productVariation.product.title,
@@ -386,18 +424,18 @@ export class ProductsService {
     }
 
     options.queryParams
-      .filter(queryParam => {
+      .filter((queryParam) => {
         return (
           queryParam !== null &&
           queryParam.value !== null &&
           queryParam.value !== undefined
         );
       })
-      .forEach(queryParam => {
+      .forEach((queryParam) => {
         switch (queryParam.key) {
           case 'query':
             queryBuilder.andWhere(
-              new Brackets(qb => {
+              new Brackets((qb) => {
                 qb.where(`lower(p.title) like :query`, {
                   query: `%${queryParam.value}%`,
                 })

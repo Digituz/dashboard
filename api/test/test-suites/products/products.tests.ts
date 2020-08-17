@@ -13,6 +13,7 @@ import {
 import { ProductImageDTO } from '../../../src/products/dtos/product-image.dto';
 import { ProductImage } from '../../../src/products/entities/product-image.entity';
 import { differenceWith, isEqual } from 'lodash';
+import { Product } from 'src/products/entities/product.entity';
 
 const validImagesFixtures: Image[] = imageFixtures;
 const validFixtures: ProductDTO[] = productFixtures;
@@ -25,7 +26,7 @@ describe('persisting products', () => {
 
     await cleanUpDatabase();
 
-    const insertImages: string[] = validImagesFixtures.map(image => {
+    const insertImages: string[] = validImagesFixtures.map((image) => {
       return `insert into image (id, main_filename, original_filename, mimetype, original_file_url,
         extra_large_file_url, large_file_url, medium_file_url, small_file_url, thumbnail_file_url,
         file_size, width, height, aspect_ratio)
@@ -51,7 +52,9 @@ describe('persisting products', () => {
   }
 
   it("should not recreate inventory for variations that don't change", async () => {
-    const product = productVersions.find(p => p.productVariations?.length > 1);
+    const product = productVersions.find(
+      (p) => p.productVariations?.length > 1,
+    );
 
     product.productVariations = product.productVariations.sort((pv1, pv2) =>
       pv1.sku.localeCompare(pv2.sku),
@@ -104,7 +107,7 @@ describe('persisting products', () => {
     expect(different).toBe(false);
   });
 
-  it('should be able to update products', async done => {
+  it('should be able to update products', async (done) => {
     for (const productVersion of productVersions) {
       await persistProduct(productVersion);
     }
@@ -143,7 +146,7 @@ describe('persisting products', () => {
       authorizedRequest,
     );
 
-    const productCreated = response.data;
+    const productCreated: Product = response.data;
 
     expect(productCreated.sku).toBe(productDTO.sku);
 
@@ -177,6 +180,15 @@ describe('persisting products', () => {
       validateImages(productCreated.productImages, productDTO.productImages);
     } else {
       expect(productCreated.productImages).toBeOneOf([[], undefined]);
+    }
+
+    if (productDTO.productComposition) {
+      const skusOnProductComposition = productCreated.productComposition.map(
+        (productComp) => productComp.productVariation.sku,
+      );
+      productDTO.productComposition.forEach((sku) => {
+        expect(skusOnProductComposition.includes(sku)).toBeTrue();
+      });
     }
   }
 
