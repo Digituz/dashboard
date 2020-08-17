@@ -195,7 +195,8 @@ export class ProductsService {
         sku: In(productDTO.productComposition),
       });
 
-      // no automated tests here for the moment, but a product composition cannot point to itself
+      // TODO test situations that prevent users from adding a product composition
+      // that point to its own product variation
       const belongsToCurrentProduct = productVariations.find(
         (variation) => variation.product === persistedProduct,
       );
