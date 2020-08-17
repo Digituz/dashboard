@@ -21,6 +21,7 @@ import { SalesOrderModule } from './sales-order/sales-order.module';
 import { SaleOrderItem } from './sales-order/entities/sale-order-item.entity';
 import { SaleOrder } from './sales-order/entities/sale-order.entity';
 import { BlingModule } from './bling/bling.module';
+import { ProductComposition } from './products/entities/product-composition.entity';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { BlingModule } from './bling/bling.module';
         Inventory,
         InventoryMovement,
         Product,
+        ProductComposition,
         ProductVariation,
         ProductImage,
         Image,

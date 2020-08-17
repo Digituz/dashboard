@@ -4,6 +4,7 @@ import { BaseEntity } from '../../util/base-entity';
 import { ProductImage } from './product-image.entity';
 import { NumericTransformer } from '../../util/numeric-transformer';
 import { ProductCategory } from './product-category.enum';
+import { ProductComposition } from './product-composition.entity';
 
 @Entity()
 export class Product extends BaseEntity {
@@ -90,11 +91,18 @@ export class Product extends BaseEntity {
   withoutVariation: boolean = true;
 
   @OneToMany(
-    type => ProductVariation,
-    productVariation => productVariation.product,
+    (type) => ProductVariation,
+    (productVariation) => productVariation.product,
     { cascade: false, eager: true },
   )
   productVariations?: ProductVariation[];
+
+  @OneToMany(
+    (type) => ProductComposition,
+    (productComposition) => productComposition.product,
+    { cascade: false, eager: true },
+  )
+  productComposition?: ProductComposition[];
 
   @Column({
     type: 'varchar',
@@ -109,11 +117,10 @@ export class Product extends BaseEntity {
   })
   variationsSize: number = 0;
 
-  @OneToMany(
-    type => ProductImage,
-    image => image.product,
-    { cascade: false, eager: false },
-  )
+  @OneToMany((type) => ProductImage, (image) => image.product, {
+    cascade: false,
+    eager: false,
+  })
   productImages?: ProductImage[];
 
   @Column({
