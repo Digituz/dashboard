@@ -56,7 +56,13 @@
   </p>
   <div></div>
   <div class="">
-    <button pButton class="ui-button-danger" label="Arquivar" [disabled]="selectedImages?.length === 0" (click)="archiveImages()"></button>
+    <button
+      pButton
+      class="ui-button-danger"
+      label="Arquivar"
+      [disabled]="selectedImages?.length === 0"
+      (click)="archiveImages()"
+    ></button>
     <button pButton label="Filtrar"></button>
   </div>
 </div>
@@ -103,12 +109,12 @@
     <img [src]="modalImage" [alt]="modalTitle" />
   </div>
   <div class="image-tags">
-    <div *ngIf="!selectedImage">
-      <i class="fal fa-spinner"></i> Carregando tags...
-    </div>
+    <div *ngIf="!selectedImage"><i class="fal fa-spinner"></i> Carregando tags...</div>
     <div class="tags-container" *ngIf="selectedImage">
       <div *ngIf="!selectedImage.tags || selectedImage.tags.length === 0">Imagem sem tags atribuídas.</div>
-      <div class="tag" *ngFor="let tag of selectedImage?.tags" (click)="removeTag(tag)"><span>{{ tag.label }}<i class="fal fa-times"></i></span></div>
+      <div class="tag" *ngFor="let tag of selectedImage?.tags" (click)="removeTag(tag)">
+        <span>{{ tag.label }}<i class="fal fa-times"></i></span>
+      </div>
     </div>
   </div>
 </p-dialog>

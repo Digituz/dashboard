@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class MessagesComponent implements OnInit {
   message: Message[] = [];

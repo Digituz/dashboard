@@ -9,11 +9,11 @@ import { MoveInventoryDialogComponent } from '../move-inventory-dialog/move-inve
 @Component({
   selector: 'app-inventory-list',
   templateUrl: './inventory-list.component.html',
-  styleUrls: ['./inventory-list.component.scss']
+  styleUrls: ['./inventory-list.component.scss'],
 })
 export class InventoryListComponent implements OnInit, IDataProvider<Inventory> {
   @ViewChild('inventoryTable') appFoo: DgzTableComponent<Inventory>;
-  @ViewChild("movementDialog") movementDialog: MoveInventoryDialogComponent;
+  @ViewChild('movementDialog') movementDialog: MoveInventoryDialogComponent;
   inventory: Inventory[];
   query: string;
   queryParams: QueryParam[] = [];
@@ -32,9 +32,7 @@ export class InventoryListComponent implements OnInit, IDataProvider<Inventory> 
   ngOnInit(): void {}
 
   queryInventory() {
-    this.queryParams = [
-      { key: 'query', value: this.query },
-    ];
+    this.queryParams = [{ key: 'query', value: this.query }];
   }
 
   openMovementDialog() {

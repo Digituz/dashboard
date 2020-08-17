@@ -17,9 +17,14 @@ export class ImageService {
   }
 
   public applyTags(images: Image[], tags: Tag[]): Observable<void> {
-    return merge(...images.map(image => {
-      return this.httpClient.post<void>(`${this.IMAGES_ENDPOINT}/${image.id}`, tags.map(tag => tag.label));
-    }));
+    return merge(
+      ...images.map((image) => {
+        return this.httpClient.post<void>(
+          `${this.IMAGES_ENDPOINT}/${image.id}`,
+          tags.map((tag) => tag.label)
+        );
+      })
+    );
   }
 
   public removeTag(image: Image, tag: Tag): Observable<void> {
@@ -27,9 +32,11 @@ export class ImageService {
   }
 
   public archiveImages(images: Image[]): Observable<void> {
-    return merge(...images.map(image => {
-      return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}`);
-    }));
+    return merge(
+      ...images.map((image) => {
+        return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}`);
+      })
+    );
   }
 
   public withTags(tagLabel: string): Observable<Image[]> {

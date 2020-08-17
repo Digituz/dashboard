@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-customers-form',
   templateUrl: './customers-form.component.html',
-  styleUrls: ['./customers-form.component.scss']
+  styleUrls: ['./customers-form.component.scss'],
 })
 export class CustomersFormComponent implements OnInit {
   formFields: FormGroup;

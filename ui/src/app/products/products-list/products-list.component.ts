@@ -25,15 +25,15 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
   products: Product[];
   query: string;
   withVariationsOptions: WithVariationsOption[] = [
-    { label: "Todos", value: null },
-    { label: "Com variações", value: "true" },
-    { label: "Sem variações", value: "false" },
+    { label: 'Todos', value: null },
+    { label: 'Com variações', value: 'true' },
+    { label: 'Sem variações', value: 'false' },
   ];
   withVariations: WithVariationsOption = this.withVariationsOptions[0];
   isActiveOptions: IsActiveOption[] = [
-    { label: "Todos", value: null },
-    { label: "Ativos", value: true },
-    { label: "Inativos", value: false },
+    { label: 'Todos', value: null },
+    { label: 'Ativos', value: true },
+    { label: 'Inativos', value: false },
   ];
   isActive: IsActiveOption = this.isActiveOptions[0];
   queryParams: QueryParam[] = [];

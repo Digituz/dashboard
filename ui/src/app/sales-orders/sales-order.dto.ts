@@ -1,4 +1,4 @@
-import { Customer } from "@app/customers/customer.entity";
+import { Customer } from '@app/customers/customer.entity';
 import { SaleOrderItemDTO } from './sale-order-item.dto';
 import { PaymentType } from './payment-type.enum';
 import { PaymentStatus } from './payment-status.enum';

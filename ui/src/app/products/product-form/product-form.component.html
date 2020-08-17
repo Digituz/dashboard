@@ -46,7 +46,12 @@
       </div>
       <div class="p-field p-col">
         <label for="sellingPrice">Categoria</label>
-        <p-dropdown [options]="categories" formControlName="category" placeholder="Selecione uma categoria" [showClear]="true"></p-dropdown>
+        <p-dropdown
+          [options]="categories"
+          formControlName="category"
+          placeholder="Selecione uma categoria"
+          [showClear]="true"
+        ></p-dropdown>
       </div>
       <div class="p-field p-col-6">
         <label for="height">Altura do Produto (m)</label>
@@ -111,7 +116,11 @@
   </form>
 </p-card>
 
-<dgz-product-images [product]="product" (imagesSelected)="imagesSelected($event)" *ngIf="!!product"></dgz-product-images>
+<dgz-product-images
+  [product]="product"
+  (imagesSelected)="imagesSelected($event)"
+  *ngIf="!!product"
+></dgz-product-images>
 
 <div class="feature-header" style="margin-top: 30px;">
   <h2>Variações do Produto</h2>

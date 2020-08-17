@@ -49,11 +49,14 @@ export class MediaLibraryComponent implements OnInit {
 
   private reloadImages() {
     this.loading = true;
-    this.imageService.loadImages().pipe(delay(350)).subscribe((images) => {
-      this.loading = false;
-      this.images = images;
-      this.selectedImages = [];
-    });
+    this.imageService
+      .loadImages()
+      .pipe(delay(350))
+      .subscribe((images) => {
+        this.loading = false;
+        this.images = images;
+        this.selectedImages = [];
+      });
   }
 
   ngOnInit(): void {

@@ -9,13 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { BreadcrumbsModule } from '../breadcrumbs/breadcrumbs.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    I18nModule,
-    RouterModule,
-    BreadcrumbsModule,
-  ],
+  imports: [CommonModule, TranslateModule, I18nModule, RouterModule, BreadcrumbsModule],
   declarations: [HeaderComponent, ShellComponent],
 })
 export class ShellModule {}

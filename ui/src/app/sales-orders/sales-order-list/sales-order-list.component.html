@@ -72,14 +72,14 @@
           ><button pButton type="button" label="Editar" [disabled]="!!salesOrder.blingStatus"></button>
         </a>
         <button
-            pButton
-            type="button"
-            icon="fal fa-exchange"
-            pTooltip="Sincronizar com Bling (apenas para vendas aprovadas)."
-            tooltipPosition="bottom"
-            (click)="syncWithBling(salesOrder)"
-            [disabled]="!!salesOrder.blingStatus || salesOrder.paymentStatus !== 'APPROVED'"
-          ></button>
+          pButton
+          type="button"
+          icon="fal fa-exchange"
+          pTooltip="Sincronizar com Bling (apenas para vendas aprovadas)."
+          tooltipPosition="bottom"
+          (click)="syncWithBling(salesOrder)"
+          [disabled]="!!salesOrder.blingStatus || salesOrder.paymentStatus !== 'APPROVED'"
+        ></button>
       </td>
     </tr>
   </tbody>

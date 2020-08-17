@@ -11,7 +11,12 @@
       </div>
       <div class="p-field p-col">
         <label for="withVariations">Variações</label>
-        <p-dropdown name="withVariations" [options]="withVariationsOptions" [(ngModel)]="withVariations" optionLabel="label"></p-dropdown>
+        <p-dropdown
+          name="withVariations"
+          [options]="withVariationsOptions"
+          [(ngModel)]="withVariations"
+          optionLabel="label"
+        ></p-dropdown>
       </div>
     </div>
     <div class="p-fluid p-formgrid p-grid">
@@ -51,11 +56,13 @@
         </div>
       </td>
       <td class="centered">
-        <i class="fal fa-check" style="color: #67c167" *ngIf="product.isActive"></i>
-        <i class="fal fa-times" style="color: #df6666" *ngIf="!product.isActive"></i>
+        <i class="fal fa-check" style="color: #67c167;" *ngIf="product.isActive"></i>
+        <i class="fal fa-times" style="color: #df6666;" *ngIf="!product.isActive"></i>
       </td>
       <td class="actions">
-        <a [title]="'Início'" [routerLink]="'/products/' + product.sku"><button pButton type="button" label="Editar"></button></a>
+        <a [title]="'Início'" [routerLink]="'/products/' + product.sku"
+          ><button pButton type="button" label="Editar"></button
+        ></a>
       </td>
     </tr>
   </tbody>
