@@ -13,7 +13,7 @@ import {
 import { ProductImageDTO } from '../../../src/products/dtos/product-image.dto';
 import { ProductImage } from '../../../src/products/entities/product-image.entity';
 import { differenceWith, isEqual } from 'lodash';
-import { Product } from 'src/products/entities/product.entity';
+import { Product } from '../../../src/products/entities/product.entity';
 
 const validImagesFixtures: Image[] = imageFixtures;
 const validFixtures: ProductDTO[] = productFixtures;
