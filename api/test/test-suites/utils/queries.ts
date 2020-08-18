@@ -32,6 +32,7 @@ export async function cleanUpDatabase() {
       'delete from tag;',
       'delete from inventory;',
       'delete from product_image;',
+      'delete from product_composition;',
       'delete from product_variation;',
       'delete from product;',
       'delete from image;',

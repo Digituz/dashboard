@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
+import { minBy } from 'lodash';
+
 import { Inventory } from './inventory.entity';
 import { InventoryMovement } from './inventory-movement.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Brackets } from 'typeorm';
+import { Repository, Brackets, In } from 'typeorm';
 import { IPaginationOpts } from '../pagination/pagination';
 import { InventoryMovementDTO } from './inventory-movement.dto';
 import { SaleOrder } from '../sales-order/entities/sale-order.entity';
 import { ProductVariation } from '../products/entities/product-variation.entity';
+import { Product } from '../products/entities/product.entity';
+import { ProductComposition } from '../products/entities/product-composition.entity';
 
 @Injectable()
 export class InventoryService {
@@ -16,6 +20,8 @@ export class InventoryService {
     private inventoryRepository: Repository<Inventory>,
     @InjectRepository(InventoryMovement)
     private inventoryMovementRepository: Repository<InventoryMovement>,
+    @InjectRepository(Product)
+    private productRepository: Repository<Product>,
   ) {}
 
   async paginate(options: IPaginationOpts): Promise<Pagination<Inventory>> {
@@ -88,6 +94,12 @@ export class InventoryService {
     return this.inventoryRepository.findOne(id);
   }
 
+  findByVariationIds(ids: number[]): Promise<Inventory[]> {
+    return this.inventoryRepository.find({
+      productVariation: In(ids),
+    });
+  }
+
   findBySku(sku: string): Promise<Inventory> {
     return this.inventoryRepository
       .createQueryBuilder('i')
@@ -101,7 +113,7 @@ export class InventoryService {
       saleOrder: saleOrder,
     });
     const removeMovementJobs = movements.map(movement => {
-      return new Promise(async (res) => {
+      return new Promise(async res => {
         const inventory = movement.inventory;
         inventory.currentPosition -= movement.amount;
         await this.inventoryRepository.save(inventory);
@@ -146,7 +158,65 @@ export class InventoryService {
       saleOrder: saleOrder,
     };
 
-    return this.inventoryMovementRepository.save(movement);
+    const inventoryMovement = await this.inventoryMovementRepository.save(
+      movement,
+    );
+
+    const dependentCompositions = await this.productRepository
+      .createQueryBuilder('p')
+      .leftJoinAndSelect('p.productComposition', 'pc')
+      .leftJoinAndSelect('pc.productVariation', 'pv')
+      .where('pc.productVariation = :productVariation', {
+        productVariation: inventory.productVariation.id,
+      })
+      .getMany();
+
+    // TODO test composition movements properly
+    if (dependentCompositions && dependentCompositions.length > 0) {
+      // This scenario means that there are composite products that use the product variation
+      // being moved here. As such, we need to update their inventory as well so they reflect
+      // the new reality.
+      const updateCompositionJobs = dependentCompositions.map(
+        async dependentComposition => {
+          await this.updateProductCompositionInventories(
+            dependentComposition,
+            saleOrder,
+            inventoryMovementDTO.description,
+          );
+        },
+      );
+      await Promise.all(updateCompositionJobs);
+    }
+
+    return inventoryMovement;
+  }
+
+  private async updateProductCompositionInventories(
+    productComposition: ProductComposition,
+    saleOrder: SaleOrder,
+    description: string,
+  ) {
+    const partsOfTheComposition: ProductVariation[] = productComposition.product.productComposition.map(
+      pc => pc.productVariation,
+    );
+    const minInventory = minBy(
+      partsOfTheComposition,
+      part => part.currentPosition,
+    );
+    const productCompositionInventory = await this.inventoryRepository.findOneOrFail(
+      {
+        productVariation: productComposition.product.productVariations[0],
+      },
+    );
+    const inventoryMovement: InventoryMovement = {
+      inventory: productCompositionInventory,
+      saleOrder,
+      description,
+      amount:
+        minInventory.currentPosition -
+        productCompositionInventory.currentPosition,
+    };
+    return this.inventoryMovementRepository.save(inventoryMovement);
   }
 
   save(inventory: Inventory): Promise<Inventory> {

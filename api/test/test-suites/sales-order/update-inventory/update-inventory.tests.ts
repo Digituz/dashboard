@@ -57,7 +57,7 @@ describe('sale orders must update inventory', () => {
 
   async function getCurrentPosition(sku: String): Promise<number> {
     const currrentPositionRows = await executeQuery(
-      `select current_position
+      `select i.current_position
         from inventory i
         left join product_variation p on i.product_variation_id = p.id
         where p.sku = '${sku}';`,

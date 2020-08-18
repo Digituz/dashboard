@@ -26,7 +26,7 @@ export class ProductVariation extends BaseEntity {
     nullable: true,
     transformer: new NumericTransformer(),
   })
-  sellingPrice: number;
+  sellingPrice?: number;
 
   @ManyToOne(
     type => Product,
@@ -42,6 +42,6 @@ export class ProductVariation extends BaseEntity {
   @Column({ name: 'no_variation' })
   noVariation?: boolean = false;
 
-  // transient/helper
+  @Column({ name: 'current_position' })
   currentPosition?: number;
 }

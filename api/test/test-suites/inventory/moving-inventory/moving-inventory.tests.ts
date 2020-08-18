@@ -20,7 +20,7 @@ describe('moving inventory', () => {
   movingScenarios.forEach((movement: InventoryMovementDTO, idx: number) => {
     it(`should handle inventory movements properly (scenario #${idx})`, async () => {
       const currentPositionQuery = `
-        select current_position
+        select i.current_position
         from inventory i
         left join product_variation p on p.id = i.product_variation_id
         where p.sku = '${movement.sku}'
