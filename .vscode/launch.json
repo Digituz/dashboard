@@ -30,7 +30,8 @@
                 "${workspaceRoot}/api/node_modules/.bin/jest",
                 "--config",
                 "${workspaceRoot}/api/test/jest-e2e.json",
-                "--runInBand"
+                "--runInBand",
+                "--testTimeout=120000"
             ],
             "sourceMaps": true,
             "cwd": "${workspaceRoot}/api",
