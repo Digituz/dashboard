@@ -22,6 +22,8 @@ export class InventoryService {
     private inventoryMovementRepository: Repository<InventoryMovement>,
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
+    @InjectRepository(ProductVariation)
+    private productVariationRepository: Repository<ProductVariation>,
   ) {}
 
   async paginate(options: IPaginationOpts): Promise<Pagination<Inventory>> {
@@ -148,8 +150,20 @@ export class InventoryService {
     saleOrder?: SaleOrder,
   ): Promise<InventoryMovement> {
     const inventory = await this.findBySku(inventoryMovementDTO.sku);
+
+    // updating inventory current position
     inventory.currentPosition += inventoryMovementDTO.amount;
     await this.inventoryRepository.save(inventory);
+
+    // updating product variation current position
+    await this.productVariationRepository.update(
+      {
+        sku: inventoryMovementDTO.sku,
+      },
+      {
+        currentPosition: inventory.currentPosition,
+      },
+    );
 
     const movement: InventoryMovement = {
       inventory,

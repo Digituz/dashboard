@@ -3,7 +3,7 @@ import { getCredentials } from '../../utils/credentials';
 import { cleanUpDatabase } from '../../utils/queries';
 import { ProductDTO } from '../../../../src/products/dtos/product.dto';
 import { InventoryMovementDTO } from '../../../../src/inventory/inventory-movement.dto';
-import { Product } from 'src/products/entities/product.entity';
+import { Product } from '../../../../src/products/entities/product.entity';
 
 describe('persisting products', () => {
   let authorizedRequest: any;

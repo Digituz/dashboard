@@ -6,11 +6,12 @@ import { Inventory } from './inventory.entity';
 import { InventoryMovement } from './inventory-movement.entity';
 import { ProductsModule } from '../products/products.module';
 import { Product } from '../products/entities/product.entity';
+import { ProductVariation } from '../products/entities/product-variation.entity';
 
 @Module({
   imports: [
     forwardRef(() => ProductsModule),
-    TypeOrmModule.forFeature([Inventory, InventoryMovement, Product]),
+    TypeOrmModule.forFeature([Inventory, InventoryMovement, Product, ProductVariation]),
   ],
   controllers: [InventoryController],
   providers: [InventoryService],
