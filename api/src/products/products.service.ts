@@ -96,6 +96,10 @@ export class ProductsService {
       return a.order - b.order;
     });
 
+    product.productComposition = await this.productCompositionRepository.find({
+      where: { product: product },
+    });
+
     return product;
   }
 
@@ -189,50 +193,65 @@ export class ProductsService {
 
     await this.createInventories(variations);
 
+    await this.persistProductComposition(productDTO, persistedProduct);
+
+    return persistedProduct;
+  }
+
+  private async persistProductComposition(
+    productDTO: ProductDTO,
+    persistedProduct: Product,
+  ) {
     if (
-      productDTO.productComposition &&
-      productDTO.productComposition.length > 0
+      !productDTO.productComposition ||
+      productDTO.productComposition.length === 0
     ) {
-      const productVariations = await this.productVariationsRepository.find({
-        sku: In(productDTO.productComposition),
-      });
+      return;
+    }
 
-      // TODO test situations that prevent users from adding a product composition
-      // that point to its own product variation
-      const belongsToCurrentProduct = productVariations.find(
-        variation => variation.product === persistedProduct,
+    const productVariations = await this.productVariationsRepository.find({
+      sku: In(productDTO.productComposition),
+    });
+
+    // TODO test situations that prevent users from adding a product composition
+    // that point to its own product variation
+    const belongsToCurrentProduct = productVariations.find(
+      variation => variation.product === persistedProduct,
+    );
+    if (belongsToCurrentProduct) {
+      throw new Error(
+        'Composite product cannot use variations that belong to itself.',
       );
-      if (belongsToCurrentProduct) {
-        throw new Error(
-          'Composite product cannot use variations that belong to itself.',
-        );
-      }
+    }
 
-      const productCompositions: ProductComposition[] = productVariations.map(
-        variation => ({
-          product: persistedProduct,
-          productVariation: variation,
-        }),
-      );
-      const composition = await this.productCompositionRepository.save(
-        productCompositions,
-      );
-      persistedProduct.productComposition = composition.map(comp => {
-        delete comp.product;
-        return comp;
-      });
+    const productCompositions: ProductComposition[] = productVariations.map(
+      variation => ({
+        product: persistedProduct,
+        productVariation: variation,
+      }),
+    );
+    const composition = await this.productCompositionRepository.save(
+      productCompositions,
+    );
+    persistedProduct.productComposition = composition.map(comp => {
+      delete comp.product;
+      return comp;
+    });
 
-      const inventories = await this.inventoryService.findByVariationIds(productVariations.map(pv => pv.id));
+    const inventories = await this.inventoryService.findByVariationIds(
+      productVariations.map(pv => pv.id),
+    );
 
-      const minInventoryVariation = minBy(inventories, 'currentPosition');
-      await this.inventoryService.saveMovement({
+    const minInventoryVariation = minBy(inventories, 'currentPosition');
+    await this.inventoryService.saveMovement(
+      {
         sku: persistedProduct.sku,
         amount: minInventoryVariation.currentPosition,
         description: 'Criação do produto composto.',
-      }, null, true);
-    }
-
-    return persistedProduct;
+      },
+      null,
+      true,
+    );
   }
 
   private async updateVariations(
@@ -370,6 +389,33 @@ export class ProductsService {
         productDTO.productVariations,
         previousVariations,
       );
+    }
+
+    if (
+      (productDTO.productComposition &&
+        productDTO.productComposition.length > 0) ||
+      (previousProductVersion.productComposition &&
+        previousProductVersion.productComposition.length > 0)
+    ) {
+      // 1. clean up product compositions (we add again later)
+      await this.productCompositionRepository.delete({
+        product: previousProductVersion,
+      });
+
+      // 2. set current position to zero (it will set the correct value later)
+      this.productVariationsRepository.update(
+        {
+          sku: productDTO.sku,
+        },
+        {
+          currentPosition: 0,
+        },
+      );
+
+      await this.inventoryService.eraseCurrentPosition(productDTO.sku);
+
+      // 3. persist the compositions again
+      await this.persistProductComposition(productDTO, persistedProduct);
     }
 
     return Promise.resolve(persistedProduct);

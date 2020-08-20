@@ -4,7 +4,6 @@ import { cleanUpDatabase } from '../../utils/queries';
 import { ProductDTO } from '../../../../src/products/dtos/product.dto';
 import { InventoryMovementDTO } from '../../../../src/inventory/inventory-movement.dto';
 import { Product } from '../../../../src/products/entities/product.entity';
-import { ProductComposition } from 'src/products/entities/product-composition.entity';
 
 describe('managing composite products', () => {
   let authorizedRequest: any;
@@ -44,6 +43,12 @@ describe('managing composite products', () => {
     ncm: '1234.56.78',
   };
 
+  const productPart3: ProductDTO = {
+    sku: 'P-3',
+    title: 'Product Part 3',
+    ncm: '1234.56.78',
+  };
+
   const inventoryPart1: InventoryMovementDTO = {
     sku: 'P-1',
     amount: 7,
@@ -54,6 +59,12 @@ describe('managing composite products', () => {
     sku: 'P-2',
     amount: 9,
     description: 'define part 2 initial inventory',
+  };
+
+  const inventoryPart3: InventoryMovementDTO = {
+    sku: 'P-3',
+    amount: 5,
+    description: 'define part 3 initial inventory',
   };
 
   const compositeProduct: ProductDTO = {
@@ -67,10 +78,12 @@ describe('managing composite products', () => {
     // persist basic products
     await axios.post(PRODUCT_ENDPOINT, productPart1, authorizedRequest);
     await axios.post(PRODUCT_ENDPOINT, productPart2, authorizedRequest);
+    await axios.post(PRODUCT_ENDPOINT, productPart3, authorizedRequest);
 
     // move their inventory
     await axios.post(MOVEMENT_ENDPOINT, inventoryPart1, authorizedRequest);
     await axios.post(MOVEMENT_ENDPOINT, inventoryPart2, authorizedRequest);
+    await axios.post(MOVEMENT_ENDPOINT, inventoryPart3, authorizedRequest);
   }
 
   async function createCompositeProductAndCheckInventory() {
@@ -223,7 +236,31 @@ describe('managing composite products', () => {
   });
 
   it('should be able to add new parts to composite products', async () => {
-    fail('not tested');
+    await prepareScenarioForTests();
+
+    const newVersion = {
+      ...compositeProduct,
+      title: 'new title',
+      productComposition: ['P-1', 'P-2', 'P-3'],
+    };
+
+    const response = await axios.post(
+      PRODUCT_ENDPOINT,
+      newVersion,
+      authorizedRequest,
+    );
+
+    expect(response).toBeDefined();
+    expect(response.data).toBeDefined();
+    expect(response.status).toBe(201);
+
+    const persistedProduct: Product = response.data;
+    expect(persistedProduct.title).toBe(newVersion.title);
+    expect(persistedProduct.productComposition.length).toBe(
+      newVersion.productComposition.length,
+    );
+
+    await checkInventory(persistedProduct.sku, inventoryPart3.amount);
   });
 
   it('should be able to remove parts from composite products', async () => {

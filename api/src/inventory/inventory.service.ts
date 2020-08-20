@@ -153,7 +153,10 @@ export class InventoryService {
     allowPositiveMovementForCompositeProducts?: boolean,
   ): Promise<InventoryMovement> {
     // 1. check if this is a composite product
-    if (!allowPositiveMovementForCompositeProducts && inventoryMovementDTO.amount > 0) {
+    if (
+      !allowPositiveMovementForCompositeProducts &&
+      inventoryMovementDTO.amount > 0
+    ) {
       const product = await this.productRepository
         .createQueryBuilder('p')
         .leftJoin('p.productVariations', 'pv')
@@ -322,6 +325,12 @@ export class InventoryService {
   }
 
   save(inventory: Inventory): Promise<Inventory> {
+    return this.inventoryRepository.save(inventory);
+  }
+
+  async eraseCurrentPosition(sku: string) {
+    const inventory = await this.findBySku(sku);
+    inventory.currentPosition = 0;
     return this.inventoryRepository.save(inventory);
   }
 }
