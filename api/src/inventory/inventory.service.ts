@@ -24,6 +24,8 @@ export class InventoryService {
     private productRepository: Repository<Product>,
     @InjectRepository(ProductVariation)
     private productVariationRepository: Repository<ProductVariation>,
+    @InjectRepository(ProductComposition)
+    private productCompositionRepository: Repository<ProductComposition>,
   ) {}
 
   async paginate(options: IPaginationOpts): Promise<Pagination<Inventory>> {
@@ -176,24 +178,22 @@ export class InventoryService {
       movement,
     );
 
-    const dependentCompositions = await this.productRepository
+    const dependentProducts: Product[] = await this.productRepository
       .createQueryBuilder('p')
       .leftJoinAndSelect('p.productComposition', 'pc')
-      .leftJoinAndSelect('pc.productVariation', 'pv')
+      .leftJoinAndSelect('p.productVariations', 'pv')
       .where('pc.productVariation = :productVariation', {
         productVariation: inventory.productVariation.id,
       })
       .getMany();
 
-    // TODO test composition movements properly
-    if (dependentCompositions && dependentCompositions.length > 0) {
+    if (dependentProducts && dependentProducts.length > 0) {
       // This scenario means that there are composite products that use the product variation
-      // being moved here. As such, we need to update their inventory as well so they reflect
-      // the new reality.
-      const updateCompositionJobs = dependentCompositions.map(
-        async dependentComposition => {
+      // being moved. As such, we might need to update their inventory to reflect the new reality.
+      const updateCompositionJobs = dependentProducts.map(
+        async (dependentProduct: Product) => {
           await this.updateProductCompositionInventories(
-            dependentComposition,
+            dependentProduct,
             saleOrder,
             inventoryMovementDTO.description,
           );
@@ -206,22 +206,34 @@ export class InventoryService {
   }
 
   private async updateProductCompositionInventories(
-    productComposition: ProductComposition,
+    product: Product,
     saleOrder: SaleOrder,
     description: string,
   ) {
-    const partsOfTheComposition: ProductVariation[] = productComposition.product.productComposition.map(
-      pc => pc.productVariation,
-    );
-    const minInventory = minBy(
-      partsOfTheComposition,
-      part => part.currentPosition,
-    );
+    // step 1: find the variations
+    const composition = await this.productCompositionRepository
+      .createQueryBuilder('pc')
+      .leftJoinAndSelect('pc.productVariation', 'pv')
+      .where('pc.product = :productId', { productId: product.id })
+      .getMany();
+    const parts = composition.map(pc => pc.productVariation);
+
+    // step 2: check the min inventory of these parts
+    const minInventory = minBy(parts, part => part.currentPosition);
+
+    // step 3: calc the amount to be updated
+    const amountMoved =
+      minInventory.currentPosition -
+      product.productVariations[0].currentPosition;
+
+    if (amountMoved === 0) return; // no change, abort
+
     const productCompositionInventory = await this.inventoryRepository.findOneOrFail(
       {
-        productVariation: productComposition.product.productVariations[0],
+        productVariation: product.productVariations[0],
       },
     );
+
     const inventoryMovement: InventoryMovement = {
       inventory: productCompositionInventory,
       saleOrder,
@@ -230,6 +242,19 @@ export class InventoryService {
         minInventory.currentPosition -
         productCompositionInventory.currentPosition,
     };
+
+    // updating product variation current position
+    await this.productVariationRepository.update(
+      {
+        sku: product.productVariations[0].sku,
+      },
+      {
+        currentPosition:
+          product.productVariations[0].currentPosition +
+          inventoryMovement.amount,
+      },
+    );
+
     return this.inventoryMovementRepository.save(inventoryMovement);
   }
 

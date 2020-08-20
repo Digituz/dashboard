@@ -5,14 +5,18 @@ import { BaseEntity } from '../../util/base-entity';
 
 @Entity()
 export class ProductComposition extends BaseEntity {
-  @ManyToOne((type) => Product, (product) => product.productComposition, {
-    nullable: false,
-    cascade: false,
-  })
+  @ManyToOne(
+    type => Product,
+    product => product.productComposition,
+    {
+      nullable: false,
+      cascade: false,
+    },
+  )
   @JoinColumn({ name: 'product_id' })
   product?: Product;
 
-  @ManyToOne((type) => Product, (product) => product.productComposition, {
+  @ManyToOne(type => ProductVariation, {
     nullable: false,
     cascade: false,
   })
