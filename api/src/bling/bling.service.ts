@@ -145,17 +145,17 @@ export class BlingService {
       apikey: process.env.BLING_APIKEY,
     };
 
-    const result = await this.httpService.post(
+    const syncRequest = await this.httpService.post(
       'https://bling.com.br/Api/v2/pedido/json/',
       qs.stringify(data),
     );
+
+    await syncRequest.toPromise();
 
     await this.salesOrderService.updateBlingStatus(
       saleOrder.referenceCode,
       SaleOrderBlingStatus.EM_ABERTO,
     );
-
-    return result;
   }
 
   async cancelPurchaseOrder(saleOrder: SaleOrder) {
