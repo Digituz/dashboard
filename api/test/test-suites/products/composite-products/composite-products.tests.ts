@@ -165,8 +165,14 @@ describe('managing composite products', () => {
       authorizedRequest,
     );
 
-    await checkInventory(productPart1.sku, inventoryPart1.amount + sellCompositeProduct.amount);
-    await checkInventory(productPart2.sku, inventoryPart2.amount + sellCompositeProduct.amount);
+    await checkInventory(
+      productPart1.sku,
+      inventoryPart1.amount + sellCompositeProduct.amount,
+    );
+    await checkInventory(
+      productPart2.sku,
+      inventoryPart2.amount + sellCompositeProduct.amount,
+    );
   });
 
   it("should fail when user try to add items to composite's inventory", async () => {
@@ -188,5 +194,43 @@ describe('managing composite products', () => {
     } catch (error) {
       // good to go, it is expected
     }
+  });
+
+  it('should be able to make simple updates to composite products', async () => {
+    await prepareScenarioForTests();
+
+    const newVersion = {
+      ...compositeProduct,
+      title: 'new title to my composite product',
+      weight: 0.9,
+      height: 0.8,
+    };
+
+    const response = await axios.post(
+      PRODUCT_ENDPOINT,
+      newVersion,
+      authorizedRequest,
+    );
+
+    expect(response).toBeDefined();
+    expect(response.data).toBeDefined();
+    expect(response.status).toBe(201);
+
+    const persistedProduct: Product = response.data;
+    expect(persistedProduct.title).toBe(newVersion.title);
+    expect(persistedProduct.weight).toBe(newVersion.weight);
+    expect(persistedProduct.height).toBe(newVersion.height);
+  });
+
+  it('should be able to add new parts to composite products', async () => {
+    fail('not tested');
+  });
+
+  it('should be able to remove parts from composite products', async () => {
+    fail('not tested');
+  });
+
+  it('should be able to completely changes parts of composite products', async () => {
+    fail('not tested');
   });
 });
