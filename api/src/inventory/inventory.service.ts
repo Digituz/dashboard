@@ -151,13 +151,36 @@ export class InventoryService {
     inventoryMovementDTO: InventoryMovementDTO,
     saleOrder?: SaleOrder,
   ): Promise<InventoryMovement> {
+    // 1. update product position and persist movement
+    const inventoryMovement = await this.moveProduct(
+      inventoryMovementDTO,
+      saleOrder,
+    );
+
+    // 2. if this product is part of compositions, update them
+    await this.updateDependentProducts(
+      inventoryMovement.inventory,
+      saleOrder,
+      inventoryMovementDTO,
+    );
+
+    // 3. if this product is a composite product, update its parts
+    await this.updatePartsOfComposition(inventoryMovementDTO, saleOrder);
+
+    return inventoryMovement;
+  }
+
+  private async moveProduct(
+    inventoryMovementDTO: InventoryMovementDTO,
+    saleOrder: SaleOrder,
+  ) {
     const inventory = await this.findBySku(inventoryMovementDTO.sku);
 
-    // updating inventory current position
+    // 1. updating inventory current position
     inventory.currentPosition += inventoryMovementDTO.amount;
     await this.inventoryRepository.save(inventory);
 
-    // updating product variation current position
+    // 2. updating product variation current position
     await this.productVariationRepository.update(
       {
         sku: inventoryMovementDTO.sku,
@@ -167,6 +190,7 @@ export class InventoryService {
       },
     );
 
+    // 3. persist movement
     const movement: InventoryMovement = {
       inventory,
       amount: inventoryMovementDTO.amount,
@@ -174,10 +198,47 @@ export class InventoryService {
       saleOrder: saleOrder,
     };
 
-    const inventoryMovement = await this.inventoryMovementRepository.save(
-      movement,
+    return await this.inventoryMovementRepository.save(movement);
+  }
+
+  private async updatePartsOfComposition(
+    inventoryMovementDTO: InventoryMovementDTO,
+    saleOrder: SaleOrder,
+  ) {
+    if (inventoryMovementDTO.amount > 0) {
+      // the thing is, too add items to composite products, one must add through its parts
+      return;
+    }
+
+    const productCompositions: ProductComposition[] = await this.productCompositionRepository
+      .createQueryBuilder('pc')
+      .leftJoinAndSelect('pc.productVariation', 'pv')
+      .leftJoin('pc.product', 'p')
+      .where('p.sku = :sku', { sku: inventoryMovementDTO.sku })
+      .getMany();
+
+    if (!productCompositions || productCompositions.length === 0) return;
+
+    const partsOfComposition: ProductVariation[] = productCompositions.map(
+      pc => pc.productVariation,
     );
 
+    await Promise.all(
+      partsOfComposition.map(async part => {
+        const movement: InventoryMovementDTO = {
+          ...inventoryMovementDTO,
+          sku: part.sku,
+        };
+        await this.moveProduct(movement, saleOrder);
+      }),
+    );
+  }
+
+  private async updateDependentProducts(
+    inventory: Inventory,
+    saleOrder: SaleOrder,
+    inventoryMovementDTO: InventoryMovementDTO,
+  ) {
     const dependentProducts: Product[] = await this.productRepository
       .createQueryBuilder('p')
       .leftJoinAndSelect('p.productComposition', 'pc')
@@ -201,8 +262,6 @@ export class InventoryService {
       );
       await Promise.all(updateCompositionJobs);
     }
-
-    return inventoryMovement;
   }
 
   private async updateProductCompositionInventories(
@@ -234,28 +293,15 @@ export class InventoryService {
       },
     );
 
-    const inventoryMovement: InventoryMovement = {
-      inventory: productCompositionInventory,
-      saleOrder,
-      description,
+    const inventoryMovementDTO: InventoryMovementDTO = {
+      sku: product.sku,
       amount:
         minInventory.currentPosition -
         productCompositionInventory.currentPosition,
+      description: description,
     };
 
-    // updating product variation current position
-    await this.productVariationRepository.update(
-      {
-        sku: product.productVariations[0].sku,
-      },
-      {
-        currentPosition:
-          product.productVariations[0].currentPosition +
-          inventoryMovement.amount,
-      },
-    );
-
-    return this.inventoryMovementRepository.save(inventoryMovement);
+    return await this.moveProduct(inventoryMovementDTO, saleOrder);
   }
 
   save(inventory: Inventory): Promise<Inventory> {

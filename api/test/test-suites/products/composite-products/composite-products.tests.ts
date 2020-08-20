@@ -151,21 +151,22 @@ describe('managing composite products', () => {
   });
 
   it('should update parts when a composite product gets sold', async () => {
-    // await prepareScenarioForTests();
+    await prepareScenarioForTests();
 
-    // const sellCompositeProduct: InventoryMovementDTO = {
-    //   sku: compositeProduct.sku,
-    //   amount: -2,
-    //   description: 'selling composite products',
-    // };
+    const sellCompositeProduct: InventoryMovementDTO = {
+      sku: compositeProduct.sku,
+      amount: -2,
+      description: 'selling composite products',
+    };
 
-    // await axios.post(
-    //   MOVEMENT_ENDPOINT,
-    //   sellCompositeProduct,
-    //   authorizedRequest,
-    // );
+    await axios.post(
+      MOVEMENT_ENDPOINT,
+      sellCompositeProduct,
+      authorizedRequest,
+    );
 
-    // await checkInventory(compositeProduct.sku, inventoryPart2.amount);
+    await checkInventory(productPart1.sku, inventoryPart1.amount + sellCompositeProduct.amount);
+    await checkInventory(productPart2.sku, inventoryPart2.amount + sellCompositeProduct.amount);
   });
 
   it("should fail when user try to add items to composite's inventory", async () => {
