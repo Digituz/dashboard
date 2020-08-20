@@ -49,6 +49,12 @@ describe('managing composite products', () => {
     ncm: '1234.56.78',
   };
 
+  const productPart4: ProductDTO = {
+    sku: 'P-4',
+    title: 'Product Part 4',
+    ncm: '1234.56.78',
+  };
+
   const inventoryPart1: InventoryMovementDTO = {
     sku: 'P-1',
     amount: 7,
@@ -67,6 +73,12 @@ describe('managing composite products', () => {
     description: 'define part 3 initial inventory',
   };
 
+  const inventoryPart4: InventoryMovementDTO = {
+    sku: 'P-4',
+    amount: 3,
+    description: 'define part 4 initial inventory',
+  };
+
   const compositeProduct: ProductDTO = {
     sku: 'CP-1',
     title: 'Composite Product 1',
@@ -79,11 +91,13 @@ describe('managing composite products', () => {
     await axios.post(PRODUCT_ENDPOINT, productPart1, authorizedRequest);
     await axios.post(PRODUCT_ENDPOINT, productPart2, authorizedRequest);
     await axios.post(PRODUCT_ENDPOINT, productPart3, authorizedRequest);
+    await axios.post(PRODUCT_ENDPOINT, productPart4, authorizedRequest);
 
     // move their inventory
     await axios.post(MOVEMENT_ENDPOINT, inventoryPart1, authorizedRequest);
     await axios.post(MOVEMENT_ENDPOINT, inventoryPart2, authorizedRequest);
     await axios.post(MOVEMENT_ENDPOINT, inventoryPart3, authorizedRequest);
+    await axios.post(MOVEMENT_ENDPOINT, inventoryPart4, authorizedRequest);
   }
 
   async function createCompositeProductAndCheckInventory() {
@@ -264,10 +278,71 @@ describe('managing composite products', () => {
   });
 
   it('should be able to remove parts from composite products', async () => {
-    fail('not tested');
+    await prepareScenarioForTests();
+
+    const withThreeParts = {
+      ...compositeProduct,
+      title: 'composition with three parts',
+      productComposition: ['P-1', 'P-2', 'P-3'],
+    };
+
+    const firstResponse = await axios.post(
+      PRODUCT_ENDPOINT,
+      withThreeParts,
+      authorizedRequest,
+    );
+    await checkInventory(firstResponse.data.sku, inventoryPart3.amount);
+
+    const backToTwoAgain = {
+      ...withThreeParts,
+      title: 'composition with two parts',
+      productComposition: ['P-1', 'P-4'],
+    };
+
+    const secondResponse = await axios.post(
+      PRODUCT_ENDPOINT,
+      backToTwoAgain,
+      authorizedRequest,
+    );
+
+    expect(secondResponse).toBeDefined();
+    expect(secondResponse.data).toBeDefined();
+    expect(secondResponse.status).toBe(201);
+
+    const persistedProduct: Product = secondResponse.data;
+    expect(persistedProduct.title).toBe(backToTwoAgain.title);
+    expect(persistedProduct.productComposition.length).toBe(
+      backToTwoAgain.productComposition.length,
+    );
+
+    await checkInventory(persistedProduct.sku, inventoryPart4.amount);
   });
 
   it('should be able to completely changes parts of composite products', async () => {
-    fail('not tested');
+    await prepareScenarioForTests();
+
+    const newVersion = {
+      ...compositeProduct,
+      title: 'new title',
+      productComposition: ['P-3', 'P-4'],
+    };
+
+    const response = await axios.post(
+      PRODUCT_ENDPOINT,
+      newVersion,
+      authorizedRequest,
+    );
+
+    expect(response).toBeDefined();
+    expect(response.data).toBeDefined();
+    expect(response.status).toBe(201);
+
+    const persistedProduct: Product = response.data;
+    expect(persistedProduct.title).toBe(newVersion.title);
+    expect(persistedProduct.productComposition.length).toBe(
+      newVersion.productComposition.length,
+    );
+
+    await checkInventory(persistedProduct.sku, inventoryPart4.amount);
   });
 });
