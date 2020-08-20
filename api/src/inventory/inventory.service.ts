@@ -150,21 +150,38 @@ export class InventoryService {
   async saveMovement(
     inventoryMovementDTO: InventoryMovementDTO,
     saleOrder?: SaleOrder,
+    allowPositiveMovementForCompositeProducts?: boolean,
   ): Promise<InventoryMovement> {
-    // 1. update product position and persist movement
+    // 1. check if this is a composite product
+    if (!allowPositiveMovementForCompositeProducts && inventoryMovementDTO.amount > 0) {
+      const product = await this.productRepository
+        .createQueryBuilder('p')
+        .leftJoin('p.productVariations', 'pv')
+        .leftJoinAndSelect('p.productComposition', 'pc')
+        .where('pv.sku = :sku', {
+          sku: inventoryMovementDTO.sku,
+        })
+        .getOne();
+
+      if (product.productComposition.length > 0) {
+        throw new Error('Cannot increase inventory for composite produts');
+      }
+    }
+
+    // 2. update product position and persist movement
     const inventoryMovement = await this.moveProduct(
       inventoryMovementDTO,
       saleOrder,
     );
 
-    // 2. if this product is part of compositions, update them
+    // 3. if this product is part of compositions, update them
     await this.updateDependentProducts(
       inventoryMovement.inventory,
       saleOrder,
       inventoryMovementDTO,
     );
 
-    // 3. if this product is a composite product, update its parts
+    // 4. if this product is a composite product, update its parts
     await this.updatePartsOfComposition(inventoryMovementDTO, saleOrder);
 
     return inventoryMovement;

@@ -170,6 +170,23 @@ describe('managing composite products', () => {
   });
 
   it("should fail when user try to add items to composite's inventory", async () => {
-    // fail('not implemented yet');
+    await prepareScenarioForTests();
+
+    const sellCompositeProduct: InventoryMovementDTO = {
+      sku: compositeProduct.sku,
+      amount: 2,
+      description: 'adding more items to composite product',
+    };
+
+    try {
+      await axios.post(
+        MOVEMENT_ENDPOINT,
+        sellCompositeProduct,
+        authorizedRequest,
+      );
+      fail('error expected');
+    } catch (error) {
+      // good to go, it is expected
+    }
   });
 });

@@ -229,7 +229,7 @@ export class ProductsService {
         sku: persistedProduct.sku,
         amount: minInventoryVariation.currentPosition,
         description: 'Criação do produto composto.',
-      });
+      }, null, true);
     }
 
     return persistedProduct;
