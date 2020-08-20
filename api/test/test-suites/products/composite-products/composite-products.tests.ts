@@ -16,12 +16,12 @@ describe('managing composite products', () => {
     await cleanUpDatabase();
   });
 
-  async function checkProductComposition(
-    compositeProduct: ProductDTO,
+  async function checkInventory(
+    sku: string,
     expectedInventoryPosition: number,
   ) {
     const getProductResponse = await axios.get(
-      `${PRODUCT_ENDPOINT}/${compositeProduct.sku}`,
+      `${PRODUCT_ENDPOINT}/${sku}`,
       authorizedRequest,
     );
     const persistedProduct: Product = getProductResponse.data;
@@ -93,59 +93,79 @@ describe('managing composite products', () => {
 
   it('should be able to insert composite products', async () => {
     await prepareScenarioForTests();
-    await checkProductComposition(compositeProduct, inventoryPart1.amount);
+    await checkInventory(compositeProduct.sku, inventoryPart1.amount);
   });
 
   it('should not change composite inventory when min inventory is not changed', async () => {
-    await prepareScenarioForTests();
-
     // as part 1 position is lower than part 2, even after the update,
     // composition's inventory must stay the same
+
+    await prepareScenarioForTests();
+
     const movePart2: InventoryMovementDTO = {
-      sku: 'P-2',
+      sku: productPart2.sku,
       amount: -1,
-      description: 'updating part 2',
+      description: 'moving stuff',
     };
 
     await axios.post(MOVEMENT_ENDPOINT, movePart2, authorizedRequest);
 
-    await checkProductComposition(compositeProduct, inventoryPart1.amount);
+    await checkInventory(compositeProduct.sku, inventoryPart1.amount);
   });
 
   it('should change composite inventory when min inventory gets lower', async () => {
-    await prepareScenarioForTests();
-
     // as part 1 position is now higher than part 2, after the update,
     // composition's inventory must be equal to whatver part 2 is
+
+    await prepareScenarioForTests();
+
     const movePart1: InventoryMovementDTO = {
-      sku: 'P-1',
+      sku: productPart1.sku,
       amount: -3,
-      description: 'updating part 1',
+      description: 'moving stuff',
     };
 
     await axios.post(MOVEMENT_ENDPOINT, movePart1, authorizedRequest);
 
-    await checkProductComposition(compositeProduct, inventoryPart1.amount + movePart1.amount);
+    await checkInventory(
+      compositeProduct.sku,
+      inventoryPart1.amount + movePart1.amount,
+    );
   });
 
   it('should keep composite inventory in sync with min inventory', async () => {
-    await prepareScenarioForTests();
-
     // as part 1 position is now higher than part 2, after the update,
     // composition's inventory must be equal to whatver part 2 is
+
+    await prepareScenarioForTests();
+
     const movePart1: InventoryMovementDTO = {
-      sku: 'P-1',
+      sku: productPart1.sku,
       amount: 4,
-      description: 'updating part 1',
+      description: 'moving stuff',
     };
 
     await axios.post(MOVEMENT_ENDPOINT, movePart1, authorizedRequest);
 
-    await checkProductComposition(compositeProduct, inventoryPart2.amount);
+    await checkInventory(compositeProduct.sku, inventoryPart2.amount);
   });
 
   it('should update parts when a composite product gets sold', async () => {
-    // fail('not implemented yet');
+    // await prepareScenarioForTests();
+
+    // const sellCompositeProduct: InventoryMovementDTO = {
+    //   sku: compositeProduct.sku,
+    //   amount: -2,
+    //   description: 'selling composite products',
+    // };
+
+    // await axios.post(
+    //   MOVEMENT_ENDPOINT,
+    //   sellCompositeProduct,
+    //   authorizedRequest,
+    // );
+
+    // await checkInventory(compositeProduct.sku, inventoryPart2.amount);
   });
 
   it("should fail when user try to add items to composite's inventory", async () => {
