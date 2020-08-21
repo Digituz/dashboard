@@ -6,6 +6,7 @@ import { ComboBoxOption } from '@app/util/combo-box-option.interface';
 import { BreadcrumbsService } from '@app/breadcrumbs/breadcrumbs.service';
 import { SalesOrdersService } from '../sales-orders.service';
 import { Observable } from 'rxjs';
+import { PaymentStatus } from '../payment-status.enum';
 
 @Component({
   selector: 'app-sales-order-list',
@@ -48,6 +49,19 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
 
   syncWithBling(salesOrder: SalesOrderDTO) {
     this.salesOrdersService.syncWithBling(salesOrder).subscribe(() => {
+      console.log('done');
+    });
+  }
+
+  duplicateOrder(salesOrder: SalesOrderDTO) {
+    const newSalesOrder: SalesOrderDTO = {
+      ...salesOrder,
+      id: null,
+      blingStatus: null,
+      paymentStatus: PaymentStatus.IN_PROCESS,
+      referenceCode: Date.now().toString(),
+    };
+    this.salesOrdersService.save(newSalesOrder).subscribe(() => {
       console.log('done');
     });
   }
