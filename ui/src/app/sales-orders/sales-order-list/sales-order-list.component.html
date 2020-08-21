@@ -37,7 +37,7 @@
       <th dgz-sortable="referenceCode">Cód. Referência</th>
       <th dgz-sortable="name">Cliente</th>
       <th dgz-sortable="total">Total</th>
-      <th dgz-sortable="status">Status Pgto.</th>
+      <th dgz-sortable="status">Status</th>
       <th></th>
     </tr>
   </thead>
@@ -48,24 +48,50 @@
       <td>{{ salesOrder.customer.name }}</td>
       <td class="currency">{{ salesOrder.total | reais }}</td>
       <td class="centered">
-        <i
-          class="fal fa-check"
-          style="color: #67c167;"
-          *ngIf="salesOrder.paymentStatus === 'APPROVED'"
-          title="Aprovada"
-        ></i>
-        <i
-          class="fal fa-times"
-          style="color: #df6666;"
-          *ngIf="salesOrder.paymentStatus === 'CANCELLED'"
-          title="Cancelada"
-        ></i>
-        <i
-          class="fal fa-sync"
-          style="color: #aaaaaa;"
-          *ngIf="salesOrder.paymentStatus === 'IN_PROCESS'"
-          title="Em Processamento"
-        ></i>
+        <div
+          class="badge"
+          [ngClass]="
+            (salesOrder.paymentStatus === 'APPROVED' && 'success') ||
+            (salesOrder.paymentStatus === 'CANCELLED' && 'failure')
+          "
+        >
+          <i
+            class="fal fa-check"
+            *ngIf="salesOrder.paymentStatus === 'APPROVED'"
+            pTooltip="Pagamento aprovado"
+            tooltipPosition="top"
+          ></i>
+          <i
+            class="fal fa-times"
+            *ngIf="salesOrder.paymentStatus === 'CANCELLED'"
+            pTooltip="Pagamento cancelado"
+            tooltipPosition="top"
+          ></i>
+          <i
+            class="fal fa-sync"
+            *ngIf="salesOrder.paymentStatus === 'IN_PROCESS'"
+            pTooltip="Pagamento em processamento"
+            tooltipPosition="top"
+          ></i>
+          <i
+            class="fal fa-ghost"
+            *ngIf="!salesOrder.blingStatus"
+            pTooltip="Venda não sincronizada com o Bling"
+            tooltipPosition="top"
+          ></i>
+          <i
+            class="fal fa-times"
+            *ngIf="salesOrder.blingStatus === 'CANCELADO'"
+            pTooltip="Venda cancelada no Bling"
+            tooltipPosition="top"
+          ></i>
+          <i
+            class="fal fa-exchange"
+            *ngIf="!!salesOrder.blingStatus && salesOrder.blingStatus !== 'CANCELADO'"
+            pTooltip="Venda sincronizada com o Bling"
+            tooltipPosition="top"
+          ></i>
+        </div>
       </td>
       <td class="actions">
         <a [title]="'Venda'" [routerLink]="'/sales-orders/' + salesOrder.referenceCode">
