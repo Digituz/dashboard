@@ -85,6 +85,9 @@ export class SalesOrderFormComponent implements OnInit {
         this.salesOrder = salesOrder;
         this.salesOrderId = salesOrder.id;
         this.configureFormFields(salesOrder);
+        if (!!salesOrder.blingStatus) {
+          this.formFields.disable();
+        }
       });
     }
   }
@@ -124,7 +127,7 @@ export class SalesOrderFormComponent implements OnInit {
       creationDate: [salesOrderDTO.creationDate || null],
       approvalDate: [salesOrderDTO.approvalDate || null],
       cancellationDate: [salesOrderDTO.cancellationDate || null],
-      total: [salesOrderDTO.total || 0],
+      total: [{ value: salesOrderDTO.total || 0, disabled: true }],
       items: itemsField,
     });
     this.loading = false;

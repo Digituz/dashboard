@@ -68,8 +68,14 @@
         ></i>
       </td>
       <td class="actions">
-        <a [title]="'Venda'" [routerLink]="'/sales-orders/' + salesOrder.referenceCode"
-          ><button pButton type="button" label="Editar" [disabled]="!!salesOrder.blingStatus"></button>
+        <a [title]="'Venda'" [routerLink]="'/sales-orders/' + salesOrder.referenceCode">
+          <button
+            pButton
+            type="button"
+            [icon]="!!salesOrder.blingStatus ? 'fal fa-search' : 'fal fa-edit'"
+            [pTooltip]="!!salesOrder.blingStatus ? 'Visualizar venda.' : 'Editar detalhes.'"
+            tooltipPosition="top"
+          ></button>
         </a>
         <button
           pButton

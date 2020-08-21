@@ -7,11 +7,23 @@
 </div>
 <div class="feature-header">
   <p>
-    <label>Atualize o pedido de venda através do formulário abaixo.</label>
+    <label>
+      {{
+        !!salesOrder.blingStatus
+          ? 'O formulário da venda está bloqueado pois a mesma já se encontra sincronizada com o Bling.'
+          : 'Atualize o pedido de venda através do formulário abaixo.'
+      }}
+    </label>
   </p>
   <div class="actions">
     <a routerLink="/sales-orders"><button pButton type="button" class="ui-button-secondary" label="Voltar"></button></a>
-    <button (click)="submitSalesOrder()" pButton type="button" label="Salvar"></button>
+    <button
+      (click)="submitSalesOrder()"
+      pButton
+      type="button"
+      label="Salvar"
+      [disabled]="!!salesOrder.blingStatus"
+    ></button>
   </div>
 </div>
 <p-card>
@@ -58,7 +70,6 @@
           locale="pt-BR"
           [minFractionDigits]="2"
           [maxFractionDigits]="2"
-          disabled="true"
           placeholder="ex. R$ 10,00"
         ></p-inputNumber>
       </div>
@@ -110,7 +121,7 @@
   <p-card>
     <div class="product-variation-description">
       <p>Selecione os produtos a serem vendidos.</p>
-      <button pButton label="Adicionar Item" (click)="addItem()"></button>
+      <button pButton label="Adicionar Item" (click)="addItem()" [disabled]="!!salesOrder.blingStatus"></button>
     </div>
     <form [formGroup]="formFields" (ngSubmit)="submitSalesOrder()" *ngIf="!loading">
       <div class="p-fluid p-grid">
@@ -185,6 +196,7 @@
               style="width: 100%;"
               pTooltip="Remover item"
               (click)="removeItem(i)"
+              [disabled]="!!salesOrder.blingStatus"
             ></button>
           </div>
         </div>
@@ -244,7 +256,13 @@
               name="shippingZipAddress"
               formControlName="shippingZipAddress"
             />
-            <button pButton type="button" icon="fal fa-search" (click)="loadAddress()"></button>
+            <button
+              pButton
+              type="button"
+              icon="fal fa-search"
+              (click)="loadAddress()"
+              [disabled]="!!salesOrder.blingStatus"
+            ></button>
           </div>
         </div>
         <div class="p-field p-col-2">

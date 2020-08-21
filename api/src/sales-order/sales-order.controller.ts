@@ -141,6 +141,7 @@ export class SalesOrderController {
       approvalDate: saleOrder.approvalDate,
       cancellationDate: saleOrder.cancellationDate,
       total: saleOrder.paymentDetails.total,
+      blingStatus: saleOrder.blingStatus,
     };
   }
 }
