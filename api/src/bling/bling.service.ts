@@ -150,12 +150,14 @@ export class BlingService {
       qs.stringify(data),
     );
 
-    await syncRequest.toPromise();
+    const response = await syncRequest.toPromise();
 
     await this.salesOrderService.updateBlingStatus(
       saleOrder.referenceCode,
       SaleOrderBlingStatus.EM_ABERTO,
     );
+
+    return Promise.resolve(response);
   }
 
   async cancelPurchaseOrder(saleOrder: SaleOrder) {
@@ -178,9 +180,11 @@ export class BlingService {
       apikey: process.env.BLING_APIKEY,
     };
 
-    return this.httpService.put(
-      `https://bling.com.br/Api/v2/pedido/${saleOrder.referenceCode}/json/`,
-      qs.stringify(data),
-    ).toPromise();
+    return this.httpService
+      .put(
+        `https://bling.com.br/Api/v2/pedido/${saleOrder.referenceCode}/json/`,
+        qs.stringify(data),
+      )
+      .toPromise();
   }
 }

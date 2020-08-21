@@ -147,10 +147,9 @@ describe('Bling integration', () => {
     saleOrder.items[0].productVariation = productVariation;
 
     // create the order on Bling
-    const createHttpResponse = await realBlingService.createPurchaseOrder(
+    const createResponse = await realBlingService.createPurchaseOrder(
       saleOrder,
     );
-    const createResponse = await createHttpResponse.toPromise();
     expect(createResponse).toBeDefined();
     expect(createResponse.data).toBeDefined();
     expect(createResponse.data.retorno.erros).toBeUndefined();
