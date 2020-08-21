@@ -54,8 +54,18 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
   }
 
   syncWithBling(salesOrder: SalesOrderDTO) {
-    this.salesOrdersService.syncWithBling(salesOrder).subscribe(() => {
-      console.log('done');
+    this.confirmationService.confirm({
+      message: 'Deseja realmente sincronizar no Bling?',
+      header: 'Sincronizar Venda',
+      acceptButtonStyleClass: 'ui-button-primary',
+      rejectButtonStyleClass: 'ui-button-danger',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      accept: () => {
+        this.salesOrdersService.syncWithBling(salesOrder).subscribe(() => {
+          console.log('done');
+        });
+      },
     });
   }
 
@@ -80,7 +90,6 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
       rejectButtonStyleClass: 'ui-button-danger',
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
-      icon: 'fal fa-times',
       accept: () => {
         this.salesOrdersService.cancelOnBling(salesOrder).subscribe(() => {
           console.log('done');
