@@ -29,4 +29,9 @@ export class SalesOrderDTO {
   cancellationDate?: Date;
   total?: number;
   blingStatus?: SaleOrderBlingStatus | string;
+
+  // ui helpers
+  duplicatingSalesOrder?: boolean;
+  syncingWithBling?: boolean;
+  cancellingOnBling?: boolean;
 }

@@ -63,7 +63,9 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
       accept: () => {
+        salesOrder.syncingWithBling = true;
         this.salesOrdersService.syncWithBling(salesOrder).subscribe(() => {
+          delete salesOrder.syncingWithBling;
           salesOrder.blingStatus = SaleOrderBlingStatus.EM_ABERTO;
         });
       },
@@ -81,6 +83,7 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
       accept: () => {
+        salesOrder.duplicatingSalesOrder = true;
         const newSalesOrder: SalesOrderDTO = {
           ...salesOrder,
           id: null,
@@ -89,6 +92,7 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
           referenceCode: Date.now().toString(),
         };
         this.salesOrdersService.save(newSalesOrder).subscribe(() => {
+          delete salesOrder.duplicatingSalesOrder;
           this.salesOrdersTable.loadData();
         });
       },
@@ -104,7 +108,9 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
       accept: () => {
+        salesOrder.cancellingOnBling = true;
         this.salesOrdersService.cancelOnBling(salesOrder).subscribe(() => {
+          delete salesOrder.cancellingOnBling;
           salesOrder.paymentStatus = PaymentStatus.CANCELLED;
           salesOrder.blingStatus = SaleOrderBlingStatus.CANCELADO;
         });
