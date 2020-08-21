@@ -51,4 +51,8 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
   syncWithBling(salesOrder: SalesOrderDTO) {
     return this.httpClient.post<void>(`${this.BLING_INTEGRATION_ENDPOINT}/${salesOrder.referenceCode}`, {});
   }
+
+  cancelOnBling(salesOrder: SalesOrderDTO) {
+    return this.httpClient.delete<void>(`${this.BLING_INTEGRATION_ENDPOINT}/${salesOrder.referenceCode}`);
+  }
 }

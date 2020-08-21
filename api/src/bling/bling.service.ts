@@ -181,6 +181,6 @@ export class BlingService {
     return this.httpService.put(
       `https://bling.com.br/Api/v2/pedido/${saleOrder.referenceCode}/json/`,
       qs.stringify(data),
-    );
+    ).toPromise();
   }
 }

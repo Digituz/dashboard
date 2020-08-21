@@ -158,14 +158,13 @@ describe('Bling integration', () => {
 
     // cancel the order on Bling
     saleOrder.paymentDetails.paymentStatus = PaymentStatus.CANCELLED;
-    const cancelHttpResponse = await realBlingService.cancelPurchaseOrder(
+    const cancelResponse = await realBlingService.cancelPurchaseOrder(
       saleOrder,
     );
-    const cacnelResponse = await cancelHttpResponse.toPromise();
-    expect(cacnelResponse).toBeDefined();
-    expect(cacnelResponse.data).toBeDefined();
-    expect(cacnelResponse.data.retorno.erros).toBeUndefined();
-    expect(cacnelResponse.status).toBe(200);
+    expect(cancelResponse).toBeDefined();
+    expect(cancelResponse.data).toBeDefined();
+    expect(cancelResponse.data.retorno.erros).toBeUndefined();
+    expect(cancelResponse.status).toBe(200);
 
     // remove product from Bling
     await removeProduct(productVariation);

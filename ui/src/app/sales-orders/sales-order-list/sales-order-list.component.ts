@@ -47,8 +47,13 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
   }
 
   syncWithBling(salesOrder: SalesOrderDTO) {
-    console.log(salesOrder);
     this.salesOrdersService.syncWithBling(salesOrder).subscribe(() => {
+      console.log('done');
+    });
+  }
+
+  cancelOnBling(salesOrder: SalesOrderDTO) {
+    this.salesOrdersService.cancelOnBling(salesOrder).subscribe(() => {
       console.log('done');
     });
   }
