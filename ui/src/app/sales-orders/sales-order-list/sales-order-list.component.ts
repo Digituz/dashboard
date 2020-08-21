@@ -57,7 +57,7 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
   syncWithBling(salesOrder: SalesOrderDTO) {
     this.confirmationService.confirm({
       message: 'Deseja realmente sincronizar no Bling?',
-      header: 'Sincronizar Venda',
+      header: 'Sincronizar Venda?',
       acceptButtonStyleClass: 'ui-button-primary',
       rejectButtonStyleClass: 'ui-button-danger',
       acceptLabel: 'Sim',
@@ -71,22 +71,34 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
   }
 
   duplicateOrder(salesOrder: SalesOrderDTO) {
-    const newSalesOrder: SalesOrderDTO = {
-      ...salesOrder,
-      id: null,
-      blingStatus: null,
-      paymentStatus: PaymentStatus.IN_PROCESS,
-      referenceCode: Date.now().toString(),
-    };
-    this.salesOrdersService.save(newSalesOrder).subscribe(() => {
-      this.salesOrdersTable.loadData();
+    this.confirmationService.confirm({
+      message:
+        'Deseja duplicar essa venda? Uma nova venda com status de ' +
+        'pagamento "Em Processamento" será criada com base na venda selecionada.',
+      header: 'Duplicar Venda?',
+      acceptButtonStyleClass: 'ui-button-primary',
+      rejectButtonStyleClass: 'ui-button-danger',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      accept: () => {
+        const newSalesOrder: SalesOrderDTO = {
+          ...salesOrder,
+          id: null,
+          blingStatus: null,
+          paymentStatus: PaymentStatus.IN_PROCESS,
+          referenceCode: Date.now().toString(),
+        };
+        this.salesOrdersService.save(newSalesOrder).subscribe(() => {
+          this.salesOrdersTable.loadData();
+        });
+      },
     });
   }
 
   cancelOnBling(salesOrder: SalesOrderDTO) {
     this.confirmationService.confirm({
       message: 'Deseja realmente cancelar a venda no Bling?',
-      header: 'Cancelamento de Venda',
+      header: 'Cancelar Venda?',
       acceptButtonStyleClass: 'ui-button-primary',
       rejectButtonStyleClass: 'ui-button-danger',
       acceptLabel: 'Sim',
