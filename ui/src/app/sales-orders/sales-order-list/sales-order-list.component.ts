@@ -8,6 +8,7 @@ import { SalesOrdersService } from '../sales-orders.service';
 import { Observable } from 'rxjs';
 import { PaymentStatus } from '../payment-status.enum';
 import { ConfirmationService } from 'primeng/api';
+import { SaleOrderBlingStatus } from '../sale-order-bling-status.enum';
 
 @Component({
   selector: 'app-sales-order-list',
@@ -63,7 +64,7 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
       rejectLabel: 'Não',
       accept: () => {
         this.salesOrdersService.syncWithBling(salesOrder).subscribe(() => {
-          console.log('done');
+          salesOrder.blingStatus = SaleOrderBlingStatus.EM_ABERTO;
         });
       },
     });
@@ -78,7 +79,7 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
       referenceCode: Date.now().toString(),
     };
     this.salesOrdersService.save(newSalesOrder).subscribe(() => {
-      console.log('done');
+      this.salesOrdersTable.loadData();
     });
   }
 
@@ -92,7 +93,8 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
       rejectLabel: 'Não',
       accept: () => {
         this.salesOrdersService.cancelOnBling(salesOrder).subscribe(() => {
-          console.log('done');
+          salesOrder.paymentStatus = PaymentStatus.CANCELLED;
+          salesOrder.blingStatus = SaleOrderBlingStatus.CANCELADO;
         });
       },
     });

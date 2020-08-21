@@ -39,7 +39,7 @@ export class DgzTableComponent<T> implements OnInit, OnChanges {
     this.loadData();
   }
 
-  private loadData() {
+  loadData() {
     this.loading = true;
     this.dataProvider
       .loadData(this.currentPage, this.pageSize, this.sortedBy, this.sortDirectionAscending, this.queryParams)

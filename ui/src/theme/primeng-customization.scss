@@ -6,6 +6,11 @@
 @import "primeng-customization/p-inputnumber";
 @import "primeng-customization/p-toast";
 
+body .ui-state-disabled,
+body .ui-widget:disabled {
+  opacity: 0.7;
+}
+
 p-fileupload {
   .ui-fileupload-buttonbar {
     border-radius: 0;

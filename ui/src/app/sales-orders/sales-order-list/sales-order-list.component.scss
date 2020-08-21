@@ -20,3 +20,13 @@ div.badge {
     color: #dd636e;
   }
 }
+
+td.actions {
+  a:first-child {
+    .ui-button {
+      background-color: #d6d6d6;
+      border-color: #d6d6d6;
+      color: #333333;
+    }
+  }
+}
