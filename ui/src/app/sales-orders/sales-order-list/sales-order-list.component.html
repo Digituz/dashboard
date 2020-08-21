@@ -74,19 +74,19 @@
             tooltipPosition="top"
           ></i>
           <i
-            class="fal fa-ghost"
+            class="fal fa-square"
             *ngIf="!salesOrder.blingStatus"
             pTooltip="Venda não sincronizada com o Bling"
             tooltipPosition="top"
           ></i>
           <i
-            class="fal fa-times"
+            class="fal fa-times-square"
             *ngIf="salesOrder.blingStatus === 'CANCELADO'"
             pTooltip="Venda cancelada no Bling"
             tooltipPosition="top"
           ></i>
           <i
-            class="fal fa-exchange"
+            class="fal fa-check-square"
             *ngIf="!!salesOrder.blingStatus && salesOrder.blingStatus !== 'CANCELADO'"
             pTooltip="Venda sincronizada com o Bling"
             tooltipPosition="top"
