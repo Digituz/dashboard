@@ -7,11 +7,13 @@ import { BreadcrumbsService } from '@app/breadcrumbs/breadcrumbs.service';
 import { SalesOrdersService } from '../sales-orders.service';
 import { Observable } from 'rxjs';
 import { PaymentStatus } from '../payment-status.enum';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-sales-order-list',
   templateUrl: './sales-order-list.component.html',
   styleUrls: ['./sales-order-list.component.scss'],
+  providers: [ConfirmationService],
 })
 export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrderDTO> {
   @ViewChild('salesOrdersTable') salesOrdersTable: DgzTableComponent<SalesOrderDTO>;
@@ -25,7 +27,11 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
   ];
   paymentStatus: ComboBoxOption = this.paymentStatusOptions[0];
 
-  constructor(private breadcrumbsService: BreadcrumbsService, private salesOrdersService: SalesOrdersService) {}
+  constructor(
+    private breadcrumbsService: BreadcrumbsService,
+    private salesOrdersService: SalesOrdersService,
+    private confirmationService: ConfirmationService
+  ) {}
 
   ngOnInit(): void {
     this.breadcrumbsService.refreshBreadcrumbs('Vendas', [{ label: 'Vendas', url: '/sales-orders' }]);
@@ -67,8 +73,19 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
   }
 
   cancelOnBling(salesOrder: SalesOrderDTO) {
-    this.salesOrdersService.cancelOnBling(salesOrder).subscribe(() => {
-      console.log('done');
+    this.confirmationService.confirm({
+      message: 'Deseja realmente cancelar a venda no Bling?',
+      header: 'Cancelamento de Venda',
+      acceptButtonStyleClass: 'ui-button-primary',
+      rejectButtonStyleClass: 'ui-button-danger',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      icon: 'fal fa-times',
+      accept: () => {
+        this.salesOrdersService.cancelOnBling(salesOrder).subscribe(() => {
+          console.log('done');
+        });
+      },
     });
   }
 }
