@@ -43,11 +43,12 @@ export class InventoryController {
             title: inventory.productVariation.product.title,
             description: inventory.productVariation.description,
             noVariation: inventory.productVariation.product.withoutVariation,
+            currentPosition: inventory.productVariation.currentPosition,
           },
           currentPosition: inventory.currentPosition,
-        }
+        };
       }),
-    }
+    };
     return Promise.resolve(paginatedResults);
   }
 

@@ -162,10 +162,7 @@ export class BlingService {
 
   async cancelPurchaseOrder(saleOrder: SaleOrder) {
     const { paymentStatus } = saleOrder.paymentDetails;
-    if (
-      paymentStatus !== PaymentStatus.CANCELLED &&
-      paymentStatus !== PaymentStatus.REFUNDED
-    ) {
+    if (paymentStatus !== PaymentStatus.CANCELLED) {
       throw new Error('Invalid sale order status on cancel operation.');
     }
 

@@ -453,6 +453,7 @@ export class ProductsService {
           description: productVariation.description,
           sellingPrice: productVariation.sellingPrice,
           noVariation: productVariation.product.withoutVariation,
+          currentPosition: productVariation.currentPosition,
         };
       }),
     );
