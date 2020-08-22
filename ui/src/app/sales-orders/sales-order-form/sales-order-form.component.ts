@@ -63,6 +63,8 @@ export class SalesOrderFormComponent implements OnInit {
 
   customers: Customer[] = [];
 
+  originalItemsAndAmount: { sku: string; amount: number }[];
+
   constructor(
     private customersService: CustomersService,
     private salesOrdersService: SalesOrdersService,
@@ -82,7 +84,14 @@ export class SalesOrderFormComponent implements OnInit {
       this.salesOrdersService.loadSalesOrder(referenceCode).subscribe((salesOrder) => {
         this.salesOrder = salesOrder;
         this.salesOrderId = salesOrder.id;
+
+        this.originalItemsAndAmount = salesOrder.items.map((item) => ({
+          sku: item.sku,
+          amount: item.amount,
+        }));
+
         this.configureFormFields(salesOrder);
+
         if (!!salesOrder.blingStatus) {
           this.formFields.disable();
         }
@@ -236,11 +245,21 @@ export class SalesOrderFormComponent implements OnInit {
 
   getItemsInStockWithoutSalesOrder(item: FormGroup) {
     if (!item.value.productVariation || !item.value.productVariation.sku) return null;
-    return item.value.productVariation.currentPosition;
+
+    const { sku, currentPosition } = item.value.productVariation;
+
+    if (!this.originalItemsAndAmount) return currentPosition;
+
+    const originalItem = this.originalItemsAndAmount.find((item) => item.sku === sku);
+
+    if (!originalItem) return currentPosition;
+
+    return currentPosition + originalItem.amount;
   }
 
   getItemsInStockWithSalesOrder(item: FormGroup) {
     if (!item.value.productVariation || !item.value.productVariation.sku) return null;
-    return item.value.productVariation.currentPosition - item.value.amount;
+    const currentPosition = this.getItemsInStockWithoutSalesOrder(item);
+    return currentPosition - item.value.amount;
   }
 }
