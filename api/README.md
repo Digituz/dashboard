@@ -36,6 +36,14 @@ docker stop digituz-dashboard-postgres
 docker rm digituz-dashboard-postgres
 ```
 
+To copy the backup, you can issue the following command:
+
+```bash
+docker cp bin/bkp/20200820-digituz-dashboard.sql digituz-dashboard-postgres:/20200820-digituz-dashboard.sql
+docker exec -i -t digituz-dashboard-postgres /bin/bash
+psql --user digituz-dashboard digituz-dashboard < 20200820-digituz-dashboard.sql
+```
+
 ## Running the app
 
 ```bash
@@ -67,7 +75,7 @@ Connecting to the database:
 docker exec -i -t digituz-dashboard-postgres /bin/bash
 
 # from within the docker instance, connect to the databse
-psql --user digituz-dashboard --password digituz-dashboard
+psql --user digituz-dashboard digituz-dashboard
 
 # run your queries
 select * from product;

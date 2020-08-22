@@ -57,5 +57,11 @@
             "name": "Launch Step 05",
             "program": "${workspaceFolder}/bin/src/05-feed-product-category.js"
         },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Step 06",
+            "program": "${workspaceFolder}/bin/src/06-populate-compositions.js"
+        },
     ]
 }
