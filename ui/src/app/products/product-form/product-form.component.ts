@@ -36,6 +36,7 @@ export class ProductFormComponent implements OnInit {
     { label: 'Brincos', value: ProductCategory.BRINCOS },
     { label: 'Camisetas', value: ProductCategory.CAMISETAS },
     { label: 'Colares', value: ProductCategory.COLARES },
+    { label: 'Conjuntos', value: ProductCategory.CONJUNTOS },
     { label: 'Decoração', value: ProductCategory.DECORACAO },
     { label: 'Pulseiras', value: ProductCategory.PULSEIRAS },
   ];
