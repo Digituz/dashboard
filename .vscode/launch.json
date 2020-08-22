@@ -42,6 +42,12 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Launch Step 01",
+            "program": "${workspaceFolder}/bin/src/01-migrate-products-from-bling.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Launch Step 03",
             "program": "${workspaceFolder}/bin/src/03-link-images-to-products.js"
         },

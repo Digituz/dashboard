@@ -35,8 +35,8 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
     { label: 'Ativos', value: true },
     { label: 'Inativos', value: false },
   ];
-  isActive: IsActiveOption = this.isActiveOptions[0];
-  queryParams: QueryParam[] = [];
+  isActive: IsActiveOption = this.isActiveOptions[1];
+  queryParams: QueryParam[] = [{ key: 'isActive', value: this.isActive.value }];
 
   constructor(private productsService: ProductsService) {}
 

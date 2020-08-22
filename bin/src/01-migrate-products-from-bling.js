@@ -89,7 +89,7 @@ async function insertProduct(token, product, delay) {
         weight: parentProduct.pesoLiq
           ? parseFloat(parentProduct.pesoLiq) / 1000
           : null,
-        isActive: true,
+        isActive: parentProduct.situacao === 'Ativo',
         ncm: parentProduct.class_fiscal,
       };
 
