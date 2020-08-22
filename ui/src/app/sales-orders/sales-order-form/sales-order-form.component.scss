@@ -35,3 +35,28 @@ div.form-error {
     margin-left: 1px;
   }
 }
+
+div.badge {
+  display: block;
+  border-radius: 3px;
+  color: white;
+  padding: 5px;
+  line-height: 22px;
+  font-size: 12px;
+  background-color: #eee;
+  color: #444;
+  text-align: center;
+  height: 100%;
+
+  i {
+    width: 20px;
+  }
+
+  &.success {
+    color: #45aa50;
+  }
+
+  &.failure {
+    color: #dd636e;
+  }
+}

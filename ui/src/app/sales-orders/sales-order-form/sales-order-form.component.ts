@@ -38,8 +38,6 @@ export class SalesOrderFormComponent implements OnInit {
     { label: 'Em Processamento', value: PaymentStatus.IN_PROCESS },
     { label: 'Aprovada', value: PaymentStatus.APPROVED },
     { label: 'Cancelada', value: PaymentStatus.CANCELLED },
-    { label: 'Estornada', value: PaymentStatus.REFUNDED },
-    { label: 'Rejeitada', value: PaymentStatus.REJECTED },
   ];
 
   installments: ComboBoxOption[] = [
@@ -230,5 +228,19 @@ export class SalesOrderFormComponent implements OnInit {
     this.productsService.findProductVariations(event.query).subscribe((results) => {
       this.productVariations = results;
     });
+  }
+
+  showItemsInStockInfo(item: FormGroup) {
+    return !!item.value.productVariation && item.value.productVariation.sku;
+  }
+
+  getItemsInStockWithoutSalesOrder(item: FormGroup) {
+    if (!item.value.productVariation || !item.value.productVariation.sku) return null;
+    return item.value.productVariation.currentPosition;
+  }
+
+  getItemsInStockWithSalesOrder(item: FormGroup) {
+    if (!item.value.productVariation || !item.value.productVariation.sku) return null;
+    return item.value.productVariation.currentPosition - item.value.amount;
   }
 }

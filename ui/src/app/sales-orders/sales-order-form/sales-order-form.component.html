@@ -125,22 +125,25 @@
     </div>
     <form [formGroup]="formFields" (ngSubmit)="submitSalesOrder()" *ngIf="!loading">
       <div class="p-fluid p-grid">
-        <div class="p-col-5">
+        <div class="p-col-7">
           <label class="input-label">Produto <i class="fal fa-asterisk"></i></label>
         </div>
-        <div class="p-col-2">
+        <div class="p-col-1">
           <label class="input-label">Preço <i class="fal fa-asterisk"></i></label>
         </div>
-        <div class="p-col-2">
-          <label class="input-label">Desconto (R$) <i class="fal fa-asterisk"></i></label>
+        <div class="p-col-1">
+          <label class="input-label">Desconto <i class="fal fa-asterisk"></i></label>
         </div>
-        <div class="p-col-2">
-          <label class="input-label">Quantidade <i class="fal fa-asterisk"></i></label>
+        <div class="p-col-1">
+          <label class="input-label">Quant. <i class="fal fa-asterisk"></i></label>
+        </div>
+        <div class="p-col-1">
+          <label class="input-label">Estoque</label>
         </div>
       </div>
       <div formArrayName="items" *ngFor="let item of items.controls; let i = index">
         <div [formGroupName]="i" class="p-fluid p-formgrid p-grid">
-          <div class="p-field p-col-5">
+          <div class="p-field p-col-7">
             <p-autoComplete
               formControlName="productVariation"
               [suggestions]="productVariations"
@@ -155,7 +158,7 @@
               </ng-template>
             </p-autoComplete>
           </div>
-          <div class="p-field p-col-2">
+          <div class="p-field p-col-1">
             <input
               type="text"
               placeholder="Ex. R$ 119,90"
@@ -164,7 +167,7 @@
               [value]="item.get('price').value || 0 | reais"
             />
           </div>
-          <div class="p-field p-col-2">
+          <div class="p-field p-col-1">
             <p-inputNumber
               [id]="'discount' + i"
               [name]="'discount' + i"
@@ -178,7 +181,7 @@
               placeholder="ex. R$ 10,00"
             ></p-inputNumber>
           </div>
-          <div class="p-field p-col-2">
+          <div class="p-field p-col-1">
             <input
               [name]="'amount' + i"
               type="number"
@@ -187,6 +190,17 @@
               placeholder="ex. 3"
               (change)="updatePrice()"
             />
+          </div>
+          <div class="p-field p-col-1">
+            <div class="badge">
+              {{ getItemsInStockWithoutSalesOrder(item) }}
+              <i
+                class="fal fa-arrow-right"
+                style="display: inline; font-size: 8px; bottom: 1px; position: relative; margin: 0 2px;"
+                *ngIf="showItemsInStockInfo(item)"
+              ></i>
+              {{ getItemsInStockWithSalesOrder(item) }}
+            </div>
           </div>
           <div class="p-field p-col-1">
             <button
