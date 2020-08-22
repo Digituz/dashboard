@@ -48,15 +48,7 @@ div.badge {
   text-align: center;
   height: 100%;
 
-  i {
-    width: 20px;
-  }
-
-  &.success {
-    color: #45aa50;
-  }
-
-  &.failure {
-    color: #dd636e;
+  &.danger {
+    color: #e91224;
   }
 }

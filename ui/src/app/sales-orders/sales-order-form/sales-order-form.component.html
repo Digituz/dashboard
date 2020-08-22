@@ -192,7 +192,13 @@
             />
           </div>
           <div class="p-field p-col-1">
-            <div class="badge" escape="true" pTooltip="Estoque: Sem a venda > com a venda." tooltipPosition="top">
+            <div
+              class="badge"
+              [ngClass]="getItemsInStockWithSalesOrder(item) < 0 ? 'danger' : ''"
+              escape="true"
+              pTooltip="Estoque: Sem a venda > com a venda."
+              tooltipPosition="top"
+            >
               {{ getItemsInStockWithoutSalesOrder(item) }}
               <i
                 class="fal fa-arrow-right"
