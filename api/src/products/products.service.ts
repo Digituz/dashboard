@@ -499,13 +499,13 @@ export class ProductsService {
           case 'query':
             queryBuilder.andWhere(
               new Brackets(qb => {
-                qb.where(`lower(p.title) like :query`, {
+                qb.where(`lower(p.title) like lower(:query)`, {
                   query: `%${queryParam.value}%`,
                 })
-                  .orWhere(`lower(p.sku) like :query`, {
+                  .orWhere(`lower(p.sku) like lower(:query)`, {
                     query: `%${queryParam.value}%`,
                   })
-                  .orWhere(`lower(p.description) like :query`, {
+                  .orWhere(`lower(p.description) like lower(:query)`, {
                     query: `%${queryParam.value}%`,
                   });
               }),
