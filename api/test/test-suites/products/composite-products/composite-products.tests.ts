@@ -7,8 +7,8 @@ import { Product } from '../../../../src/products/entities/product.entity';
 
 describe('managing composite products', () => {
   let authorizedRequest: any;
-  const PRODUCT_ENDPOINT = 'http://localhost:3000/v1/products';
-  const MOVEMENT_ENDPOINT = 'http://localhost:3000/v1/inventory/movement';
+  const PRODUCT_ENDPOINT = 'http://localhost:3005/v1/products';
+  const MOVEMENT_ENDPOINT = 'http://localhost:3005/v1/inventory/movement';
 
   beforeEach(async () => {
     authorizedRequest = await getCredentials();

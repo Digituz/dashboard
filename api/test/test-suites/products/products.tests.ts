@@ -118,7 +118,7 @@ describe('persisting products', () => {
     product.category = category;
     await persistProduct(product);
     const response = await axios.get(
-      `http://localhost:3000/v1/products/${product.sku}`,
+      `http://localhost:3005/v1/products/${product.sku}`,
       authorizedRequest,
     );
     const productCreated = response.data;
@@ -136,13 +136,13 @@ describe('persisting products', () => {
 
   async function persistProduct(productDTO: ProductDTO) {
     await axios.post(
-      'http://localhost:3000/v1/products',
+      'http://localhost:3005/v1/products',
       productDTO,
       authorizedRequest,
     );
 
     const response = await axios.get(
-      `http://localhost:3000/v1/products/${productDTO.sku}`,
+      `http://localhost:3005/v1/products/${productDTO.sku}`,
       authorizedRequest,
     );
 

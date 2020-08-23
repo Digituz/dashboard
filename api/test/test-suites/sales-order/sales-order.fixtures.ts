@@ -9,7 +9,7 @@ export async function createSaleOrders(): Promise<unknown> {
     return new Promise(res => {
       setTimeout(async () => {
         await axios.post(
-          'http://localhost:3000/v1/sales-order',
+          'http://localhost:3005/v1/sales-order',
           saleOrder,
           authorizedRequest,
         );

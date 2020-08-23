@@ -20,7 +20,7 @@ describe('querying customers', () => {
 
   it('should be able to query customers', async () => {
     const response = await axios.get(
-      'http://localhost:3000/v1/customers?page=1&limit=4',
+      'http://localhost:3005/v1/customers?page=1&limit=4',
       authorizedRequest,
     );
 
@@ -36,7 +36,7 @@ describe('querying customers', () => {
     expect(result.items[3].name).toBe('Maria da Silva');
 
     const responsePage2 = await axios.get(
-      'http://localhost:3000/v1/customers?page=2&limit=4',
+      'http://localhost:3005/v1/customers?page=2&limit=4',
       authorizedRequest,
     );
 
@@ -52,7 +52,7 @@ describe('querying customers', () => {
 
   it('should be able to query customers while filtering by name', async () => {
     const response = await axios.get(
-      'http://localhost:3000/v1/customers?page=1&limit=4&query=krebs',
+      'http://localhost:3005/v1/customers?page=1&limit=4&query=krebs',
       authorizedRequest,
     );
 

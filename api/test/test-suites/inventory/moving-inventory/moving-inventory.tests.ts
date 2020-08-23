@@ -46,7 +46,7 @@ describe('moving inventory', () => {
         productVariationResultsBefore[0].current_position;
 
       const response = await axios.post(
-        'http://localhost:3000/v1/inventory/movement',
+        'http://localhost:3005/v1/inventory/movement',
         movement,
         authorizedRequest,
       );

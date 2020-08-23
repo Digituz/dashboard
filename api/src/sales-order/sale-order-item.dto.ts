@@ -4,5 +4,5 @@ export class SaleOrderItemDTO {
     price: number;
     discount: number;
     amount: number;
-    currentPosition: number;
+    currentPosition?: number;
 }

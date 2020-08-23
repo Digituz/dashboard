@@ -24,7 +24,7 @@ export async function insertInventoryFixtures() {
         description: `Random movement for fixture #${index}`,
       };
       await axios.post(
-        'http://localhost:3000/v1/inventory/movement',
+        'http://localhost:3005/v1/inventory/movement',
         movement,
         authorizedRequest,
       );

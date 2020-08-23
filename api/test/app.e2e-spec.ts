@@ -31,7 +31,7 @@ describe('AppController (e2e)', () => {
 
   it('should be able to run tests', async () => {
     try {
-      await axios.get('http://localhost:3000/');
+      await axios.get('http://localhost:3005/');
       fail('an error should be thrown by the line above');
     } catch (err) {
       expect(err).toBeDefined();

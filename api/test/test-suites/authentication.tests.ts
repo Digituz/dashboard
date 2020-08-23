@@ -8,7 +8,7 @@ describe('authentication', () => {
     };
 
     const resp = await axios.post(
-      'http://localhost:3000/v1/sign-in',
+      'http://localhost:3005/v1/sign-in',
       validCrendetials,
     );
     expect(resp).toBeDefined();
@@ -21,7 +21,7 @@ describe('authentication', () => {
         password: 'invalidPassword',
       };
 
-      await axios.post('http://localhost:3000/v1/sign-in', validCrendetials);
+      await axios.post('http://localhost:3005/v1/sign-in', validCrendetials);
       fail('an error should be thrown by the line above');
     } catch (err) {
       expect(err).toBeDefined();

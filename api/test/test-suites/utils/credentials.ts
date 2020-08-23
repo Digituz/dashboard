@@ -7,7 +7,7 @@ export async function getCredentials() {
   };
 
   const resp = await axios.post(
-    'http://localhost:3000/v1/sign-in',
+    'http://localhost:3005/v1/sign-in',
     validCrendetials,
   );
   const accessToken = resp.data.access_token;

@@ -88,13 +88,13 @@ truncate table product;
 
 ```bash
 # sign in
-curl -X POST http://localhost:3000/v1/sign-in -d '{"username": "bruno.krebs@fridakahlo.com.br", "password": "lbX01as$"}' -H "Content-Type: application/json"
+curl -X POST http://localhost:3005/v1/sign-in -d '{"username": "bruno.krebs@fridakahlo.com.br", "password": "lbX01as$"}' -H "Content-Type: application/json"
 
 # copy the token from the command above
 JWT=eyJ...Zxk
 
 # use the token on other requests
-curl -H 'Authorization: Bearer '$JWT localhost:3000/v1/profile
+curl -H 'Authorization: Bearer '$JWT localhost:3005/v1/profile
 ```
 
 ## Interacting with the API
@@ -102,34 +102,62 @@ curl -H 'Authorization: Bearer '$JWT localhost:3000/v1/profile
 Using the API. For the moment, they all need JWTs. So, check the instructions above, then execute the following commands:
 
 ```bash
-curl -H 'Authorization: Bearer '$JWT localhost:3000/v1/products
+curl -H 'Authorization: Bearer '$JWT localhost:3005/v1/products
 
 curl -X POST -H 'Authorization: Bearer '$JWT -H 'Content-Type: application/json' -d '{
   "sku": "LFK-0001",
   "title": "Máscara Frida Kahlo"
-}' localhost:3000/v1/products
+}' localhost:3005/v1/products
 
 curl -X POST -H 'Authorization: Bearer '$JWT -H 'Content-Type: application/json' -d '{
   "parentSku": "LFK-0001",
   "sku": "LFK-0001-K",
   "description": "Kids"
-}' localhost:3000/v1/products/variations
+}' localhost:3005/v1/products/variations
 
 curl -X POST -H 'Authorization: Bearer '$JWT -H 'Content-Type: application/json' -d '{
   "parentSku": "LFK-0001",
   "sku": "LFK-0001-K",
   "description": "4 Kids"
-}' localhost:3000/v1/products/variations
+}' localhost:3005/v1/products/variations
 
 curl -X POST -H 'Authorization: Bearer '$JWT -H 'Content-Type: application/json' -d '{
   "parentSku": "LFK-0001",
   "sku": "LFK-0001-M",
   "description": "4 Men"
-}' localhost:3000/v1/products/variations
+}' localhost:3005/v1/products/variations
 
 curl -X POST -H 'Authorization: Bearer '$JWT -H 'Content-Type: application/json' -d '{
   "parentSku": "LFK-0001",
   "sku": "LFK-0001-W",
   "description": "4 Women"
-}' localhost:3000/v1/products/variations
+}' localhost:3005/v1/products/variations
+```
+
+## API Test
+
+To create the test database, run the following commands:
+
+```sql
+CREATE DATABASE "digituz-dashboard-test";
+GRANT ALL PRIVILEGES ON DATABASE "digituz-dashboard-test" TO "digituz-dashboard";
+```
+
+After that, change the `TYPEORM_URL` variable (on the `.env` file on the `api` dir, not on the `api/test`) to point to this test database:
+
+```text
+TYPEORM_URL=postgres://digituz-dashboard:123@localhost:5432/digituz-dashboard-test
+```
+
+Then run the migrations:
+
+```bash
+# from the api dir
+ts-node ./node_modules/typeorm/cli.js migration:run
+```
+
+With that in place, just run the tests:
+
+```bash
+npm test
 ```

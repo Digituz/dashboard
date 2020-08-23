@@ -9,7 +9,7 @@ export async function insertCustomersFixtures() {
   const insertCustomerJobs = customersFixtures.map((customer) => {
     return new Promise(async (res) => {
       await axios.post(
-        'http://localhost:3000/v1/customers/',
+        'http://localhost:3005/v1/customers/',
         customer,
         authorizedRequest,
       );

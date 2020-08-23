@@ -18,7 +18,7 @@ describe('update sale order payment status', () => {
   async function changeOrderStatus(reference, status) {
     const beforeRequest = Date.now();
     const response = await axios.post(
-      `http://localhost:3000/v1/sales-order/${reference}`,
+      `http://localhost:3005/v1/sales-order/${reference}`,
       { status },
       authorizedRequest,
     );

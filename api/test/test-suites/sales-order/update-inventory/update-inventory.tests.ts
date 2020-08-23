@@ -25,7 +25,7 @@ describe('sale orders must update inventory', () => {
 
   async function changeOrderStatus(reference, status) {
     const response = await axios.post(
-      `http://localhost:3000/v1/sales-order/${reference}`,
+      `http://localhost:3005/v1/sales-order/${reference}`,
       { status },
       authorizedRequest,
     );
@@ -84,7 +84,7 @@ describe('sale orders must update inventory', () => {
 
     // create the sale order
     const response = await axios.post(
-      `http://localhost:3000/v1/sales-order/`,
+      `http://localhost:3005/v1/sales-order/`,
       saleOrder,
       authorizedRequest,
     );

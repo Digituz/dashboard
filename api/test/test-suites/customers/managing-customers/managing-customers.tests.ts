@@ -17,7 +17,7 @@ describe('inserting customers', () => {
   insertingCustomersScenarios.forEach((customer: Customer, idx: number) => {
     it(`should insert new customers properly (scenario #${idx})`, async () => {
       const response = await axios.post(
-        'http://localhost:3000/v1/customers/',
+        'http://localhost:3005/v1/customers/',
         customer,
         authorizedRequest,
       );
@@ -46,7 +46,7 @@ describe('inserting customers', () => {
     };
 
     const response = await axios.post(
-      'http://localhost:3000/v1/customers/',
+      'http://localhost:3005/v1/customers/',
       customer,
       authorizedRequest,
     );
@@ -59,7 +59,7 @@ describe('inserting customers', () => {
     const customerId = response.data.id;
 
     const updateResponse = await axios.put(
-      `http://localhost:3000/v1/customers/${customerId}`,
+      `http://localhost:3005/v1/customers/${customerId}`,
       customer,
       authorizedRequest,
     );
@@ -70,7 +70,7 @@ describe('inserting customers', () => {
 
     customer.phoneNumber = '(51) 98765-4321';
     const secondUpdateResponse = await axios.put(
-      `http://localhost:3000/v1/customers/${customerId}`,
+      `http://localhost:3005/v1/customers/${customerId}`,
       customer,
       authorizedRequest,
     );

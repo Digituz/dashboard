@@ -20,7 +20,7 @@ describe('querying sale orders', () => {
 
   it('should be able to query sale orders', async () => {
     const response = await axios.get(
-      'http://localhost:3000/v1/sales-order?page=1&limit=3',
+      'http://localhost:3005/v1/sales-order?page=1&limit=3',
       authorizedRequest,
     );
 
@@ -56,7 +56,7 @@ describe('querying sale orders', () => {
     );
 
     const responsePage2 = await axios.get(
-      'http://localhost:3000/v1/sales-order?page=2&limit=3',
+      'http://localhost:3005/v1/sales-order?page=2&limit=3',
       authorizedRequest,
     );
 
@@ -86,7 +86,7 @@ describe('querying sale orders', () => {
 
   it('should be able to query sale orders by customers', async () => {
     const response = await axios.get(
-      'http://localhost:3000/v1/sales-order?page=1&limit=3&query=helena',
+      'http://localhost:3005/v1/sales-order?page=1&limit=3&query=helena',
       authorizedRequest,
     );
 
@@ -106,7 +106,7 @@ describe('querying sale orders', () => {
     );
 
     const responseKrebs = await axios.get(
-      'http://localhost:3000/v1/sales-order?page=1&limit=3&query=krebs',
+      'http://localhost:3005/v1/sales-order?page=1&limit=3&query=krebs',
       authorizedRequest,
     );
 
@@ -136,7 +136,7 @@ describe('querying sale orders', () => {
 
   it('should be able to query sale orders by payment status', async () => {
     const responseApproved = await axios.get(
-      'http://localhost:3000/v1/sales-order?page=1&limit=3&paymentStatus=APPROVED',
+      'http://localhost:3005/v1/sales-order?page=1&limit=3&paymentStatus=APPROVED',
       authorizedRequest,
     );
 
@@ -147,7 +147,7 @@ describe('querying sale orders', () => {
     expect(resultApproved.items[1].paymentStatus).toBe('APPROVED');
 
     const responseCancelled = await axios.get(
-      'http://localhost:3000/v1/sales-order?page=1&limit=3&paymentStatus=CANCELLED',
+      'http://localhost:3005/v1/sales-order?page=1&limit=3&paymentStatus=CANCELLED',
       authorizedRequest,
     );
 
@@ -157,7 +157,7 @@ describe('querying sale orders', () => {
     expect(resultCancelled.items[0].paymentStatus).toBe('CANCELLED');
 
     const responseInProcess = await axios.get(
-      'http://localhost:3000/v1/sales-order?page=1&limit=3&paymentStatus=IN_PROCESS',
+      'http://localhost:3005/v1/sales-order?page=1&limit=3&paymentStatus=IN_PROCESS',
       authorizedRequest,
     );
 

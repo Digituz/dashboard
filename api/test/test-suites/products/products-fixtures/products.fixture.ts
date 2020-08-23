@@ -10,7 +10,7 @@ export async function insertProductFixtures() {
   const insertProductJobs = products.map((product, index) => {
     return new Promise(async (res) => {
       await axios.post(
-        'http://localhost:3000/v1/products',
+        'http://localhost:3005/v1/products',
         product,
         authorizedRequest,
       );

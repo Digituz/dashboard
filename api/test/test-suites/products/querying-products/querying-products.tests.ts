@@ -18,7 +18,7 @@ describe('querying products', () => {
 
   it('should be able to retrieve all products with variations, images, and inventory', async () => {
     const response = await axios.get(
-      'http://localhost:3000/v1/products/all',
+      'http://localhost:3005/v1/products/all',
       authorizedRequest,
     );
     expect(response.data.length).toBe(productsFixtures.length);
@@ -42,7 +42,7 @@ describe('querying products', () => {
 
   it('should sort results by title by default', async () => {
     const response = await axios.get(
-      'http://localhost:3000/v1/products?page=1&limit=5',
+      'http://localhost:3005/v1/products?page=1&limit=5',
       authorizedRequest,
     );
 
@@ -57,7 +57,7 @@ describe('querying products', () => {
   it('should paginate properly', async () => {
     const limit = 5;
     const response = await axios.get(
-      `http://localhost:3000/v1/products?page=2&limit=${limit}`,
+      `http://localhost:3005/v1/products?page=2&limit=${limit}`,
       authorizedRequest,
     );
 
@@ -70,7 +70,7 @@ describe('querying products', () => {
 
   it('should sort by amount of product variations', async () => {
     let response = await axios.get(
-      'http://localhost:3000/v1/products?page=1&limit=3&sortedBy=productVariations',
+      'http://localhost:3005/v1/products?page=1&limit=3&sortedBy=productVariations',
       authorizedRequest,
     );
 
@@ -80,7 +80,7 @@ describe('querying products', () => {
     expect(response.data.items[2].sku).toBe('A-02');
 
     response = await axios.get(
-      'http://localhost:3000/v1/products?page=1&limit=3&sortedBy=productVariations&sortDirectionAscending=true',
+      'http://localhost:3005/v1/products?page=1&limit=3&sortedBy=productVariations&sortDirectionAscending=true',
       authorizedRequest,
     );
 
@@ -90,7 +90,7 @@ describe('querying products', () => {
     expect(response.data.items[2].sku).toBe('A-02');
 
     response = await axios.get(
-      'http://localhost:3000/v1/products?page=1&limit=3&sortedBy=productVariations&sortDirectionAscending=false',
+      'http://localhost:3005/v1/products?page=1&limit=3&sortedBy=productVariations&sortDirectionAscending=false',
       authorizedRequest,
     );
 
@@ -102,7 +102,7 @@ describe('querying products', () => {
 
   it('should sort by amount of product images', async () => {
     let response = await axios.get(
-      'http://localhost:3000/v1/products?page=1&limit=3&sortedBy=productImages',
+      'http://localhost:3005/v1/products?page=1&limit=3&sortedBy=productImages',
       authorizedRequest,
     );
 
@@ -112,7 +112,7 @@ describe('querying products', () => {
     expect(response.data.items[2].sku).toBe('A-02');
 
     response = await axios.get(
-      'http://localhost:3000/v1/products?page=1&limit=3&sortedBy=productImages&sortDirectionAscending=true',
+      'http://localhost:3005/v1/products?page=1&limit=3&sortedBy=productImages&sortDirectionAscending=true',
       authorizedRequest,
     );
 
@@ -122,7 +122,7 @@ describe('querying products', () => {
     expect(response.data.items[2].sku).toBe('A-02');
 
     response = await axios.get(
-      'http://localhost:3000/v1/products?page=1&limit=3&sortedBy=productImages&sortDirectionAscending=false',
+      'http://localhost:3005/v1/products?page=1&limit=3&sortedBy=productImages&sortDirectionAscending=false',
       authorizedRequest,
     );
 

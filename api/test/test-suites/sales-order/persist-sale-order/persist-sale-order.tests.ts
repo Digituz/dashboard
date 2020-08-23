@@ -22,7 +22,7 @@ describe('persist sale orders', () => {
     it(`should persist sale orders (scenario #${idx})`, async () => {
       const beforePersisting = Date.now();
       const response = await axios.post(
-        'http://localhost:3000/v1/sales-order',
+        'http://localhost:3005/v1/sales-order',
         saleOrder,
         authorizedRequest,
       );
@@ -68,7 +68,7 @@ describe('persist sale orders', () => {
       expect(numberOfSaleOrderItems).toBe(saleOrder.items.length);
 
       const updateResponse = await axios.post(
-        'http://localhost:3000/v1/sales-order',
+        'http://localhost:3005/v1/sales-order',
         {
           ...saleOrder,
           id: saleOrderCreated.id,

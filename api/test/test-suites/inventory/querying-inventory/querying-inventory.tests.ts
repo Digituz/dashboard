@@ -17,7 +17,7 @@ describe('querying inventory', () => {
 
   it('should be able to query inventory', async () => {
     const response = await axios.get(
-      'http://localhost:3000/v1/inventory?page=1&limit=3',
+      'http://localhost:3005/v1/inventory?page=1&limit=3',
       authorizedRequest,
     );
 
@@ -32,7 +32,7 @@ describe('querying inventory', () => {
     expect(result.items[2].productVariationDetails.sku).toBe('A-02-15');
 
     const responsePage2 = await axios.get(
-      'http://localhost:3000/v1/inventory?page=2&limit=3',
+      'http://localhost:3005/v1/inventory?page=2&limit=3',
       authorizedRequest,
     );
 
@@ -49,7 +49,7 @@ describe('querying inventory', () => {
 
   it('should be able to query inventory sorting results', async () => {
     const response = await axios.get(
-      'http://localhost:3000/v1/inventory?page=1&limit=3&order=currentPosition&sortDirectionAscending=false',
+      'http://localhost:3005/v1/inventory?page=1&limit=3&order=currentPosition&sortDirectionAscending=false',
       authorizedRequest,
     );
 
@@ -64,7 +64,7 @@ describe('querying inventory', () => {
     expect(result.items[2].productVariationDetails.sku).toBe('A-09-21');
 
     const responsePage2 = await axios.get(
-      'http://localhost:3000/v1/inventory?page=2&limit=3&order=currentPosition&sortDirectionAscending=false',
+      'http://localhost:3005/v1/inventory?page=2&limit=3&order=currentPosition&sortDirectionAscending=false',
       authorizedRequest,
     );
 
@@ -81,7 +81,7 @@ describe('querying inventory', () => {
 
   it('should be able to query inventory sorting and querying results', async () => {
     const response = await axios.get(
-      'http://localhost:3000/v1/inventory?page=1&limit=3&order=currentPosition&sortDirectionAscending=false&query=A-01',
+      'http://localhost:3005/v1/inventory?page=1&limit=3&order=currentPosition&sortDirectionAscending=false&query=A-01',
       authorizedRequest,
     );
 

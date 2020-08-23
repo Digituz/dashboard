@@ -13,6 +13,6 @@ export async function bootstrap(silentMode = false) {
   const app = await NestFactory.create(AppModule, { logger });
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.setGlobalPrefix('v1');
-  await app.listen(3000);
+  await app.listen(3005);
   return app;
 }
