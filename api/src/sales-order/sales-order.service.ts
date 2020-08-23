@@ -80,10 +80,10 @@ export class SalesOrderService {
           case 'query':
             queryBuilder.andWhere(
               new Brackets(qb => {
-                qb.where(`lower(c.name) like :query`, {
-                  query: `%${queryParam.value.toString().toLowerCase()}%`,
-                }).orWhere(`lower(c.cpf) like :query`, {
-                  query: `%${queryParam.value.toString().toLowerCase()}%`,
+                qb.where(`lower(c.name) like lower(:query)`, {
+                  query: `%${queryParam.value.toString()}%`,
+                }).orWhere(`lower(c.cpf) like lower(:query)`, {
+                  query: `%${queryParam.value.toString()}%`,
                 });
               }),
             );

@@ -66,8 +66,8 @@ export class InventoryService {
           case 'query':
             queryBuilder.andWhere(
               new Brackets(qb => {
-                qb.where(`lower(pv.sku) like :query`, {
-                  query: `%${queryParam.value.toString().toLowerCase()}%`,
+                qb.where(`lower(pv.sku) like lower(:query)`, {
+                  query: `%${queryParam.value.toString()}%`,
                 });
               }),
             );

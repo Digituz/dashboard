@@ -60,11 +60,11 @@ export class ProductsService {
   async findByQuery(query: string): Promise<Product[]> {
     return this.productsRepository
       .createQueryBuilder('product')
-      .where('LOWER(product.title) LIKE LOWER(:query)', {
-        query: `%${query.toLowerCase()}%`,
+      .where('lower(product.title) like lower(:query)', {
+        query: `%${query}%`,
       })
-      .orWhere('LOWER(product.sku) LIKE LOWER(:query)', {
-        query: `%${query.toLowerCase()}%`,
+      .orWhere('lower(product.sku) like lower(:query)', {
+        query: `%${query}%`,
       })
       .orderBy('product.title')
       .limit(10)
@@ -425,17 +425,17 @@ export class ProductsService {
     const queryBuilder = this.productVariationsRepository
       .createQueryBuilder('pV')
       .leftJoinAndSelect('pV.product', 'p')
-      .where('lower(p.sku) like :query', {
-        query: `%${query.toLowerCase()}%`,
+      .where('lower(p.sku) like lower(:query)', {
+        query: `%${query}%`,
       })
-      .orWhere('lower(pV.sku) like :query', {
-        query: `%${query.toLowerCase()}%`,
+      .orWhere('lower(pV.sku) like lower(:query)', {
+        query: `%${query}%`,
       })
-      .orWhere('lower(p.title) like :query', {
-        query: `%${query.toLowerCase()}%`,
+      .orWhere('lower(p.title) like lower(:query)', {
+        query: `%${query}%`,
       })
-      .orWhere('lower(pV.description) like :query', {
-        query: `%${query.toLowerCase()}%`,
+      .orWhere('lower(pV.description) like lower(:query)', {
+        query: `%${query}%`,
       })
       .orderBy('p.title')
       .orderBy('pV.sku')
