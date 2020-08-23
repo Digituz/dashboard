@@ -49,8 +49,8 @@ const { getProductsFromBling, getDigituzProducts } = require("./util/products");
           })
         ),
         productComposition: parts,
-        productImages: digituzProduct.productImages.map((image) => ({
-          imageId: image.id,
+        productImages: digituzProduct.productImages.map((productImage) => ({
+          imageId: productImage.image.id,
           order: image.order,
         })),
         category: "CONJUNTOS",
