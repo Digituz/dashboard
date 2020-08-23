@@ -95,7 +95,13 @@ export class InventoryService {
   }
 
   findById(id: number): Promise<Inventory> {
-    return this.inventoryRepository.findOne(id);
+    return this.inventoryRepository
+      .createQueryBuilder('i')
+      .leftJoinAndSelect('i.movements', 'm')
+      .leftJoinAndSelect('i.productVariation', 'pv')
+      .leftJoinAndSelect('pv.product', 'p')
+      .where({ id })
+      .getOne();
   }
 
   findByVariationIds(ids: number[]): Promise<Inventory[]> {

@@ -215,7 +215,7 @@ export class SalesOrderService {
         const movement: InventoryMovementDTO = {
           sku: item.productVariation.sku,
           amount: -item.amount,
-          description: `${saleOrder.id}`,
+          description: `Originário da venda número ${saleOrder.id}`,
         };
         await this.inventoryService.saveMovement(movement, persistedSaleOrder);
         res();

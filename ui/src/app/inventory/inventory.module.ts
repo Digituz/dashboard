@@ -15,9 +15,10 @@ import { InventoryListComponent } from '@app/inventory/inventory-list/inventory-
 import { InventoryComponent } from '@app/inventory/inventory.component';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
 import { MoveInventoryDialogComponent } from '@app/inventory/move-inventory-dialog/move-inventory-dialog.component';
+import { InventoryMovementsComponent } from './inventory-movements/inventory-movements.component';
 
 @NgModule({
-  declarations: [InventoryComponent, InventoryListComponent, MoveInventoryDialogComponent],
+  declarations: [InventoryComponent, InventoryListComponent, MoveInventoryDialogComponent, InventoryMovementsComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

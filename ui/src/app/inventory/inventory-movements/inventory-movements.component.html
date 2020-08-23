@@ -1,0 +1,34 @@
+<div class="feature-header" *ngIf="!loading">
+  <h2>
+    {{ inventory.productVariation.sku }} {{ inventory.productVariation.product.title }} -
+    {{ inventory.productVariation.description }}
+  </h2>
+  <p>
+    <label>A tabela abaixo mostra as movimentações do produto selecionado.</label>
+  </p>
+  <div class="actions">
+    <a routerLink="/inventory"><button pButton type="button" class="ui-button-secondary" label="Voltar"></button></a>
+  </div>
+</div>
+<table class="digituz" *ngIf="!loading">
+  <thead>
+    <tr>
+      <th>Descrição</th>
+      <th>Quantidade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let movement of inventory.movements">
+      <td>{{ movement.description }}</td>
+      <td class="centered" [ngClass]="movement.amount > 0 ? 'positive' : 'negative'">{{ movement.amount }}</td>
+    </tr>
+    <tr *ngIf="!inventory.movements || inventory.movements.length === 0">
+      <td colspan="2">
+        <div class="no-data-container">
+          <i class="fal fa-inbox"></i>
+          <p>Produto sem movimentações cadastradas.</p>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
