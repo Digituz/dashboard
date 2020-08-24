@@ -69,5 +69,11 @@
             "name": "Launch Step 06",
             "program": "${workspaceFolder}/bin/src/06-populate-compositions.js"
         },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Step 07",
+            "program": "${workspaceFolder}/bin/src/07-migrate-in-process-sales-orders.js"
+        }
     ]
 }

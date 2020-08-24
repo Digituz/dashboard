@@ -1,0 +1,983 @@
+[
+  {
+    "pedido": {
+      "desconto": "0,00",
+      "observacoes": "",
+      "observacaointerna": "",
+      "data": "2020-08-15",
+      "numero": "7500486276",
+      "numeroOrdemCompra": "",
+      "vendedor": "",
+      "valorfrete": "14.90",
+      "totalprodutos": "143.82",
+      "totalvenda": "158.72",
+      "situacao": "Em digita\u00e7\u00e3o",
+      "tipoIntegracao": "Api",
+      "cliente": {
+        "id": "9152159195",
+        "nome": "ligia Feminino nascimento",
+        "cnpj": "318.293.058-32",
+        "ie": null,
+        "rg": "",
+        "endereco": "Rua Salvador Tolezano",
+        "numero": "127",
+        "complemento": "ap 67, bloco A1",
+        "cidade": "S\u00e3o Paulo",
+        "bairro": "Parque Mandaqui",
+        "cep": "02422-160",
+        "uf": "SP",
+        "email": "ligiapadovani@gmail.com",
+        "celular": "",
+        "fone": "(11) 97056-3587"
+      },
+      "transporte": {
+        "transportadora": "Correios - PAC",
+        "cnpj": "",
+        "tipo_frete": "D",
+        "qtde_volumes": "0",
+        "enderecoEntrega": {
+          "nome": "ligia Feminino nascimento",
+          "endereco": "Rua Salvador Tolezano",
+          "numero": "127",
+          "complemento": "ap 67, bloco A1",
+          "cidade": "S\u00e3o Paulo",
+          "bairro": "Parque Mandaqui",
+          "cep": "02.422-160",
+          "uf": "SP"
+        }
+      },
+      "itens": [
+        {
+          "item": {
+            "codigo": "C00267-60",
+            "descricao": "Corrente Bolinhas Tamanho:60",
+            "quantidade": "1.0000",
+            "valorunidade": "62.9100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "P05931",
+            "descricao": "Berloque Frida Kahlo Melancia",
+            "quantidade": "1.0000",
+            "valorunidade": "80.9100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        }
+      ],
+      "parcelas": [
+        {
+          "parcela": {
+            "idLancamento": 0,
+            "valor": "158.72",
+            "dataVencimento": "2020-08-16 00:00:00",
+            "obs": "",
+            "destino": 1,
+            "forma_pagamento": {
+              "id": 0,
+              "descricao": "Dinheiro",
+              "codigoFiscal": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "pedido": {
+      "desconto": "0,00",
+      "observacoes": "",
+      "observacaointerna": "",
+      "data": "2020-08-15",
+      "numero": "7519101802",
+      "numeroOrdemCompra": "",
+      "vendedor": "",
+      "valorfrete": "14.90",
+      "totalprodutos": "130.23",
+      "totalvenda": "145.13",
+      "situacao": "Em digita\u00e7\u00e3o",
+      "tipoIntegracao": "Api",
+      "cliente": {
+        "id": "9153984131",
+        "nome": "Djamene das Neves Soares",
+        "cnpj": "016.238.290-11",
+        "ie": null,
+        "rg": "",
+        "endereco": "Rua Ilhas Canarias",
+        "numero": "390",
+        "complemento": "Casa",
+        "cidade": "Rio Grande",
+        "bairro": "Parque Marinha",
+        "cep": "96215-140",
+        "uf": "RS",
+        "email": "djamenesoares@gmail.com",
+        "celular": "",
+        "fone": "(53) 99137-8103"
+      },
+      "transporte": {
+        "transportadora": "Correios - PAC",
+        "cnpj": "",
+        "tipo_frete": "D",
+        "qtde_volumes": "0",
+        "enderecoEntrega": {
+          "nome": "Djamene das Neves Soares",
+          "endereco": "Rua Ilhas Canarias",
+          "numero": "390",
+          "complemento": "Casa",
+          "cidade": "Rio Grande",
+          "bairro": "Parque Marinha",
+          "cep": "96.215-140",
+          "uf": "RS"
+        }
+      },
+      "itens": [
+        {
+          "item": {
+            "codigo": "40623",
+            "descricao": "Capa Almofada Poliester FK Face and Flowers",
+            "quantidade": "1.0000",
+            "valorunidade": "49.4100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "un",
+            "pesoBruto": "0.00000",
+            "largura": "45",
+            "altura": "45",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "40622",
+            "descricao": "Capa Almofada Poliester FK Esperanza",
+            "quantidade": "1.0000",
+            "valorunidade": "49.4100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "un",
+            "pesoBruto": "0.00000",
+            "largura": "45",
+            "altura": "45",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "40641",
+            "descricao": "Set C/6 Pcs Porta Copos Corti\u00e7a Flowers",
+            "quantidade": "1.0000",
+            "valorunidade": "31.4100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "10",
+            "altura": "10",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        }
+      ],
+      "parcelas": [
+        {
+          "parcela": {
+            "idLancamento": 0,
+            "valor": "145.13",
+            "dataVencimento": "2020-08-16 00:00:00",
+            "obs": "",
+            "destino": 1,
+            "forma_pagamento": {
+              "id": 0,
+              "descricao": "Dinheiro",
+              "codigoFiscal": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "pedido": {
+      "desconto": "0,00",
+      "observacoes": "",
+      "observacaointerna": "",
+      "data": "2020-08-15",
+      "numero": "7526552730",
+      "numeroOrdemCompra": "",
+      "vendedor": "",
+      "valorfrete": "14.90",
+      "totalprodutos": "143.82",
+      "totalvenda": "158.72",
+      "situacao": "Em digita\u00e7\u00e3o",
+      "tipoIntegracao": "Api",
+      "cliente": {
+        "id": "9152159195",
+        "nome": "ligia Feminino nascimento",
+        "cnpj": "318.293.058-32",
+        "ie": null,
+        "rg": "",
+        "endereco": "Rua Salvador Tolezano",
+        "numero": "127",
+        "complemento": "ap 67, bloco A1",
+        "cidade": "S\u00e3o Paulo",
+        "bairro": "Parque Mandaqui",
+        "cep": "02422-160",
+        "uf": "SP",
+        "email": "ligiapadovani@gmail.com",
+        "celular": "",
+        "fone": "(11) 97056-3587"
+      },
+      "transporte": {
+        "transportadora": "Correios - PAC",
+        "cnpj": "",
+        "tipo_frete": "D",
+        "qtde_volumes": "0",
+        "enderecoEntrega": {
+          "nome": "ligia Feminino nascimento",
+          "endereco": "Rua Salvador Tolezano",
+          "numero": "127",
+          "complemento": "ap 67, bloco A1",
+          "cidade": "S\u00e3o Paulo",
+          "bairro": "Parque Mandaqui",
+          "cep": "02.422-160",
+          "uf": "SP"
+        }
+      },
+      "itens": [
+        {
+          "item": {
+            "codigo": "C00267-60",
+            "descricao": "Corrente Bolinhas Tamanho:60",
+            "quantidade": "1.0000",
+            "valorunidade": "62.9100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "P05931",
+            "descricao": "Berloque Frida Kahlo Melancia",
+            "quantidade": "1.0000",
+            "valorunidade": "80.9100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        }
+      ],
+      "parcelas": [
+        {
+          "parcela": {
+            "idLancamento": 0,
+            "valor": "158.72",
+            "dataVencimento": "2020-08-16 00:00:00",
+            "obs": "",
+            "destino": 1,
+            "forma_pagamento": {
+              "id": 0,
+              "descricao": "Dinheiro",
+              "codigoFiscal": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "pedido": {
+      "desconto": "0,00",
+      "observacoes": "",
+      "observacaointerna": "",
+      "data": "2020-08-16",
+      "numero": "7601265817",
+      "numeroOrdemCompra": "",
+      "vendedor": "",
+      "valorfrete": "14.90",
+      "totalprodutos": "390.87",
+      "totalvenda": "405.77",
+      "situacao": "Em digita\u00e7\u00e3o",
+      "tipoIntegracao": "Api",
+      "cliente": {
+        "id": "9157318953",
+        "nome": "Marina Silva",
+        "cnpj": "426.632.700-59",
+        "ie": null,
+        "rg": "",
+        "endereco": "Ricardo Louzada",
+        "numero": "166",
+        "complemento": "Ricardo Louzada",
+        "cidade": "Charqueadas",
+        "bairro": "Centro",
+        "cep": "96745-000",
+        "uf": "RS",
+        "email": "celiamarina.cezimbrasilva@gmail.com",
+        "celular": "",
+        "fone": "(51) 99314-4136"
+      },
+      "transporte": {
+        "transportadora": "Correios - SEDEX",
+        "cnpj": "",
+        "tipo_frete": "D",
+        "qtde_volumes": "0",
+        "enderecoEntrega": {
+          "nome": "Marina Silva",
+          "endereco": "Ricardo Louzada",
+          "numero": "166",
+          "complemento": "Ricardo Louzada",
+          "cidade": "Charqueadas",
+          "bairro": "Centro",
+          "cep": "96.745-000",
+          "uf": "RS"
+        }
+      },
+      "itens": [
+        {
+          "item": {
+            "codigo": "P05919",
+            "descricao": "Berloque Frida Kahlo e Caveira",
+            "quantidade": "1.0000",
+            "valorunidade": "107.9100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "P05923",
+            "descricao": "BerloqueFrida Kahlo Arara Vermelha",
+            "quantidade": "1.0000",
+            "valorunidade": "107.9100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "43095",
+            "descricao": "Cachepot Cer\u00e2mica Red Flowers - Fundo Preto",
+            "quantidade": "1.0000",
+            "valorunidade": "53.9100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "43163",
+            "descricao": "Capa Almofada Poliester FK Red Flowers FD Preto",
+            "quantidade": "1.0000",
+            "valorunidade": "53.9100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "un",
+            "pesoBruto": "0.00000",
+            "largura": "45",
+            "altura": "45",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "43235",
+            "descricao": "Lugar Americano - Red Flowers Conjunto com 2 Lugares",
+            "quantidade": "2.0000",
+            "valorunidade": "17.9100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "43.5",
+            "altura": "28.5",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "43127",
+            "descricao": "Set C/6 Pcs Porta Copos Corti\u00e7a FK Skull Flowers",
+            "quantidade": "1.0000",
+            "valorunidade": "31.4100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "un",
+            "pesoBruto": "0.00000",
+            "largura": "10",
+            "altura": "10",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        }
+      ],
+      "parcelas": [
+        {
+          "parcela": {
+            "idLancamento": 0,
+            "valor": "405.77",
+            "dataVencimento": "2020-08-17 00:00:00",
+            "obs": "",
+            "destino": 1,
+            "forma_pagamento": {
+              "id": 0,
+              "descricao": "Dinheiro",
+              "codigoFiscal": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "pedido": {
+      "desconto": "0,00",
+      "observacoes": "",
+      "observacaointerna": "",
+      "data": "2020-08-19",
+      "numero": "7857748157",
+      "numeroOrdemCompra": "",
+      "vendedor": "",
+      "valorfrete": "14.90",
+      "totalprodutos": "31.41",
+      "totalvenda": "46.31",
+      "situacao": "Em digita\u00e7\u00e3o",
+      "tipoIntegracao": "Api",
+      "cliente": {
+        "id": "9190296162",
+        "nome": "Let\u00edcia Sim\u00f5es Motta Passos",
+        "cnpj": "017.109.487-52",
+        "ie": null,
+        "rg": "",
+        "endereco": "Rua Chapot Presvot",
+        "numero": "700",
+        "complemento": "apt 1204",
+        "cidade": "Vit\u00f3ria",
+        "bairro": "Praia do Canto",
+        "cep": "29.055-410",
+        "uf": "ES",
+        "email": "letismotta13@gmail.com",
+        "celular": "",
+        "fone": "(27) 99982-5803"
+      },
+      "transporte": {
+        "transportadora": "Correios - PAC",
+        "cnpj": "",
+        "tipo_frete": "D",
+        "qtde_volumes": "0",
+        "enderecoEntrega": {
+          "nome": "Let\u00edcia Sim\u00f5es Motta Passos",
+          "endereco": "Rua Chapot Presvot",
+          "numero": "700",
+          "complemento": "apt 1204",
+          "cidade": "Vit\u00f3ria",
+          "bairro": "Praia do Canto",
+          "cep": "29.055-410",
+          "uf": "ES"
+        }
+      },
+      "itens": [
+        {
+          "item": {
+            "codigo": "43413",
+            "descricao": "Mini Caneca Porcelana FK Geometric Flowers",
+            "quantidade": "1.0000",
+            "valorunidade": "31.4100000000",
+            "precocusto": "0.0000000000",
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "500.00000",
+            "largura": "7.9",
+            "altura": "7.7",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        }
+      ],
+      "parcelas": [
+        {
+          "parcela": {
+            "idLancamento": 0,
+            "valor": "46.31",
+            "dataVencimento": "2020-08-20 00:00:00",
+            "obs": "",
+            "destino": 1,
+            "forma_pagamento": {
+              "id": 0,
+              "descricao": "Dinheiro",
+              "codigoFiscal": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "pedido": {
+      "desconto": "0,00",
+      "observacoes": "",
+      "observacaointerna": "",
+      "data": "2020-08-21",
+      "numero": "8027658196",
+      "numeroOrdemCompra": "",
+      "vendedor": "",
+      "valorfrete": "14.90",
+      "totalprodutos": "161.91",
+      "totalvenda": "176.81",
+      "situacao": "Em digita\u00e7\u00e3o",
+      "tipoIntegracao": "Api",
+      "cliente": {
+        "id": "9223981819",
+        "nome": "Luciana Vargas",
+        "cnpj": "689.455.740-34",
+        "ie": null,
+        "rg": "",
+        "endereco": "Rua Lagoa Vermelha",
+        "numero": "637",
+        "complemento": "Casa",
+        "cidade": "Imb\u00e9",
+        "bairro": "Centro",
+        "cep": "95625-000",
+        "uf": "RS",
+        "email": "lureed@bol.com.br",
+        "celular": "",
+        "fone": "(51) 98337-8229"
+      },
+      "transporte": {
+        "transportadora": "Correios - PAC",
+        "cnpj": "",
+        "tipo_frete": "D",
+        "qtde_volumes": "0",
+        "enderecoEntrega": {
+          "nome": "Luciana Vargas",
+          "endereco": "Rua Lagoa Vermelha",
+          "numero": "637",
+          "complemento": "Casa",
+          "cidade": "Imb\u00e9",
+          "bairro": "Centro",
+          "cep": "95.625-000",
+          "uf": "RS"
+        }
+      },
+      "itens": [
+        {
+          "item": {
+            "codigo": "A05912-14",
+            "descricao": "Anel Frida Kahlo Flor Vermelha Fino Tamanho:14",
+            "quantidade": "1.0000",
+            "valorunidade": "161.9100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        }
+      ],
+      "parcelas": [
+        {
+          "parcela": {
+            "idLancamento": 0,
+            "valor": "176.81",
+            "dataVencimento": "2020-08-22 00:00:00",
+            "obs": "",
+            "destino": 1,
+            "forma_pagamento": {
+              "id": 0,
+              "descricao": "Dinheiro",
+              "codigoFiscal": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "pedido": {
+      "desconto": "0,00",
+      "observacoes": "",
+      "observacaointerna": "",
+      "data": "2020-08-22",
+      "numero": "8092606450",
+      "numeroOrdemCompra": "",
+      "vendedor": "",
+      "valorfrete": "14.90",
+      "totalprodutos": "107.91",
+      "totalvenda": "122.81",
+      "situacao": "Em digita\u00e7\u00e3o",
+      "tipoIntegracao": "Api",
+      "cliente": {
+        "id": "9230359317",
+        "nome": "Thalita Leoche dos Santos",
+        "cnpj": "332.869.898-19",
+        "ie": null,
+        "rg": "",
+        "endereco": "Rua Robert Sandall",
+        "numero": "181",
+        "complemento": "805",
+        "cidade": "Santos",
+        "bairro": "Ponta da Praia",
+        "cep": "11030-530",
+        "uf": "SP",
+        "email": "thalitaleoche@hotmail.com",
+        "celular": "",
+        "fone": "(13) 99711-3307"
+      },
+      "transporte": {
+        "transportadora": "Correios - PAC",
+        "cnpj": "",
+        "tipo_frete": "D",
+        "qtde_volumes": "0",
+        "enderecoEntrega": {
+          "nome": "Thalita Leoche dos Santos",
+          "endereco": "Rua Robert Sandall",
+          "numero": "181",
+          "complemento": "805",
+          "cidade": "Santos",
+          "bairro": "Ponta da Praia",
+          "cep": "11.030-530",
+          "uf": "SP"
+        }
+      },
+      "itens": [
+        {
+          "item": {
+            "codigo": "P05908",
+            "descricao": "Berloque Frida Kahlo Murano Flor",
+            "quantidade": "1.0000",
+            "valorunidade": "107.9100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        }
+      ],
+      "parcelas": [
+        {
+          "parcela": {
+            "idLancamento": 0,
+            "valor": "122.81",
+            "dataVencimento": "2020-08-23 00:00:00",
+            "obs": "",
+            "destino": 1,
+            "forma_pagamento": {
+              "id": 0,
+              "descricao": "Dinheiro",
+              "codigoFiscal": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "pedido": {
+      "desconto": "0,00",
+      "observacoes": "",
+      "observacaointerna": "",
+      "data": "2020-08-22",
+      "numero": "8131873679",
+      "numeroOrdemCompra": "",
+      "vendedor": "",
+      "valorfrete": "14.90",
+      "totalprodutos": "206.64",
+      "totalvenda": "221.54",
+      "situacao": "Em digita\u00e7\u00e3o",
+      "tipoIntegracao": "Api",
+      "cliente": {
+        "id": "9234035036",
+        "nome": "Cintia N. Silva",
+        "cnpj": "275.894.738-20",
+        "ie": null,
+        "rg": "",
+        "endereco": "Rua Celebes",
+        "numero": "147",
+        "complemento": "ap 11",
+        "cidade": "S\u00e3o Bernardo do Campo",
+        "bairro": "Jardim do Mar",
+        "cep": "09726-200",
+        "uf": "SP",
+        "email": "cintianalini@hotmail.com",
+        "celular": "",
+        "fone": "(11) 99463-3369"
+      },
+      "transporte": {
+        "transportadora": "Correios - PAC",
+        "cnpj": "",
+        "tipo_frete": "D",
+        "qtde_volumes": "0",
+        "enderecoEntrega": {
+          "nome": "Cintia N. Silva",
+          "endereco": "Rua Celebes",
+          "numero": "147",
+          "complemento": "ap 11",
+          "cidade": "S\u00e3o Bernardo do Campo",
+          "bairro": "Jardim do Mar",
+          "cep": "09.726-200",
+          "uf": "SP"
+        }
+      },
+      "itens": [
+        {
+          "item": {
+            "codigo": "41775",
+            "descricao": "Capacho Fibra de Coco",
+            "quantidade": "1.0000",
+            "valorunidade": "76.4100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "60",
+            "altura": "40",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "40622",
+            "descricao": "Capa Almofada Poliester FK Esperanza",
+            "quantidade": "1.0000",
+            "valorunidade": "49.4100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "un",
+            "pesoBruto": "0.00000",
+            "largura": "45",
+            "altura": "45",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "43331",
+            "descricao": "Caneca com Al\u00e7a Vidro M\u00e1gica",
+            "quantidade": "2.0000",
+            "valorunidade": "40.4100000000",
+            "precocusto": "16.0000000000",
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "895",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        }
+      ],
+      "parcelas": [
+        {
+          "parcela": {
+            "idLancamento": 0,
+            "valor": "221.54",
+            "dataVencimento": "2020-08-23 00:00:00",
+            "obs": "",
+            "destino": 1,
+            "forma_pagamento": {
+              "id": 0,
+              "descricao": "Dinheiro",
+              "codigoFiscal": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "pedido": {
+      "desconto": "0,00",
+      "observacoes": "",
+      "observacaointerna": "",
+      "data": "2020-08-23",
+      "numero": "8216349451",
+      "numeroOrdemCompra": "",
+      "vendedor": "",
+      "valorfrete": "14.90",
+      "totalprodutos": "69.38",
+      "totalvenda": "84.28",
+      "situacao": "Em digita\u00e7\u00e3o",
+      "tipoIntegracao": "Api",
+      "cliente": {
+        "id": "9236786278",
+        "nome": "Rosemeri Figueiredo",
+        "cnpj": "874.064.897-49",
+        "ie": null,
+        "rg": "",
+        "endereco": "Rua Manuel Bastos de Oliveira",
+        "numero": "25",
+        "complemento": "",
+        "cidade": "Rio de Janeiro",
+        "bairro": "Vargem Pequena",
+        "cep": "22783-430",
+        "uf": "RJ",
+        "email": "rosemerilumiar@gmail.com",
+        "celular": "",
+        "fone": "(21) 99887-9604"
+      },
+      "transporte": {
+        "transportadora": "Correios - PAC",
+        "cnpj": "",
+        "tipo_frete": "D",
+        "qtde_volumes": "0",
+        "enderecoEntrega": {
+          "nome": "Rosemeri Figueiredo",
+          "endereco": "Rua Manuel Bastos de Oliveira",
+          "numero": "25",
+          "complemento": "",
+          "cidade": "Rio de Janeiro",
+          "bairro": "Vargem Pequena",
+          "cep": "22.783-430",
+          "uf": "RJ"
+        }
+      },
+      "itens": [
+        {
+          "item": {
+            "codigo": "43337",
+            "descricao": "Tela Face Flowers Frame Colorido",
+            "quantidade": "1.0000",
+            "valorunidade": "40.4100000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        },
+        {
+          "item": {
+            "codigo": "62450-77B",
+            "descricao": "Moleskine Pav\u00e3o Frida Kahlo - Pequena 80 folhas",
+            "quantidade": "1.0000",
+            "valorunidade": "28.9700000000",
+            "precocusto": null,
+            "descontoItem": "0.00",
+            "un": "Un",
+            "pesoBruto": "0.00000",
+            "largura": "",
+            "altura": "",
+            "profundidade": "",
+            "descricaoDetalhada": "",
+            "unidadeMedida": "cm",
+            "gtin": ""
+          }
+        }
+      ],
+      "parcelas": [
+        {
+          "parcela": {
+            "idLancamento": 0,
+            "valor": "84.28",
+            "dataVencimento": "2020-08-24 00:00:00",
+            "obs": "",
+            "destino": 1,
+            "forma_pagamento": {
+              "id": 0,
+              "descricao": "Dinheiro",
+              "codigoFiscal": 1
+            }
+          }
+        }
+      ]
+    }
+  }
+]
