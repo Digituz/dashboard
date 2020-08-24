@@ -25,7 +25,7 @@ async function insertProduct(token, product, delay) {
   return new Promise((res, rej) => {
     setTimeout(async () => {
       try {
-        await got.post("http://localhost:3000/v1/products", {
+        await got.post("http://localhost:3005/v1/products", {
           json: product,
           headers: {
             authorization: `Bearer ${token}`,

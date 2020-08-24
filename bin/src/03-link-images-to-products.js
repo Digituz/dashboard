@@ -15,7 +15,7 @@ async function getProductsImages() {
 
 async function getDigituzProducts() {
   const token = await getToken();
-  const response = await got(`http://localhost:3000/v1/products/all`, {
+  const response = await got(`http://localhost:3005/v1/products/all`, {
     method: "GET",
     responseType: "json",
     headers: {
@@ -28,7 +28,7 @@ async function getDigituzProducts() {
 async function getDigituzImages(sku) {
   const token = await getToken();
   const response = await got(
-    `http://localhost:3000/v1/media-library/with-tag/${sku}`,
+    `http://localhost:3005/v1/media-library/with-tag/${sku}`,
     {
       method: "GET",
       responseType: "json",
@@ -42,7 +42,7 @@ async function getDigituzImages(sku) {
 
 async function updateDigituzProduct(digituzProduct) {
   const token = await getToken();
-  const response = await got("http://localhost:3000/v1/products/", {
+  const response = await got("http://localhost:3005/v1/products/", {
     method: "POST",
     responseType: "json",
     headers: {

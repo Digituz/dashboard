@@ -36,7 +36,7 @@ async function getProductsFromBling() {
 
 async function getDigituzProducts() {
   const token = await getToken();
-  const response = await got(`http://localhost:3000/v1/products/all`, {
+  const response = await got(`http://localhost:3005/v1/products/all`, {
     method: "GET",
     responseType: "json",
     headers: {

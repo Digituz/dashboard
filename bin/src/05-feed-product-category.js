@@ -82,7 +82,7 @@ function enumify(str, delimeter) {
       };
     })
     .map(async (product) => {
-      await got("http://localhost:3000/v1/products/", {
+      await got("http://localhost:3005/v1/products/", {
         method: "POST",
         responseType: "json",
         headers: {

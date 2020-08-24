@@ -49,10 +49,14 @@ const { getProductsFromBling, getDigituzProducts } = require("./util/products");
           })
         ),
         productComposition: parts,
-        productImages: digituzProduct.productImages.map((productImage) => ({
-          imageId: productImage.image.id,
-          order: image.order,
-        })),
+        productImages: digituzProduct.productImages
+          .filter((productImage) => {
+            return !!productImage.image;
+          })
+          .map((productImage) => ({
+            imageId: productImage.image.id,
+            order: productImage.order,
+          })),
         category: "CONJUNTOS",
       };
 
@@ -60,7 +64,7 @@ const { getProductsFromBling, getDigituzProducts } = require("./util/products");
         delete productDTO.productImages;
       }
 
-      await got.post("http://localhost:3000/v1/products", {
+      await got.post("http://localhost:3005/v1/products", {
         json: productDTO,
         headers: {
           authorization: `Bearer ${token}`,

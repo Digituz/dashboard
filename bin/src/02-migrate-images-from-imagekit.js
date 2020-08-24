@@ -12,7 +12,7 @@ const getToken = require("./util/auth");
 
 async function getProducts(token) {
   const response = await got(
-    "http://localhost:3000/v1/products?page=1&limit=300",
+    "http://localhost:3005/v1/products?page=1&limit=300",
     {
       method: "GET",
       headers: {
@@ -89,7 +89,7 @@ async function downloadImage(imageId) {
           const formData = new FormData();
           formData.append("file", file);
           const { data: persistedImage } = await axios.post(
-            "http://localhost:3000/v1/media-library/upload",
+            "http://localhost:3005/v1/media-library/upload",
             formData,
             {
               headers: {
@@ -100,7 +100,7 @@ async function downloadImage(imageId) {
           );
           console.log(`${downloadedImage.imageId} uploaded`);
           await axios.post(
-            `http://localhost:3000/v1/media-library/${persistedImage.id}`,
+            `http://localhost:3005/v1/media-library/${persistedImage.id}`,
             downloadedImage.tags,
             {
               headers: {
