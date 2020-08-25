@@ -178,6 +178,8 @@ export class SalesOrderService {
       items,
       paymentDetails,
       shipmentDetails,
+      creationDate: saleOrderDTO.creationDate,
+      approvalDate: saleOrderDTO.approvalDate,
     };
 
     if (!isANewSaleOrder) {
@@ -189,7 +191,7 @@ export class SalesOrderService {
     }
 
     if (isANewSaleOrder) {
-      saleOrder.creationDate = new Date();
+      saleOrder.creationDate = saleOrder.creationDate || new Date();
     }
 
     const persistedSaleOrder = await this.salesOrderRepository.save(saleOrder);

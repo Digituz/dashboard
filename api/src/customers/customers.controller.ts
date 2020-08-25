@@ -37,7 +37,7 @@ export class CustomersController {
 
   @Post('/')
   async save(@Body() customer: Customer): Promise<Customer> {
-    return this.customersService.save(customer);
+    return this.customersService.findOrCreate(customer);
   }
 
   @Put(':id')

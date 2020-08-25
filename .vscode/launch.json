@@ -74,6 +74,12 @@
             "request": "launch",
             "name": "Launch Step 07",
             "program": "${workspaceFolder}/bin/src/07-migrate-in-process-sales-orders.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Step 08",
+            "program": "${workspaceFolder}/bin/src/08-migrate-old-sales-orders.js"
         }
     ]
 }
