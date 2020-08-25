@@ -302,6 +302,13 @@ export class ProductsService {
     return Promise.resolve(product);
   }
 
+  async updateProductProperties(
+    productId: number,
+    properties: Partial<Product>,
+  ) {
+    return this.productsRepository.update({ id: productId }, properties);
+  }
+
   private async updateProduct(
     previousProductVersion: Product,
     productDTO: ProductDTO,

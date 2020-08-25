@@ -91,15 +91,15 @@ export class Product extends BaseEntity {
   withoutVariation: boolean = true;
 
   @OneToMany(
-    (type) => ProductVariation,
-    (productVariation) => productVariation.product,
+    type => ProductVariation,
+    productVariation => productVariation.product,
     { cascade: false, eager: true },
   )
   productVariations?: ProductVariation[];
 
   @OneToMany(
-    (type) => ProductComposition,
-    (productComposition) => productComposition.product,
+    type => ProductComposition,
+    productComposition => productComposition.product,
     { cascade: false, eager: true },
   )
   productComposition?: ProductComposition[];
@@ -117,10 +117,14 @@ export class Product extends BaseEntity {
   })
   variationsSize: number = 0;
 
-  @OneToMany((type) => ProductImage, (image) => image.product, {
-    cascade: false,
-    eager: false,
-  })
+  @OneToMany(
+    type => ProductImage,
+    image => image.product,
+    {
+      cascade: false,
+      eager: false,
+    },
+  )
   productImages?: ProductImage[];
 
   @Column({
@@ -128,4 +132,10 @@ export class Product extends BaseEntity {
     type: 'int',
   })
   imagesSize: number = 0;
+
+  @Column({
+    name: 'shopify_id',
+    type: 'int',
+  })
+  shopifyId?: number = 0;
 }

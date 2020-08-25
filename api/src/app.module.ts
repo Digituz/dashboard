@@ -22,6 +22,7 @@ import { SaleOrderItem } from './sales-order/entities/sale-order-item.entity';
 import { SaleOrder } from './sales-order/entities/sale-order.entity';
 import { BlingModule } from './bling/bling.module';
 import { ProductComposition } from './products/entities/product-composition.entity';
+import { MarketplacesModule } from './marketplaces/marketplaces.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { ProductComposition } from './products/entities/product-composition.enti
     CustomersModule,
     SalesOrderModule,
     BlingModule,
+    MarketplacesModule,
   ],
   controllers: [],
   providers: [],
