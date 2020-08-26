@@ -135,7 +135,7 @@ export class Product extends BaseEntity {
 
   @Column({
     name: 'shopify_id',
-    type: 'int',
+    type: 'bigint',
   })
   shopifyId?: number = 0;
 }

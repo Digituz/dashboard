@@ -44,4 +44,16 @@ export class ProductVariation extends BaseEntity {
 
   @Column({ name: 'current_position' })
   currentPosition?: number;
+
+  @Column({
+    name: 'shopify_id',
+    type: 'bigint',
+  })
+  shopifyId?: number = 0;
+
+  @Column({
+    name: 'shopify_inventory_id',
+    type: 'bigint',
+  })
+  shopifyInventoryId?: number = 0;
 }

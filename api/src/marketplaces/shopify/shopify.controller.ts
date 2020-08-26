@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, Get } from '@nestjs/common';
 import { ShopifyService } from './shopify.service';
 
 @Controller('shopify')
@@ -8,5 +8,10 @@ export class ShopifyController {
   @Post('/')
   async save(): Promise<void> {
     return this.shopifyService.syncProducts();
+  }
+
+  @Get('/fetch_tracking_numbers')
+  async getTrackingInformation() {
+    
   }
 }

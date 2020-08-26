@@ -254,6 +254,13 @@ export class ProductsService {
     );
   }
 
+  async updateVariationProperty(
+    id: number,
+    properties: Partial<ProductVariation>,
+  ) {
+    return this.productVariationsRepository.update(id, properties);
+  }
+
   private async updateVariations(
     product: Product,
     newVariations: ProductVariation[] = [],
