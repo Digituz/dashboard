@@ -24,7 +24,7 @@ import { BlingModule } from './bling/bling.module';
 import { ProductComposition } from './products/entities/product-composition.entity';
 import { MarketplacesModule } from './marketplaces/marketplaces.module';
 import { KeyValuePair } from './key-value-pair/key-value-pair.entity';
-import { KeyValuePairService } from './key-value-pair/key-value-pair.service';
+import { KeyValuePairModule } from './key-value-pair/key-value-pair.module';
 
 @Module({
   imports: [
@@ -39,6 +39,7 @@ import { KeyValuePairService } from './key-value-pair/key-value-pair.service';
         Customer,
         Inventory,
         InventoryMovement,
+        KeyValuePair,
         Product,
         ProductComposition,
         ProductVariation,
@@ -48,7 +49,6 @@ import { KeyValuePairService } from './key-value-pair/key-value-pair.service';
         SaleOrder,
         SaleOrderItem,
         Tag,
-        KeyValuePair,
       ],
       synchronize: false,
       migrationsTableName: 'database_migrations',
@@ -68,9 +68,9 @@ import { KeyValuePairService } from './key-value-pair/key-value-pair.service';
     SalesOrderModule,
     BlingModule,
     MarketplacesModule,
-    TypeOrmModule.forFeature([KeyValuePair]),
+    KeyValuePairModule,
   ],
   controllers: [],
-  providers: [KeyValuePairService],
+  providers: [],
 })
 export class AppModule {}

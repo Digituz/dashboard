@@ -15,7 +15,7 @@ export class KeyValuePairService {
   }
 
   get(key: string): Promise<KeyValuePair> {
-    return this.keyValuePairService.findOneOrFail({
+    return this.keyValuePairService.findOne({
       key,
     });
   }

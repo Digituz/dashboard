@@ -1,5 +1,6 @@
-import { PrimaryColumn, Column } from 'typeorm';
+import { PrimaryColumn, Column, Entity } from 'typeorm';
 
+@Entity()
 export class KeyValuePair {
   @PrimaryColumn()
   key?: string;
