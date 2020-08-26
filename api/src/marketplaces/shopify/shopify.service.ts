@@ -53,8 +53,6 @@ export class ShopifyService {
       });
     }
 
-    console.log(`${product.sku} updated on shopify`);
-
     // 3. fill product variations with shopify ids
     response.variants.forEach((variant: IProductVariant) => {
       const productVariation = product.productVariations.find(
@@ -63,8 +61,31 @@ export class ShopifyService {
       productVariation.shopifyId = variant.id;
       productVariation.shopifyInventoryId = variant.inventory_item_id;
     });
+  }
 
-    const updateShopifyIds = product.productVariations.map(async (pv, idx) => {
+  async syncProducts() {
+    const products = await this.productsService.findAll();
+    console.log(`${products.length} produtos encontrados`);
+    const syncJobs = products.map((product, idx) => {
+      return new Promise(res => {
+        setTimeout(async () => {
+          await this.syncProduct(product);
+          console.log(`${idx} - ${product.sku} sincronizado`);
+          res();
+        }, idx * 550);
+      });
+    });
+    await Promise.all(syncJobs);
+
+    console.log('finished updating product information');
+    console.log('starting to update inventory');
+
+    const allVariations = products.flatMap(product => {
+      const { productVariations } = product;
+      return [...productVariations];
+    });
+
+    allVariations.map((pv, idx) => {
       return new Promise(res => {
         setTimeout(async () => {
           // 4. save shopify ids
@@ -76,33 +97,16 @@ export class ShopifyService {
           // 5. update inventory on Shopify
           await this.shopify.inventoryLevel.set({
             location_id: 53361180827,
-            inventory_item_id: pv.shopifyInventoryId,
+            inventory_item_id: parseInt(pv.shopifyInventoryId.toString()),
             available: pv.currentPosition,
           });
 
           console.log(`${pv.sku} inventory updated on shopify`);
 
           res();
-        }, 1500 * idx);
+        }, 550 * idx);
       });
     });
-    await Promise.all(updateShopifyIds);
-  }
-
-  async syncProducts() {
-    const products = await this.productsService.findAll();
-    console.log(`${products.length} produtos encontrados`);
-    const syncJobs = products
-      .map((product, idx) => {
-        return new Promise(res => {
-          setTimeout(async () => {
-            console.log(`${product.sku}: iniciando sincronização`);
-            await this.syncProduct(product);
-            console.log(`${product.sku} sincronizado`);
-            res();
-          }, idx * 1000);
-        });
-      });
-    await Promise.all(syncJobs);
+    await Promise.all(allVariations);
   }
 }
