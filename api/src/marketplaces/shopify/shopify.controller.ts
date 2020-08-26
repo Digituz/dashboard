@@ -9,9 +9,4 @@ export class ShopifyController {
   async save(): Promise<void> {
     return this.shopifyService.syncProducts();
   }
-
-  @Get('/fetch_tracking_numbers')
-  async getTrackingInformation() {
-    
-  }
 }

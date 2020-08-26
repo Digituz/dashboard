@@ -37,6 +37,7 @@
     "got": "^11.3.0",
     "kraken": "^0.4.0",
     "lodash": "^4.17.15",
+    "mercadolibre": "0.0.13",
     "moment": "^2.27.0",
     "nestjs-typeorm-paginate": "^2.0.3",
     "passport": "^0.4.1",
