@@ -21,8 +21,8 @@ export class MercadoLivreService {
     this.mercadoLivre = new meli.Meli(
       ML_CLIENT_ID,
       ML_CLIENT_SECRET,
-      at.value,
-      rt.value,
+      at?.value,
+      rt?.value,
     );
 
     if (rt && at) {
