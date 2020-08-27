@@ -98,6 +98,11 @@ export class ProductFormComponent implements OnInit {
     product.productVariations = this.variations;
     product.productImages = this.images;
 
+    if (this.product.id) {
+      // field is disabled, so the form doesn't provide it
+      product.sku = this.product.sku;
+    }
+
     this.productService.saveProduct(product).subscribe(() => {
       this.router.navigate(['/products']);
     });
