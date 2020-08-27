@@ -104,7 +104,7 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
         };
         this.salesOrdersService.save(newSalesOrder).subscribe(() => {
           delete salesOrder.duplicatingSalesOrder;
-          this.salesOrdersTable.loadData();
+          this.resultsTable.loadData();
         });
       },
     });
