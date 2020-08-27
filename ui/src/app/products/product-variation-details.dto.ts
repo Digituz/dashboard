@@ -4,7 +4,6 @@ export class ProductVariationDetailsDTO {
   sku: string;
   description: string;
   sellingPrice: number;
-  noVariation: boolean;
   completeDescription?: string;
   currentPosition: number;
 }

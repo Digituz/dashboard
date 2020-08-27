@@ -51,7 +51,7 @@
       <td>{{ product.title }}</td>
       <td class="currency">{{ product.sellingPrice | reais }}</td>
       <td class="centered">
-        <div *ngIf="!product.withoutVariation">
+        <div *ngIf="product.productVariations.length > 1">
           {{ product.productVariations.length }}
         </div>
       </td>

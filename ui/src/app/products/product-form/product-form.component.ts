@@ -53,7 +53,14 @@ export class ProductFormComponent implements OnInit {
 
     if (sku === 'new') {
       this.product = {};
-      this.variations = [];
+      this.variations = [
+        {
+          parentSku: null,
+          sku: null,
+          sellingPrice: 0,
+          description: 'Tamanho:Único',
+        },
+      ];
       this.images = [];
       this.configureFormFields(this.product);
     } else {
@@ -69,11 +76,11 @@ export class ProductFormComponent implements OnInit {
 
   private configureFormFields(product: Product) {
     this.formFields = this.fb.group({
-      sku: [product.sku || ''],
+      sku: [{ value: product.sku || '', disabled: !!product.id }],
       ncm: [product.ncm || ''],
       title: [product.title || ''],
       description: [product.description || ''],
-      sellingPrice: [product.sellingPrice || null],
+      sellingPrice: [{ value: product.sellingPrice || null, disabled: true }],
       height: [product.height || null],
       width: [product.width || null],
       length: [product.length || null],

@@ -12,7 +12,16 @@
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
         <label for="sku">SKU</label>
-        <input id="sku" name="sku" type="text" formControlName="sku" pInputText placeholder="SKU do seu produto" />
+        <input
+          id="sku"
+          name="sku"
+          type="text"
+          formControlName="sku"
+          pInputText
+          placeholder="SKU do seu produto"
+          pTooltip="Depois de salvo, o SKU não pode ser alterado."
+          tooltipPosition="top"
+        />
       </div>
       <div class="p-field p-col">
         <label for="ncm">NCM</label>
@@ -34,15 +43,20 @@
         />
       </div>
       <div class="p-field p-col">
-        <label for="sellingPrice">Preço de venda</label>
-        <input
+        <label for="sellingPrice">Preço mínimo</label>
+        <p-inputNumber
           id="sellingPrice"
           name="sellingPrice"
-          type="text"
           formControlName="sellingPrice"
-          pInputText
-          placeholder="Preço de venda do produto"
-        />
+          currency="BRL"
+          mode="currency"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          placeholder="ex. R$ 10,00"
+          tooltipPosition="top"
+          pTooltip="Defina o preço do produto através das variações."
+        ></p-inputNumber>
       </div>
       <div class="p-field p-col">
         <label for="sellingPrice">Categoria</label>
@@ -185,13 +199,17 @@
       </div>
       <div class="p-field p-col-12">
         <label for="variationSellingPrice">Preço de Venda</label>
-        <input
-          pInputText
-          name="variationSellingPrice"
+        <p-inputNumber
           id="variationSellingPrice"
-          placeholder="Preço de venda da variação"
+          name="variationSellingPrice"
           formControlName="sellingPrice"
-        />
+          currency="BRL"
+          mode="currency"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          placeholder="ex. R$ 10,00"
+        ></p-inputNumber>
       </div>
     </div>
   </form>

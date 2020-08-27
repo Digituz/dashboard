@@ -19,6 +19,7 @@ import { ProductImagesComponent } from './product-form/product-images/product-im
 import { ProductsListComponent } from './products-list/products-list.component';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
 import { ImageService } from '@app/media-library/image.service';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [ProductsComponent, ProductFormComponent, ProductImagesComponent, ProductsListComponent],
@@ -35,6 +36,7 @@ import { ImageService } from '@app/media-library/image.service';
     InputNumberModule,
     InputTextModule,
     InputSwitchModule,
+    TooltipModule,
     ProductsRoutingModule,
     BreadcrumbsModule,
   ],
