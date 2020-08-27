@@ -1,10 +1,30 @@
 [
-  { "sku": "LFK-00001", "title": "Máscara XYZ", "ncm": "1234.56.78" },
   {
     "sku": "LFK-00001",
     "title": "Máscara XYZ",
     "ncm": "1234.56.78",
-    "productImages": [{ "imageId": 3, "order": 1 }]
+    "productVariations": [
+      {
+        "sku": "LFK-00001",
+        "parentSku": "LFK-00001",
+        "description": "Tamanho:Único",
+        "sellingPrice": 39.9
+      }
+    ]
+  },
+  {
+    "sku": "LFK-00001",
+    "title": "Máscara XYZ",
+    "ncm": "1234.56.78",
+    "productImages": [{ "imageId": 3, "order": 1 }],
+    "productVariations": [
+      {
+        "sku": "LFK-00001",
+        "parentSku": "LFK-00001",
+        "description": "Tamanho:Único",
+        "sellingPrice": 39.9
+      }
+    ]
   },
   {
     "sku": "LFK-00001",
@@ -109,6 +129,14 @@
       { "imageId": 1, "order": 0 },
       { "imageId": 2, "order": 1 },
       { "imageId": 3, "order": 2 }
+    ],
+    "productVariations": [
+      {
+        "sku": "LFK-00003",
+        "parentSku": "LFK-00003",
+        "description": "Tamanho:Único",
+        "sellingPrice": 59.9
+      }
     ]
   },
   {
@@ -118,6 +146,14 @@
     "productImages": [
       { "imageId": 3, "order": 2 },
       { "imageId": 4, "order": 2 }
+    ],
+    "productVariations": [
+      {
+        "sku": "LFK-00003",
+        "parentSku": "LFK-00003",
+        "description": "Tamanho:Único",
+        "sellingPrice": 59.9
+      }
     ]
   },
   {
@@ -127,6 +163,14 @@
     "productImages": [
       { "imageId": 2, "order": 0 },
       { "imageId": 3, "order": 1 }
+    ],
+    "productVariations": [
+      {
+        "sku": "LFK-00004",
+        "parentSku": "LFK-00004",
+        "description": "Tamanho:Único",
+        "sellingPrice": 49.9
+      }
     ]
   },
   {
@@ -136,17 +180,41 @@
     "productImages": [
       { "imageId": 3, "order": 0 },
       { "imageId": 2, "order": 1 }
+    ],
+    "productVariations": [
+      {
+        "sku": "LFK-00004",
+        "parentSku": "LFK-00004",
+        "description": "Tamanho:Único",
+        "sellingPrice": 49.9
+      }
     ]
   },
   {
     "sku": "LFK-00004",
     "title": "Máscara Cinza",
     "ncm": "1234.56.79",
-    "productImages": []
+    "productImages": [],
+    "productVariations": [
+      {
+        "sku": "LFK-00004",
+        "parentSku": "LFK-00004",
+        "description": "Tamanho:Único",
+        "sellingPrice": 49.9
+      }
+    ]
   },
   {
     "sku": "LFK-00004",
     "title": "Máscara Cinza",
-    "ncm": "1234.56.79"
+    "ncm": "1234.56.79",
+    "productVariations": [
+      {
+        "sku": "LFK-00004",
+        "parentSku": "LFK-00004",
+        "description": "Tamanho:Único",
+        "sellingPrice": 49.9
+      }
+    ]
   }
 ]

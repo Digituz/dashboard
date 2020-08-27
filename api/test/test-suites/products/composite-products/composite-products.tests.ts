@@ -35,24 +35,56 @@ describe('managing composite products', () => {
     sku: 'P-1',
     title: 'Product Part 1',
     ncm: '1234.56.78',
+    productVariations: [
+      {
+        parentSku: 'P-1',
+        sku: 'P-1',
+        sellingPrice: 29.95,
+        description: 'Tamanho:Único',
+      },
+    ],
   };
 
   const productPart2: ProductDTO = {
     sku: 'P-2',
     title: 'Product Part 2',
     ncm: '1234.56.78',
+    productVariations: [
+      {
+        parentSku: 'P-2',
+        sku: 'P-2',
+        sellingPrice: 29.95,
+        description: 'Tamanho:Único',
+      },
+    ],
   };
 
   const productPart3: ProductDTO = {
     sku: 'P-3',
     title: 'Product Part 3',
     ncm: '1234.56.78',
+    productVariations: [
+      {
+        parentSku: 'P-3',
+        sku: 'P-3',
+        sellingPrice: 29.95,
+        description: 'Tamanho:Único',
+      },
+    ],
   };
 
   const productPart4: ProductDTO = {
     sku: 'P-4',
     title: 'Product Part 4',
     ncm: '1234.56.78',
+    productVariations: [
+      {
+        parentSku: 'P-4',
+        sku: 'P-4',
+        sellingPrice: 29.95,
+        description: 'Tamanho:Único',
+      },
+    ],
   };
 
   const inventoryPart1: InventoryMovementDTO = {
@@ -84,6 +116,14 @@ describe('managing composite products', () => {
     title: 'Composite Product 1',
     ncm: '1234.56.78',
     productComposition: ['P-1', 'P-2'],
+    productVariations: [
+      {
+        parentSku: 'CP-1',
+        sku: 'CP-1',
+        sellingPrice: 29.95,
+        description: 'Tamanho:Único',
+      },
+    ],
   };
 
   async function createAndMoveBasicProducts() {

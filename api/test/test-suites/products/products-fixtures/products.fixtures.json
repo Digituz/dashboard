@@ -4,7 +4,15 @@
     "title": "Product A-00",
     "ncm": "1234.56.78",
     "variations_size": 0,
-    "images_size": 0
+    "images_size": 0,
+    "productVariations": [
+      {
+        "sku": "A-00",
+        "parentSku": "A-00",
+        "description": "Tamanho:Único",
+        "sellingPrice": 39.9
+      }
+    ]
   },
   {
     "sku": "A-01",

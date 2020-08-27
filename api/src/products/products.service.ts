@@ -296,6 +296,11 @@ export class ProductsService {
   }
 
   async save(productDTO: ProductDTO): Promise<Product> {
+    // perform some initial validation
+    if (!productDTO.productVariations || productDTO.productVariations.length === 0) {
+      throw new Error("Products must have at least one variation.");
+    }
+
     let product = await this.findOneBySku(productDTO.sku);
     if (product) {
       product = await this.updateProduct(product, productDTO);
