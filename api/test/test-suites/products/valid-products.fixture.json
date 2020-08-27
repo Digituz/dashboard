@@ -7,7 +7,7 @@
       {
         "sku": "LFK-00001",
         "parentSku": "LFK-00001",
-        "description": "Tamanho:Único",
+        "description": "Tamanho Único",
         "sellingPrice": 39.9
       }
     ]
@@ -21,7 +21,7 @@
       {
         "sku": "LFK-00001",
         "parentSku": "LFK-00001",
-        "description": "Tamanho:Único",
+        "description": "Tamanho Único",
         "sellingPrice": 39.9
       }
     ]
@@ -134,7 +134,7 @@
       {
         "sku": "LFK-00003",
         "parentSku": "LFK-00003",
-        "description": "Tamanho:Único",
+        "description": "Tamanho Único",
         "sellingPrice": 59.9
       }
     ]
@@ -151,7 +151,7 @@
       {
         "sku": "LFK-00003",
         "parentSku": "LFK-00003",
-        "description": "Tamanho:Único",
+        "description": "Tamanho Único",
         "sellingPrice": 59.9
       }
     ]
@@ -168,7 +168,7 @@
       {
         "sku": "LFK-00004",
         "parentSku": "LFK-00004",
-        "description": "Tamanho:Único",
+        "description": "Tamanho Único",
         "sellingPrice": 49.9
       }
     ]
@@ -185,7 +185,7 @@
       {
         "sku": "LFK-00004",
         "parentSku": "LFK-00004",
-        "description": "Tamanho:Único",
+        "description": "Tamanho Único",
         "sellingPrice": 49.9
       }
     ]
@@ -199,7 +199,7 @@
       {
         "sku": "LFK-00004",
         "parentSku": "LFK-00004",
-        "description": "Tamanho:Único",
+        "description": "Tamanho Único",
         "sellingPrice": 49.9
       }
     ]
@@ -212,7 +212,7 @@
       {
         "sku": "LFK-00004",
         "parentSku": "LFK-00004",
-        "description": "Tamanho:Único",
+        "description": "Tamanho Único",
         "sellingPrice": 49.9
       }
     ]

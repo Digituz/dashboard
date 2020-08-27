@@ -194,7 +194,7 @@ describe('persisting products', () => {
     const noVariation = {
       parentSku: 'FK-0001',
       sku: 'FK-0001',
-      description: 'Tamanho:Único',
+      description: 'Tamanho Único',
       sellingPrice: 39.9,
     };
     const product: ProductDTO = {

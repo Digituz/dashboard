@@ -58,7 +58,7 @@ export class ProductFormComponent implements OnInit {
           parentSku: null,
           sku: null,
           sellingPrice: 0,
-          description: 'Tamanho:Único',
+          description: 'Tamanho Único',
         },
       ];
       this.images = [];

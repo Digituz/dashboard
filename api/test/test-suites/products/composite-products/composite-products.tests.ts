@@ -40,7 +40,7 @@ describe('managing composite products', () => {
         parentSku: 'P-1',
         sku: 'P-1',
         sellingPrice: 29.95,
-        description: 'Tamanho:Único',
+        description: 'Tamanho Único',
       },
     ],
   };
@@ -54,7 +54,7 @@ describe('managing composite products', () => {
         parentSku: 'P-2',
         sku: 'P-2',
         sellingPrice: 29.95,
-        description: 'Tamanho:Único',
+        description: 'Tamanho Único',
       },
     ],
   };
@@ -68,7 +68,7 @@ describe('managing composite products', () => {
         parentSku: 'P-3',
         sku: 'P-3',
         sellingPrice: 29.95,
-        description: 'Tamanho:Único',
+        description: 'Tamanho Único',
       },
     ],
   };
@@ -82,7 +82,7 @@ describe('managing composite products', () => {
         parentSku: 'P-4',
         sku: 'P-4',
         sellingPrice: 29.95,
-        description: 'Tamanho:Único',
+        description: 'Tamanho Único',
       },
     ],
   };
@@ -121,7 +121,7 @@ describe('managing composite products', () => {
         parentSku: 'CP-1',
         sku: 'CP-1',
         sellingPrice: 29.95,
-        description: 'Tamanho:Único',
+        description: 'Tamanho Único',
       },
     ],
   };
