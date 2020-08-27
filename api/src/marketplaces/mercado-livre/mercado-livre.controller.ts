@@ -1,7 +1,9 @@
-import { Controller, Post, Get, Query } from '@nestjs/common';
+import { Controller, Post, Get, Query, UseGuards } from '@nestjs/common';
 import { MercadoLivreService } from './mercado-livre.service';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 
 @Controller('mercado-livre')
+@UseGuards(JwtAuthGuard)
 export class MercadoLivreController {
   mercadoLivre: any;
   accessToken: string;

@@ -1,10 +1,12 @@
-import { Controller, Get, Query, Post, Body, Param, Put } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Param, Put, UseGuards } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Customer } from './customer.entity';
 import { parseBoolean } from '../util/parsers';
 import { CustomersService } from './customers.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('customers')
+@UseGuards(JwtAuthGuard)
 export class CustomersController {
   constructor(private customersService: CustomersService) {}
 

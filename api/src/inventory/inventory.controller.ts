@@ -1,4 +1,4 @@
-import { Controller, Query, Get, Param, Body, Post } from '@nestjs/common';
+import { Controller, Query, Get, Param, Body, Post, UseGuards } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { parseBoolean } from '../util/parsers';
 import { InventoryService } from './inventory.service';
@@ -6,8 +6,10 @@ import { Inventory } from './inventory.entity';
 import { InventoryMovementDTO } from './inventory-movement.dto';
 import { InventoryMovement } from './inventory-movement.entity';
 import { InventoryDTO } from './inventory.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('inventory')
+@UseGuards(JwtAuthGuard)
 export class InventoryController {
   constructor(private inventoryService: InventoryService) {}
 

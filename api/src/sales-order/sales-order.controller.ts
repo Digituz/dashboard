@@ -7,6 +7,7 @@ import {
   Param,
   Get,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
 
@@ -15,9 +16,11 @@ import { SalesOrderService } from './sales-order.service';
 import { SaleOrder } from './entities/sale-order.entity';
 import { UpdateSaleOrderStatusDTO } from './update-sale-order-status.dto';
 import { PaymentStatus } from './entities/payment-status.enum';
-import { parseBoolean } from '..//util/parsers';
+import { parseBoolean } from '../util/parsers';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('sales-order')
+@UseGuards(JwtAuthGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 export class SalesOrderController {
   constructor(private salesOrderService: SalesOrderService) {}
