@@ -125,26 +125,12 @@ export class ProductsService {
   }
 
   private async insertProduct(productDTO: ProductDTO) {
-    const containsRealVariations =
-      productDTO.productVariations?.length > 0 ? true : false;
     const variations: ProductVariation[] = productDTO.productVariations || [];
 
-    let sellingPrice;
-    if (!containsRealVariations) {
-      variations.push({
-        sku: productDTO.sku,
-        description: 'Tamanho Único',
-        sellingPrice: productDTO.sellingPrice,
-        noVariation: true,
-      });
-
-      sellingPrice = productDTO.sellingPrice;
-    } else {
-      const sortedByMinimumPrice = productDTO.productVariations.sort(
-        (p1, p2) => p1.sellingPrice - p2.sellingPrice,
-      );
-      sellingPrice = sortedByMinimumPrice[0].sellingPrice;
-    }
+    const sortedByMinimumPrice = productDTO.productVariations.sort(
+      (p1, p2) => p1.sellingPrice - p2.sellingPrice,
+    );
+    const sellingPrice = sortedByMinimumPrice[0].sellingPrice;
 
     const newProduct: Product = {
       sku: productDTO.sku,
@@ -160,7 +146,6 @@ export class ProductsService {
       isActive: productDTO.isActive,
       variationsSize: productDTO.productVariations?.length,
       imagesSize: productDTO.productImages?.length,
-      withoutVariation: !containsRealVariations,
       category: productDTO.category
         ? ProductCategory[productDTO.category]
         : null,
@@ -271,11 +256,30 @@ export class ProductsService {
       oldVariations,
       'sku',
     );
+
     const variationsToBeRemoved = _.differenceBy(
       oldVariations,
       newVariations,
       'sku',
     );
+
+    const variationsToBeUpdated = _.differenceBy(
+      newVariations,
+      variationsToBeInserted,
+      'sku',
+    );
+
+    if (variationsToBeUpdated) {
+      const newVersions = variationsToBeUpdated.map(variation => {
+        const oldVersion = oldVariations.find(o => o.sku === variation.sku);
+        variation.product = product;
+        return {
+          ...oldVersion,
+          ...variation,
+        };
+      });
+      await this.productVariationsRepository.save(newVersions);
+    }
 
     if (variationsToBeRemoved.length > 0) {
       await this.inventoryService.removeInventoryAndMovements(
@@ -297,8 +301,11 @@ export class ProductsService {
 
   async save(productDTO: ProductDTO): Promise<Product> {
     // perform some initial validation
-    if (!productDTO.productVariations || productDTO.productVariations.length === 0) {
-      throw new Error("Products must have at least one variation.");
+    if (
+      !productDTO.productVariations ||
+      productDTO.productVariations.length === 0
+    ) {
+      throw new Error('Products must have at least one variation.');
     }
 
     let product = await this.findOneBySku(productDTO.sku);
@@ -374,7 +381,6 @@ export class ProductsService {
       isActive: productDTO.isActive,
       ncm: productDTO.ncm,
       variationsSize: productDTO.productVariations?.length,
-      withoutVariation: !productDTO.productVariations ? true : false,
       imagesSize: productDTO.productImages?.length,
       category: productDTO.category
         ? ProductCategory[productDTO.category]
@@ -385,30 +391,12 @@ export class ProductsService {
 
     // managing variations and inventories
     const previousVariations = previousProductVersion.productVariations;
-    if (
-      !previousProductVersion.withoutVariation &&
-      persistedProduct.withoutVariation
-    ) {
-      const newVariations = [
-        {
-          sku: productDTO.sku,
-          description: 'Tamanho Único',
-          sellingPrice: productDTO.sellingPrice,
-          noVariation: true,
-        },
-      ];
-      await this.updateVariations(
-        persistedProduct,
-        newVariations,
-        previousVariations,
-      );
-    } else if (!persistedProduct.withoutVariation) {
-      await this.updateVariations(
-        persistedProduct,
-        productDTO.productVariations,
-        previousVariations,
-      );
-    }
+
+    await this.updateVariations(
+      persistedProduct,
+      productDTO.productVariations,
+      previousVariations,
+    );
 
     if (
       (productDTO.productComposition &&
@@ -471,7 +459,6 @@ export class ProductsService {
           sku: productVariation.sku,
           description: productVariation.description,
           sellingPrice: productVariation.sellingPrice,
-          noVariation: productVariation.product.withoutVariation,
           currentPosition: productVariation.currentPosition,
         };
       }),

@@ -12,7 +12,6 @@ export class ProductDTO {
   @Length(5, 60)
   title: string;
   ncm: string;
-  noVariation?: boolean = false;
   description?: string;
   productDetails?: string;
   sellingPrice?: number;
@@ -21,7 +20,7 @@ export class ProductDTO {
   length?: number;
   weight?: number;
   isActive?: boolean;
-  productVariations?: ProductVariationDTO[];
+  productVariations: ProductVariationDTO[];
   productComposition?: string[];
   productImages?: ProductImageDTO[];
   category?: ProductCategory | string;

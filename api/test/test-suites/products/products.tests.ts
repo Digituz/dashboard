@@ -148,30 +148,24 @@ describe('persisting products', () => {
 
     expect(productCreated.sku).toBe(productDTO.sku);
 
-    if (productDTO.productVariations?.length > 0) {
-      expect(productCreated.productVariations?.length).toBe(
-        productDTO.productVariations.length,
-      );
-      expect(productCreated.withoutVariation).toBe(false);
+    expect(productCreated.productVariations.length).toBe(
+      productDTO.productVariations.length,
+    );
 
-      const sortedByMinimumPrice = productDTO.productVariations.sort(
-        (p1, p2) => p1.sellingPrice - p2.sellingPrice,
-      );
-      const minimumPriceVariation = sortedByMinimumPrice[0];
+    const sortedByMinimumPrice = productDTO.productVariations.sort(
+      (p1, p2) => p1.sellingPrice - p2.sellingPrice,
+    );
+    const minimumPriceVariation = sortedByMinimumPrice[0];
 
-      expect(productCreated.sellingPrice).toBe(
-        minimumPriceVariation.sellingPrice,
-      );
-    } else {
-      expect(productCreated.productVariations?.length).toBe(1);
-      const noVariation = productCreated.productVariations[0];
-      expect(noVariation.sku).toBe(productDTO.sku);
-      expect(noVariation.noVariation).toBe(true);
+    expect(productCreated.sellingPrice).toBe(
+      minimumPriceVariation.sellingPrice,
+    );
 
-      const expectedPrice = productDTO.sellingPrice
-        ? productDTO.sellingPrice
-        : null;
-      expect(productCreated.sellingPrice).toBe(expectedPrice);
+    for (const pv of productDTO.productVariations) {
+      const persistedVariation = productCreated.productVariations.find(
+        v => v.sku === pv.sku,
+      );
+      expect(persistedVariation.sellingPrice).toBe(pv.sellingPrice);
     }
 
     if (productDTO.productImages) {
@@ -194,5 +188,25 @@ describe('persisting products', () => {
     it(`to be able to create valid products (${validFixture.sku})`, async () => {
       await persistProduct(validFixture);
     });
+  });
+
+  it('should properly handle products with no variations', async () => {
+    const noVariation = {
+      parentSku: 'FK-0001',
+      sku: 'FK-0001',
+      description: 'Tamanho:Único',
+      sellingPrice: 39.9,
+    };
+    const product: ProductDTO = {
+      sku: 'FK-0001',
+      title: 'FK-0001',
+      ncm: '1234.56.78',
+      productVariations: [noVariation],
+    };
+    await persistProduct(product);
+
+    noVariation.sellingPrice = 49.9;
+
+    await persistProduct(product);
   });
 });

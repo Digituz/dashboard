@@ -66,7 +66,6 @@ describe('Bling integration', () => {
       isActive: true,
       imagesSize: 0,
       variationsSize: 1,
-      withoutVariation: false,
     };
 
     const productVariation: ProductVariation = {
@@ -92,7 +91,6 @@ describe('Bling integration', () => {
       isActive: true,
       imagesSize: 0,
       variationsSize: 1,
-      withoutVariation: false,
     };
 
     const productVariation: ProductVariation = {
@@ -121,7 +119,6 @@ describe('Bling integration', () => {
       isActive: true,
       imagesSize: 0,
       variationsSize: 1,
-      withoutVariation: false,
     };
 
     const productVariation: ProductVariation = {

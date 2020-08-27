@@ -39,9 +39,6 @@ export class ProductVariation extends BaseEntity {
   @JoinColumn({ name: 'product_id' })
   product?: Product;
 
-  @Column({ name: 'no_variation' })
-  noVariation?: boolean = false;
-
   @Column({ name: 'current_position' })
   currentPosition?: number;
 
