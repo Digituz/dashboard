@@ -21,7 +21,7 @@ interface WithVariationsOption {
   styleUrls: ['./products-list.component.scss'],
 })
 export class ProductsListComponent implements OnInit, IDataProvider<Product> {
-  @ViewChild('productsTable') appFoo: DgzTableComponent<Product>;
+  @ViewChild('productsTable') resultsTable: DgzTableComponent<Product>;
   products: Product[];
   query: string;
   withVariationsOptions: WithVariationsOption[] = [
@@ -44,9 +44,10 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
     pageNumber: number,
     pageSize: number,
     sortedBy?: string,
-    sortDirectionAscending?: boolean
+    sortDirectionAscending?: boolean,
+    queryParams?: QueryParam[]
   ): Observable<Pagination<Product>> {
-    return this.productsService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, this.queryParams);
+    return this.productsService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, queryParams);
   }
 
   ngOnInit(): void {}
@@ -57,5 +58,14 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
       { key: 'isActive', value: this.isActive.value },
       { key: 'withVariations', value: this.withVariations.value },
     ];
+    this.resultsTable.reload(this.queryParams);
+  }
+
+  updateQueryParams(queryParams: QueryParam[]) {
+    this.query = queryParams.find((q) => q.key === 'query').value.toString();
+    const selectedVariationsOption = queryParams.find((q) => q.key === 'withVariations').value;
+    this.withVariations = this.withVariationsOptions.find((o) => o.value === selectedVariationsOption);
+    const selectedActiveOption = queryParams.find((q) => q.key === 'isActive').value;
+    this.isActive = this.isActiveOptions.find((o) => o.value === selectedActiveOption);
   }
 }

@@ -1,18 +1,24 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { IDataProvider, QueryParam } from '@app/util/pagination';
 import { delay } from 'rxjs/operators';
+import { FilterCacheService } from '@app/filter-cache.service';
 
 @Component({
   selector: 'dgz-table',
   templateUrl: './dgz-table.component.html',
   styleUrls: ['./dgz-table.component.scss'],
 })
-export class DgzTableComponent<T> implements OnChanges {
+export class DgzTableComponent<T> implements OnInit {
   @Input()
   dataProvider: IDataProvider<T>;
 
   @Input()
   queryParams: QueryParam[];
+
+  @Output() updateQueryParams = new EventEmitter<QueryParam[]>();
+
+  @Input()
+  name: string;
 
   loading: boolean = false;
   currentData: T[] = [];
@@ -23,9 +29,22 @@ export class DgzTableComponent<T> implements OnChanges {
   sortDirectionAscending: boolean;
   totalItems: number = 0;
 
-  constructor() {}
+  constructor(private filterCacheService: FilterCacheService) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnInit() {
+    const savedParams = this.filterCacheService.get(this.name);
+    if (savedParams) {
+      this.currentPage = savedParams.currentPage;
+      this.pageSize = savedParams.pageSize;
+      this.sortedBy = savedParams.sortedBy;
+      this.sortDirectionAscending = savedParams.sortDirectionAscending;
+      this.queryParams = savedParams.queryParams;
+    }
+    this.loadData();
+  }
+
+  reload(queryParams: QueryParam[]): void {
+    this.queryParams = queryParams;
     this.currentPage = 1;
     this.loadData();
   }
@@ -36,6 +55,13 @@ export class DgzTableComponent<T> implements OnChanges {
   }
 
   loadData() {
+    this.filterCacheService.set(this.name, {
+      currentPage: this.currentPage,
+      pageSize: this.pageSize,
+      sortedBy: this.sortedBy,
+      sortDirectionAscending: this.sortDirectionAscending,
+      queryParams: this.queryParams,
+    });
     this.loading = true;
     this.dataProvider
       .loadData(this.currentPage, this.pageSize, this.sortedBy, this.sortDirectionAscending, this.queryParams)
@@ -45,6 +71,7 @@ export class DgzTableComponent<T> implements OnChanges {
         this.totalItems = response.meta.totalItems;
         this.numberOfPages = Math.ceil(this.totalItems / this.pageSize);
         this.loading = false;
+        this.updateQueryParams.emit(this.queryParams);
       });
   }
 
