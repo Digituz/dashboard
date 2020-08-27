@@ -524,9 +524,9 @@ export class ProductsService {
             break;
           case 'withVariations':
             if (queryParam.value) {
-              queryBuilder.andWhere(`variations_size > 0`);
+              queryBuilder.andWhere(`variations_size > 1`);
             } else {
-              queryBuilder.andWhere(`variations_size < 1`);
+              queryBuilder.andWhere(`variations_size < 2`);
             }
         }
       });
