@@ -17,7 +17,7 @@ import { SaleOrderBlingStatus } from '../sale-order-bling-status.enum';
   providers: [ConfirmationService],
 })
 export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrderDTO> {
-  @ViewChild('salesOrdersTable') salesOrdersTable: DgzTableComponent<SalesOrderDTO>;
+  @ViewChild('salesOrdersTable') resultsTable: DgzTableComponent<SalesOrderDTO>;
   queryParams: QueryParam[] = [];
   query: string;
   paymentStatusOptions: ComboBoxOption[] = [
@@ -42,9 +42,10 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
     pageNumber: number,
     pageSize: number,
     sortedBy?: string,
-    sortDirectionAscending?: boolean
+    sortDirectionAscending?: boolean,
+    queryParams?: QueryParam[]
   ): Observable<Pagination<SalesOrderDTO>> {
-    return this.salesOrdersService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, this.queryParams);
+    return this.salesOrdersService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, queryParams);
   }
 
   querySalesOrders() {
@@ -52,6 +53,16 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
       { key: 'query', value: this.query },
       { key: 'paymentStatus', value: this.paymentStatus.value },
     ];
+    this.resultsTable.reload(this.queryParams);
+  }
+
+  updateQueryParams(queryParams: QueryParam[]) {
+    this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
+
+    const selectedPaymentStatusOption = queryParams.find((q) => q.key === 'paymentStatus')?.value;
+    if (selectedPaymentStatusOption) {
+      this.paymentStatus = this.paymentStatusOptions.find((o) => o.value === selectedPaymentStatusOption);
+    }
   }
 
   syncWithBling(salesOrder: SalesOrderDTO) {

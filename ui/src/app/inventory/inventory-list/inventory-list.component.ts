@@ -12,7 +12,7 @@ import { MoveInventoryDialogComponent } from '../move-inventory-dialog/move-inve
   styleUrls: ['./inventory-list.component.scss'],
 })
 export class InventoryListComponent implements OnInit, IDataProvider<Inventory> {
-  @ViewChild('inventoryTable') appFoo: DgzTableComponent<Inventory>;
+  @ViewChild('inventoryTable') resultsTable: DgzTableComponent<Inventory>;
   @ViewChild('movementDialog') movementDialog: MoveInventoryDialogComponent;
   inventory: Inventory[];
   query: string;
@@ -24,18 +24,24 @@ export class InventoryListComponent implements OnInit, IDataProvider<Inventory> 
     pageNumber: number,
     pageSize: number,
     sortedBy?: string,
-    sortDirectionAscending?: boolean
+    sortDirectionAscending?: boolean,
+    queryParams?: QueryParam[]
   ): Observable<Pagination<Inventory>> {
-    return this.inventoryService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, this.queryParams);
+    return this.inventoryService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, queryParams);
   }
 
   ngOnInit(): void {}
 
-  queryInventory() {
-    this.queryParams = [{ key: 'query', value: this.query }];
-  }
-
   openMovementDialog() {
     this.movementDialog.openDialog();
+  }
+
+  queryInventory() {
+    this.queryParams = [{ key: 'query', value: this.query }];
+    this.resultsTable.reload(this.queryParams);
+  }
+
+  updateQueryParams(queryParams: QueryParam[]) {
+    this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
   }
 }

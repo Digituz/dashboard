@@ -30,7 +30,13 @@
     <a title="Nova Venda" routerLink="/sales-orders/new"><button pButton type="button" label="Nova Venda"></button></a>
   </div>
 </div>
-<dgz-table #salesOrdersTable [dataProvider]="this" [queryParams]="queryParams">
+<dgz-table
+  #salesOrdersTable
+  [dataProvider]="this"
+  [queryParams]="queryParams"
+  (updateQueryParams)="updateQueryParams($event)"
+  name="sales-orders-list"
+>
   <thead>
     <tr>
       <th dgz-sortable="date">Data</th>

@@ -21,7 +21,13 @@
     <a title="Novo Cliente" routerLink="/customers/new"><button pButton type="button" label="Novo Cliente"></button></a>
   </div>
 </div>
-<dgz-table #customersTable [dataProvider]="this" [queryParams]="queryParams">
+<dgz-table
+  #customersTable
+  [dataProvider]="this"
+  [queryParams]="queryParams"
+  (updateQueryParams)="updateQueryParams($event)"
+  name="customer-list"
+>
   <thead>
     <tr>
       <th dgz-sortable="name">Nome</th>

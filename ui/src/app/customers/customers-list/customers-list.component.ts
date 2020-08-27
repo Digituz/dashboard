@@ -12,7 +12,7 @@ import { CustomersService } from '../customers.service';
   styleUrls: ['./customers-list.component.scss'],
 })
 export class CustomersListComponent implements OnInit, IDataProvider<Customer> {
-  @ViewChild('customersTable') salesOrdersTable: DgzTableComponent<Customer>;
+  @ViewChild('customersTable') resultsTable: DgzTableComponent<Customer>;
   queryParams: QueryParam[] = [];
   query: string;
 
@@ -26,12 +26,18 @@ export class CustomersListComponent implements OnInit, IDataProvider<Customer> {
     pageNumber: number,
     pageSize: number,
     sortedBy?: string,
-    sortDirectionAscending?: boolean
+    sortDirectionAscending?: boolean,
+    queryParams?: QueryParam[]
   ): Observable<Pagination<Customer>> {
-    return this.customersService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, this.queryParams);
+    return this.customersService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, queryParams);
   }
 
   queryCustomers() {
     this.queryParams = [{ key: 'query', value: this.query }];
+    this.resultsTable.reload(this.queryParams);
+  }
+
+  updateQueryParams(queryParams: QueryParam[]) {
+    this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
   }
 }
