@@ -25,6 +25,14 @@
   .top-bar {
     background-color: #fff;
     padding: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    color: #666;
+
+    .sign-out {
+      cursor: pointer;
+      color: #000;
+    }
   }
 
   .menu {
