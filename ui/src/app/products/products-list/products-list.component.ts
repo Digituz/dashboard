@@ -62,10 +62,16 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
   }
 
   updateQueryParams(queryParams: QueryParam[]) {
-    this.query = queryParams.find((q) => q.key === 'query').value.toString();
-    const selectedVariationsOption = queryParams.find((q) => q.key === 'withVariations').value;
-    this.withVariations = this.withVariationsOptions.find((o) => o.value === selectedVariationsOption);
-    const selectedActiveOption = queryParams.find((q) => q.key === 'isActive').value;
-    this.isActive = this.isActiveOptions.find((o) => o.value === selectedActiveOption);
+    this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
+
+    const selectedVariationsOption = queryParams.find((q) => q.key === 'withVariations')?.value;
+    if (selectedVariationsOption) {
+      this.withVariations = this.withVariationsOptions.find((o) => o.value === selectedVariationsOption);
+    }
+
+    const selectedActiveOption = queryParams.find((q) => q.key === 'isActive')?.value;
+    if (selectedActiveOption !== undefined) {
+      this.isActive = this.isActiveOptions.find((o) => o.value === selectedActiveOption);
+    }
   }
 }

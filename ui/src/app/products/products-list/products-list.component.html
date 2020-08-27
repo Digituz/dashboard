@@ -34,7 +34,13 @@
     <a title="Novo Produto" routerLink="/products/new"><button pButton type="button" label="Novo Produto"></button></a>
   </div>
 </div>
-<dgz-table #productsTable [dataProvider]="this" [queryParams]="queryParams" (updateQueryParams)="updateQueryParams($event)" name="product-list">
+<dgz-table
+  #productsTable
+  [dataProvider]="this"
+  [queryParams]="queryParams"
+  (updateQueryParams)="updateQueryParams($event)"
+  name="product-list"
+>
   <thead>
     <tr>
       <th dgz-sortable="sku">SKU</th>
