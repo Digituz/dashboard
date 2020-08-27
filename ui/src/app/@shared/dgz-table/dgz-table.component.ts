@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IDataProvider, QueryParam } from '@app/util/pagination';
 import { delay } from 'rxjs/operators';
 
@@ -7,7 +7,7 @@ import { delay } from 'rxjs/operators';
   templateUrl: './dgz-table.component.html',
   styleUrls: ['./dgz-table.component.scss'],
 })
-export class DgzTableComponent<T> implements OnInit, OnChanges {
+export class DgzTableComponent<T> implements OnChanges {
   @Input()
   dataProvider: IDataProvider<T>;
 
@@ -27,10 +27,6 @@ export class DgzTableComponent<T> implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.currentPage = 1;
-    this.loadData();
-  }
-
-  ngOnInit(): void {
     this.loadData();
   }
 
