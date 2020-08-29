@@ -23,6 +23,6 @@ export class MercadoLivreController {
 
   @Post('/')
   async save(): Promise<void> {
-    // return this.shopifyService.syncProducts();
+    return this.mercadoLivreService.createProducts();
   }
 }

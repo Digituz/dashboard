@@ -1,0 +1,1067 @@
+{
+  "id": "MLB1361411457",
+  "site_id": "MLB",
+  "title": "Anel Infinito Amor Pura Prata 925 - Melhor Preço",
+  "subtitle": null,
+  "seller_id": 205698626,
+  "category_id": "MLB1438",
+  "official_store_id": null,
+  "price": 32,
+  "base_price": 32,
+  "original_price": null,
+  "currency_id": "BRL",
+  "initial_quantity": 2825,
+  "available_quantity": 1052,
+  "sold_quantity": 821,
+  "sale_terms": [
+    {
+      "id": "WARRANTY_TIME",
+      "name": "Tempo de garantia",
+      "value_id": null,
+      "value_name": "6.0 meses",
+      "value_struct": { "number": 6, "unit": "meses" },
+      "values": [
+        {
+          "id": null,
+          "name": "6.0 meses",
+          "struct": { "number": 6, "unit": "meses" }
+        }
+      ]
+    },
+    {
+      "id": "WARRANTY_TYPE",
+      "name": "Tipo de garantia",
+      "value_id": "2230279",
+      "value_name": "Garantia de fábrica",
+      "value_struct": null,
+      "values": [
+        { "id": "2230279", "name": "Garantia de fábrica", "struct": null }
+      ]
+    }
+  ],
+  "buying_mode": "buy_it_now",
+  "listing_type_id": "gold_pro",
+  "start_time": "2019-11-09T04:29:51.000Z",
+  "stop_time": "2039-11-04T04:00:00.000Z",
+  "condition": "new",
+  "permalink": "https://produto.mercadolivre.com.br/MLB-1361411457-anel-infinito-amor-pura-prata-925-melhor-preco-_JM",
+  "thumbnail": "http://mlb-s2-p.mlstatic.com/610552-MLB32824073048_112019-I.jpg",
+  "secure_thumbnail": "https://mlb-s2-p.mlstatic.com/610552-MLB32824073048_112019-I.jpg",
+  "pictures": [
+    {
+      "id": "610552-MLB32824073048_112019",
+      "url": "http://mlb-s2-p.mlstatic.com/610552-MLB32824073048_112019-O.jpg",
+      "secure_url": "https://mlb-s2-p.mlstatic.com/610552-MLB32824073048_112019-O.jpg",
+      "size": "411x500",
+      "max_size": "1008x1224",
+      "quality": ""
+    },
+    {
+      "id": "750117-MLB41365864183_042020",
+      "url": "http://mlb-s2-p.mlstatic.com/750117-MLB41365864183_042020-O.jpg",
+      "secure_url": "https://mlb-s2-p.mlstatic.com/750117-MLB41365864183_042020-O.jpg",
+      "size": "500x500",
+      "max_size": "1200x1200",
+      "quality": ""
+    },
+    {
+      "id": "828457-MLB32824073047_112019",
+      "url": "http://mlb-s2-p.mlstatic.com/828457-MLB32824073047_112019-O.jpg",
+      "secure_url": "https://mlb-s2-p.mlstatic.com/828457-MLB32824073047_112019-O.jpg",
+      "size": "500x500",
+      "max_size": "1200x1200",
+      "quality": ""
+    },
+    {
+      "id": "771654-MLB41365864182_042020",
+      "url": "http://mlb-s2-p.mlstatic.com/771654-MLB41365864182_042020-O.jpg",
+      "secure_url": "https://mlb-s2-p.mlstatic.com/771654-MLB41365864182_042020-O.jpg",
+      "size": "500x500",
+      "max_size": "1200x1200",
+      "quality": ""
+    },
+    {
+      "id": "930668-MLB41365864057_042020",
+      "url": "http://mlb-s2-p.mlstatic.com/930668-MLB41365864057_042020-O.jpg",
+      "secure_url": "https://mlb-s2-p.mlstatic.com/930668-MLB41365864057_042020-O.jpg",
+      "size": "500x500",
+      "max_size": "1200x1200",
+      "quality": ""
+    },
+    {
+      "id": "671954-MLB32834630611_112019",
+      "url": "http://mlb-s2-p.mlstatic.com/671954-MLB32834630611_112019-O.jpg",
+      "secure_url": "https://mlb-s2-p.mlstatic.com/671954-MLB32834630611_112019-O.jpg",
+      "size": "500x381",
+      "max_size": "1081x824",
+      "quality": ""
+    },
+    {
+      "id": "957436-MLB32834630607_112019",
+      "url": "http://mlb-s2-p.mlstatic.com/957436-MLB32834630607_112019-O.jpg",
+      "secure_url": "https://mlb-s2-p.mlstatic.com/957436-MLB32834630607_112019-O.jpg",
+      "size": "500x500",
+      "max_size": "1200x1200",
+      "quality": ""
+    },
+    {
+      "id": "683361-MLB32824067398_112019",
+      "url": "http://mlb-s2-p.mlstatic.com/683361-MLB32824067398_112019-O.jpg",
+      "secure_url": "https://mlb-s2-p.mlstatic.com/683361-MLB32824067398_112019-O.jpg",
+      "size": "500x500",
+      "max_size": "1200x1200",
+      "quality": ""
+    },
+    {
+      "id": "998458-MLB40668729435_022020",
+      "url": "http://mlb-s2-p.mlstatic.com/998458-MLB40668729435_022020-O.jpg",
+      "secure_url": "https://mlb-s2-p.mlstatic.com/998458-MLB40668729435_022020-O.jpg",
+      "size": "500x455",
+      "max_size": "862x786",
+      "quality": ""
+    }
+  ],
+  "video_id": null,
+  "descriptions": [{ "id": "MLB1361411457-2382348905" }],
+  "accepts_mercadopago": true,
+  "non_mercado_pago_payment_methods": [],
+  "shipping": {
+    "mode": "me2",
+    "methods": [],
+    "tags": [],
+    "dimensions": "5x20x15,98",
+    "local_pick_up": false,
+    "free_shipping": false,
+    "logistic_type": "cross_docking",
+    "store_pick_up": false
+  },
+  "international_delivery_mode": "none",
+  "seller_address": {
+    "city": { "id": "BR-SP-39", "name": "São Bernardo do Campo" },
+    "state": { "id": "BR-SP", "name": "São Paulo" },
+    "country": { "id": "BR", "name": "Brasil" },
+    "search_location": {
+      "neighborhood": { "id": "TUxCQklORDU1MDQ", "name": "Independência" },
+      "city": { "id": "TUxCQ1NQLTMzNjI", "name": "São Bernardo do Campo" },
+      "state": { "id": "TUxCUFNBT085N2E4", "name": "São Paulo" }
+    },
+    "latitude": -23.705261,
+    "longitude": -46.582825,
+    "id": 1055373923
+  },
+  "seller_contact": null,
+  "location": {},
+  "geolocation": { "latitude": -23.705261, "longitude": -46.582825 },
+  "coverage_areas": [],
+  "attributes": [
+    {
+      "id": "AGE_GROUP",
+      "name": "Idade",
+      "value_id": "1065182",
+      "value_name": "Adultos",
+      "value_struct": null,
+      "values": [{ "id": "1065182", "name": "Adultos", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "BRAND",
+      "name": "Marca",
+      "value_id": null,
+      "value_name": "Tudo Prata",
+      "value_struct": null,
+      "values": [{ "id": null, "name": "Tudo Prata", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "GEMSTONE_TYPES",
+      "name": "Tipos de pedras",
+      "value_id": "-1",
+      "value_name": null,
+      "value_struct": null,
+      "values": [{ "id": "-1", "name": null, "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "IS_KIT",
+      "name": "É kit",
+      "value_id": "242084",
+      "value_name": "Não",
+      "value_struct": null,
+      "values": [{ "id": "242084", "name": "Não", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "ITEM_CONDITION",
+      "name": "Condição do item",
+      "value_id": "2230284",
+      "value_name": "Novo",
+      "value_struct": null,
+      "values": [{ "id": "2230284", "name": "Novo", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "MANUFACTURER",
+      "name": "Fabricante",
+      "value_id": null,
+      "value_name": "Tudo Prata",
+      "value_struct": null,
+      "values": [{ "id": null, "name": "Tudo Prata", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "MATERIAL",
+      "name": "Material",
+      "value_id": "2481975",
+      "value_name": "Prata",
+      "value_struct": null,
+      "values": [{ "id": "2481975", "name": "Prata", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "METAL_PURITY",
+      "name": "Pureza do metal",
+      "value_id": null,
+      "value_name": "925",
+      "value_struct": null,
+      "values": [{ "id": null, "name": "925", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "MODEL",
+      "name": "Modelo",
+      "value_id": null,
+      "value_name": "Infinito Amor",
+      "value_struct": null,
+      "values": [{ "id": null, "name": "Infinito Amor", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "RING_TYPE",
+      "name": "Tipo de anel",
+      "value_id": "114962",
+      "value_name": "Sem fin",
+      "value_struct": null,
+      "values": [{ "id": "114962", "name": "Sem fin", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "SEX",
+      "name": "Gênero",
+      "value_id": "415960",
+      "value_name": "Feminino",
+      "value_struct": null,
+      "values": [{ "id": "415960", "name": "Feminino", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "STYLES",
+      "name": "Estilos",
+      "value_id": "432204",
+      "value_name": "Moderno",
+      "value_struct": null,
+      "values": [{ "id": "432204", "name": "Moderno", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "WITH_STONE",
+      "name": "Com pedra",
+      "value_id": "242084",
+      "value_name": "Não",
+      "value_struct": null,
+      "values": [{ "id": "242084", "name": "Não", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    }
+  ],
+  "warnings": [],
+  "listing_source": "",
+  "variations": [
+    {
+      "id": 46163175722,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3423409",
+          "value_name": "5",
+          "value_struct": null,
+          "values": [{ "id": "3423409", "name": "5", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 1,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175724,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "4119848",
+          "value_name": "6",
+          "value_struct": null,
+          "values": [{ "id": "4119848", "name": "6", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 5,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175728,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3423412",
+          "value_name": "8",
+          "value_struct": null,
+          "values": [{ "id": "3423412", "name": "8", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 5,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175734,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3259494",
+          "value_name": "11",
+          "value_struct": null,
+          "values": [{ "id": "3259494", "name": "11", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 5,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175736,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3259446",
+          "value_name": "12",
+          "value_struct": null,
+          "values": [{ "id": "3259446", "name": "12", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 25,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175742,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3189177",
+          "value_name": "15",
+          "value_struct": null,
+          "values": [{ "id": "3189177", "name": "15", "struct": null }]
+        }
+      ],
+      "available_quantity": 1,
+      "sold_quantity": 50,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175744,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3189094",
+          "value_name": "16",
+          "value_struct": null,
+          "values": [{ "id": "3189094", "name": "16", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 100,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175748,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3189096",
+          "value_name": "17",
+          "value_struct": null,
+          "values": [{ "id": "3189096", "name": "17", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 100,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175740,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3423416",
+          "value_name": "14",
+          "value_struct": null,
+          "values": [{ "id": "3423416", "name": "14", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 25,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175738,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3189173",
+          "value_name": "13",
+          "value_struct": null,
+          "values": [{ "id": "3189173", "name": "13", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 25,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175730,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3423413",
+          "value_name": "9",
+          "value_struct": null,
+          "values": [{ "id": "3423413", "name": "9", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 5,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175726,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3423411",
+          "value_name": "7",
+          "value_struct": null,
+          "values": [{ "id": "3423411", "name": "7", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 5,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175732,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3189167",
+          "value_name": "10",
+          "value_struct": null,
+          "values": [{ "id": "3189167", "name": "10", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 5,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46163175752,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3189098",
+          "value_name": "18",
+          "value_struct": null,
+          "values": [{ "id": "3189098", "name": "18", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 100,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211318047,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3189100",
+          "value_name": "19",
+          "value_struct": null,
+          "values": [{ "id": "3189100", "name": "19", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 100,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211318052,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3259499",
+          "value_name": "20",
+          "value_struct": null,
+          "values": [{ "id": "3259499", "name": "20", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 50,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211318056,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3189104",
+          "value_name": "21",
+          "value_struct": null,
+          "values": [{ "id": "3189104", "name": "21", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 25,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211318060,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3259501",
+          "value_name": "22",
+          "value_struct": null,
+          "values": [{ "id": "3259501", "name": "22", "struct": null }]
+        }
+      ],
+      "available_quantity": 1,
+      "sold_quantity": 50,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211318065,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3259502",
+          "value_name": "23",
+          "value_struct": null,
+          "values": [{ "id": "3259502", "name": "23", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 25,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211318069,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3189110",
+          "value_name": "24",
+          "value_struct": null,
+          "values": [{ "id": "3189110", "name": "24", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 25,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211318074,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3259521",
+          "value_name": "25",
+          "value_struct": null,
+          "values": [{ "id": "3259521", "name": "25", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 25,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211372989,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "4147746",
+          "value_name": "26",
+          "value_struct": null,
+          "values": [{ "id": "4147746", "name": "26", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 25,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211372991,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3259523",
+          "value_name": "27",
+          "value_struct": null,
+          "values": [{ "id": "3259523", "name": "27", "struct": null }]
+        }
+      ],
+      "available_quantity": 50,
+      "sold_quantity": 5,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211372993,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3259504",
+          "value_name": "28",
+          "value_struct": null,
+          "values": [{ "id": "3259504", "name": "28", "struct": null }]
+        }
+      ],
+      "available_quantity": 0,
+      "sold_quantity": 5,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211372995,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3259505",
+          "value_name": "29",
+          "value_struct": null,
+          "values": [{ "id": "3259505", "name": "29", "struct": null }]
+        }
+      ],
+      "available_quantity": 0,
+      "sold_quantity": 5,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    },
+    {
+      "id": 46211373000,
+      "price": 32,
+      "attribute_combinations": [
+        {
+          "id": "SIZE",
+          "name": "Tamanho",
+          "value_id": "3259506",
+          "value_name": "30",
+          "value_struct": null,
+          "values": [{ "id": "3259506", "name": "30", "struct": null }]
+        }
+      ],
+      "available_quantity": 0,
+      "sold_quantity": 25,
+      "sale_terms": [],
+      "picture_ids": [
+        "610552-MLB32824073048_112019",
+        "750117-MLB41365864183_042020",
+        "828457-MLB32824073047_112019",
+        "771654-MLB41365864182_042020",
+        "930668-MLB41365864057_042020",
+        "671954-MLB32834630611_112019",
+        "957436-MLB32834630607_112019",
+        "683361-MLB32824067398_112019",
+        "998458-MLB40668729435_022020"
+      ],
+      "catalog_product_id": null
+    }
+  ],
+  "status": "active",
+  "sub_status": [],
+  "tags": [
+    "brand_verified",
+    "good_quality_picture",
+    "good_quality_thumbnail",
+    "loyalty_discount_eligible",
+    "immediate_payment",
+    "cart_eligible"
+  ],
+  "warranty": "Garantia de fábrica: 6.0 meses",
+  "catalog_product_id": null,
+  "domain_id": "MLB-RINGS",
+  "parent_item_id": null,
+  "differential_pricing": null,
+  "deal_ids": [],
+  "automatic_relist": false,
+  "date_created": "2019-11-09T04:29:51.000Z",
+  "last_updated": "2020-08-29T14:28:40.000Z",
+  "health": 0.9,
+  "catalog_listing": false
+}

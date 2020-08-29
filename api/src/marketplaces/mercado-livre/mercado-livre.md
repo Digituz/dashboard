@@ -42,3 +42,23 @@ Will get you an user like:
 ```
 
 After that, you can login with this user, authorize the application, and start creating test products.
+
+## Getting Categories
+
+```bash
+curl -X GET https://api.mercadolibre.com/sites/MLB/categories
+
+curl -X GET https://api.mercadolibre.com/categories/MLB1438
+```
+
+## Getting a Product
+
+```bash
+curl -X GET https://api.mercadolibre.com/items/MLB1361411457
+```
+
+## Migrating Products from Digituz to Mercado Livre
+
+```bash
+curl -X POST -H 'Authorization: Bearer '$DIGITUZ_TOKEN http://localhost:3005/v1/mercado-livre/
+```
