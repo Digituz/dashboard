@@ -83,7 +83,10 @@ export class MercadoLivreService {
       return product.productVariations.length === 1 && product.isActive;
     });
     const mlProduct = await this.mapToMLProduct(oneProduct);
-    console.log(mlProduct);
+    this.mercadoLivre.post(`items`, mlProduct, (err, response) => {
+      if (err) return console.error(err);
+      console.log(response);
+    });
   }
 
   private async getProductCategory(product: Product): Promise<string> {
@@ -145,13 +148,12 @@ export class MercadoLivreService {
       price: singleVariation.sellingPrice,
       currency_id: 'BRL',
       tags: ['immediate_payment'],
-      subtitle: null, // TODO ml-integration check is valuable?
+      // subtitle: null, // TODO ml-integration check is valuable?
       sale_terms: [], // TODO ml-integration check is valuable?
-      warranty: '90 dias de garantia',
       title: 'Item de Teste - Por favor, NÃO OFERTAR!', // TODO ml-integration fix
       listing_type_id: 'silver', // TODO ml-integration fix (gold_special, gold_pro, silver)
       shipping: null, // TODO ml-integration fix
-      payment_method: null, // TODO ml-integration fix (needed?)
+      // payment_method: null, // TODO ml-integration fix (needed?)
       attributes: [
         {
           id: 'BRAND',

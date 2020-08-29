@@ -21,7 +21,7 @@ curl http://localhost:3005/v1/mercado-livre\?code\=TG-5f46e0a3578a730006d292e0-6
 Issuing a request like:
 
 ```bash
-ACCESS_TOKEN="APP_USR-6962689565848218-082621-552c792316bc728fa5b7f2357de5cad6-50194908"
+ACCESS_TOKEN="APP_USR-6962689565848218-082822-8f0863d90967436d8d931f9533fdb0ec-572387649"
 
 curl -X POST -H "Content-Type: application/json" -d '{
   "site_id": "MLB"
