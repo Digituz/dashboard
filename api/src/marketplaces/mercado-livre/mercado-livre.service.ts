@@ -83,7 +83,9 @@ export class MercadoLivreService {
       return (
         product.productVariations.length === 1 &&
         product.isActive &&
-        !product.mercadoLivreId
+        !product.mercadoLivreId &&
+        product.mercadoLivreCategoryId &&
+        product.productImages?.length > 0
       );
     });
     const createJobs = activeNoVariationProducts.map((product, idx) => {
@@ -92,6 +94,7 @@ export class MercadoLivreService {
           const mlProduct = await this.mapToMLProduct(product);
           this.mercadoLivre.post('items', mlProduct, async (err, response) => {
             if (err) return rej(err);
+            if (!response.id) return rej(`Unable to create ${product.sku} on Mercado Livre.`);
             product.mercadoLivreId = response.id;
             await this.productsService.updateProductProperties(product.id, {
               mercadoLivreId: response.id,
@@ -105,55 +108,24 @@ export class MercadoLivreService {
     await Promise.all(createJobs);
   }
 
-  private async getProductCategory(product: Product): Promise<string> {
-    const mlCategory = this.mercadoLivreCategoryMapping[product.category];
-    if (mlCategory) return mlCategory;
-
-    return new Promise((res, rej) => {
-      this.mercadoLivre.get(
-        `sites/${ML_SITE_ID}/domain_discovery/search?limit=1&q=${encodeURI(
-          product.title,
-        )}`,
-        (err, response) => {
-          if (err) return rej(err);
-          if (!response[0] || !response[0].category_id)
-            rej('Category not found.');
-          this.mercadoLivreCategoryMapping[product.category] =
-            response[0].category_id;
-          res(this.mercadoLivreCategoryMapping[product.category]);
-        },
-      );
-    });
-  }
-
   private async mapToMLProduct(product: Product) {
     const productImages = product.productImages.map(pi => ({
       source: pi.image.largeFileURL,
     }));
-    const productCategory = await this.getProductCategory(product);
 
     return product.variationsSize > 1
-      ? this.mapProductWithVariationsForCreation(
-          product,
-          productImages,
-          productCategory,
-        )
-      : this.mapProductWithoutVariationsForCreation(
-          product,
-          productImages,
-          productCategory,
-        );
+      ? this.mapProductWithVariationsForCreation(product, productImages)
+      : this.mapProductWithoutVariationsForCreation(product, productImages);
   }
 
   private mapProductWithoutVariationsForCreation(
     product: Product,
     productImages: { source: string }[],
-    productCategory: string,
   ) {
     const singleVariation = product.productVariations[0];
 
     return {
-      category_id: productCategory,
+      category_id: product.mercadoLivreCategoryId,
       description: {
         plain_text: product.description,
       },
@@ -186,13 +158,8 @@ export class MercadoLivreService {
   private mapProductWithVariationsForCreation(
     product: Product,
     productImages: { source: string }[],
-    productCategory: string,
   ) {
-    return this.mapProductWithoutVariationsForCreation(
-      product,
-      productImages,
-      productCategory,
-    );
+    return this.mapProductWithoutVariationsForCreation(product, productImages);
     // return {
     //   sku: null, // TODO
     //   category_id: productCategory,
