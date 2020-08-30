@@ -79,14 +79,30 @@ export class MercadoLivreService {
 
   async createProducts() {
     const products = await this.productsService.findAll();
-    const oneProduct = products.find(product => {
-      return product.productVariations.length === 1 && product.isActive;
+    const activeNoVariationProducts = products.filter(product => {
+      return (
+        product.productVariations.length === 1 &&
+        product.isActive &&
+        !product.mercadoLivreId
+      );
     });
-    const mlProduct = await this.mapToMLProduct(oneProduct);
-    this.mercadoLivre.post(`items`, mlProduct, (err, response) => {
-      if (err) return console.error(err);
-      console.log(response);
+    const createJobs = activeNoVariationProducts.map((product, idx) => {
+      return new Promise((res, rej) => {
+        setTimeout(async () => {
+          const mlProduct = await this.mapToMLProduct(product);
+          this.mercadoLivre.post('items', mlProduct, async (err, response) => {
+            if (err) return rej(err);
+            product.mercadoLivreId = response.id;
+            await this.productsService.updateProductProperties(product.id, {
+              mercadoLivreId: response.id,
+            });
+            console.log(`${product.sku} created successfully`);
+            res();
+          });
+        }, idx * 250);
+      });
     });
+    await Promise.all(createJobs);
   }
 
   private async getProductCategory(product: Product): Promise<string> {

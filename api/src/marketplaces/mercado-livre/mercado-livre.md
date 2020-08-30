@@ -59,6 +59,16 @@ curl -X GET https://api.mercadolibre.com/items/MLB1361411457
 
 ## Migrating Products from Digituz to Mercado Livre
 
+Triggering sync:
+
 ```bash
 curl -X POST -H 'Authorization: Bearer '$DIGITUZ_TOKEN http://localhost:3005/v1/mercado-livre/
+```
+
+Deleting (delete) a product on Mercado Livre:
+
+```bash
+ITEM_ID=MLB-1642264358
+ACCESS_TOKEN=APP_USR-6962689565848218-082822-8f0863d90967436d8d931f9533fdb0ec-572387649
+curl -X DELETE https://api.mercadolibre.com/items/$ITEM_ID/description?access_token=$ACCESS_TOKEN
 ```

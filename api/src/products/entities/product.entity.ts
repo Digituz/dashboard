@@ -134,5 +134,21 @@ export class Product extends BaseEntity {
     name: 'shopify_id',
     type: 'bigint',
   })
-  shopifyId?: number = 0;
+  shopifyId?: number;
+
+  @Column({
+    name: 'mercado_livre_id',
+    type: 'varchar',
+    length: 30,
+    nullable: true,
+  })
+  mercadoLivreId?: string;
+
+  @Column({
+    name: 'mercado_livre_category_id',
+    type: 'varchar',
+    length: 60,
+    nullable: true,
+  })
+  mercadoLivreCategoryId?: string;
 }
