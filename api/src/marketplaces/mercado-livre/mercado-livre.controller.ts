@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Query, UseGuards, Put } from '@nestjs/common';
 import { MercadoLivreService } from './mercado-livre.service';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 
@@ -24,5 +24,10 @@ export class MercadoLivreController {
   @Post('/')
   async save(): Promise<void> {
     return this.mercadoLivreService.createProducts();
+  }
+
+  @Put('/')
+  async update(): Promise<void> {
+    return this.mercadoLivreService.updateProducts();
   }
 }

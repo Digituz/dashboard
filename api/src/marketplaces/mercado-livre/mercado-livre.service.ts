@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import htmlToText from 'html-to-text';
 import meli from 'mercadolibre';
 import { KeyValuePairService } from '../../key-value-pair/key-value-pair.service';
 import { Product } from '../../products/entities/product.entity';
 import { ProductsService } from '../../products/products.service';
+import { ProductCategory } from '../../products/entities/product-category.enum';
 
 const ML_REDIRECT_URL = 'https://digituz.com.br/api/v1/mercado-livre';
 const ML_CLIENT_ID = '6962689565848218';
@@ -77,6 +79,19 @@ export class MercadoLivreService {
     });
   }
 
+  async updateProducts() {
+    const products = await this.productsService.findAll();
+    const berloques = products.filter(product => {
+      return (
+        product.mercadoLivreId && product.category === ProductCategory.BERLOQUES
+      );
+    });
+    const jobs = berloques.map(async berloque =>
+      this.updateProductDetails(berloque, true),
+    );
+    await Promise.all(jobs);
+  }
+
   async createProducts() {
     const products = await this.productsService.findAll();
     const activeNoVariationProducts = products.filter(product => {
@@ -94,7 +109,8 @@ export class MercadoLivreService {
           const mlProduct = await this.mapToMLProduct(product);
           this.mercadoLivre.post('items', mlProduct, async (err, response) => {
             if (err) return rej(err);
-            if (!response.id) return rej(`Unable to create ${product.sku} on Mercado Livre.`);
+            if (!response.id)
+              return rej(`Unable to create ${product.sku} on Mercado Livre.`);
             product.mercadoLivreId = response.id;
             await this.productsService.updateProductProperties(product.id, {
               mercadoLivreId: response.id,
@@ -127,7 +143,7 @@ export class MercadoLivreService {
     return {
       category_id: product.mercadoLivreCategoryId,
       description: {
-        plain_text: product.description,
+        plain_text: htmlToText.fromString(product.productDetails),
       },
       condition: 'new',
       buying_mode: 'buy_it_now',
@@ -207,5 +223,61 @@ export class MercadoLivreService {
     //     },
     //   ],
     // };
+  }
+
+  private async updateProductDescription(product: Product) {
+    if (!product.productDetails) return Promise.resolve();
+    return new Promise((res, rej) => {
+      const updatedProperties: any = {
+        plain_text: htmlToText.fromString(product.productDetails),
+      };
+      this.mercadoLivre.put(
+        `items/${product.mercadoLivreId}/description`,
+        updatedProperties,
+        async (err, response) => {
+          if (err) return rej(err);
+          if (!response.plain_text) {
+            return rej(
+              `Unable to update ${product.sku} (${product.mercadoLivreId}) on Mercado Livre.`,
+            );
+          }
+          res();
+        },
+      );
+    });
+  }
+
+  private async updateProductDetails(product: Product, updateTitle: boolean) {
+    return new Promise((res, rej) => {
+      const updatedProperties: any = {
+        attributes: [
+          {
+            id: 'MATERIAL',
+            value_id: '2481975',
+            value_name: 'Prata',
+          },
+        ],
+      };
+      if (updateTitle) {
+        updatedProperties.title = product.title;
+      }
+      this.mercadoLivre.put(
+        `items/${product.mercadoLivreId}`,
+        updatedProperties,
+        async (err, response) => {
+          if (err) return rej(err);
+          await this.updateProductDescription(product);
+          if (!response.id) {
+            return rej(
+              `Unable to update ${product.sku} (${product.mercadoLivreId}) on Mercado Livre.`,
+            );
+          }
+          console.log(
+            `${product.sku} (${product.mercadoLivreId}) updated successfully`,
+          );
+          res();
+        },
+      );
+    });
   }
 }
