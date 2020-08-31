@@ -155,7 +155,7 @@ export class MercadoLivreService {
       // subtitle: null, // TODO ml-integration check is valuable?
       sale_terms: [], // TODO ml-integration check is valuable?
       title: 'Item de Teste - Por favor, NÃO OFERTAR!', // TODO ml-integration fix
-      listing_type_id: 'silver', // TODO ml-integration fix (gold_special, gold_pro, silver)
+      listing_type_id: 'gold_pro', // TODO ml-integration fix (gold_special, gold_pro, silver)
       shipping: null, // TODO ml-integration fix
       // payment_method: null, // TODO ml-integration fix (needed?)
       attributes: [
@@ -225,6 +225,27 @@ export class MercadoLivreService {
     // };
   }
 
+  private async updateProductExposure(product: Product) {
+    return new Promise((res, rej) => {
+      const exposure: any = {
+        id: 'gold_pro',
+      };
+      this.mercadoLivre.post(
+        `items/${product.mercadoLivreId}/listing_type`,
+        exposure,
+        async (err, response) => {
+          if (err) return rej(err);
+          if (!response.id) {
+            return rej(
+              `Unable to update exposure of ${product.sku} (${product.mercadoLivreId}) on Mercado Livre.`,
+            );
+          }
+          res();
+        },
+      );
+    });
+  }
+
   private async updateProductDescription(product: Product) {
     if (!product.productDetails) return Promise.resolve();
     return new Promise((res, rej) => {
@@ -247,7 +268,11 @@ export class MercadoLivreService {
     });
   }
 
-  private async updateProductDetails(product: Product, updateTitle: boolean) {
+  private async updateProductDetails(
+    product: Product,
+    updateTitle: boolean,
+    updateExposure?: boolean,
+  ) {
     return new Promise((res, rej) => {
       const updatedProperties: any = {
         attributes: [
@@ -267,6 +292,9 @@ export class MercadoLivreService {
         async (err, response) => {
           if (err) return rej(err);
           await this.updateProductDescription(product);
+          if (updateExposure) {
+            await this.updateProductExposure(product);
+          }
           if (!response.id) {
             return rej(
               `Unable to update ${product.sku} (${product.mercadoLivreId}) on Mercado Livre.`,
