@@ -102,12 +102,66 @@
       "attribute_group_name": "Outros"
     },
     {
+      "id": "DIAMETER",
+      "name": "Diâmetro",
+      "value_id": null,
+      "value_name": "10 mm",
+      "value_struct": { "number": 10, "unit": "mm" },
+      "values": [
+        {
+          "id": null,
+          "name": "10 mm",
+          "struct": { "number": 10, "unit": "mm" }
+        }
+      ],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "GEMSTONE_TYPE",
+      "name": "Tipo de pedra",
+      "value_id": "-1",
+      "value_name": null,
+      "value_struct": null,
+      "values": [{ "id": "-1", "name": null, "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "HEIGHT",
+      "name": "Altura",
+      "value_id": null,
+      "value_name": "1 mm",
+      "value_struct": { "number": 1, "unit": "mm" },
+      "values": [
+        { "id": null, "name": "1 mm", "struct": { "number": 1, "unit": "mm" } }
+      ],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
       "id": "ITEM_CONDITION",
       "name": "Condição do item",
       "value_id": "2230284",
       "value_name": "Novo",
       "value_struct": null,
       "values": [{ "id": "2230284", "name": "Novo", "struct": null }],
+      "attribute_group_id": "OTHERS",
+      "attribute_group_name": "Outros"
+    },
+    {
+      "id": "LENGTH",
+      "name": "Comprimento",
+      "value_id": null,
+      "value_name": "10 mm",
+      "value_struct": { "number": 10, "unit": "mm" },
+      "values": [
+        {
+          "id": null,
+          "name": "10 mm",
+          "struct": { "number": 10, "unit": "mm" }
+        }
+      ],
       "attribute_group_id": "OTHERS",
       "attribute_group_name": "Outros"
     },
@@ -137,12 +191,7 @@
   "variations": [],
   "status": "active",
   "sub_status": [],
-  "tags": [
-    "good_quality_picture",
-    "incomplete_technical_specs",
-    "immediate_payment",
-    "cart_eligible"
-  ],
+  "tags": ["good_quality_picture", "immediate_payment", "cart_eligible"],
   "warranty": null,
   "catalog_product_id": null,
   "domain_id": "MLB-CHARMS_AND_MEDALS",
@@ -151,7 +200,7 @@
   "deal_ids": [],
   "automatic_relist": false,
   "date_created": "2020-08-30T21:32:12.000Z",
-  "last_updated": "2020-08-31T22:30:46.591Z",
+  "last_updated": "2020-08-31T23:12:03.695Z",
   "health": 0.75,
   "catalog_listing": false
 }

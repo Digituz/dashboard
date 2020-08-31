@@ -167,6 +167,22 @@ export class MercadoLivreService {
           id: 'SELLER_SKU',
           value_name: singleVariation.sku,
         },
+        {
+          id: 'DIAMETER',
+          value_name: `${product.width * 10} mm`,
+        },
+        {
+          id: 'HEIGHT',
+          value_name: `${product.height * 10} mm`,
+        },
+        {
+          id: 'LENGTH',
+          value_name: `${product.length * 10} mm`,
+        },
+        {
+          id: 'GEMSTONE_TYPE',
+          value_name: null,
+        },
       ],
     };
   }
@@ -280,6 +296,22 @@ export class MercadoLivreService {
             id: 'MATERIAL',
             value_id: '2481975',
             value_name: 'Prata',
+          },
+          {
+            id: 'DIAMETER',
+            value_name: `${product.width * 10} mm`,
+          },
+          {
+            id: 'HEIGHT',
+            value_name: `${product.height * 10} mm`,
+          },
+          {
+            id: 'LENGTH',
+            value_name: `${product.length * 10} mm`,
+          },
+          {
+            id: 'GEMSTONE_TYPE',
+            value_name: null,
           },
         ],
       };
