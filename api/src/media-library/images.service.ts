@@ -18,6 +18,7 @@ export class ImagesService {
   async findAll(archived = false): Promise<Image[]> {
     const images = await this.imagesRepository.find({
       where: { archived },
+      order: { id: 'DESC' },
     });
     return Promise.resolve(
       images.map(image => ({

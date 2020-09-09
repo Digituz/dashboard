@@ -163,6 +163,7 @@ export class MediaLibraryComponent implements OnInit {
   applyTags() {
     this.imageService.applyTags(this.selectedImages, this.selectedTags).subscribe(() => {
       this.selectedTags = null;
+      this.reloadImages();
     });
   }
 

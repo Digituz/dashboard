@@ -23,9 +23,9 @@ export class TagsService {
   async query(query: string): Promise<Tag[]> {
     return this.tagsRepository
       .createQueryBuilder('tag')
-      .where('tag.label like :query', { query: `%${query.toLowerCase()}%` })
-      .orWhere('tag.description like :query', {
-        query: `%${query.toLowerCase()}%`,
+      .where('lower(tag.label) like lower(:query)', { query: `%${query}%` })
+      .orWhere('lower(tag.description) like lower(:query)', {
+        query: `%${query}%`,
       })
       .limit(10)
       .getMany();
