@@ -39,9 +39,9 @@ docker rm digituz-dashboard-postgres
 To copy the backup, you can issue the following command:
 
 ```bash
-docker cp bin/bkp/20200820-digituz-dashboard.sql digituz-dashboard-postgres:/20200820-digituz-dashboard.sql
+docker cp bin/bkp/digituz-2020-09-08.dump digituz-dashboard-postgres:/digituz-2020-09-08.dump
 docker exec -i -t digituz-dashboard-postgres /bin/bash
-psql --user digituz-dashboard digituz-dashboard < 20200820-digituz-dashboard.sql
+psql --user digituz-dashboard digituz-dashboard < digituz-2020-09-08.dump
 ```
 
 ## Running the app

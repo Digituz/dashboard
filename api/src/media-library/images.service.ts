@@ -16,28 +16,142 @@ export class ImagesService {
   }
 
   async findAll(archived = false): Promise<Image[]> {
-    return this.imagesRepository.find({
+    const images = await this.imagesRepository.find({
       where: { archived },
     });
+    return Promise.resolve(
+      images.map(image => ({
+        ...image,
+        originalFileURL: image.originalFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        extraLargeFileURL: image.extraLargeFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        largeFileURL: image.largeFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        mediumFileURL: image.mediumFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        smallFileURL: image.smallFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        thumbnailFileURL: image.thumbnailFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+      })),
+    );
   }
 
   async findByIds(ids: number[]): Promise<Image[]> {
-    return this.imagesRepository.findByIds(ids);
+    const images = await this.imagesRepository.findByIds(ids);
+    return Promise.resolve(
+      images.map(image => ({
+        ...image,
+        originalFileURL: image.originalFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        extraLargeFileURL: image.extraLargeFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        largeFileURL: image.largeFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        mediumFileURL: image.mediumFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        smallFileURL: image.smallFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        thumbnailFileURL: image.thumbnailFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+      })),
+    );
   }
 
   async findById(id: number): Promise<Image> {
-    return this.imagesRepository
+    const image = await this.imagesRepository
       .createQueryBuilder('image')
       .leftJoinAndSelect('image.tags', 'tags')
       .where('image.id = :id', { id })
       .getOne();
+    return Promise.resolve({
+      ...image,
+      originalFileURL: image.originalFileURL.replace(
+        'https://s3.sa-east-1.amazonaws.com/',
+        'https://',
+      ),
+      extraLargeFileURL: image.extraLargeFileURL.replace(
+        'https://s3.sa-east-1.amazonaws.com/',
+        'https://',
+      ),
+      largeFileURL: image.largeFileURL.replace(
+        'https://s3.sa-east-1.amazonaws.com/',
+        'https://',
+      ),
+      mediumFileURL: image.mediumFileURL.replace(
+        'https://s3.sa-east-1.amazonaws.com/',
+        'https://',
+      ),
+      smallFileURL: image.smallFileURL.replace(
+        'https://s3.sa-east-1.amazonaws.com/',
+        'https://',
+      ),
+      thumbnailFileURL: image.thumbnailFileURL.replace(
+        'https://s3.sa-east-1.amazonaws.com/',
+        'https://',
+      ),
+    });
   }
 
-  findAllWithTag(tagLabel: string): Promise<Image[]> {
-    return this.imagesRepository
+  async findAllWithTag(tagLabel: string): Promise<Image[]> {
+    const images = await this.imagesRepository
       .createQueryBuilder('image')
       .leftJoin('image.tags', 'tag')
       .where('tag.label = :label', { label: tagLabel })
       .getMany();
+    return Promise.resolve(
+      images.map(image => ({
+        ...image,
+        originalFileURL: image.originalFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        extraLargeFileURL: image.extraLargeFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        largeFileURL: image.largeFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        mediumFileURL: image.mediumFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        smallFileURL: image.smallFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+        thumbnailFileURL: image.thumbnailFileURL.replace(
+          'https://s3.sa-east-1.amazonaws.com/',
+          'https://',
+        ),
+      })),
+    );
   }
 }
