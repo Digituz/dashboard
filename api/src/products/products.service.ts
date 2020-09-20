@@ -96,9 +96,12 @@ export class ProductsService {
       return a.order - b.order;
     });
 
-    product.productComposition = await this.productCompositionRepository.find({
-      where: { product: product },
-    });
+    product.productComposition = await this.productCompositionRepository
+      .createQueryBuilder('pc')
+      .leftJoinAndSelect('pc.productVariation', 'pv')
+      .leftJoinAndSelect('pv.product', 'p')
+      .where({ product })
+      .getMany();
 
     return product;
   }
