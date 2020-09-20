@@ -98,6 +98,7 @@ export class ProductFormComponent implements OnInit {
     product.productDetails = this.productDetails;
     product.productVariations = this.variations;
     product.productImages = this.images;
+    product.productComposition = this.product.productComposition.map((item) => item.productVariation.sku);
 
     if (this.product.id) {
       // field is disabled, so the form doesn't provide it
