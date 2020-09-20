@@ -31,4 +31,7 @@ PGPASSWORD=123 psql -U digituz-dashboard -d postgres -c 'create database "digitu
 
 # restore the backup
 PGPASSWORD=123 psql -U digituz-dashboard -d digituz-dashboard < digituz-postgres.dump
+
+# leave the container
+exit
 ```
