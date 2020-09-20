@@ -173,6 +173,53 @@
     </tr>
   </tbody>
 </table>
+
+<div class="feature-header" style="margin-top: 30px;">
+  <h2>Composição do Produto</h2>
+  <p>
+    <label
+      >Caso esse produto seja composto, utilize esta área para indicar quais os produtos fazem parte do mesmo.</label
+    >
+  </p>
+  <div class="actions">
+    <!-- <button pButton type="button" (click)="newItemOnComposition()" label="Adicionar Item"></button> -->
+  </div>
+</div>
+<table class="digituz">
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Título</th>
+      <th>Preço</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of product?.productComposition">
+      <td>{{ item.productVariation.sku }}</td>
+      <td>{{ item.productVariation.product.title }}</td>
+      <td class="currency">{{ item.productVariation.sellingPrice | reais }}</td>
+      <td class="actions">
+        <button
+          pButton
+          type="button"
+          class="ui-button-danger"
+          icon="fal fa-trash"
+          (click)="removeItemFromComposition(item)"
+        ></button>
+      </td>
+    </tr>
+    <tr *ngIf="!product || !product.productComposition || product.productComposition.length === 0">
+      <td colspan="4">
+        <div class="no-data-container">
+          <i class="fal fa-inbox"></i>
+          <p>Produto simples</p>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 <p-dialog
   header="Variação do Produto"
   [(visible)]="isModalVisible"

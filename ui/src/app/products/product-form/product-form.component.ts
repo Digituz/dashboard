@@ -7,6 +7,7 @@ import { ProductVariation } from '../product-variation.entity';
 import { Image } from '../../media-library/image.entity';
 import { ProductImage } from '../product-image.entity';
 import { ProductCategory } from '../product-category.enum';
+import { ProductComposition } from '../product-composition.entity';
 
 interface Category {
   label: string;
@@ -162,4 +163,12 @@ export class ProductFormComponent implements OnInit {
     }
     this.isModalVisible = false;
   }
+
+  removeItemFromComposition(removedItem: ProductComposition) {
+    this.product.productComposition = this.product.productComposition.filter(
+      (item) => item.productVariation.sku !== removedItem.productVariation.sku
+    );
+  }
+
+  newItemOnComposition() {}
 }

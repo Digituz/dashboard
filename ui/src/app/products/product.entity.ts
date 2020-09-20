@@ -1,6 +1,7 @@
 import { ProductVariation } from './product-variation.entity';
 import { ProductImage } from './product-image.entity';
 import { ProductCategory } from './product-category.enum';
+import { ProductComposition } from './product-composition.entity';
 
 export default class Product {
   id?: number;
@@ -17,6 +18,7 @@ export default class Product {
   ncm?: string;
   variationsSize?: number = 0;
   productVariations?: ProductVariation[];
+  productComposition?: ProductComposition[];
   imagesSize?: number = 0;
   productImages?: ProductImage[];
   category?: ProductCategory;
