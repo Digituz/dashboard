@@ -80,6 +80,9 @@ JWT_TIME_SPAN=1d
 BLING_APIKEY=50c467c88f5cb2b8021c7f8818a8d4b22df7a80dc29fbe1f533b0ce6c2e1cfaa7581fbc8
 
 # typeorm (for migrations only)
+TYPEORM_USERNAME=digituz-dashboard
+TYPEORM_PASSWORD=123
+TYPEORM_DATABASE=digituz-dashboard
 TYPEORM_CONNECTION=postgres
 TYPEORM_URL=postgres://digituz-dashboard:123@localhost:5432/digituz-dashboard
 TYPEORM_SYNCHRONIZE=false

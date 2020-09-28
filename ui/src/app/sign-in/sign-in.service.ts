@@ -37,7 +37,7 @@ export class SignInService {
   isSignedId() {
     const now = Date.now();
     if (!this.token || !this.tokenInfo?.exp) return false;
-    return this.tokenInfo.exp * 1000 > (now + 120 * 1000);
+    return this.tokenInfo.exp * 1000 > now + 120 * 1000;
   }
 
   getToken() {
