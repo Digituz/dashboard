@@ -7,7 +7,7 @@ import * as XSLX from 'xlsx';
 import { Inventory } from './inventory.entity';
 import { InventoryMovement } from './inventory-movement.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Brackets, In } from 'typeorm';
+import { Repository, Brackets, In, Binary } from 'typeorm';
 import { IPaginationOpts } from '../pagination/pagination';
 import { InventoryMovementDTO } from './inventory-movement.dto';
 import { SaleOrder } from '../sales-order/entities/sale-order.entity';
@@ -343,17 +343,27 @@ export class InventoryService {
 
   //export to xls
   async exportXls() {
-    const inventory = this.inventoryRepository.find();
+    const inventory = await this.inventoryRepository
+      .createQueryBuilder('inventory')
+      .leftJoin('inventory.productVariation', 'productVariation')
+      .leftJoin('productVariation.product', 'product')
+      .select([
+        'productVariation.sku',
+        'product.title',
+        'productVariation.description',
+        'inventory.current_position',
+        'inventory.id',
+      ])
+      .getRawMany();
     const wb = XSLX.utils.book_new();
     wb.Props = {
       Title: 'Estoque',
       CreatedDate: new Date(),
     };
     wb.SheetNames.push('Estoque');
-    const xlsInfo = [[inventory]];
-    const wb_data = XSLX.utils.aoa_to_sheet(xlsInfo);
+    const xlsInfo = inventory;
+    const wb_data = XSLX.utils.json_to_sheet(xlsInfo);
     wb.SheetNames['Estoque'] = wb_data;
-    const wbComplete = XSLX.write(wb, { bookType: 'xlsx', type: 'binary' });
-    return wbComplete;
+    XSLX.writeFile(wb, '/tmp/Estoque');
   }
 }

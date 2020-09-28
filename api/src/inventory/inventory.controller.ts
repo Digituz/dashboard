@@ -62,6 +62,11 @@ export class InventoryController {
     return Promise.resolve(paginatedResults);
   }
 
+  @Get('/xls')
+  async exportXls() {
+    return this.inventoryService.exportXls();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: number): Promise<Inventory> {
     return this.inventoryService.findById(id);
@@ -75,8 +80,4 @@ export class InventoryController {
   }
 
   //Criar endpoint para export arquivo cls receber a requisição
-  @Get('/xls')
-  async exportXls() {
-    return this.inventoryService.exportXls();
-  }
 }

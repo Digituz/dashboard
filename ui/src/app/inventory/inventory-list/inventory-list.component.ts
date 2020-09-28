@@ -46,7 +46,8 @@ export class InventoryListComponent implements OnInit, IDataProvider<Inventory> 
   }
 
   xlsExport() {
-    const inventory = this.inventoryService.xlsExport();
-    console.log(inventory);
+    this.inventoryService.xlsExport().subscribe((inventory) => {
+      console.log(inventory);
+    });
   }
 }
