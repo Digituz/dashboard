@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 import { minBy } from 'lodash';
 
-import * as XSLX from 'xlsx';
+import * as XLSX from 'xlsx';
 
 import { Inventory } from './inventory.entity';
 import { InventoryMovement } from './inventory-movement.entity';
@@ -341,9 +341,9 @@ export class InventoryService {
     return this.inventoryRepository.save(inventory);
   }
 
-  //export to xls
   async exportXls() {
-    const inventory = await this.inventoryRepository
+    // get inventory info for all product variations ordered by ncm
+    const reportData = await this.inventoryRepository
       .createQueryBuilder('inventory')
       .leftJoin('inventory.productVariation', 'productVariation')
       .leftJoin('productVariation.product', 'product')
@@ -354,16 +354,28 @@ export class InventoryService {
         'inventory.current_position',
         'inventory.id',
       ])
+      .orderBy('product.ncm')
       .getRawMany();
-    const wb = XSLX.utils.book_new();
+
+    const wb = XLSX.utils.book_new();
     wb.Props = {
-      Title: 'Estoque',
+      Title: 'Relatório de Estoque',
       CreatedDate: new Date(),
     };
-    wb.SheetNames.push('Estoque');
-    const xlsInfo = inventory;
-    const wb_data = XSLX.utils.json_to_sheet(xlsInfo);
-    wb.SheetNames['Estoque'] = wb_data;
-    XSLX.writeFile(wb, '/tmp/Estoque');
+
+    const workSheet = XLSX.utils.json_to_sheet(reportData);
+    XLSX.utils.book_append_sheet(wb, workSheet, 'Estoque');
+
+    XLSX.writeFile(wb, '/tmp/Estoque.xlsx');
+
+    // melhorias a serem feitas:
+    // 1. remover ID da spreadsheet gerada
+    // 2. trocar os headers (por nomes em português)
+    // 3. exibir uma coluna com NCM (a Tula pediu para ordernamos por NCM por ora)
+    // 4. deixar a coluna `productVariation_description` em branco quando for `Tamanho Único`
+    // 5. deixar colunas expandidas por padrão (se for fácil)
+    // 6. trocar cor para cinza no botão de gerar o relatório
+    // 7. trocar o título do botão para "Gerar Relatório"
+    // 8. testar o download via ajax, exemplo: https://medium.com/@radicalloop/download-file-using-ajax-in-angular-4-50109564bf17 
   }
 }
