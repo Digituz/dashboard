@@ -9,7 +9,7 @@ export class patrickUser1601296118601 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `delete from app_user where email = 'patrickk0806@gmail.com'`,
+      `delete from app_user where email = 'patrickk0806@gmail.com';`,
     );
   }
 }
