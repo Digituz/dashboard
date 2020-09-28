@@ -62,4 +62,8 @@ export class InventoryService implements IDataProvider<Inventory> {
       description: inventoryMovement.description,
     });
   }
+
+  xlsExport() {
+    return this.httpClient.get<Inventory>(`${this.INVENTORY_ENDPOINT}/xls`);
+  }
 }

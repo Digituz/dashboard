@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 import { minBy } from 'lodash';
 
+import * as XSLX from 'xlsx';
+
 import { Inventory } from './inventory.entity';
 import { InventoryMovement } from './inventory-movement.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -54,18 +56,18 @@ export class InventoryService {
     }
 
     options.queryParams
-      .filter(queryParam => {
+      .filter((queryParam) => {
         return (
           queryParam !== null &&
           queryParam.value !== null &&
           queryParam.value !== undefined
         );
       })
-      .forEach(queryParam => {
+      .forEach((queryParam) => {
         switch (queryParam.key) {
           case 'query':
             queryBuilder.andWhere(
-              new Brackets(qb => {
+              new Brackets((qb) => {
                 qb.where(`lower(pv.sku) like lower(:query)`, {
                   query: `%${queryParam.value.toString()}%`,
                 });
@@ -122,8 +124,8 @@ export class InventoryService {
     const movements = await this.inventoryMovementRepository.find({
       saleOrder: saleOrder,
     });
-    const removeMovementJobs = movements.map(movement => {
-      return new Promise(async res => {
+    const removeMovementJobs = movements.map((movement) => {
+      return new Promise(async (res) => {
         const inventory = movement.inventory;
         inventory.currentPosition -= movement.amount;
         await this.inventoryRepository.save(inventory);
@@ -135,8 +137,8 @@ export class InventoryService {
   }
 
   async removeInventoryAndMovements(productVariations: ProductVariation[]) {
-    const removeJobs = productVariations.map(productVariation => {
-      return new Promise(async res => {
+    const removeJobs = productVariations.map((productVariation) => {
+      return new Promise(async (res) => {
         const inventory = await this.inventoryRepository.findOne({
           where: { productVariation },
         });
@@ -192,7 +194,6 @@ export class InventoryService {
 
     // 4. if this product is a composite product, update its parts
     await this.updatePartsOfComposition(inventoryMovementDTO, saleOrder);
-
     return inventoryMovement;
   }
 
@@ -246,11 +247,11 @@ export class InventoryService {
     if (!productCompositions || productCompositions.length === 0) return;
 
     const partsOfComposition: ProductVariation[] = productCompositions.map(
-      pc => pc.productVariation,
+      (pc) => pc.productVariation,
     );
 
     await Promise.all(
-      partsOfComposition.map(async part => {
+      partsOfComposition.map(async (part) => {
         const movement: InventoryMovementDTO = {
           ...inventoryMovementDTO,
           sku: part.sku,
@@ -301,10 +302,10 @@ export class InventoryService {
       .leftJoinAndSelect('pc.productVariation', 'pv')
       .where('pc.product = :productId', { productId: product.id })
       .getMany();
-    const parts = composition.map(pc => pc.productVariation);
+    const parts = composition.map((pc) => pc.productVariation);
 
     // step 2: check the min inventory of these parts
-    const minInventory = minBy(parts, part => part.currentPosition);
+    const minInventory = minBy(parts, (part) => part.currentPosition);
 
     // step 3: calc the amount to be updated
     const amountMoved =
@@ -338,5 +339,21 @@ export class InventoryService {
     const inventory = await this.findBySku(sku);
     inventory.currentPosition = 0;
     return this.inventoryRepository.save(inventory);
+  }
+
+  //export to xls
+  async exportXls() {
+    const inventory = this.inventoryRepository.find();
+    const wb = XSLX.utils.book_new();
+    wb.Props = {
+      Title: 'Estoque',
+      CreatedDate: new Date(),
+    };
+    wb.SheetNames.push('Estoque');
+    const xlsInfo = [[inventory]];
+    const wb_data = XSLX.utils.aoa_to_sheet(xlsInfo);
+    wb.SheetNames['Estoque'] = wb_data;
+    const wbComplete = XSLX.write(wb, { bookType: 'xlsx', type: 'binary' });
+    return wbComplete;
   }
 }

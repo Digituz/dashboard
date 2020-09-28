@@ -1,4 +1,12 @@
-import { Controller, Query, Get, Param, Body, Post, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Query,
+  Get,
+  Param,
+  Body,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { parseBoolean } from '../util/parsers';
 import { InventoryService } from './inventory.service';
@@ -21,6 +29,7 @@ export class InventoryController {
     @Query('sortDirectionAscending') sortDirectionAscending: string,
     @Query('query') query: string,
   ): Promise<Pagination<InventoryDTO>> {
+    console.log('Teste');
     const result = await this.inventoryService.paginate({
       page,
       limit,
@@ -35,7 +44,7 @@ export class InventoryController {
     });
     const paginatedResults = {
       ...result,
-      items: result.items.map(inventory => {
+      items: result.items.map((inventory) => {
         return {
           id: inventory.id,
           productVariationDetails: {
@@ -63,5 +72,11 @@ export class InventoryController {
     @Body() inventoryMovementDTO: InventoryMovementDTO,
   ): Promise<InventoryMovement> {
     return this.inventoryService.saveMovement(inventoryMovementDTO);
+  }
+
+  //Criar endpoint para export arquivo cls receber a requisição
+  @Get('/xls')
+  async exportXls() {
+    return this.inventoryService.exportXls();
   }
 }
