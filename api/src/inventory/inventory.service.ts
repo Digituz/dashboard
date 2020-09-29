@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Header, Injectable } from '@nestjs/common';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 import { minBy } from 'lodash';
 
-import * as XSLX from 'xlsx';
+import * as XLSX from 'xlsx';
 
 import { Inventory } from './inventory.entity';
 import { InventoryMovement } from './inventory-movement.entity';
@@ -14,6 +14,8 @@ import { SaleOrder } from '../sales-order/entities/sale-order.entity';
 import { ProductVariation } from '../products/entities/product-variation.entity';
 import { Product } from '../products/entities/product.entity';
 import { ProductComposition } from '../products/entities/product-composition.entity';
+import { response } from 'express';
+import { fileURLToPath } from 'url';
 
 @Injectable()
 export class InventoryService {
@@ -343,27 +345,52 @@ export class InventoryService {
 
   //export to xls
   async exportXls() {
-    const inventory = await this.inventoryRepository
+    // get inventory info for all product variations ordered by ncm
+    const reportData = await this.inventoryRepository
       .createQueryBuilder('inventory')
       .leftJoin('inventory.productVariation', 'productVariation')
       .leftJoin('productVariation.product', 'product')
       .select([
-        'productVariation.sku',
-        'product.title',
-        'productVariation.description',
-        'inventory.current_position',
-        'inventory.id',
+        'product.ncm as NCM',
+        'productVariation.sku as SKU',
+        'product.title as Titulo',
+        'productVariation.description as Tamanho',
+        'inventory.current_position as Quantidade',
       ])
+      .orderBy('product.ncm')
       .getRawMany();
-    const wb = XSLX.utils.book_new();
+
+    const data = reportData.map((item) => {
+      if (item.tamanho == 'Tamanho Único') {
+        item.tamanho = '';
+      }
+      return item;
+    });
+
+    const wb = XLSX.utils.book_new();
     wb.Props = {
-      Title: 'Estoque',
+      Title: 'Relatório de Estoque',
       CreatedDate: new Date(),
     };
-    wb.SheetNames.push('Estoque');
-    const xlsInfo = inventory;
-    const wb_data = XSLX.utils.json_to_sheet(xlsInfo);
-    wb.SheetNames['Estoque'] = wb_data;
-    XSLX.writeFile(wb, '/tmp/Estoque');
+    const workSheet = XLSX.utils.json_to_sheet(data);
+
+    const wscols = [
+      { wch: 10 }, // "characters"
+      { wch: 20 }, //wpx pode ser usado apra dizer o tamanho da coluna em "pixels"
+      { wch: 50 },
+      { wch: 25 },
+      { wch: 10 },
+      { hidden: true }, // hide column
+    ];
+
+    workSheet['!cols'] = wscols;
+    XLSX.utils.book_append_sheet(wb, workSheet, 'Estoque');
+
+    XLSX.writeFile(wb, '/tmp/Estoque.xlsx');
+
+    return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
   }
+
+  // melhorias a serem feitas:
+  // 8. testar o download via ajax, exemplo: https://medium.com/@radicalloop/download-file-using-ajax-in-angular-4-50109564bf17
 }
