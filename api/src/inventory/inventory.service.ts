@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Header, Injectable } from '@nestjs/common';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 import { minBy } from 'lodash';
 
@@ -14,6 +14,8 @@ import { SaleOrder } from '../sales-order/entities/sale-order.entity';
 import { ProductVariation } from '../products/entities/product-variation.entity';
 import { Product } from '../products/entities/product.entity';
 import { ProductComposition } from '../products/entities/product-composition.entity';
+import { response } from 'express';
+import { fileURLToPath } from 'url';
 
 @Injectable()
 export class InventoryService {
@@ -348,34 +350,46 @@ export class InventoryService {
       .leftJoin('inventory.productVariation', 'productVariation')
       .leftJoin('productVariation.product', 'product')
       .select([
-        'productVariation.sku',
-        'product.title',
-        'productVariation.description',
-        'inventory.current_position',
-        'inventory.id',
+        'product.ncm as NCM',
+        'productVariation.sku as SKU',
+        'product.title as Titulo',
+        'productVariation.description as Tamanho',
+        'inventory.current_position as Quantidade',
       ])
       .orderBy('product.ncm')
       .getRawMany();
 
+    const data = reportData.map((item) => {
+      if (item.tamanho == 'Tamanho Único') {
+        item.tamanho = '';
+      }
+      return item;
+    });
     const wb = XLSX.utils.book_new();
     wb.Props = {
       Title: 'Relatório de Estoque',
       CreatedDate: new Date(),
     };
 
-    const workSheet = XLSX.utils.json_to_sheet(reportData);
+    const workSheet = XLSX.utils.json_to_sheet(data);
+
+    const wscols = [
+      { wch: 10 }, // "characters"
+      { wch: 20 }, //wpx pode ser usado apra dizer o tamanho da coluna em "pixels"
+      { wch: 50 },
+      { wch: 25 },
+      { wch: 10 },
+      { hidden: true }, // hide column
+    ];
+
+    workSheet['!cols'] = wscols;
     XLSX.utils.book_append_sheet(wb, workSheet, 'Estoque');
 
     XLSX.writeFile(wb, '/tmp/Estoque.xlsx');
 
-    // melhorias a serem feitas:
-    // 1. remover ID da spreadsheet gerada
-    // 2. trocar os headers (por nomes em português)
-    // 3. exibir uma coluna com NCM (a Tula pediu para ordernamos por NCM por ora)
-    // 4. deixar a coluna `productVariation_description` em branco quando for `Tamanho Único`
-    // 5. deixar colunas expandidas por padrão (se for fácil)
-    // 6. trocar cor para cinza no botão de gerar o relatório
-    // 7. trocar o título do botão para "Gerar Relatório"
-    // 8. testar o download via ajax, exemplo: https://medium.com/@radicalloop/download-file-using-ajax-in-angular-4-50109564bf17 
+    return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
   }
+
+  // melhorias a serem feitas:
+  // 8. testar o download via ajax, exemplo: https://medium.com/@radicalloop/download-file-using-ajax-in-angular-4-50109564bf17
 }
