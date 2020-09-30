@@ -384,7 +384,7 @@ export class InventoryService {
 
     workSheet['!cols'] = wscols;
     XLSX.utils.book_append_sheet(wb, workSheet, 'Estoque');
-    throw new Error();
+
     return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
   }
 }
