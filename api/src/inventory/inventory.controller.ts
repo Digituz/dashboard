@@ -1,4 +1,15 @@
-import { Controller, Query, Get, Param, Body, Post, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Query,
+  Get,
+  Param,
+  Body,
+  Post,
+  UseGuards,
+  Res,
+  HttpStatus,
+} from '@nestjs/common';
+import { Response } from 'express';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { parseBoolean } from '../util/parsers';
 import { InventoryService } from './inventory.service';
@@ -35,7 +46,7 @@ export class InventoryController {
     });
     const paginatedResults = {
       ...result,
-      items: result.items.map(inventory => {
+      items: result.items.map((inventory) => {
         return {
           id: inventory.id,
           productVariationDetails: {
@@ -51,6 +62,12 @@ export class InventoryController {
       }),
     };
     return Promise.resolve(paginatedResults);
+  }
+
+  @Get('/xls')
+  async exportXls(@Res() res: Response) {
+    const buff = await this.inventoryService.exportXls();
+    res.status(HttpStatus.OK).send(buff);
   }
 
   @Get(':id')

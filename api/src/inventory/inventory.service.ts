@@ -1,17 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Header, Injectable } from '@nestjs/common';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 import { minBy } from 'lodash';
+
+import * as XLSX from 'xlsx';
 
 import { Inventory } from './inventory.entity';
 import { InventoryMovement } from './inventory-movement.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Brackets, In } from 'typeorm';
+import { Repository, Brackets, In, Binary } from 'typeorm';
 import { IPaginationOpts } from '../pagination/pagination';
 import { InventoryMovementDTO } from './inventory-movement.dto';
 import { SaleOrder } from '../sales-order/entities/sale-order.entity';
 import { ProductVariation } from '../products/entities/product-variation.entity';
 import { Product } from '../products/entities/product.entity';
 import { ProductComposition } from '../products/entities/product-composition.entity';
+import { response } from 'express';
+import { fileURLToPath } from 'url';
 
 @Injectable()
 export class InventoryService {
@@ -54,18 +58,18 @@ export class InventoryService {
     }
 
     options.queryParams
-      .filter(queryParam => {
+      .filter((queryParam) => {
         return (
           queryParam !== null &&
           queryParam.value !== null &&
           queryParam.value !== undefined
         );
       })
-      .forEach(queryParam => {
+      .forEach((queryParam) => {
         switch (queryParam.key) {
           case 'query':
             queryBuilder.andWhere(
-              new Brackets(qb => {
+              new Brackets((qb) => {
                 qb.where(`lower(pv.sku) like lower(:query)`, {
                   query: `%${queryParam.value.toString()}%`,
                 });
@@ -122,8 +126,8 @@ export class InventoryService {
     const movements = await this.inventoryMovementRepository.find({
       saleOrder: saleOrder,
     });
-    const removeMovementJobs = movements.map(movement => {
-      return new Promise(async res => {
+    const removeMovementJobs = movements.map((movement) => {
+      return new Promise(async (res) => {
         const inventory = movement.inventory;
         inventory.currentPosition -= movement.amount;
         await this.inventoryRepository.save(inventory);
@@ -135,8 +139,8 @@ export class InventoryService {
   }
 
   async removeInventoryAndMovements(productVariations: ProductVariation[]) {
-    const removeJobs = productVariations.map(productVariation => {
-      return new Promise(async res => {
+    const removeJobs = productVariations.map((productVariation) => {
+      return new Promise(async (res) => {
         const inventory = await this.inventoryRepository.findOne({
           where: { productVariation },
         });
@@ -192,7 +196,6 @@ export class InventoryService {
 
     // 4. if this product is a composite product, update its parts
     await this.updatePartsOfComposition(inventoryMovementDTO, saleOrder);
-
     return inventoryMovement;
   }
 
@@ -246,11 +249,11 @@ export class InventoryService {
     if (!productCompositions || productCompositions.length === 0) return;
 
     const partsOfComposition: ProductVariation[] = productCompositions.map(
-      pc => pc.productVariation,
+      (pc) => pc.productVariation,
     );
 
     await Promise.all(
-      partsOfComposition.map(async part => {
+      partsOfComposition.map(async (part) => {
         const movement: InventoryMovementDTO = {
           ...inventoryMovementDTO,
           sku: part.sku,
@@ -301,10 +304,10 @@ export class InventoryService {
       .leftJoinAndSelect('pc.productVariation', 'pv')
       .where('pc.product = :productId', { productId: product.id })
       .getMany();
-    const parts = composition.map(pc => pc.productVariation);
+    const parts = composition.map((pc) => pc.productVariation);
 
     // step 2: check the min inventory of these parts
-    const minInventory = minBy(parts, part => part.currentPosition);
+    const minInventory = minBy(parts, (part) => part.currentPosition);
 
     // step 3: calc the amount to be updated
     const amountMoved =
@@ -338,5 +341,50 @@ export class InventoryService {
     const inventory = await this.findBySku(sku);
     inventory.currentPosition = 0;
     return this.inventoryRepository.save(inventory);
+  }
+
+  //export to xls
+  async exportXls() {
+    // get inventory info for all product variations ordered by ncm
+    const reportData = await this.inventoryRepository
+      .createQueryBuilder('inventory')
+      .leftJoin('inventory.productVariation', 'productVariation')
+      .leftJoin('productVariation.product', 'product')
+      .select([
+        'product.ncm as NCM',
+        'productVariation.sku as SKU',
+        'product.title as Titulo',
+        'productVariation.description as Tamanho',
+        'inventory.current_position as Quantidade',
+      ])
+      .orderBy('product.ncm')
+      .getRawMany();
+
+    const data = reportData.map((item) => {
+      if (item.tamanho === 'Tamanho Único') {
+        item.tamanho = '';
+      }
+      return item;
+    });
+
+    const wb = XLSX.utils.book_new();
+    wb.Props = {
+      Title: 'Relatório de Estoque',
+      CreatedDate: new Date(),
+    };
+    const workSheet = XLSX.utils.json_to_sheet(data);
+
+    const wscols = [
+      { wch: 10 }, // "width por characters"
+      { wch: 20 },
+      { wch: 50 },
+      { wch: 25 },
+      { wch: 10 },
+    ];
+
+    workSheet['!cols'] = wscols;
+    XLSX.utils.book_append_sheet(wb, workSheet, 'Estoque');
+
+    return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
   }
 }
