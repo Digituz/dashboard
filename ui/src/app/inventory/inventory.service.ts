@@ -64,8 +64,6 @@ export class InventoryService implements IDataProvider<Inventory> {
     });
   }
 
-  xlsExport() {}
-
   download(path: string, body: Object = {}): Observable<any> {
     path = `${this.INVENTORY_ENDPOINT}/xls`;
     return this.httpClient.get(path, { responseType: 'blob' });
@@ -90,12 +88,4 @@ export class InventoryService implements IDataProvider<Inventory> {
       }
     }
   }
-
-  //`${this.INVENTORY_ENDPOINT}/xls`
-  // return this.httpClient.get(`${this.INVENTORY_ENDPOINT}/sxls`,{responseType:'blob'}).pipe(
-  //tap(
-  //data => console.log(data),
-  //err => console.log(err)
-  //)
-  //);
 }

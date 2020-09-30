@@ -50,7 +50,7 @@ export class InventoryListComponent implements OnInit, IDataProvider<Inventory> 
       (res) => {
         const options = { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' };
         const filename = 'Estoque.xlsx';
-        InventoryService.createAndDownloadBlobFile(res.body, options, filename);
+        InventoryService.createAndDownloadBlobFile(res, options, filename);
       },
       (err) => {
         // show the error

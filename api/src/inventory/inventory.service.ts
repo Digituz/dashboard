@@ -386,11 +386,8 @@ export class InventoryService {
     workSheet['!cols'] = wscols;
     XLSX.utils.book_append_sheet(wb, workSheet, 'Estoque');
 
-    XLSX.writeFile(wb, '/tmp/Estoque.xlsx');
+    //XLSX.writeFile(wb, '/tmp/Estoque.xlsx');
 
     return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
   }
-
-  // melhorias a serem feitas:
-  // 8. testar o download via ajax, exemplo: https://medium.com/@radicalloop/download-file-using-ajax-in-angular-4-50109564bf17
 }
