@@ -46,16 +46,10 @@ export class InventoryListComponent implements OnInit, IDataProvider<Inventory> 
   }
 
   xlsExport() {
-    this.inventoryService.download('').subscribe(
-      (res) => {
-        const options = { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' };
-        const filename = 'Estoque.xlsx';
-        InventoryService.createAndDownloadBlobFile(res, options, filename);
-      },
-      (err) => {
-        // show the error
-        console.log(err);
-      }
-    );
+    this.inventoryService.download().subscribe((res) => {
+      const options = { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' };
+      const filename = 'Estoque.xlsx';
+      InventoryService.createAndDownloadBlobFile(res, options, filename);
+    });
   }
 }

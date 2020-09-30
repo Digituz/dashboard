@@ -361,7 +361,7 @@ export class InventoryService {
       .getRawMany();
 
     const data = reportData.map((item) => {
-      if (item.tamanho == 'Tamanho Único') {
+      if (item.tamanho === 'Tamanho Único') {
         item.tamanho = '';
       }
       return item;
@@ -375,19 +375,16 @@ export class InventoryService {
     const workSheet = XLSX.utils.json_to_sheet(data);
 
     const wscols = [
-      { wch: 10 }, // "characters"
-      { wch: 20 }, //wpx pode ser usado apra dizer o tamanho da coluna em "pixels"
+      { wch: 10 }, // "width por characters"
+      { wch: 20 },
       { wch: 50 },
       { wch: 25 },
       { wch: 10 },
-      { hidden: true }, // hide column
     ];
 
     workSheet['!cols'] = wscols;
     XLSX.utils.book_append_sheet(wb, workSheet, 'Estoque');
-
-    //XLSX.writeFile(wb, '/tmp/Estoque.xlsx');
-
+    throw new Error();
     return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
   }
 }

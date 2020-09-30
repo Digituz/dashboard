@@ -4,7 +4,6 @@ import { Inventory } from '@app/inventory/inventory.entity';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { InventoryMovement } from './inventory-movement.entity';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -64,28 +63,22 @@ export class InventoryService implements IDataProvider<Inventory> {
     });
   }
 
-  download(path: string, body: Object = {}): Observable<any> {
-    path = `${this.INVENTORY_ENDPOINT}/xls`;
+  download(): Observable<any> {
+    const path = `${this.INVENTORY_ENDPOINT}/xls`;
     return this.httpClient.get(path, { responseType: 'blob' });
   }
 
   static createAndDownloadBlobFile(body: any, options: any, filename: any) {
-    var blob = new Blob([body], options);
-    if (navigator.msSaveBlob) {
-      // IE 10+
-      navigator.msSaveBlob(blob, filename);
-    } else {
-      var link = document.createElement('a');
-      // Browsers that support HTML5 download attribute
-      if (link.download !== undefined) {
-        var url = URL.createObjectURL(blob);
-        link.setAttribute('href', url);
-        link.setAttribute('download', filename);
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    }
+    const blob = new Blob([body], options);
+
+    const link = document.createElement('a');
+
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
