@@ -1,4 +1,13 @@
-import { Controller, Get, Query, Post, Body, Param, Put, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  Post,
+  Body,
+  Param,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Customer } from './customer.entity';
 import { parseBoolean } from '../util/parsers';
@@ -43,7 +52,10 @@ export class CustomersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() customer: Customer): Promise<Customer> {
+  update(
+    @Param('id') id: number,
+    @Body() customer: Customer,
+  ): Promise<Customer> {
     return this.customersService.update(id, customer);
   }
 }

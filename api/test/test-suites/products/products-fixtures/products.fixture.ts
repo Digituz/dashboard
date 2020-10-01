@@ -8,7 +8,7 @@ export async function insertProductFixtures() {
   const authorizedRequest = await getCredentials();
 
   const insertProductJobs = products.map((product, index) => {
-    return new Promise(async (res) => {
+    return new Promise(async res => {
       await axios.post(
         'http://localhost:3005/v1/products',
         product,

@@ -13,10 +13,7 @@ export class InventoryMovement extends BaseEntity {
   @JoinColumn({ name: 'inventory_id' })
   inventory: Inventory;
 
-  @ManyToOne(
-    type => SaleOrder,
-    { nullable: true, cascade: false },
-  )
+  @ManyToOne(type => SaleOrder, { nullable: true, cascade: false })
   @JoinColumn({ name: 'sale_order_id' })
   saleOrder?: SaleOrder;
 

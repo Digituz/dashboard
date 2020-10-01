@@ -26,10 +26,12 @@ describe('querying products', () => {
       expect(product.productVariations).toBeDefined();
 
       const { sku } = product;
-      const productFixture = productsFixtures.find((p) => (p.sku === sku));
-      
+      const productFixture = productsFixtures.find(p => p.sku === sku);
+
       if (productFixture.productVariations) {
-        expect(product.productVariations.length).toBe(productFixture.productVariations.length);
+        expect(product.productVariations.length).toBe(
+          productFixture.productVariations.length,
+        );
       } else {
         expect(product.productVariations.length).toBe(1);
       }

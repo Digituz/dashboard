@@ -46,7 +46,7 @@ export class InventoryController {
     });
     const paginatedResults = {
       ...result,
-      items: result.items.map((inventory) => {
+      items: result.items.map(inventory => {
         return {
           id: inventory.id,
           productVariationDetails: {

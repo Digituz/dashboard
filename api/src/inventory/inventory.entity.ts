@@ -5,10 +5,7 @@ import { ProductVariation } from '../products/entities/product-variation.entity'
 
 @Entity()
 export class Inventory extends BaseEntity {
-  @ManyToOne(
-    type => ProductVariation,
-    { nullable: false, cascade: false },
-  )
+  @ManyToOne(type => ProductVariation, { nullable: false, cascade: false })
   @JoinColumn({ name: 'product_variation_id' })
   productVariation: ProductVariation;
 

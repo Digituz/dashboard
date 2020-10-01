@@ -14,9 +14,7 @@ export class salesOrderInventory1594763802705 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `alter table product_image drop column id;`,
-    );
+    await queryRunner.query(`alter table product_image drop column id;`);
     await queryRunner.query(
       `alter table inventory_movement drop constraint inventory_movement_sale_order_fk;`,
     );

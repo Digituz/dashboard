@@ -85,7 +85,8 @@ export class MediaLibraryController {
       kraken.upload(resizeJobConfig, (err, data) => {
         if (err) return rej(err);
         if (!data.success) rej('error on upload to kraken');
-        if (!data.results || !data.results.original) rej('unexpected error on upload to kraken');
+        if (!data.results || !data.results.original)
+          rej('unexpected error on upload to kraken');
         res(data.results);
       });
     });

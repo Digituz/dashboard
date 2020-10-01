@@ -1,9 +1,8 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class productsVariations1590450018996 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             create table product_variation (
                 id serial primary key,
                 sku varchar(24) not null unique,
@@ -17,10 +16,12 @@ export class productsVariations1590450018996 implements MigrationInterface {
                 constraint fk_product_product_variation foreign key (product_id) references product(id)
             );
         `);
-        await queryRunner.query(`create index idx_product_product_variation on product_variation (product_id);`);
-    }
+    await queryRunner.query(
+      `create index idx_product_product_variation on product_variation (product_id);`,
+    );
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`drop table product_variation;`);
-    }
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`drop table product_variation;`);
+  }
 }

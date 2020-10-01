@@ -8,8 +8,6 @@ export class productCategories1595885583223 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      'alter table product drop column category;',
-    );
+    await queryRunner.query('alter table product drop column category;');
   }
 }

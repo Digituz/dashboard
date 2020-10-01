@@ -20,7 +20,7 @@ export class Customer extends BaseEntity {
     nullable: false,
   })
   name: string;
-  
+
   @Column({
     name: 'phone_number',
     type: 'varchar',
@@ -29,7 +29,7 @@ export class Customer extends BaseEntity {
     nullable: true,
   })
   phoneNumber?: string;
-  
+
   @Column({
     name: 'email',
     type: 'varchar',
@@ -38,7 +38,7 @@ export class Customer extends BaseEntity {
     nullable: true,
   })
   email?: string;
-  
+
   @Column({
     name: 'birthday',
     type: 'date',
@@ -55,7 +55,7 @@ export class Customer extends BaseEntity {
     nullable: true,
   })
   zipAddress?: string;
-  
+
   @Column({
     name: 'state',
     type: 'varchar',
@@ -64,7 +64,7 @@ export class Customer extends BaseEntity {
     nullable: true,
   })
   state?: string;
-  
+
   @Column({
     name: 'city',
     type: 'varchar',
@@ -73,7 +73,7 @@ export class Customer extends BaseEntity {
     nullable: true,
   })
   city?: string;
-  
+
   @Column({
     name: 'neighborhood',
     type: 'varchar',
@@ -82,7 +82,7 @@ export class Customer extends BaseEntity {
     nullable: true,
   })
   neighborhood?: string;
-  
+
   @Column({
     name: 'street_address',
     type: 'varchar',
@@ -91,7 +91,7 @@ export class Customer extends BaseEntity {
     nullable: true,
   })
   streetAddress?: string;
-  
+
   @Column({
     name: 'street_number',
     type: 'varchar',
@@ -100,7 +100,7 @@ export class Customer extends BaseEntity {
     nullable: true,
   })
   streetNumber?: string;
-  
+
   @Column({
     name: 'street_number2',
     type: 'varchar',

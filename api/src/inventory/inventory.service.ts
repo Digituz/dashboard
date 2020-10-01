@@ -58,18 +58,18 @@ export class InventoryService {
     }
 
     options.queryParams
-      .filter((queryParam) => {
+      .filter(queryParam => {
         return (
           queryParam !== null &&
           queryParam.value !== null &&
           queryParam.value !== undefined
         );
       })
-      .forEach((queryParam) => {
+      .forEach(queryParam => {
         switch (queryParam.key) {
           case 'query':
             queryBuilder.andWhere(
-              new Brackets((qb) => {
+              new Brackets(qb => {
                 qb.where(`lower(pv.sku) like lower(:query)`, {
                   query: `%${queryParam.value.toString()}%`,
                 });
@@ -126,8 +126,8 @@ export class InventoryService {
     const movements = await this.inventoryMovementRepository.find({
       saleOrder: saleOrder,
     });
-    const removeMovementJobs = movements.map((movement) => {
-      return new Promise(async (res) => {
+    const removeMovementJobs = movements.map(movement => {
+      return new Promise(async res => {
         const inventory = movement.inventory;
         inventory.currentPosition -= movement.amount;
         await this.inventoryRepository.save(inventory);
@@ -139,8 +139,8 @@ export class InventoryService {
   }
 
   async removeInventoryAndMovements(productVariations: ProductVariation[]) {
-    const removeJobs = productVariations.map((productVariation) => {
-      return new Promise(async (res) => {
+    const removeJobs = productVariations.map(productVariation => {
+      return new Promise(async res => {
         const inventory = await this.inventoryRepository.findOne({
           where: { productVariation },
         });
@@ -249,11 +249,11 @@ export class InventoryService {
     if (!productCompositions || productCompositions.length === 0) return;
 
     const partsOfComposition: ProductVariation[] = productCompositions.map(
-      (pc) => pc.productVariation,
+      pc => pc.productVariation,
     );
 
     await Promise.all(
-      partsOfComposition.map(async (part) => {
+      partsOfComposition.map(async part => {
         const movement: InventoryMovementDTO = {
           ...inventoryMovementDTO,
           sku: part.sku,
@@ -304,10 +304,10 @@ export class InventoryService {
       .leftJoinAndSelect('pc.productVariation', 'pv')
       .where('pc.product = :productId', { productId: product.id })
       .getMany();
-    const parts = composition.map((pc) => pc.productVariation);
+    const parts = composition.map(pc => pc.productVariation);
 
     // step 2: check the min inventory of these parts
-    const minInventory = minBy(parts, (part) => part.currentPosition);
+    const minInventory = minBy(parts, part => part.currentPosition);
 
     // step 3: calc the amount to be updated
     const amountMoved =
@@ -360,7 +360,7 @@ export class InventoryService {
       .orderBy('product.ncm')
       .getRawMany();
 
-    const data = reportData.map((item) => {
+    const data = reportData.map(item => {
       if (item.tamanho === 'Tamanho Único') {
         item.tamanho = '';
       }

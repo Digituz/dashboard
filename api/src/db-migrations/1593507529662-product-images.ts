@@ -11,7 +11,9 @@ export class productImages1593507529662 implements MigrationInterface {
             constraint fk_product_image_product foreign key (product_id) references product(id)
         );
     `);
-    await queryRunner.query(`create unique index uidx_product_image on product_image(image_id, product_id);`);
+    await queryRunner.query(
+      `create unique index uidx_product_image on product_image(image_id, product_id);`,
+    );
     await queryRunner.query(
       `alter table product add column images_size int not null default 0;`,
     );

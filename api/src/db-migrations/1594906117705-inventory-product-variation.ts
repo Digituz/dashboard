@@ -5,7 +5,9 @@ export class inventoryProductVariation1594906117705
   public async up(queryRunner: QueryRunner): Promise<void> {
     // sale order
     await queryRunner.query(`delete from sale_order_item;`);
-    await queryRunner.query(`alter table sale_order_item drop column product_id;`);
+    await queryRunner.query(
+      `alter table sale_order_item drop column product_id;`,
+    );
     await queryRunner.query(
       `alter table sale_order_item add column product_variation_id integer;`,
     );
@@ -32,7 +34,9 @@ export class inventoryProductVariation1594906117705
   public async down(queryRunner: QueryRunner): Promise<void> {
     // sale order
     await queryRunner.query(`delete from sale_order_item;`);
-    await queryRunner.query(`alter table sale_order_item drop column product_variation_id;`);
+    await queryRunner.query(
+      `alter table sale_order_item drop column product_variation_id;`,
+    );
     await queryRunner.query(
       `alter table sale_order_item add column product_id integer;`,
     );
@@ -43,7 +47,9 @@ export class inventoryProductVariation1594906117705
     // inventory
     await queryRunner.query(`delete from inventory_movement;`);
     await queryRunner.query(`delete from inventory;`);
-    await queryRunner.query(`alter table inventory drop column product_variation_id;`);
+    await queryRunner.query(
+      `alter table inventory drop column product_variation_id;`,
+    );
     await queryRunner.query(
       `alter table inventory add column product_id integer;`,
     );

@@ -8,8 +8,6 @@ export class salesOrderBlingStatus1597342730008 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      'alter table sale_order drop column bling_status;',
-    );
+    await queryRunner.query('alter table sale_order drop column bling_status;');
   }
 }

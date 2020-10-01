@@ -7,10 +7,7 @@ import { MercadoLivreService } from './mercado-livre/mercado-livre.service';
 import { KeyValuePairModule } from '../key-value-pair/key-value-pair.module';
 
 @Module({
-  imports: [
-    ProductsModule,
-    KeyValuePairModule,
-  ],
+  imports: [ProductsModule, KeyValuePairModule],
   controllers: [ShopifyController, MercadoLivreController],
   providers: [ShopifyService, MercadoLivreService],
 })

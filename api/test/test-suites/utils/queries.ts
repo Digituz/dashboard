@@ -38,7 +38,9 @@ export async function cleanUpDatabase() {
       'delete from image;',
     );
   } catch (err) {
-    console.error('unable to clean up database, check the sequence of the delete commands;');
+    console.error(
+      'unable to clean up database, check the sequence of the delete commands;',
+    );
     process.exit(1);
   }
 }

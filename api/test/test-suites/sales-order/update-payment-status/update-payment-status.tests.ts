@@ -34,12 +34,16 @@ describe('update sale order payment status', () => {
 
     if (status === 'CANCELLED') {
       expect(saleOrderCreated.cancellationDate.toString()).toBeDefined();
-      expect(Date.parse(saleOrderCreated.cancellationDate.toString())).toBeGreaterThan(beforeRequest);
+      expect(
+        Date.parse(saleOrderCreated.cancellationDate.toString()),
+      ).toBeGreaterThan(beforeRequest);
     }
 
     if (status === 'APPROVED') {
       expect(saleOrderCreated.approvalDate.toString()).toBeDefined();
-      expect(Date.parse(saleOrderCreated.approvalDate.toString())).toBeGreaterThan(beforeRequest);
+      expect(
+        Date.parse(saleOrderCreated.approvalDate.toString()),
+      ).toBeGreaterThan(beforeRequest);
     }
   }
 

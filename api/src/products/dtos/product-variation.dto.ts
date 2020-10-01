@@ -1,4 +1,4 @@
-import { Length, IsNotEmpty  } from 'class-validator';
+import { Length, IsNotEmpty } from 'class-validator';
 
 export class ProductVariationDTO {
   @IsNotEmpty()

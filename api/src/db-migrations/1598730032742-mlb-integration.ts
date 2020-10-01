@@ -11,7 +11,11 @@ export class mlbIntegration1598730032742 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('alter table product drop column mercado_livre_id;');
-    await queryRunner.query('alter table product drop column mercado_livre_category_id;');
+    await queryRunner.query(
+      'alter table product drop column mercado_livre_id;',
+    );
+    await queryRunner.query(
+      'alter table product drop column mercado_livre_category_id;',
+    );
   }
 }
