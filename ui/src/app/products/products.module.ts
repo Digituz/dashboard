@@ -20,9 +20,17 @@ import { ProductsListComponent } from './products-list/products-list.component';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
 import { ImageService } from '@app/media-library/image.service';
 import { TooltipModule } from 'primeng/tooltip';
+import { ProductCompositionComponent } from './product-composition/product-composition.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
-  declarations: [ProductsComponent, ProductFormComponent, ProductImagesComponent, ProductsListComponent],
+  declarations: [
+    ProductsComponent,
+    ProductFormComponent,
+    ProductImagesComponent,
+    ProductsListComponent,
+    ProductCompositionComponent,
+  ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -39,6 +47,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     ProductsRoutingModule,
     BreadcrumbsModule,
+    AutoCompleteModule,
   ],
   providers: [ImageService],
 })

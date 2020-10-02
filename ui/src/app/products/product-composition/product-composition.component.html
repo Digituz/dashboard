@@ -1,0 +1,40 @@
+<p-dialog
+  header="Composição do Produto"
+  [(visible)]="isModalVisible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [resizable]="false"
+  [draggable]="false"
+>
+  <form nz-form [formGroup]="formFieldsVariation" (ngSubmit)="submitProductVariation()" *ngIf="isModalVisible">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="variationSku">Produto</label>
+        <p-autoComplete
+          [suggestions]="productVariations"
+          (completeMethod)="search($event)"
+          [multiple]="false"
+          field="title"
+          placeholder="Selecione um produto"
+          formControlName="product"
+        >
+          <ng-template let-productVariation pTemplate="item">
+            <div>{{ productVariation.sku }} - {{ productVariation.title }}</div>
+          </ng-template>
+        </p-autoComplete>
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <button pButton type="button" class="ui-button-secondary" (click)="handleCancel()" label="Cancelar"></button>
+    <button
+      pButton
+      type="button"
+      class="ui-button-danger"
+      (click)="handleCancel()"
+      *ngIf="showRemoveButton"
+      label="Remover"
+    ></button>
+    <button pButton type="button" class="ui-button-primary" (click)="submitProductVariation()" label="Salvar"></button>
+  </p-footer>
+</p-dialog>
