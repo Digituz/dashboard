@@ -178,4 +178,16 @@ export class ProductFormComponent implements OnInit {
   newItemOnComposition() {
     this.productCompositionComponent.openDialog();
   }
+
+  onCompositionItem(event: any) {
+    const productVariation = event;
+    this.product.productComposition.push({
+      productVariation: {
+        ...productVariation,
+        product: {
+          title: productVariation.title,
+        },
+      },
+    });
+  }
 }

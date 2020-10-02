@@ -274,4 +274,7 @@
   </p-footer>
 </p-dialog>
 
-<app-product-composition #productCompositionComponent></app-product-composition>
+<app-product-composition
+  #productCompositionComponent
+  (componentItem)="onCompositionItem($event)"
+></app-product-composition>

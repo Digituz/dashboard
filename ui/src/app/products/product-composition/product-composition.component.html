@@ -5,6 +5,7 @@
   [modal]="true"
   [resizable]="false"
   [draggable]="false"
+  width="800"
 >
   <form nz-form [formGroup]="formFieldsVariation" (ngSubmit)="submitProductVariation()" *ngIf="isModalVisible">
     <div class="p-fluid p-formgrid p-grid">
@@ -17,6 +18,7 @@
           field="title"
           placeholder="Selecione um produto"
           formControlName="product"
+          appendTo="body"
         >
           <ng-template let-productVariation pTemplate="item">
             <div>{{ productVariation.sku }} - {{ productVariation.title }}</div>

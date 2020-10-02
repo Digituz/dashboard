@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductsService } from '../products.service';
 import { ProductVariationDetailsDTO } from '@app/products/product-variation-details.dto';
@@ -9,6 +9,8 @@ import { ProductVariationDetailsDTO } from '@app/products/product-variation-deta
   styleUrls: ['./product-composition.component.scss'],
 })
 export class ProductCompositionComponent implements OnInit {
+  @Output() componentItem = new EventEmitter();
+
   formFields: FormGroup;
   formFieldsVariation: FormGroup;
   isModalVisible: boolean = false;
@@ -32,7 +34,7 @@ export class ProductCompositionComponent implements OnInit {
 
   submitProductVariation() {
     const composition = this.formFieldsVariation.value;
-    console.log(composition.product);
+    this.componentItem.emit(composition.product);
     this.isModalVisible = false;
   }
 
