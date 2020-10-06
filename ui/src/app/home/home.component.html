@@ -13,17 +13,17 @@
   >
     <thead>
       <tr>
-        <th dgz-sortable="date">Data</th>
-        <th dgz-sortable="name">Cliente</th>
-        <th dgz-sortable="city">Cidade/UF</th>
-        <th dgz-sortable="shipping">Forma de Envio</th>
-        <th dgz-sortable="total">Total</th>
+        <th>Data</th>
+        <th>Cliente</th>
+        <th>Cidade/UF</th>
+        <th>Forma de Envio</th>
+        <th>Total</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let salesOrder of salesOrderTable.currentData">
-        <td class="centered">{{ salesOrder.creationDate | date: 'dd/MM HH:mm' }}</td>
+        <td class="centered">{{ salesOrder.approvalDate | date: 'dd/MM HH:mm' }}</td>
         <td>{{ salesOrder.customer.name }}</td>
         <td class="centered">
           {{ salesOrder.shipmentDetails.shippingCity }}/{{ salesOrder.shipmentDetails.shippingState }}

@@ -1,0 +1,13 @@
+<button pButton type="button" class="ui-button-secondary" label="Voltar"></button>
+
+<p-dialog
+  header="Aviso"
+  [(visible)]="isModalVisible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [resizable]="false"
+  [draggable]="false"
+  [contentStyle]="{ overflow: 'visible' }"
+>
+  <p>Não é possivel retornar pois está foi a primeira tela acessada</p>
+</p-dialog>

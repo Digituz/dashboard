@@ -8,10 +8,26 @@ import { MediumEditorComponent } from './medium-editor/medium-editor.component';
 import { DgzTableComponent } from './dgz-table/dgz-table.component';
 import { DgzSortableDirective } from './dgz-table/dgz-sortable.directive';
 import { ReaisPipe } from './pipes/reais.pipe';
+import { ButtonBackComponent } from './button-back/button-back.component';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
-  imports: [CommonModule, ButtonModule],
-  declarations: [LoaderComponent, MediumEditorComponent, DgzTableComponent, DgzSortableDirective, ReaisPipe],
-  exports: [LoaderComponent, MediumEditorComponent, DgzTableComponent, DgzSortableDirective, ReaisPipe],
+  imports: [CommonModule, ButtonModule, DialogModule],
+  declarations: [
+    LoaderComponent,
+    MediumEditorComponent,
+    DgzTableComponent,
+    DgzSortableDirective,
+    ReaisPipe,
+    ButtonBackComponent,
+  ],
+  exports: [
+    LoaderComponent,
+    MediumEditorComponent,
+    DgzTableComponent,
+    DgzSortableDirective,
+    ReaisPipe,
+    ButtonBackComponent,
+  ],
 })
 export class SharedModule {}

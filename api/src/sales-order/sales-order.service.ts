@@ -295,7 +295,7 @@ export class SalesOrderService {
       .leftJoinAndSelect('so.customer', 'c')
       .where('so.payment_status = :status', { status: 'APPROVED' })
       .andWhere('so.approval_date >= :date', {
-        date: moment().subtract(14, 'd'),
+        date: moment().subtract(30, 'd'),
       });
 
     let orderColumn = '';
@@ -313,10 +313,10 @@ export class SalesOrderService {
         orderColumn = 'c.name';
         break;
       case 'city':
-        orderColumn = 'c.name';
+        orderColumn = 'so.shipping_state';
         break;
       case 'shipping':
-        orderColumn = 'c.name';
+        orderColumn = 'so.shipping_type';
         break;
       case 'total':
         orderColumn = 'so.total';
