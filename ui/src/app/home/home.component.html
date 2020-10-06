@@ -1,3 +1,41 @@
 <div>
-  <button>Primary</button>
+  <div class="feature-header">
+    <p>
+      <label>Últimas vendas confirmadas.</label>
+    </p>
+  </div>
+  <dgz-table
+    #salesOrderTable
+    [dataProvider]="this"
+    [queryParams]="queryParams"
+    (updateQueryParams)="updateQueryParams($event)"
+    name="sales-order-list"
+  >
+    <thead>
+      <tr>
+        <th dgz-sortable="date">Data</th>
+        <th dgz-sortable="name">Cliente</th>
+        <th dgz-sortable="city">Cidade/UF</th>
+        <th dgz-sortable="shipping">Forma de Envio</th>
+        <th dgz-sortable="total">Total</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let salesOrder of salesOrderTable.currentData">
+        <td class="centered">{{ salesOrder.creationDate | date: 'dd/MM HH:mm' }}</td>
+        <td>{{ salesOrder.customer.name }}</td>
+        <td class="centered">
+          {{ salesOrder.shipmentDetails.shippingCity }}/{{ salesOrder.shipmentDetails.shippingState }}
+        </td>
+        <td class="centered">{{ salesOrder.shipmentDetails.shippingType }}</td>
+        <td class="currency">{{ salesOrder.paymentDetails.total | reais }}</td>
+        <td class="actions">
+          <a [routerLink]="'../sales-orders/' + salesOrder.referenceCode">
+            <button pButton class="ui-button-secondary" [icon]="'fal fa-edit'" tooltipPosition="top"></button>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </dgz-table>
 </div>

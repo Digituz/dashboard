@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreadcrumbsService } from '@app/breadcrumbs/breadcrumbs.service';
+import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
+import { SalesOrderDTO } from '@app/sales-orders/sales-order.dto';
+import { Pagination, QueryParam } from '@app/util/pagination';
+import { Observable } from 'rxjs';
+import { HomeService } from './home.service';
 
 @Component({
   selector: 'app-home',
@@ -7,12 +12,36 @@ import { BreadcrumbsService } from '@app/breadcrumbs/breadcrumbs.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  @ViewChild('salesOrderTable') resultsTable: DgzTableComponent<SalesOrderDTO>;
+  queryParams: QueryParam[] = [];
+  query: string;
+
   isLoading = false;
 
-  constructor(private breadcrumbsService: BreadcrumbsService) {}
+  constructor(private homeService: HomeService, private breadcrumbsService: BreadcrumbsService) {}
 
   ngOnInit() {
     this.isLoading = false;
     this.breadcrumbsService.refreshBreadcrumbs('Painel de Controle', []);
+  }
+
+  loadData(
+    pageNumber: number,
+    pageSize: number,
+    sortedBy?: string,
+    sortDirectionAscending?: boolean,
+    queryParams?: QueryParam[]
+  ): Observable<Pagination<SalesOrderDTO>> {
+    const data = this.homeService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, queryParams);
+    return data;
+  }
+
+  querySalesOrders() {
+    this.queryParams = [{ key: 'query', value: this.query }];
+    this.resultsTable.reload(this.queryParams);
+  }
+
+  updateQueryParams(queryParams: QueryParam[]) {
+    //this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
   }
 }

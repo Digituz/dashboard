@@ -53,12 +53,12 @@ export class SalesOrderController {
 
     return {
       ...results,
-      items: results.items.map(saleOrder => {
+      items: results.items.map((saleOrder) => {
         return {
           id: saleOrder.id,
           referenceCode: saleOrder.referenceCode,
           customer: saleOrder.customer,
-          items: saleOrder.items.map(item => ({
+          items: saleOrder.items.map((item) => ({
             sku: item.productVariation.sku,
             price: item.price,
             discount: item.discount,
@@ -91,6 +91,28 @@ export class SalesOrderController {
     };
   }
 
+  @Get('/sales-confirmed')
+  async getConfirmedOrders(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+    @Query('sortedBy') sortedBy: string,
+    @Query('sortDirectionAscending') sortDirectionAscending: string,
+    @Query('query') query: string,
+  ): Promise<Pagination<SaleOrder>> {
+    return this.salesOrderService.getConfirmedOrders({
+      page,
+      limit,
+      sortedBy,
+      sortDirectionAscending: parseBoolean(sortDirectionAscending),
+      queryParams: [
+        {
+          key: 'query',
+          value: query,
+        },
+      ],
+    });
+  }
+
   @Post()
   async save(@Body() saleOrder: SaleOrderDTO): Promise<SaleOrder> {
     const saleOrderPersisted = await this.salesOrderService.save(saleOrder);
@@ -120,7 +142,7 @@ export class SalesOrderController {
       id: saleOrder.id,
       referenceCode: saleOrder.referenceCode,
       customer: saleOrder.customer,
-      items: saleOrder.items.map(item => ({
+      items: saleOrder.items.map((item) => ({
         sku: item.productVariation.sku,
         completeDescription: `${item.productVariation.sku} - ${item.productVariation.product.title} (${item.productVariation.description})`,
         price: item.price,

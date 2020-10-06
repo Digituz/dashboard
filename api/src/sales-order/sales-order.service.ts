@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import randomize from 'randomatic';
+import moment from 'moment';
 
 import { SaleOrder } from './entities/sale-order.entity';
 import { Repository, Brackets } from 'typeorm';
@@ -68,18 +69,18 @@ export class SalesOrderService {
     }
 
     options.queryParams
-      .filter(queryParam => {
+      .filter((queryParam) => {
         return (
           queryParam !== null &&
           queryParam.value !== null &&
           queryParam.value !== undefined
         );
       })
-      .forEach(queryParam => {
+      .forEach((queryParam) => {
         switch (queryParam.key) {
           case 'query':
             queryBuilder.andWhere(
-              new Brackets(qb => {
+              new Brackets((qb) => {
                 qb.where(`lower(c.name) like lower(:query)`, {
                   query: `%${queryParam.value.toString()}%`,
                 }).orWhere(`lower(c.cpf) like lower(:query)`, {
@@ -118,14 +119,14 @@ export class SalesOrderService {
   private async buildItemsList(
     saleOrderDTO: SaleOrderDTO,
   ): Promise<SaleOrderItem[]> {
-    const skus = saleOrderDTO.items.map(item => item.sku);
+    const skus = saleOrderDTO.items.map((item) => item.sku);
     const productsVariations = await this.productsService.findVariationsBySkus(
       skus,
     );
 
-    return productsVariations.map(productVariation => {
+    return productsVariations.map((productVariation) => {
       const item = saleOrderDTO.items.find(
-        item => item.sku === productVariation.sku,
+        (item) => item.sku === productVariation.sku,
       );
       const saleOrderItem = {
         price: item.price,
@@ -198,7 +199,7 @@ export class SalesOrderService {
 
     // create the new items
     const persistedItems = await this.salesOrderItemRepository.save(
-      items.map(item => ({
+      items.map((item) => ({
         saleOrder: persistedSaleOrder,
         ...item,
       })),
@@ -212,8 +213,8 @@ export class SalesOrderService {
     }
 
     // creating movements to update inventory position
-    const movementJobs = persistedItems.map(item => {
-      return new Promise(async res => {
+    const movementJobs = persistedItems.map((item) => {
+      return new Promise(async (res) => {
         const movement: InventoryMovementDTO = {
           sku: item.productVariation.sku,
           amount: -item.amount,
@@ -284,5 +285,63 @@ export class SalesOrderService {
         referenceCode,
       })
       .getOne();
+  }
+
+  async getConfirmedOrders(
+    options: IPaginationOpts,
+  ): Promise<Pagination<SaleOrder>> {
+    const queryBuilder = await this.salesOrderRepository
+      .createQueryBuilder('so')
+      .leftJoinAndSelect('so.customer', 'c')
+      .where('so.payment_status = :status', { status: 'APPROVED' })
+      .andWhere('so.approval_date >= :date', {
+        date: moment().subtract(14, 'd'),
+      });
+
+    let orderColumn = '';
+
+    switch (options.sortedBy?.trim()) {
+      case undefined:
+      case null:
+      case 'date':
+        if (isNullOrUndefined(options.sortDirectionAscending)) {
+          options.sortDirectionAscending = false;
+        }
+        orderColumn = 'so.approval_date';
+        break;
+      case 'name':
+        orderColumn = 'c.name';
+        break;
+      case 'city':
+        orderColumn = 'c.name';
+        break;
+      case 'shipping':
+        orderColumn = 'c.name';
+        break;
+      case 'total':
+        orderColumn = 'so.total';
+        break;
+      default:
+        orderColumn = 'so.total';
+      //options.sortedBy
+    }
+
+    let sortDirection;
+    let sortNulls;
+    switch (options.sortDirectionAscending) {
+      case undefined:
+      case null:
+      case true:
+        sortDirection = 'ASC';
+        sortNulls = 'NULLS FIRST';
+        break;
+      default:
+        sortDirection = 'DESC';
+        sortNulls = 'NULLS LAST';
+    }
+
+    queryBuilder.orderBy(orderColumn, sortDirection, sortNulls);
+
+    return paginate<SaleOrder>(queryBuilder, options);
   }
 }
