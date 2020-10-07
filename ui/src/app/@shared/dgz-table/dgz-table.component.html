@@ -10,7 +10,7 @@
   <i class="fal fa-exclamation-circle"></i>
   <p>Nenhum resultado encontrado.</p>
 </div>
-<div class="pagination-area" *ngIf="!loading && currentData.length > 0">
+<div class="pagination-area" *ngIf="showPaginationArea && !loading && currentData.length > 0">
   <button (click)="nextPage()" [disabled]="currentPage >= numberOfPages"><p>»</p></button>
   <button (click)="previousPage()" [disabled]="currentPage === 1"><p>«</p></button>
   <p>Página {{ currentPage }} de {{ numberOfPages }}</p>

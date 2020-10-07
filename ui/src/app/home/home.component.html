@@ -8,8 +8,8 @@
     #salesOrderTable
     [dataProvider]="this"
     [queryParams]="queryParams"
-    (updateQueryParams)="updateQueryParams($event)"
     name="sales-order-list"
+    [showPaginationArea]="false"
   >
     <thead>
       <tr>

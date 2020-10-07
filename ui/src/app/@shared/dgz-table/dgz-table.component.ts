@@ -15,6 +15,9 @@ export class DgzTableComponent<T> implements OnInit {
   @Input()
   queryParams: QueryParam[];
 
+  @Input()
+  showPaginationArea: boolean = true;
+
   @Output() updateQueryParams = new EventEmitter<QueryParam[]>();
 
   @Input()
@@ -71,7 +74,7 @@ export class DgzTableComponent<T> implements OnInit {
         this.totalItems = response.meta.totalItems;
         this.numberOfPages = Math.ceil(this.totalItems / this.pageSize);
         this.loading = false;
-        this.updateQueryParams.emit(this.queryParams);
+        this.updateQueryParams?.emit(this.queryParams);
       });
   }
 

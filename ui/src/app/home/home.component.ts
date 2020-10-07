@@ -40,8 +40,4 @@ export class HomeComponent implements OnInit {
     this.queryParams = [{ key: 'query', value: this.query }];
     this.resultsTable.reload(this.queryParams);
   }
-
-  updateQueryParams(queryParams: QueryParam[]) {
-    //this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
-  }
 }
