@@ -13,11 +13,11 @@
   >
     <thead>
       <tr>
-        <th>Data</th>
-        <th>Cliente</th>
-        <th>Cidade/UF</th>
-        <th>Forma de Envio</th>
-        <th>Total</th>
+        <th dgz-sortable="date">Data</th>
+        <th dgz-sortable="name">Cliente</th>
+        <th dgz-sortable="city">Cidade/UF</th>
+        <th dgz-sortable="shipping">Forma de Envio</th>
+        <th dgz-sortable="total">Total</th>
         <th></th>
       </tr>
     </thead>
@@ -31,7 +31,7 @@
         <td class="centered">{{ salesOrder.shipmentDetails.shippingType }}</td>
         <td class="currency">{{ salesOrder.paymentDetails.total | reais }}</td>
         <td class="actions">
-          <a [routerLink]="'../sales-orders/' + salesOrder.referenceCode">
+          <a [routerLink]="'/sales-orders/' + salesOrder.referenceCode">
             <button pButton class="ui-button-secondary" [icon]="'fal fa-edit'" tooltipPosition="top"></button>
           </a>
         </td>

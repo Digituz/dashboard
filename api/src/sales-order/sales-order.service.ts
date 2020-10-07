@@ -287,7 +287,7 @@ export class SalesOrderService {
       .getOne();
   }
 
-  async getConfirmedOrders(
+  async getConfirmedSalesOrders(
     options: IPaginationOpts,
   ): Promise<Pagination<SaleOrder>> {
     const queryBuilder = await this.salesOrderRepository
@@ -298,7 +298,32 @@ export class SalesOrderService {
         date: moment().subtract(60, 'd'),
       });
 
-    let orderColumn = 'so.approvalDate';
+    let orderColumn = '';
+
+    switch (options.sortedBy?.trim()) {
+      case undefined:
+      case null:
+      case 'date':
+        if (isNullOrUndefined(options.sortDirectionAscending)) {
+          options.sortDirectionAscending = false;
+        }
+        orderColumn = 'so.approvalDate';
+        break;
+      case 'name':
+        orderColumn = 'c.name';
+        break;
+      case 'city':
+        orderColumn = 'so.shippingCity';
+        break;
+      case 'shipping':
+        orderColumn = 'so.shippingType';
+        break;
+      case 'total':
+        orderColumn = 'so.total';
+        break;
+      default:
+        orderColumn = options.sortedBy;
+    }
 
     let sortDirection;
     let sortNulls;

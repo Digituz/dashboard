@@ -9,10 +9,9 @@ import { DgzTableComponent } from './dgz-table/dgz-table.component';
 import { DgzSortableDirective } from './dgz-table/dgz-sortable.directive';
 import { ReaisPipe } from './pipes/reais.pipe';
 import { ButtonBackComponent } from './button-back/button-back.component';
-import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
-  imports: [CommonModule, ButtonModule, DialogModule],
+  imports: [CommonModule, ButtonModule],
   declarations: [
     LoaderComponent,
     MediumEditorComponent,

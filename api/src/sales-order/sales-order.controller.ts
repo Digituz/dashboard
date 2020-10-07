@@ -91,15 +91,15 @@ export class SalesOrderController {
     };
   }
 
-  @Get('/sales-confirmed')
-  async getConfirmedOrders(
+  @Get('/confirmed-sales-orders')
+  async getConfirmedSalesOrders(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
     @Query('sortedBy') sortedBy: string,
     @Query('sortDirectionAscending') sortDirectionAscending: string,
     @Query('query') query: string,
   ): Promise<Pagination<SaleOrder>> {
-    return this.salesOrderService.getConfirmedOrders({
+    return this.salesOrderService.getConfirmedSalesOrders({
       page,
       limit,
       sortedBy,

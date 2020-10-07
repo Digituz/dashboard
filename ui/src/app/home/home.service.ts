@@ -18,7 +18,7 @@ export class HomeService {
     sortDirectionAscending?: boolean,
     queryParams?: import('../util/pagination').QueryParam[]
   ): Observable<Pagination<SalesOrderDTO>> {
-    let query = `${this.SALES_ORDERS_ENDPOINT}/sales-confirmed?page=${pageNumber}&limit=${pageSize}`;
+    let query = `${this.SALES_ORDERS_ENDPOINT}/confirmed-sales-orders?page=${pageNumber}&limit=${pageSize}`;
 
     if (sortedBy) {
       query += `&sortedBy=${sortedBy}`;
