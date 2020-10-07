@@ -5,7 +5,7 @@
         <label>Vendas confirmadas nos últimos 3 dias.</label>
       </p>
     </div>
-    <div style="height: 340px; overflow: scroll;">
+    <div style="height: 345px; min-height: 345px; background-color: #fff; overflow: scroll;">
       <dgz-table
         #salesOrderTable
         [dataProvider]="this"
@@ -47,6 +47,16 @@
           </tr>
         </tbody>
       </dgz-table>
+    </div>
+  </div>
+  <div class="p-col-6">
+    <div class="feature-header">
+      <p>
+        <label>Vendas confirmadas nos últimos 7 dias.</label>
+      </p>
+    </div>
+    <div style="background-color: #fff;">
+      <p-chart height="345" type="bar" [data]="data"></p-chart>
     </div>
   </div>
 </div>
