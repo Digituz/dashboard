@@ -310,8 +310,8 @@ export class SalesOrderService {
         sortNulls = 'NULLS LAST';
         break;
       default:
-        sortDirection = 'DESC';
-        sortNulls = 'NULLS LAST';
+        sortDirection = 'ASC';
+        sortNulls = 'NULLS FIRST';
     }
 
     queryBuilder.orderBy(orderColumn, sortDirection, sortNulls);
