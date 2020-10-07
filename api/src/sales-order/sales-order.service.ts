@@ -293,38 +293,12 @@ export class SalesOrderService {
     const queryBuilder = await this.salesOrderRepository
       .createQueryBuilder('so')
       .leftJoinAndSelect('so.customer', 'c')
-      .where('so.payment_status = :status', { status: 'APPROVED' })
-      .andWhere('so.approval_date >= :date', {
-        date: moment().subtract(30, 'd'),
+      .where('so.paymentStatus = :status', { status: 'APPROVED' })
+      .andWhere('so.approvalDate >= :date', {
+        date: moment().subtract(60, 'd'),
       });
 
-    let orderColumn = '';
-
-    switch (options.sortedBy?.trim()) {
-      case undefined:
-      case null:
-      case 'date':
-        if (isNullOrUndefined(options.sortDirectionAscending)) {
-          options.sortDirectionAscending = false;
-        }
-        orderColumn = 'so.approval_date';
-        break;
-      case 'name':
-        orderColumn = 'c.name';
-        break;
-      case 'city':
-        orderColumn = 'so.shipping_state';
-        break;
-      case 'shipping':
-        orderColumn = 'so.shipping_type';
-        break;
-      case 'total':
-        orderColumn = 'so.total';
-        break;
-      default:
-        orderColumn = 'so.total';
-      //options.sortedBy
-    }
+    let orderColumn = 'so.approvalDate';
 
     let sortDirection;
     let sortNulls;
@@ -332,8 +306,8 @@ export class SalesOrderService {
       case undefined:
       case null:
       case true:
-        sortDirection = 'ASC';
-        sortNulls = 'NULLS FIRST';
+        sortDirection = 'DESC';
+        sortNulls = 'NULLS LAST';
         break;
       default:
         sortDirection = 'DESC';

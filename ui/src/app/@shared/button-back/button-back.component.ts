@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./button-back.component.scss'],
 })
 export class ButtonBackComponent implements OnInit {
-  isModalVisible: boolean = false;
+  @Input()
+  fallbackURL = '';
 
   constructor(private location: Location, private router: Router) {}
 
@@ -16,8 +17,11 @@ export class ButtonBackComponent implements OnInit {
 
   @HostListener('click')
   onClick() {
-    if (window.history.length <= 2) {
-      return (this.isModalVisible = true);
+    const valor: any = this.location.getState();
+    console.log(valor.navigationId);
+    if (valor.navigationId <= 1) {
+      console.log(this.fallbackURL);
+      return this.router.navigateByUrl(this.fallbackURL);
     }
     this.location.back();
   }
