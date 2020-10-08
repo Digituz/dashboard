@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import randomize from 'randomatic';
 
@@ -19,6 +19,7 @@ import { IPaginationOpts } from '../pagination/pagination';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 import { isNullOrUndefined } from '../util/numeric-transformer';
 import { SaleOrderBlingStatus } from './entities/sale-order-bling-status.enum';
+import { BlingService } from '../bling/bling.service';
 
 @Injectable()
 export class SalesOrderService {
@@ -30,6 +31,8 @@ export class SalesOrderService {
     private customersService: CustomersService,
     private productsService: ProductsService,
     private inventoryService: InventoryService,
+    @Inject(forwardRef(() => BlingService))
+    private blingService: BlingService,
   ) {}
 
   async paginate(options: IPaginationOpts): Promise<Pagination<SaleOrder>> {
@@ -68,18 +71,18 @@ export class SalesOrderService {
     }
 
     options.queryParams
-      .filter(queryParam => {
+      .filter((queryParam) => {
         return (
           queryParam !== null &&
           queryParam.value !== null &&
           queryParam.value !== undefined
         );
       })
-      .forEach(queryParam => {
+      .forEach((queryParam) => {
         switch (queryParam.key) {
           case 'query':
             queryBuilder.andWhere(
-              new Brackets(qb => {
+              new Brackets((qb) => {
                 qb.where(`lower(c.name) like lower(:query)`, {
                   query: `%${queryParam.value.toString()}%`,
                 }).orWhere(`lower(c.cpf) like lower(:query)`, {
@@ -118,14 +121,14 @@ export class SalesOrderService {
   private async buildItemsList(
     saleOrderDTO: SaleOrderDTO,
   ): Promise<SaleOrderItem[]> {
-    const skus = saleOrderDTO.items.map(item => item.sku);
+    const skus = saleOrderDTO.items.map((item) => item.sku);
     const productsVariations = await this.productsService.findVariationsBySkus(
       skus,
     );
 
-    return productsVariations.map(productVariation => {
+    return productsVariations.map((productVariation) => {
       const item = saleOrderDTO.items.find(
-        item => item.sku === productVariation.sku,
+        (item) => item.sku === productVariation.sku,
       );
       const saleOrderItem = {
         price: item.price,
@@ -198,7 +201,7 @@ export class SalesOrderService {
 
     // create the new items
     const persistedItems = await this.salesOrderItemRepository.save(
-      items.map(item => ({
+      items.map((item) => ({
         saleOrder: persistedSaleOrder,
         ...item,
       })),
@@ -208,12 +211,14 @@ export class SalesOrderService {
 
     // removing old movements
     if (!isANewSaleOrder) {
-      await this.inventoryService.cleanUpMovements(persistedSaleOrder);
+      if (saleOrder.paymentDetails.paymentStatus === PaymentStatus.APPROVED) {
+        await this.blingService.createPurchaseOrder(saleOrder);
+      }
     }
 
     // creating movements to update inventory position
-    const movementJobs = persistedItems.map(item => {
-      return new Promise(async res => {
+    const movementJobs = persistedItems.map((item) => {
+      return new Promise(async (res) => {
         const movement: InventoryMovementDTO = {
           sku: item.productVariation.sku,
           amount: -item.amount,
@@ -266,11 +271,16 @@ export class SalesOrderService {
 
     if (status === PaymentStatus.APPROVED) {
       saleOrder.approvalDate = new Date();
-    }
 
-    saleOrder.paymentDetails.paymentStatus = status;
-    await this.salesOrderRepository.save(saleOrder);
-    return Promise.resolve(saleOrder);
+      saleOrder.paymentDetails.paymentStatus = status;
+      await this.salesOrderRepository.save(saleOrder);
+      await this.blingService.createPurchaseOrder(saleOrder);
+      return Promise.resolve(saleOrder);
+    } else {
+      saleOrder.paymentDetails.paymentStatus = status;
+      await this.salesOrderRepository.save(saleOrder);
+      return Promise.resolve(saleOrder);
+    }
   }
 
   async getByReferenceCode(referenceCode: string) {
