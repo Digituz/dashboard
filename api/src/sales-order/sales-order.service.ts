@@ -138,14 +138,12 @@ export class SalesOrderService {
         price: item.price,
         discount: item.discount || 0,
         amount: item.amount,
-        productVariation: productVariation,
-      };
-
-      saleOrderItem.productVariation = {
-        ...saleOrderItem.productVariation,
-        product: {
-          ...saleOrderItem.productVariation.product,
-          title: productDetails.title,
+        productVariation: {
+          ...productVariation,
+          product: {
+            ...productVariation.product,
+            title: productDetails.title,
+          },
         },
       };
       return saleOrderItem;
