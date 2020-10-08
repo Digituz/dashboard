@@ -1,4 +1,4 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable, HttpService, Inject, forwardRef } from '@nestjs/common';
 import { j2xParser as XMLParser } from 'fast-xml-parser';
 import moment from 'moment';
 import qs from 'qs';
@@ -15,6 +15,7 @@ export class BlingService {
 
   constructor(
     private httpService: HttpService,
+    @Inject(forwardRef(() => SalesOrderService))
     private salesOrderService: SalesOrderService,
   ) {}
 
@@ -107,12 +108,12 @@ export class BlingService {
       vlr_desconto: saleOrder.paymentDetails.discount,
     };
 
-    items.forEach(item => {
+    items.forEach((item) => {
       const finalPrice = item.price - item.discount;
       const itemSold = {
         item: {
           codigo: item.productVariation.sku,
-          descricao: item.productVariation.product.title,
+          descricao: item.productVariation.product.title, //ver onde pegar a descrição do produto se faz uma query aqui ou pega de algum lugar
           un: 'Un',
           qtde: item.amount,
           vlr_unit: finalPrice,
