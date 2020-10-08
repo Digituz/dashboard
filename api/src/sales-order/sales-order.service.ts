@@ -125,8 +125,12 @@ export class SalesOrderService {
     const productsVariations = await this.productsService.findVariationsBySkus(
       skus,
     );
+    const products = await this.productsService.findProductsBySkus(skus);
 
     return productsVariations.map((productVariation) => {
+      const productDetails = products.find(
+        (product) => product.sku === productVariation.sku,
+      );
       const item = saleOrderDTO.items.find(
         (item) => item.sku === productVariation.sku,
       );
@@ -135,6 +139,14 @@ export class SalesOrderService {
         discount: item.discount || 0,
         amount: item.amount,
         productVariation: productVariation,
+      };
+
+      saleOrderItem.productVariation = {
+        ...saleOrderItem.productVariation,
+        product: {
+          ...saleOrderItem.productVariation.product,
+          title: productDetails.title,
+        },
       };
       return saleOrderItem;
     });
