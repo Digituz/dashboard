@@ -113,7 +113,7 @@ export class BlingService {
       const itemSold = {
         item: {
           codigo: item.productVariation.sku,
-          descricao: item.productVariation.product.title, //ver onde pegar a descrição do produto se faz uma query aqui ou pega de algum lugar
+          descricao: item.productVariation.product.title,
           un: 'Un',
           qtde: item.amount,
           vlr_unit: finalPrice,
