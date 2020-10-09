@@ -69,18 +69,18 @@ export class SalesOrderService {
     }
 
     options.queryParams
-      .filter(queryParam => {
+      .filter((queryParam) => {
         return (
           queryParam !== null &&
           queryParam.value !== null &&
           queryParam.value !== undefined
         );
       })
-      .forEach(queryParam => {
+      .forEach((queryParam) => {
         switch (queryParam.key) {
           case 'query':
             queryBuilder.andWhere(
-              new Brackets(qb => {
+              new Brackets((qb) => {
                 qb.where(`lower(c.name) like lower(:query)`, {
                   query: `%${queryParam.value.toString()}%`,
                 }).orWhere(`lower(c.cpf) like lower(:query)`, {
@@ -119,14 +119,14 @@ export class SalesOrderService {
   private async buildItemsList(
     saleOrderDTO: SaleOrderDTO,
   ): Promise<SaleOrderItem[]> {
-    const skus = saleOrderDTO.items.map(item => item.sku);
+    const skus = saleOrderDTO.items.map((item) => item.sku);
     const productsVariations = await this.productsService.findVariationsBySkus(
       skus,
     );
 
-    return productsVariations.map(productVariation => {
+    return productsVariations.map((productVariation) => {
       const item = saleOrderDTO.items.find(
-        item => item.sku === productVariation.sku,
+        (item) => item.sku === productVariation.sku,
       );
       const saleOrderItem = {
         price: item.price,
@@ -199,7 +199,7 @@ export class SalesOrderService {
 
     // create the new items
     const persistedItems = await this.salesOrderItemRepository.save(
-      items.map(item => ({
+      items.map((item) => ({
         saleOrder: persistedSaleOrder,
         ...item,
       })),
@@ -213,8 +213,8 @@ export class SalesOrderService {
     }
 
     // creating movements to update inventory position
-    const movementJobs = persistedItems.map(item => {
-      return new Promise(async res => {
+    const movementJobs = persistedItems.map((item) => {
+      return new Promise(async (res) => {
         const movement: InventoryMovementDTO = {
           sku: item.productVariation.sku,
           amount: -item.amount,
@@ -300,5 +300,18 @@ export class SalesOrderService {
       .orderBy('so.approvalDate', 'DESC');
 
     return paginate<SaleOrder>(queryBuilder, options);
+  }
+
+  async getSaleForWeek() {
+    const queryBuilder = await this.salesOrderRepository
+      .createQueryBuilder('so')
+      .where('so.paymentStatus = :status', { status: 'APPROVED' })
+      .andWhere('so.approvalDate >= :date', {
+        date: moment().subtract(7, 'd'),
+      })
+      //.andWhere('so.payment_type = :paymentType',{paymentType:'BANK_SLIP'})
+      .orderBy('so.approvalDate', 'DESC')
+      .getMany();
+    return queryBuilder;
   }
 }

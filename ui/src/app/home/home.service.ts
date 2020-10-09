@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class HomeService {
   private SALES_ORDERS_ENDPOINT = '/sales-order';
+  private CHART_ENDPOINT = '/chart';
   constructor(private httpClient: HttpClient) {}
 
   loadData(
@@ -27,5 +28,9 @@ export class HomeService {
       query += `&sortDirectionAscending=${sortDirectionAscending}`;
     }
     return this.httpClient.get<Pagination<SalesOrderDTO>>(query);
+  }
+
+  loadChartData() {
+    return this.httpClient.get(`${this.CHART_ENDPOINT}`);
   }
 }

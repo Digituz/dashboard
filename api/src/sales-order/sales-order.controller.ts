@@ -34,6 +34,7 @@ export class SalesOrderController {
     @Query('query') query: string,
     @Query('paymentStatus') paymentStatus: string,
   ): Promise<Pagination<SaleOrderDTO>> {
+    this.salesOrderService.getSaleForWeek();
     const results = await this.salesOrderService.paginate({
       page,
       limit,

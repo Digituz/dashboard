@@ -25,6 +25,7 @@ import { ProductComposition } from './products/entities/product-composition.enti
 import { MarketplacesModule } from './marketplaces/marketplaces.module';
 import { KeyValuePair } from './key-value-pair/key-value-pair.entity';
 import { KeyValuePairModule } from './key-value-pair/key-value-pair.module';
+import { ChartModule } from './chart/chart.module';
 
 @Module({
   imports: [
@@ -69,6 +70,7 @@ import { KeyValuePairModule } from './key-value-pair/key-value-pair.module';
     BlingModule,
     MarketplacesModule,
     KeyValuePairModule,
+    ChartModule,
   ],
   controllers: [],
   providers: [],

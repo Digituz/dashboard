@@ -17,30 +17,16 @@ export class HomeComponent implements OnInit {
   query: string;
   data: any;
   isLoading = false;
+  days: any;
 
-  constructor(private homeService: HomeService, private breadcrumbsService: BreadcrumbsService) {
-    this.data = {
-      labels: ['Quinta', 'Sexta', 'Sábado', 'Domingo', 'Segunda', 'Terça', 'Quarta'],
-      datasets: [
-        {
-          label: 'Boleto',
-          backgroundColor: '#42A5F5',
-          borderColor: '#1E88E5',
-          data: [65, 59, 80, 81, 56, 55, 40],
-        },
-        {
-          label: 'Cartão de Crédito',
-          backgroundColor: '#9CCC65',
-          borderColor: '#7CB342',
-          data: [28, 48, 40, 19, 86, 27, 90],
-        },
-      ],
-    };
-  }
+  constructor(private homeService: HomeService, private breadcrumbsService: BreadcrumbsService) {}
 
   ngOnInit() {
     this.isLoading = false;
     this.breadcrumbsService.refreshBreadcrumbs('Painel de Controle', []);
+    this.homeService.loadChartData().subscribe((response) => {
+      this.data = response;
+    });
   }
 
   loadData(
