@@ -302,14 +302,13 @@ export class SalesOrderService {
     return paginate<SaleOrder>(queryBuilder, options);
   }
 
-  async getSaleForWeek() {
+  async getSalesForWeek() {
     const queryBuilder = await this.salesOrderRepository
       .createQueryBuilder('so')
       .where('so.paymentStatus = :status', { status: 'APPROVED' })
       .andWhere('so.approvalDate >= :date', {
         date: moment().subtract(7, 'd'),
       })
-      //.andWhere('so.payment_type = :paymentType',{paymentType:'BANK_SLIP'})
       .orderBy('so.approvalDate', 'DESC')
       .getMany();
     return queryBuilder;

@@ -18,7 +18,7 @@ export function parserWeekDay(value: number): string {
       return 'Sexta';
     case 6:
       return 'Sabado';
-    case 7:
+    case 0:
       return 'Domingo';
     default:
       return 'N/A';
