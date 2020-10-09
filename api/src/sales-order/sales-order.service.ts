@@ -222,6 +222,10 @@ export class SalesOrderService {
     // removing old movements
     if (!isANewSaleOrder) {
       if (saleOrder.paymentDetails.paymentStatus === PaymentStatus.APPROVED) {
+        await this.updateStatus(
+          saleOrder.referenceCode,
+          PaymentStatus.APPROVED,
+        );
         await this.blingService.createPurchaseOrder(saleOrder);
       }
     }
@@ -281,16 +285,12 @@ export class SalesOrderService {
 
     if (status === PaymentStatus.APPROVED) {
       saleOrder.approvalDate = new Date();
-
-      saleOrder.paymentDetails.paymentStatus = status;
       await this.salesOrderRepository.save(saleOrder);
-      await this.blingService.createPurchaseOrder(saleOrder);
-      return Promise.resolve(saleOrder);
-    } else {
-      saleOrder.paymentDetails.paymentStatus = status;
-      await this.salesOrderRepository.save(saleOrder);
-      return Promise.resolve(saleOrder);
     }
+
+    saleOrder.paymentDetails.paymentStatus = status;
+    await this.salesOrderRepository.save(saleOrder);
+    return Promise.resolve(saleOrder);
   }
 
   async getByReferenceCode(referenceCode: string) {
