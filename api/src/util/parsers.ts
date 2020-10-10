@@ -4,7 +4,7 @@ export function parseBoolean(value: string): boolean {
   return false;
 }
 
-export function parserWeekDay(value: number): string {
+export function parseWeekDay(value: number): string {
   switch (value) {
     case 1:
       return 'Segunda';
@@ -17,7 +17,7 @@ export function parserWeekDay(value: number): string {
     case 5:
       return 'Sexta';
     case 6:
-      return 'Sabado';
+      return 'Sábado';
     case 0:
       return 'Domingo';
     default:

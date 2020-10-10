@@ -295,14 +295,14 @@ export class SalesOrderService {
       .leftJoinAndSelect('so.customer', 'c')
       .where('so.paymentStatus = :status', { status: 'APPROVED' })
       .andWhere('so.approvalDate >= :date', {
-        date: moment().subtract(30, 'd'),
+        date: moment().subtract(3, 'd'),
       })
       .orderBy('so.approvalDate', 'DESC');
 
     return paginate<SaleOrder>(queryBuilder, options);
   }
 
-  async getSalesForWeek() {
+  async getSalesForLast7Days() {
     const queryBuilder = await this.salesOrderRepository
       .createQueryBuilder('so')
       .where('so.paymentStatus = :status', { status: 'APPROVED' })

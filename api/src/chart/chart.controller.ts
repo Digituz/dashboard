@@ -1,11 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
 import { ChartService } from './chart.service';
 
-@Controller('chart')
+@Controller('/chart')
 export class ChartController {
   constructor(private chartService: ChartService) {}
 
-  @Get()
+  @Get('/sales-for-last-7-days')
   async graphicalData() {
     return this.chartService.graphicalData();
   }
