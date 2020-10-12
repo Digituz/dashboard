@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import randomize from 'randomatic';
 import moment from 'moment';
@@ -32,7 +32,6 @@ export class SalesOrderService {
     private customersService: CustomersService,
     private productsService: ProductsService,
     private inventoryService: InventoryService,
-    @Inject(forwardRef(() => BlingService))
     private blingService: BlingService,
   ) {}
 
@@ -126,12 +125,8 @@ export class SalesOrderService {
     const productsVariations = await this.productsService.findVariationsBySkus(
       skus,
     );
-    const products = await this.productsService.findProductsBySkus(skus);
 
     return productsVariations.map(productVariation => {
-      const productDetails = products.find(
-        product => product.sku === productVariation.sku,
-      );
       const item = saleOrderDTO.items.find(
         item => item.sku === productVariation.sku,
       );
@@ -139,13 +134,7 @@ export class SalesOrderService {
         price: item.price,
         discount: item.discount || 0,
         amount: item.amount,
-        productVariation: {
-          ...productVariation,
-          product: {
-            ...productVariation.product,
-            title: productDetails.title,
-          },
-        },
+        productVariation: productVariation,
       };
       return saleOrderItem;
     });
@@ -208,6 +197,14 @@ export class SalesOrderService {
       saleOrder.creationDate = saleOrder.creationDate || new Date();
     }
 
+    if (
+      saleOrder.paymentDetails.paymentStatus === PaymentStatus.APPROVED &&
+      !saleOrder.blingStatus
+    ) {
+      await this.blingService.createPurchaseOrder(saleOrder);
+      saleOrder.blingStatus = SaleOrderBlingStatus.EM_ABERTO;
+    }
+
     const persistedSaleOrder = await this.salesOrderRepository.save(saleOrder);
 
     // create the new items
@@ -222,13 +219,7 @@ export class SalesOrderService {
 
     // removing old movements
     if (!isANewSaleOrder) {
-      if (saleOrder.paymentDetails.paymentStatus === PaymentStatus.APPROVED) {
-        await this.updateStatus(
-          saleOrder.referenceCode,
-          PaymentStatus.APPROVED,
-        );
-        await this.blingService.createPurchaseOrder(saleOrder);
-      }
+      await this.inventoryService.cleanUpMovements(persistedSaleOrder);
     }
 
     // creating movements to update inventory position
@@ -252,20 +243,6 @@ export class SalesOrderService {
     return this.createOrUpdateSaleOrder(saleOrderDTO);
   }
 
-  async updateBlingStatus(
-    referenceCode: string,
-    saleOrderBlingStatus: SaleOrderBlingStatus,
-  ) {
-    return this.salesOrderRepository.update(
-      {
-        referenceCode,
-      },
-      {
-        blingStatus: saleOrderBlingStatus,
-      },
-    );
-  }
-
   async updateStatus(
     referenceCode: string,
     status: PaymentStatus,
@@ -282,6 +259,11 @@ export class SalesOrderService {
       // we must remove movements when payment gets cancelled
       saleOrder.cancellationDate = new Date();
       await this.inventoryService.cleanUpMovements(saleOrder);
+
+      if (saleOrder.blingStatus === SaleOrderBlingStatus.EM_ABERTO) {
+        saleOrder.blingStatus = SaleOrderBlingStatus.CANCELADO;
+        await this.blingService.cancelPurchaseOrder(saleOrder);
+      }
     }
 
     if (status === PaymentStatus.APPROVED) {

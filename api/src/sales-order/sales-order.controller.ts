@@ -8,6 +8,7 @@ import {
   Get,
   Query,
   UseGuards,
+  Delete,
 } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
 
@@ -117,6 +118,16 @@ export class SalesOrderController {
   async save(@Body() saleOrder: SaleOrderDTO): Promise<SaleOrder> {
     const saleOrderPersisted = await this.salesOrderService.save(saleOrder);
     return Promise.resolve(new SaleOrder(saleOrderPersisted));
+  }
+
+  @Delete('/:referenceCode')
+  async cancelOnBling(
+    @Param('referenceCode') referenceCode: string,
+  ): Promise<void> {
+    await this.salesOrderService.updateStatus(
+      referenceCode,
+      PaymentStatus.CANCELLED,
+    );
   }
 
   @Post(':referenceCode')

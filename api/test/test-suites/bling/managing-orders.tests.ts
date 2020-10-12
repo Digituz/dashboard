@@ -15,7 +15,7 @@ import { SaleOrderBlingStatus } from '../../../src/sales-order/entities/sale-ord
 // this service is used by BlingService to update the status of the
 class SalesOrderServiceMock extends SalesOrderService {
   constructor() {
-    super(null, null, null, null, null);
+    super(null, null, null, null, null, null);
   }
 
   updateBlingStatus(

@@ -65,24 +65,6 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
     }
   }
 
-  syncWithBling(salesOrder: SalesOrderDTO) {
-    this.confirmationService.confirm({
-      message: 'Deseja realmente sincronizar no Bling?',
-      header: 'Sincronizar Venda?',
-      acceptButtonStyleClass: 'ui-button-primary',
-      rejectButtonStyleClass: 'ui-button-danger',
-      acceptLabel: 'Sim',
-      rejectLabel: 'Não',
-      accept: () => {
-        salesOrder.syncingWithBling = true;
-        this.salesOrdersService.syncWithBling(salesOrder).subscribe(() => {
-          delete salesOrder.syncingWithBling;
-          salesOrder.blingStatus = SaleOrderBlingStatus.EM_ABERTO;
-        });
-      },
-    });
-  }
-
   duplicateOrder(salesOrder: SalesOrderDTO) {
     this.confirmationService.confirm({
       message:

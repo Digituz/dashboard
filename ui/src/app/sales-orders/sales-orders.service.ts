@@ -9,7 +9,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
   private SALES_ORDERS_ENDPOINT = '/sales-order';
-  private BLING_INTEGRATION_ENDPOINT = '/bling';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -48,11 +47,7 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
     return this.httpClient.post<void>(this.SALES_ORDERS_ENDPOINT, saleOrder);
   }
 
-  syncWithBling(salesOrder: SalesOrderDTO) {
-    return this.httpClient.post<void>(`${this.BLING_INTEGRATION_ENDPOINT}/${salesOrder.referenceCode}`, {});
-  }
-
   cancelOnBling(salesOrder: SalesOrderDTO) {
-    return this.httpClient.delete<void>(`${this.BLING_INTEGRATION_ENDPOINT}/${salesOrder.referenceCode}`);
+    return this.httpClient.delete<void>(`${this.SALES_ORDERS_ENDPOINT}/${salesOrder.referenceCode}`);
   }
 }

@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SaleOrder } from './entities/sale-order.entity';
 import { SaleOrderItem } from './entities/sale-order-item.entity';
@@ -11,7 +11,7 @@ import { BlingModule } from '../bling/bling.module';
 
 @Module({
   imports: [
-    forwardRef(() => BlingModule),
+    BlingModule,
     ProductsModule,
     CustomersModule,
     InventoryModule,
