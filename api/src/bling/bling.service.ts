@@ -108,7 +108,7 @@ export class BlingService {
       vlr_desconto: saleOrder.paymentDetails.discount,
     };
 
-    items.forEach((item) => {
+    items.forEach(item => {
       const finalPrice = item.price - item.discount;
       const itemSold = {
         item: {
