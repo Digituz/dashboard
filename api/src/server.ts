@@ -16,7 +16,7 @@ export async function bootstrap(silentMode = false) {
 
   if (process.env.NODE_ENV !== 'development') {
     app.enableCors({
-      origin: "https://dashboard.digituz.com.br"
+      origin: 'https://dashboard.digituz.com.br',
     });
   }
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
