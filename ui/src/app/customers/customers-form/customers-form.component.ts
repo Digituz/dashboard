@@ -41,7 +41,7 @@ export class CustomersFormComponent implements OnInit {
       name: [customer.name || ''],
       phoneNumber: [customer.phoneNumber || ''],
       email: [customer.email || ''],
-      birthday: [customer.birthday || ''],
+      birthday: [customer.birthday || null],
       zipAddress: [customer.zipAddress || ''],
       state: [customer.state || ''],
       city: [customer.city || ''],
