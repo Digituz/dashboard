@@ -53,12 +53,12 @@ export class SalesOrderController {
 
     return {
       ...results,
-      items: results.items.map((saleOrder) => {
+      items: results.items.map(saleOrder => {
         return {
           id: saleOrder.id,
           referenceCode: saleOrder.referenceCode,
           customer: saleOrder.customer,
-          items: saleOrder.items.map((item) => ({
+          items: saleOrder.items.map(item => ({
             sku: item.productVariation.sku,
             price: item.price,
             discount: item.discount,
@@ -142,7 +142,7 @@ export class SalesOrderController {
       id: saleOrder.id,
       referenceCode: saleOrder.referenceCode,
       customer: saleOrder.customer,
-      items: saleOrder.items.map((item) => ({
+      items: saleOrder.items.map(item => ({
         sku: item.productVariation.sku,
         completeDescription: `${item.productVariation.sku} - ${item.productVariation.product.title} (${item.productVariation.description})`,
         price: item.price,

@@ -26,13 +26,13 @@
         <tbody>
           <tr *ngFor="let salesOrder of salesOrderTable.currentData">
             <td class="centered">
-              <div style="line-height: 20px; display: flex; flex-direction: column; width: 80px">
+              <div style="line-height: 20px; display: flex; flex-direction: column; width: 80px;">
                 {{ salesOrder.approvalDate | date: 'dd/MM'
                 }}<small>{{ salesOrder.approvalDate | date: 'HH:mm' }}</small>
               </div>
             </td>
             <td>
-              <div style="width: 150px; overflow: scroll; white-space: nowrap">{{ salesOrder.customer.name }}</div>
+              <div style="width: 150px; overflow: scroll; white-space: nowrap;">{{ salesOrder.customer.name }}</div>
             </td>
             <td class="centered">
               {{ salesOrder.shipmentDetails.shippingCity }}/{{ salesOrder.shipmentDetails.shippingState }}

@@ -16,5 +16,6 @@
             "server": "localhost",
             "username": "digituz-dashboard"
         }
-    ]
+    ],
+    "editor.formatOnSave": true
 }
