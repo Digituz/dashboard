@@ -9,29 +9,9 @@ import { PaymentType } from '../../../src/sales-order/entities/payment-type.enum
 import { ShippingType } from '../../../src/sales-order/entities/shipping-type.enum';
 import { Product } from '../../../src/products/entities/product.entity';
 import { ProductVariation } from '../../../src/products/entities/product-variation.entity';
-import { SalesOrderService } from '../../../src/sales-order/sales-order.service';
-import { SaleOrderBlingStatus } from '../../../src/sales-order/entities/sale-order-bling-status.enum';
-
-// this service is used by BlingService to update the status of the
-class SalesOrderServiceMock extends SalesOrderService {
-  constructor() {
-    super(null, null, null, null, null, null);
-  }
-
-  updateBlingStatus(
-    referenceCode: string,
-    saleOrderBlingStatus: SaleOrderBlingStatus,
-  ): Promise<any> {
-    return Promise.resolve();
-  }
-}
 
 describe('Bling integration', () => {
-  const salesOrderServiceMock = new SalesOrderServiceMock();
-  const realBlingService = new BlingService(
-    new HttpService(axios),
-    salesOrderServiceMock,
-  );
+  const realBlingService = new BlingService(new HttpService(axios));
 
   async function createOrUpdateProduct(productVariation: ProductVariation) {
     const httpResponse = await realBlingService.createOrUpdateProduct(
