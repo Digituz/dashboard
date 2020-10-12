@@ -6,17 +6,12 @@ import qs from 'qs';
 import { SaleOrder } from '../sales-order/entities/sale-order.entity';
 import { PaymentStatus } from '../sales-order/entities/payment-status.enum';
 import { ProductVariation } from '../products/entities/product-variation.entity';
-import { SalesOrderService } from '../sales-order/sales-order.service';
-import { SaleOrderBlingStatus } from '../sales-order/entities/sale-order-bling-status.enum';
 
 @Injectable()
 export class BlingService {
   parser = new XMLParser({});
 
-  constructor(
-    private httpService: HttpService,
-    private salesOrderService: SalesOrderService,
-  ) {}
+  constructor(private httpService: HttpService) {}
 
   async removeProduct(productVariation: ProductVariation) {
     const data = {
@@ -152,20 +147,10 @@ export class BlingService {
 
     const response = await syncRequest.toPromise();
 
-    await this.salesOrderService.updateBlingStatus(
-      saleOrder.referenceCode,
-      SaleOrderBlingStatus.EM_ABERTO,
-    );
-
     return Promise.resolve(response);
   }
 
   async cancelPurchaseOrder(saleOrder: SaleOrder) {
-    const { paymentStatus } = saleOrder.paymentDetails;
-    if (paymentStatus !== PaymentStatus.CANCELLED) {
-      throw new Error('Invalid sale order status on cancel operation.');
-    }
-
     const xml = this.parser.parse({
       pedido: {
         idSituacao: 12, // more info: https://ajuda.bling.com.br/hc/pt-br/articles/360046304394-GET-situacao-m%C3%B3dulo-

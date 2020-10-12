@@ -7,9 +7,11 @@ import { SalesOrderService } from './sales-order.service';
 import { ProductsModule } from '../products/products.module';
 import { CustomersModule } from '../customers/customers.module';
 import { InventoryModule } from '../inventory/inventory.module';
+import { BlingModule } from '../bling/bling.module';
 
 @Module({
   imports: [
+    BlingModule,
     ProductsModule,
     CustomersModule,
     InventoryModule,

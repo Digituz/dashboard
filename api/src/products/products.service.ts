@@ -73,7 +73,10 @@ export class ProductsService {
 
   async findVariationsBySkus(skus: string[]): Promise<ProductVariation[]> {
     return this.productVariationsRepository.find({
-      sku: In(skus),
+      where: {
+        sku: In(skus),
+      },
+      relations: ['product'],
     });
   }
 

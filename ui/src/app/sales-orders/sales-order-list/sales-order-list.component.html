@@ -122,16 +122,6 @@
         <button
           pButton
           type="button"
-          [icon]="salesOrder.syncingWithBling ? 'fal fa-sync fa-spin' : 'fal fa-exchange'"
-          class="ui-button-secondary"
-          pTooltip="Sincronizar venda com Bling. Apenas para vendas aprovadas."
-          tooltipPosition="top"
-          (click)="syncWithBling(salesOrder)"
-          [disabled]="!!salesOrder.blingStatus || salesOrder.paymentStatus !== 'APPROVED'"
-        ></button>
-        <button
-          pButton
-          type="button"
           [icon]="salesOrder.cancellingOnBling ? 'fal fa-sync fa-spin' : 'fal fa-times'"
           class="ui-button-danger"
           pTooltip="Cancelar venda no Bling."

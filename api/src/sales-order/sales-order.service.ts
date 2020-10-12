@@ -20,6 +20,7 @@ import { IPaginationOpts } from '../pagination/pagination';
 import { Pagination, paginate } from 'nestjs-typeorm-paginate';
 import { isNullOrUndefined } from '../util/numeric-transformer';
 import { SaleOrderBlingStatus } from './entities/sale-order-bling-status.enum';
+import { BlingService } from '../bling/bling.service';
 
 @Injectable()
 export class SalesOrderService {
@@ -31,6 +32,7 @@ export class SalesOrderService {
     private customersService: CustomersService,
     private productsService: ProductsService,
     private inventoryService: InventoryService,
+    private blingService: BlingService,
   ) {}
 
   async paginate(options: IPaginationOpts): Promise<Pagination<SaleOrder>> {
@@ -195,6 +197,14 @@ export class SalesOrderService {
       saleOrder.creationDate = saleOrder.creationDate || new Date();
     }
 
+    if (
+      saleOrder.paymentDetails.paymentStatus === PaymentStatus.APPROVED &&
+      !saleOrder.blingStatus
+    ) {
+      await this.blingService.createPurchaseOrder(saleOrder);
+      saleOrder.blingStatus = SaleOrderBlingStatus.EM_ABERTO;
+    }
+
     const persistedSaleOrder = await this.salesOrderRepository.save(saleOrder);
 
     // create the new items
@@ -233,20 +243,6 @@ export class SalesOrderService {
     return this.createOrUpdateSaleOrder(saleOrderDTO);
   }
 
-  async updateBlingStatus(
-    referenceCode: string,
-    saleOrderBlingStatus: SaleOrderBlingStatus,
-  ) {
-    return this.salesOrderRepository.update(
-      {
-        referenceCode,
-      },
-      {
-        blingStatus: saleOrderBlingStatus,
-      },
-    );
-  }
-
   async updateStatus(
     referenceCode: string,
     status: PaymentStatus,
@@ -263,10 +259,16 @@ export class SalesOrderService {
       // we must remove movements when payment gets cancelled
       saleOrder.cancellationDate = new Date();
       await this.inventoryService.cleanUpMovements(saleOrder);
+
+      if (saleOrder.blingStatus === SaleOrderBlingStatus.EM_ABERTO) {
+        saleOrder.blingStatus = SaleOrderBlingStatus.CANCELADO;
+        await this.blingService.cancelPurchaseOrder(saleOrder);
+      }
     }
 
     if (status === PaymentStatus.APPROVED) {
       saleOrder.approvalDate = new Date();
+      await this.salesOrderRepository.save(saleOrder);
     }
 
     saleOrder.paymentDetails.paymentStatus = status;
