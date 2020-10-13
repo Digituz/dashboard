@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductsService } from '../products.service';
 import { ProductVariationDetailsDTO } from '@app/products/product-variation-details.dto';
+
 @Component({
   selector: 'app-product-composition',
   templateUrl: './product-composition.component.html',
@@ -15,11 +16,15 @@ export class ProductCompositionComponent implements OnInit {
   isModalVisible: boolean = false;
   showRemoveButton: boolean = false;
   productVariations: ProductVariationDetailsDTO[] = [];
+
   constructor(private fb: FormBuilder, private productService: ProductsService) {}
+
   ngOnInit(): void {}
+
   handleCancel(): void {
     this.isModalVisible = false;
   }
+
   openDialog() {
     this.formFieldsVariation = this.fb.group({
       product: '',
