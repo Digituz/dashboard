@@ -10,6 +10,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { SharedModule } from '../@shared/shared.module';
 import { ProductsRoutingModule } from './products-routing.module';
@@ -20,9 +21,16 @@ import { ProductsListComponent } from './products-list/products-list.component';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
 import { ImageService } from '@app/media-library/image.service';
 import { TooltipModule } from 'primeng/tooltip';
+import { ProductCompositionComponent } from './product-composition/product-composition.component';
 
 @NgModule({
-  declarations: [ProductsComponent, ProductFormComponent, ProductImagesComponent, ProductsListComponent],
+  declarations: [
+    ProductsComponent,
+    ProductFormComponent,
+    ProductImagesComponent,
+    ProductsListComponent,
+    ProductCompositionComponent,
+  ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -39,6 +47,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule,
     ProductsRoutingModule,
     BreadcrumbsModule,
+    AutoCompleteModule,
   ],
   providers: [ImageService],
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductsService } from '../products.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,6 +8,7 @@ import { Image } from '../../media-library/image.entity';
 import { ProductImage } from '../product-image.entity';
 import { ProductCategory } from '../product-category.enum';
 import { ProductComposition } from '../product-composition.entity';
+import { ProductCompositionComponent } from '../product-composition/product-composition.component';
 
 interface Category {
   label: string;
@@ -20,6 +21,8 @@ interface Category {
   styleUrls: ['./product-form.component.scss'],
 })
 export class ProductFormComponent implements OnInit {
+  @ViewChild('productCompositionComponent') productCompositionComponent: ProductCompositionComponent;
+
   formFields: FormGroup;
   formFieldsVariation: FormGroup;
   productDetails: string;
@@ -171,5 +174,22 @@ export class ProductFormComponent implements OnInit {
     );
   }
 
-  newItemOnComposition() {}
+  newItemOnComposition() {
+    this.productCompositionComponent.openDialog();
+  }
+
+  onItemChosen(event: any) {
+    const productVariation = event;
+    if (this.product.productComposition === undefined) {
+      this.product.productComposition = [];
+    }
+    this.product.productComposition.push({
+      productVariation: {
+        ...productVariation,
+        product: {
+          title: productVariation.title,
+        },
+      },
+    });
+  }
 }
