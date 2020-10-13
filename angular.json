@@ -39,9 +39,7 @@
               "node_modules/medium-editor/dist/css/themes/default.css",
               "src/main.scss"
             ],
-            "scripts": [
-              "node_modules/medium-editor/dist/js/medium-editor.min.js"
-            ]
+            "scripts": ["node_modules/medium-editor/dist/js/medium-editor.min.js"]
           },
           "configurations": {
             "production": {
@@ -118,14 +116,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json", "e2e/tsconfig.json"],
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
