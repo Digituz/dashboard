@@ -185,3 +185,12 @@ p-dialog {
   align-items: center;
   justify-content: center;
 }
+
+.showMore {
+  display: flex;
+  justify-content: center;
+
+  button {
+    margin-top: 15px;
+  }
+}
