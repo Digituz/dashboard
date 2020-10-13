@@ -182,7 +182,7 @@
     >
   </p>
   <div class="actions">
-    <!-- <button pButton type="button" (click)="newItemOnComposition()" label="Adicionar Item"></button> -->
+    <button pButton type="button" (click)="newItemOnComposition()" label="Adicionar Item"></button>
   </div>
 </div>
 <table class="digituz">
@@ -273,3 +273,4 @@
     <button pButton type="button" class="ui-button-primary" (click)="submitVariation()" label="Salvar"></button>
   </p-footer>
 </p-dialog>
+<app-product-composition #productCompositionComponent (onItemChosen)="onItemChosen($event)"></app-product-composition>
