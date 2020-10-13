@@ -13,7 +13,7 @@ export class ImageService {
   constructor(private httpClient: HttpClient) {}
 
   public loadImages(page: number): Observable<Image[]> {
-    return this.httpClient.get<Image[]>(`${this.IMAGES_ENDPOINT}/?page=${page}&size=24`);
+    return this.httpClient.get<Image[]>(`${this.IMAGES_ENDPOINT}/?page=${page}`);
   }
 
   public applyTags(images: Image[], tags: Tag[]): Observable<void> {
