@@ -180,11 +180,13 @@ export class ProductFormComponent implements OnInit {
 
   onItemChosen(event: any) {
     const productVariation = event;
+    if (this.product.productComposition === undefined) {
+      this.product.productComposition = [];
+    }
     this.product.productComposition.push({
       productVariation: {
         ...productVariation,
         product: {
-          currentPosition: productVariation.currentPosition,
           title: productVariation.title,
         },
       },
