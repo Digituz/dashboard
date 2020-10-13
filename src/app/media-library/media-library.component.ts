@@ -22,6 +22,7 @@ import Tag from '@app/tags/tag.entity';
 export class MediaLibraryComponent implements OnInit {
   @ViewChild('uploader') uploader: FileUpload;
   private searchChange$ = new BehaviorSubject('');
+  page: number = 0;
   images: Image[];
   isModalVisible = false;
   isSpinning = false;
@@ -38,7 +39,6 @@ export class MediaLibraryComponent implements OnInit {
 
   selectedImage: Image;
   selectedImages: Image[] = [];
-
   constructor(
     private breadcrumbsService: BreadcrumbsService,
     private productsService: ProductsService,
@@ -50,7 +50,7 @@ export class MediaLibraryComponent implements OnInit {
   private reloadImages() {
     this.loading = true;
     this.imageService
-      .loadImages()
+      .loadImages(this.page)
       .pipe(delay(350))
       .subscribe((images) => {
         this.loading = false;
@@ -177,6 +177,15 @@ export class MediaLibraryComponent implements OnInit {
   archiveImages() {
     this.imageService.archiveImages(this.selectedImages).subscribe(() => {
       this.reloadImages();
+    });
+  }
+
+  showMore() {
+    this.page += 1;
+    this.imageService.loadImages(this.page).subscribe((images) => {
+      this.loading = false;
+      this.images.push(...images);
+      this.selectedImages = [];
     });
   }
 }
