@@ -35,6 +35,7 @@
         (completeMethod)="search($event)"
         [multiple]="true"
         field="label"
+        (ngModelChange)="onTagSelection($event)"
       >
         <ng-template let-tag pTemplate="item">
           <div>{{ tag.label }} - {{ tag.description }}</div>
@@ -96,12 +97,7 @@
   </div>
 </div>
 <div class="showMore">
-  <ng-container *ngIf="pageByTag === -1">
-    <button pButton label="Mostrar mais" (click)="showMore()"></button>
-  </ng-container>
-  <ng-container *ngIf="pageByTag > -1">
-    <button pButton label="Mostrar mais" (click)="showByTag()"></button>
-  </ng-container>
+  <button pButton label="Mostrar mais" (click)="showMore()"></button>
 </div>
 
 <p-dialog
