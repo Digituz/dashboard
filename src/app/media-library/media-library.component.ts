@@ -183,27 +183,34 @@ export class MediaLibraryComponent implements OnInit {
   }
 
   showMore() {
-    this.page++;
-    this.imageService.loadImages(this.page).subscribe((images) => {
-      this.loading = false;
-      this.images.push(...images);
-      this.selectedImages = [];
-    });
+    if (this.pageByTag === -1) {
+      this.page++;
+      this.imageService.loadImages(this.page).subscribe((images) => {
+        this.loading = false;
+        this.images.push(...images);
+      });
+    } else {
+      this.showByTag();
+    }
   }
 
   showByTag() {
     this.pageByTag++;
-    const tagsLabel = this.selectedTags.map((tag) => {
+    const labels = this.selectedTags.map((tag) => {
       return tag.label;
     });
-    this.imageService.byTag(tagsLabel[0], this.pageByTag).subscribe((images) => {
+
+    this.imageService.byTag(labels.toString(), this.pageByTag).subscribe((images) => {
       this.loading = false;
       if (this.pageByTag === 0) {
         this.images = images;
       } else {
         this.images.push(...images);
       }
-      this.selectedImages = [];
     });
+  }
+
+  onTagSelection(event: any) {
+    this.pageByTag = -1;
   }
 }
