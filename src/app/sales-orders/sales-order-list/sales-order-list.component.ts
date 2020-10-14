@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { IDataProvider, QueryParam, Pagination } from '@app/util/pagination';
 import { SalesOrderDTO } from '../sales-order.dto';
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
@@ -31,7 +32,8 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
   constructor(
     private breadcrumbsService: BreadcrumbsService,
     private salesOrdersService: SalesOrdersService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -109,5 +111,9 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
         });
       },
     });
+  }
+
+  onClick() {
+    this.router.navigateByUrl('/');
   }
 }

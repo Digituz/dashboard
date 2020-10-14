@@ -15,9 +15,10 @@ import { SalesOrdersComponent } from './sales-orders.component';
 import { SalesOrdersRoutingModule } from './sales-orders-routing.module';
 import { SalesOrderFormComponent } from './sales-order-form/sales-order-form.component';
 import { SalesOrderListComponent } from './sales-order-list/sales-order-list.component';
+import { SalesOrdersReportComponent } from './sales-orders-report/sales-orders-report.component';
 
 @NgModule({
-  declarations: [SalesOrdersComponent, SalesOrderFormComponent, SalesOrderListComponent],
+  declarations: [SalesOrdersComponent, SalesOrderFormComponent, SalesOrderListComponent, SalesOrdersReportComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,
