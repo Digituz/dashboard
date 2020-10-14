@@ -23,6 +23,8 @@ export class MediaLibraryComponent implements OnInit {
   @ViewChild('uploader') uploader: FileUpload;
   private searchChange$ = new BehaviorSubject('');
   page: number = 0;
+  pageByTag: number = -1;
+  currentLabel: string;
   images: Image[];
   isModalVisible = false;
   isSpinning = false;
@@ -181,10 +183,26 @@ export class MediaLibraryComponent implements OnInit {
   }
 
   showMore() {
-    this.page += 1;
+    this.page++;
     this.imageService.loadImages(this.page).subscribe((images) => {
       this.loading = false;
       this.images.push(...images);
+      this.selectedImages = [];
+    });
+  }
+
+  showByTag() {
+    this.pageByTag++;
+    const tagsLabel = this.selectedTags.map((tag) => {
+      return tag.label;
+    });
+    this.imageService.byTag(tagsLabel[0], this.pageByTag).subscribe((images) => {
+      this.loading = false;
+      if (this.pageByTag === 0) {
+        this.images = images;
+      } else {
+        this.images.push(...images);
+      }
       this.selectedImages = [];
     });
   }
