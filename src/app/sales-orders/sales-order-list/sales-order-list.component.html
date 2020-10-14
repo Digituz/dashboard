@@ -27,6 +27,9 @@
     <label>Controle as suas vendas de forma simplificada.</label>
   </p>
   <div class="actions">
+    <a title="Gerar Relátorio de Vendas" routerLink="/sales-orders/sales-orders-report"
+      ><button pButton class="ui-button-secondary" type="button" label="Gerar Relátorio"></button
+    ></a>
     <a title="Nova Venda" routerLink="/sales-orders/new"><button pButton type="button" label="Nova Venda"></button></a>
   </div>
 </div>
@@ -134,3 +137,4 @@
   </tbody>
 </dgz-table>
 <p-confirmDialog></p-confirmDialog>
+<app-sales-orders-report></app-sales-orders-report>

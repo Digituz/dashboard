@@ -10,9 +10,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
 import { CustomersRoutingModule } from './customers-routing.module';
 import { CardModule } from 'primeng/card';
+import { CustomersReportComponent } from './customers-report/customers-report.component';
 
 @NgModule({
-  declarations: [CustomersListComponent, CustomersFormComponent, CustomersComponent],
+  declarations: [CustomersListComponent, CustomersFormComponent, CustomersComponent, CustomersReportComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,
