@@ -46,4 +46,8 @@ export class ImageService {
   loadImage(id: number) {
     return this.httpClient.get<Image>(`${this.IMAGES_ENDPOINT}/${id}`);
   }
+
+  public byTag(tagLabel: string, page: number): Observable<Image[]> {
+    return this.httpClient.get<Image[]>(`${this.IMAGES_ENDPOINT}/by-tag/?tagLabel=${tagLabel}&page=${page}`);
+  }
 }

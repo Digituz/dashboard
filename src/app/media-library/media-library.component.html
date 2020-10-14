@@ -63,7 +63,7 @@
       [disabled]="selectedImages?.length === 0"
       (click)="archiveImages()"
     ></button>
-    <button pButton label="Filtrar"></button>
+    <button pButton label="Filtrar" (click)="showByTag()"></button>
   </div>
 </div>
 <div class="dgz-table dgz-table-info" *ngIf="!loading && images.length === 0">
@@ -96,7 +96,12 @@
   </div>
 </div>
 <div class="showMore">
-  <button pButton label="Mostrar mais" (click)="showMore()"></button>
+  <ng-container *ngIf="pageByTag === -1">
+    <button pButton label="Mostrar mais" (click)="showMore()"></button>
+  </ng-container>
+  <ng-container *ngIf="pageByTag > -1">
+    <button pButton label="Mostrar mais" (click)="showByTag()"></button>
+  </ng-container>
 </div>
 
 <p-dialog
