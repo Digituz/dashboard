@@ -1,1 +1,52 @@
-<p>sales-orders-report works!</p>
+<div class="feature-header">
+  <p>
+    <label>Ordene seu relatório.</label>
+  </p>
+  <div class="actions">
+    <app-button-back fallbackURL="/sales-orders"></app-button-back>
+  </div>
+</div>
+<p-card>
+  <form [formGroup]="formFields" (ngSubmit)="submitReport()">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="orderForm">
+        <label class="marginHorizontal">Periodo: De</label>
+        <p-inputMask mask="99/99/9999" placeholder="__/__/__"></p-inputMask>
+        <p class="marginHorizontal">A</p>
+        <p-inputMask mask="99/99/9999" placeholder="__/__/__"></p-inputMask>
+      </div>
+      <div class="orderForm">
+        <label class="marginHorizontal">Ordenar Por:</label>
+        <p-dropdown
+          [options]="order"
+          formControlName="order"
+          placeholder="Selecione como deseja ordenar"
+          [showClear]="true"
+        ></p-dropdown>
+      </div>
+      <div class="orderForm">
+        <label>&nbsp;</label>
+        <button pButton type="button" class="ui-button-primary" label="Ordenar"></button>
+      </div>
+    </div>
+  </form>
+</p-card>
+
+<dgz-table #salesOrdersTable [dataProvider]="this" name="sales-orders-list">
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Cód. Referência</th>
+      <th>Cliente</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let salesOrder of salesOrdersTable.currentData">
+      <td class="centered">{{ salesOrder.creationDate | date: 'dd/MM HH:mm' }}</td>
+      <td class="centered">{{ salesOrder.referenceCode }}</td>
+      <td>{{ salesOrder.customer.name }}</td>
+      <td class="currency">{{ salesOrder.total | reais }}</td>
+    </tr>
+  </tbody>
+</dgz-table>

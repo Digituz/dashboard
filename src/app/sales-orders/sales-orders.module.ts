@@ -7,6 +7,7 @@ import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
 
@@ -32,6 +33,7 @@ import { SalesOrdersReportComponent } from './sales-orders-report/sales-orders-r
     TooltipModule,
     SharedModule,
     CommonModule,
+    InputMaskModule,
     SalesOrdersRoutingModule,
   ],
 })

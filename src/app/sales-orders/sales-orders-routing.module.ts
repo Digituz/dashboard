@@ -27,16 +27,16 @@ const routes: Routes = [
           },
         },
         {
+          path: 'report',
+          component: SalesOrdersReportComponent,
+        },
+        {
           path: ':referenceCode',
           component: SalesOrderFormComponent,
           data: {
             title: 'Editar Venda',
             breadcrumb: 'Editar Venda',
           },
-        },
-        {
-          path: '/report',
-          component: SalesOrdersReportComponent,
         },
       ],
     },
