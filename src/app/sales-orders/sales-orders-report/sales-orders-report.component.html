@@ -25,7 +25,6 @@
         ></p-dropdown>
       </div>
       <div class="orderForm">
-        <label>&nbsp;</label>
         <button pButton type="button" class="ui-button-primary" label="Ordenar"></button>
       </div>
     </div>
@@ -39,6 +38,7 @@
       <th>Cód. Referência</th>
       <th>Cliente</th>
       <th>Total</th>
+      <th>Detalhes</th>
     </tr>
   </thead>
   <tbody>
@@ -47,6 +47,18 @@
       <td class="centered">{{ salesOrder.referenceCode }}</td>
       <td>{{ salesOrder.customer.name }}</td>
       <td class="currency">{{ salesOrder.total | reais }}</td>
+      <td class="centered">
+        <a [title]="'Venda'" [routerLink]="'/sales-orders/' + salesOrder.referenceCode">
+          <button
+            pButton
+            type="button"
+            class="ui-button-secondary"
+            [icon]="'fal fa-search'"
+            [pTooltip]="'Visualizar venda.'"
+            tooltipPosition="top"
+          ></button>
+        </a>
+      </td>
     </tr>
   </tbody>
 </dgz-table>
