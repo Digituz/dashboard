@@ -11,32 +11,32 @@
     <div class="p-fluid p-formgrid p-grid">
       <div class="orderForm">
         <label class="marginHorizontal">Periodo: De</label>
-        <p-inputMask mask="99/99/9999" placeholder="__/__/__"></p-inputMask>
-        <p class="marginHorizontal">A</p>
-        <p-inputMask mask="99/99/9999" placeholder="__/__/__"></p-inputMask>
+        <p-inputMask mask="99/99/9999" formControlName="initialDate"></p-inputMask>
+        <p class="marginHorizontal">Até</p>
+        <p-inputMask mask="99/99/9999" formControlName="finalDate"></p-inputMask>
       </div>
       <div class="orderForm">
-        <label class="marginHorizontal">Ordenar Por:</label>
+        <label class="marginHorizontal">Agrupar Por:</label>
         <p-dropdown
-          [options]="order"
-          formControlName="order"
-          placeholder="Selecione como deseja ordenar"
+          [options]="groupBy"
+          placeholder="Selecione a forma de Agrupamento"
           [showClear]="true"
+          formControlName="groupBy"
         ></p-dropdown>
       </div>
       <div class="orderForm">
-        <button pButton type="button" class="ui-button-primary" label="Ordenar"></button>
+        <button pButton type="button" class="ui-button-primary" label="Agrupar" (click)="submitReport()"></button>
       </div>
     </div>
   </form>
 </p-card>
 
-<dgz-table #salesOrdersTable [dataProvider]="this" name="sales-orders-list">
+<dgz-table #salesOrdersTable [dataProvider]="this" name="sales-orders-list" *ngIf="!loading">
   <thead>
     <tr>
-      <th>Data</th>
-      <th>Cód. Referência</th>
-      <th>Cliente</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Telefone</th>
       <th>Total</th>
       <th>Detalhes</th>
     </tr>
@@ -62,3 +62,9 @@
     </tr>
   </tbody>
 </dgz-table>
+<ng-container *ngIf="loading">
+  <div class="dgz-table dgz-table-info">
+    <i class="fal fa-exclamation-circle"></i>
+    <p>Selecione como deseja agrupar o relátorio.</p>
+  </div>
+</ng-container>

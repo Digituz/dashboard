@@ -3,6 +3,7 @@ import { SalesOrderDTO } from './sales-order.dto';
 import { IDataProvider, Pagination } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Customer } from '@app/customers/customer.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -49,5 +50,10 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
 
   cancelOnBling(salesOrder: SalesOrderDTO) {
     return this.httpClient.delete<void>(`${this.SALES_ORDERS_ENDPOINT}/${salesOrder.referenceCode}`);
+  }
+
+  loadDataGroupBy(startDate: string, endDate: string, groupBy: string): Observable<Pagination<Customer>> {
+    const query = `${this.SALES_ORDERS_ENDPOINT}/report?startDate=${startDate}&endDate=${endDate}&groupBy=${groupBy}`;
+    return this.httpClient.get<Pagination<Customer>>(query);
   }
 }

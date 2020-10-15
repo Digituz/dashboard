@@ -9,6 +9,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { SharedModule } from '@app/@shared';
@@ -34,6 +35,7 @@ import { SalesOrdersReportComponent } from './sales-orders-report/sales-orders-r
     SharedModule,
     CommonModule,
     InputMaskModule,
+    TableModule,
     SalesOrdersRoutingModule,
   ],
 })

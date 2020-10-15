@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ComboBoxOption } from '@app/util/combo-box-option.interface';
+
 import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 import { SalesOrderDTO } from '../sales-order.dto';
 import { SalesOrdersService } from '../sales-orders.service';
-
-interface Ordination {
-  label: string;
-  id: number;
-}
 
 @Component({
   selector: 'app-sales-orders-report',
@@ -16,19 +13,17 @@ interface Ordination {
   styleUrls: ['./sales-orders-report.component.scss'],
 })
 export class SalesOrdersReportComponent implements OnInit {
-  loading: boolean = false;
+  loading: boolean = true;
   formFields: FormGroup;
-  order: Ordination[] = [
-    { label: 'Cliente', id: 1 },
-    { label: 'Data da Venda', id: 2 },
-    { label: 'Data da Aprovação', id: 3 },
-    { label: 'Estado', id: 4 },
-    { label: 'Valor', id: 5 },
-  ];
+  data: any;
+  groupBy: ComboBoxOption[] = [{ label: 'Cliente', value: 'CUSTOMER' }];
+  selectedGroupBy: ComboBoxOption = this.groupBy[0];
 
   constructor(private salesOrdersService: SalesOrdersService, private fb: FormBuilder) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.configureFormFields();
+  }
 
   loadData(
     pageNumber: number,
@@ -41,10 +36,34 @@ export class SalesOrdersReportComponent implements OnInit {
   }
 
   private configureFormFields() {
-    this.formFields = this.fb.group({});
-    this.loading = false;
+    const currentDay = new Date();
+    const day = currentDay.getDate().toString().padStart(2, '0');
+    const currentMonth = currentDay.getMonth().toString().padStart(2, '0');
+    const pastMonth = (currentDay.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDay.getFullYear();
+    const initalDate = day + '/' + currentMonth + '/' + year;
+    const finalDate = day + '/' + pastMonth + '/' + year;
+
+    this.formFields = this.fb.group({
+      initialDate: [initalDate],
+      finalDate: [finalDate],
+      groupBy: [this.selectedGroupBy],
+    });
   }
+
+  private formatDate(date: String) {
+    const dateRecived = date.split('/').reverse();
+    return `${dateRecived[0]}-${dateRecived[1]}-${dateRecived[2]}`;
+  }
+
   submitReport() {
-    return console.log('form vivo');
+    const formValues = this.formFields.value;
+    const dateStart = this.formatDate(formValues.initialDate);
+    const dateEnd = this.formatDate(formValues.finalDate);
+    return this.salesOrdersService.loadDataGroupBy(dateStart, dateEnd, formValues.groupBy).subscribe((response) => {
+      this.data = response;
+      console.log(this.data);
+      this.loading = false;
+    });
   }
 }
