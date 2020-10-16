@@ -3,7 +3,8 @@
     <label>Atualize os dados do cliente no formulário abaixo.</label>
   </p>
   <div class="actions">
-    <a routerLink="/customers"><button pButton type="button" class="ui-button-secondary" label="Voltar"></button></a>
+    <app-button-back fallbackURL="/customers"></app-button-back>
+
     <button (click)="submitCustomer()" pButton type="button" label="Salvar"></button>
   </div>
 </div>

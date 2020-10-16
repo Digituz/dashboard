@@ -4,6 +4,8 @@ import { IDataProvider, Pagination } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Customer } from '@app/customers/customer.entity';
+import { SalesOrdersReportComponent } from './sales-orders-report/sales-orders-report.component';
+import { SalesOrderCustomerReport } from './sales-orders-report/sales-order-customer-report.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -52,8 +54,17 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
     return this.httpClient.delete<void>(`${this.SALES_ORDERS_ENDPOINT}/${salesOrder.referenceCode}`);
   }
 
-  loadDataGroupBy(startDate: string, endDate: string, groupBy: string): Observable<Pagination<Customer>> {
-    const query = `${this.SALES_ORDERS_ENDPOINT}/report?startDate=${startDate}&endDate=${endDate}&groupBy=${groupBy}`;
-    return this.httpClient.get<Pagination<Customer>>(query);
+  loadDataGroupBy(
+    startDate: string,
+    endDate: string,
+    groupBy: string,
+    pageNumber?: number,
+    pageSize?: number,
+    sortedBy?: string,
+    sortDirectionAscending?: boolean,
+    queryParams?: import('../util/pagination').QueryParam[]
+  ): Observable<Pagination<SalesOrderCustomerReport>> {
+    const query = `${this.SALES_ORDERS_ENDPOINT}/report?startDate=${startDate}&endDate=${endDate}&groupBy=${groupBy}&limit=1000&page=${pageNumber}`;
+    return this.httpClient.get<Pagination<SalesOrderCustomerReport>>(query);
   }
 }

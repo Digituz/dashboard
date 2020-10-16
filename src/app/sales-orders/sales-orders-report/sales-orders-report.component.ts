@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import { ComboBoxOption } from '@app/util/combo-box-option.interface';
 
 import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
-import { SalesOrderDTO } from '../sales-order.dto';
 import { SalesOrdersService } from '../sales-orders.service';
+import { SalesOrderCustomerReport } from './sales-order-customer-report.interface';
 
 @Component({
   selector: 'app-sales-orders-report',
@@ -13,11 +14,18 @@ import { SalesOrdersService } from '../sales-orders.service';
   styleUrls: ['./sales-orders-report.component.scss'],
 })
 export class SalesOrdersReportComponent implements OnInit {
+  @ViewChild('customersReportTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
+  customerData: SalesOrderCustomerReport[] = [];
   loading: boolean = true;
   formFields: FormGroup;
-  data: any;
-  groupBy: ComboBoxOption[] = [{ label: 'Cliente', value: 'CUSTOMER' }];
+  groupBy: ComboBoxOption[] = [
+    { label: 'Cliente', value: 'CUSTOMER' },
+    { label: 'Produto', value: 'PRODUCT' },
+  ];
+  showReport: string;
   selectedGroupBy: ComboBoxOption = this.groupBy[0];
+  queryParams: QueryParam[] = [];
+  query: string;
 
   constructor(private salesOrdersService: SalesOrdersService, private fb: FormBuilder) {}
 
@@ -31,8 +39,23 @@ export class SalesOrdersReportComponent implements OnInit {
     sortedBy?: string,
     sortDirectionAscending?: boolean,
     queryParams?: QueryParam[]
-  ): Observable<Pagination<SalesOrderDTO>> {
-    return this.salesOrdersService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, queryParams);
+  ): Observable<Pagination<SalesOrderCustomerReport>> {
+    const formFieldsValues = this.formFields.value;
+    const startDate = this.formatDate(formFieldsValues.initialDate);
+    const endDate = this.formatDate(formFieldsValues.finalDate);
+    const groupBy = formFieldsValues.groupBy.value;
+
+    const data = this.salesOrdersService.loadDataGroupBy(
+      startDate,
+      endDate,
+      groupBy,
+      pageNumber,
+      pageSize,
+      sortedBy,
+      sortDirectionAscending,
+      queryParams
+    );
+    return data;
   }
 
   private configureFormFields() {
@@ -58,12 +81,10 @@ export class SalesOrdersReportComponent implements OnInit {
 
   submitReport() {
     const formValues = this.formFields.value;
-    const dateStart = this.formatDate(formValues.initialDate);
-    const dateEnd = this.formatDate(formValues.finalDate);
-    return this.salesOrdersService.loadDataGroupBy(dateStart, dateEnd, formValues.groupBy).subscribe((response) => {
-      this.data = response;
-      console.log(this.data);
-      this.loading = false;
-    });
+    this.showReport = formValues.groupBy;
+    console.log(this.showReport);
+    this.queryParams = [{ key: 'query', value: this.query }];
+    this.resultsTable.reload(this.queryParams);
+    this.loading = false;
   }
 }
