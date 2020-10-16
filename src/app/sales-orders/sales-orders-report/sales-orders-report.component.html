@@ -17,21 +17,16 @@
       </div>
       <div class="orderForm">
         <label class="marginHorizontal">Agrupar Por:</label>
-        <p-dropdown
-          [options]="groupBy"
-          placeholder="Selecione a forma de Agrupamento"
-          [showClear]="true"
-          formControlName="groupBy"
-        ></p-dropdown>
+        <p-dropdown [options]="groupBy" [showClear]="true" formControlName="groupBy"></p-dropdown>
       </div>
       <div class="orderForm">
-        <button pButton type="button" class="ui-button-primary" label="Agrupar" (click)="submitReport()"></button>
+        <button pButton type="submit" class="ui-button-primary" label="Agrupar"></button>
       </div>
     </div>
   </form>
 </p-card>
 
-<dgz-table #salesOrdersTable [dataProvider]="this" name="sales-orders-list" *ngIf="!loading">
+<dgz-table #customersReportTable [dataProvider]="this" name="customersReportTable" [showPaginationArea]="false">
   <thead>
     <tr>
       <th>Nome</th>
@@ -42,13 +37,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let salesOrder of salesOrdersTable.currentData">
-      <td class="centered">{{ salesOrder.creationDate | date: 'dd/MM HH:mm' }}</td>
-      <td class="centered">{{ salesOrder.referenceCode }}</td>
-      <td>{{ salesOrder.customer.name }}</td>
-      <td class="currency">{{ salesOrder.total | reais }}</td>
+    <tr *ngFor="let customerReport of customersReportTable.currentData">
+      <td class="centered">{{ customerReport.name }}</td>
+      <td class="centered">{{ customerReport.email }}</td>
+      <td>{{ customerReport.phone_number }}</td>
+      <td class="currency">{{ customerReport.total | reais }}</td>
       <td class="centered">
-        <a [title]="'Venda'" [routerLink]="'/sales-orders/' + salesOrder.referenceCode">
+        <a [title]="'Detalhes do cliente'" [routerLink]="'/customers/' + customerReport.id">
           <button
             pButton
             type="button"
@@ -62,9 +57,45 @@
     </tr>
   </tbody>
 </dgz-table>
-<ng-container *ngIf="loading">
+
+<dgz-table
+  #customersReportTable
+  [dataProvider]="this"
+  name="customersReportTable"
+  [showPaginationArea]="false"
+  *ngIf="showReport === 'PRODUCT'"
+>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>SKU</th>
+      <th>Valor Vendido</th>
+      <th>Detalhes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let customerReport of customersReportTable.currentData">
+      <td class="centered">{{ customerReport.name }}</td>
+      <td class="centered">{{ customerReport.email }}</td>
+      <td>{{ customerReport.phone_number }}</td>
+      <td class="centered">
+        <a [title]="'Detalhes do cliente'" [routerLink]="'/customers/' + customerReport.id">
+          <button
+            pButton
+            type="button"
+            class="ui-button-secondary"
+            [icon]="'fal fa-search'"
+            [pTooltip]="'Visualizar venda.'"
+            tooltipPosition="top"
+          ></button>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>
+<!---<ng-container *ngIf="loading">
   <div class="dgz-table dgz-table-info">
     <i class="fal fa-exclamation-circle"></i>
     <p>Selecione como deseja agrupar o relátorio.</p>
   </div>
-</ng-container>
+</ng-container>-->
