@@ -112,8 +112,4 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
       },
     });
   }
-
-  onClick() {
-    this.router.navigateByUrl('/');
-  }
 }

@@ -1,6 +1,6 @@
 <div class="feature-header">
   <p>
-    <label>Ordene seu relatório.</label>
+    <label>Agrupe seu relatório.</label>
   </p>
   <div class="actions">
     <app-button-back fallbackURL="/sales-orders"></app-button-back>
@@ -48,42 +48,6 @@
       <td class="centered">{{ customerReport.email }}</td>
       <td>{{ customerReport.phone_number }}</td>
       <td class="currency">{{ customerReport.total | reais }}</td>
-      <td class="centered">
-        <a [title]="'Detalhes do cliente'" [routerLink]="'/customers/' + customerReport.id">
-          <button
-            pButton
-            type="button"
-            class="ui-button-secondary"
-            [icon]="'fal fa-search'"
-            [pTooltip]="'Visualizar venda.'"
-            tooltipPosition="top"
-          ></button>
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</dgz-table>
-
-<dgz-table
-  #customersReportTable
-  [dataProvider]="this"
-  name="customersReportTable"
-  [showPaginationArea]="false"
-  *ngIf="showReport === 'PRODUCT'"
->
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>SKU</th>
-      <th>Valor Vendido</th>
-      <th>Detalhes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let customerReport of customersReportTable.currentData">
-      <td class="centered">{{ customerReport.name }}</td>
-      <td class="centered">{{ customerReport.email }}</td>
-      <td>{{ customerReport.phone_number }}</td>
       <td class="centered">
         <a [title]="'Detalhes do cliente'" [routerLink]="'/customers/' + customerReport.id">
           <button
