@@ -31,7 +31,7 @@
   [dataProvider]="this"
   name="customersReportTable"
   [showPaginationArea]="false"
-  *ngIf="loading === false"
+  *ngIf="loading === false && showReport === 'CUSTOMER'"
 >
   <thead>
     <tr>
@@ -99,9 +99,3 @@
     </tr>
   </tbody>
 </dgz-table>
-<!---<ng-container *ngIf="loading">
-  <div class="dgz-table dgz-table-info">
-    <i class="fal fa-exclamation-circle"></i>
-    <p>Selecione como deseja agrupar o relátorio.</p>
-  </div>
-</ng-container>-->

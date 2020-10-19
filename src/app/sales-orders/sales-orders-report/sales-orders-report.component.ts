@@ -41,10 +41,9 @@ export class SalesOrdersReportComponent implements OnInit {
     queryParams?: QueryParam[]
   ): Observable<Pagination<SalesOrderCustomerReport>> {
     const formFieldsValues = this.formFields.value;
-    const startDate = formFieldsValues.initialDate;
-    const endDate = formFieldsValues.finalDate;
-    const groupBy = formFieldsValues.groupBy.value;
-
+    const startDate = this.formatDate(formFieldsValues.initialDate);
+    const endDate = this.formatDate(formFieldsValues.finalDate);
+    const groupBy = this.showReport || 'CUSTOMER';
     const data = this.salesOrdersService.loadDataGroupBy(
       startDate,
       endDate,
@@ -68,8 +67,13 @@ export class SalesOrdersReportComponent implements OnInit {
     this.formFields = this.fb.group({
       initialDate: [initalDate],
       finalDate: [finalDate],
-      groupBy: [this.selectedGroupBy],
+      groupBy: [this.selectedGroupBy.value],
     });
+  }
+
+  private formatDate(date: String) {
+    const dateRecived = date.split('/').reverse();
+    return `${dateRecived[0]}-${dateRecived[1]}-${dateRecived[2]}`;
   }
 
   submitReport() {
@@ -81,6 +85,5 @@ export class SalesOrdersReportComponent implements OnInit {
     if (this.resultsTable) {
       this.resultsTable.reload(this.queryParams);
     }
-    console.log(this.showReport);
   }
 }
