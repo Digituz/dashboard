@@ -14,7 +14,7 @@ import { SalesOrderCustomerReport } from './sales-order-customer-report.interfac
   styleUrls: ['./sales-orders-report.component.scss'],
 })
 export class SalesOrdersReportComponent {
-  @ViewChild('customersReportTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
+  @ViewChild('ReportTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
   loading = false;
   startDate: string;
   endDate: string;
