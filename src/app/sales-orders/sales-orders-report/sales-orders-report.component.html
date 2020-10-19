@@ -26,7 +26,13 @@
   </form>
 </p-card>
 
-<dgz-table #customersReportTable [dataProvider]="this" name="customersReportTable" [showPaginationArea]="false">
+<dgz-table
+  #customersReportTable
+  [dataProvider]="this"
+  name="customersReportTable"
+  [showPaginationArea]="false"
+  *ngIf="loading === false"
+>
   <thead>
     <tr>
       <th>Nome</th>

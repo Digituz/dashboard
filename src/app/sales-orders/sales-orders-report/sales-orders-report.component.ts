@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { format, subMonths } from 'date-fns';
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import { ComboBoxOption } from '@app/util/combo-box-option.interface';
 
@@ -15,7 +16,6 @@ import { SalesOrderCustomerReport } from './sales-order-customer-report.interfac
 })
 export class SalesOrdersReportComponent implements OnInit {
   @ViewChild('customersReportTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
-  customerData: SalesOrderCustomerReport[] = [];
   loading: boolean = true;
   formFields: FormGroup;
   groupBy: ComboBoxOption[] = [
@@ -41,8 +41,8 @@ export class SalesOrdersReportComponent implements OnInit {
     queryParams?: QueryParam[]
   ): Observable<Pagination<SalesOrderCustomerReport>> {
     const formFieldsValues = this.formFields.value;
-    const startDate = this.formatDate(formFieldsValues.initialDate);
-    const endDate = this.formatDate(formFieldsValues.finalDate);
+    const startDate = formFieldsValues.initialDate;
+    const endDate = formFieldsValues.finalDate;
     const groupBy = formFieldsValues.groupBy.value;
 
     const data = this.salesOrdersService.loadDataGroupBy(
@@ -60,12 +60,10 @@ export class SalesOrdersReportComponent implements OnInit {
 
   private configureFormFields() {
     const currentDay = new Date();
-    const day = currentDay.getDate().toString().padStart(2, '0');
-    const currentMonth = currentDay.getMonth().toString().padStart(2, '0');
-    const pastMonth = (currentDay.getMonth() + 1).toString().padStart(2, '0');
-    const year = currentDay.getFullYear();
-    const initalDate = day + '/' + currentMonth + '/' + year;
-    const finalDate = day + '/' + pastMonth + '/' + year;
+    const pastMonthDate = subMonths(currentDay, 1);
+
+    const initalDate = format(pastMonthDate, 'dd/MM/yyyy');
+    const finalDate = format(new Date(), 'dd/MM/yyyy');
 
     this.formFields = this.fb.group({
       initialDate: [initalDate],
@@ -74,17 +72,15 @@ export class SalesOrdersReportComponent implements OnInit {
     });
   }
 
-  private formatDate(date: String) {
-    const dateRecived = date.split('/').reverse();
-    return `${dateRecived[0]}-${dateRecived[1]}-${dateRecived[2]}`;
-  }
-
   submitReport() {
     const formValues = this.formFields.value;
     this.showReport = formValues.groupBy;
-    console.log(this.showReport);
+
     this.queryParams = [{ key: 'query', value: this.query }];
-    this.resultsTable.reload(this.queryParams);
     this.loading = false;
+    if (this.resultsTable) {
+      this.resultsTable.reload(this.queryParams);
+    }
+    console.log(this.showReport);
   }
 }

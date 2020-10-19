@@ -64,6 +64,7 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
     sortDirectionAscending?: boolean,
     queryParams?: import('../util/pagination').QueryParam[]
   ): Observable<Pagination<SalesOrderCustomerReport>> {
+    console.log(startDate, '.......', endDate);
     const query = `${this.SALES_ORDERS_ENDPOINT}/report?startDate=${startDate}&endDate=${endDate}&groupBy=${groupBy}&limit=1000&page=${pageNumber}`;
     return this.httpClient.get<Pagination<SalesOrderCustomerReport>>(query);
   }
