@@ -27,11 +27,17 @@
 </p-card>
 
 <dgz-table
+<<<<<<< HEAD
   *ngIf="!loading && groupBy.value === 'CUSTOMER'"
   #customersReportTable
   [dataProvider]="this"
   (updateQueryParams)="updateQueryParams($event)"
   name="customersReportTable"
+=======
+  #ReportTable
+  [dataProvider]="this"
+  name="ReportTable"
+>>>>>>> relátorio de vendas agrupado por produtos
   [showPaginationArea]="false"
 >
   <thead>
@@ -44,7 +50,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let customerReport of customersReportTable.currentData">
+    <tr *ngFor="let customerReport of ReportTable.currentData">
       <td class="centered">{{ customerReport.name }}</td>
       <td class="centered">{{ customerReport.email }}</td>
       <td class="centered">{{ customerReport.phoneNumber }}</td>
@@ -65,7 +71,45 @@
   </tbody>
 </dgz-table>
 
+<<<<<<< HEAD
 <div class="dgz-table dgz-table-info" *ngIf="loading && showWarnig">
   <i class="fal fa-exclamation-circle"></i>
   <p>Para gerar relatórios, insira um período válido.</p>
 </div>
+=======
+<dgz-table
+  #ReportTable
+  [dataProvider]="this"
+  name="ReportTable"
+  [showPaginationArea]="false"
+  *ngIf="showReport === 'PRODUCT'"
+>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>SKU</th>
+      <th>Valor Vendido</th>
+      <th>Detalhes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let productReport of ReportTable.currentData">
+      <td class="">{{ productReport.title }}</td>
+      <td class="centered">{{ productReport.sku }}</td>
+      <td>{{ productReport.selling_price }}</td>
+      <td class="centered">
+        <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productReport.sku">
+          <button
+            pButton
+            type="button"
+            class="ui-button-secondary"
+            [icon]="'fal fa-search'"
+            [pTooltip]="'Visualizar venda.'"
+            tooltipPosition="top"
+          ></button>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>
+>>>>>>> relátorio de vendas agrupado por produtos

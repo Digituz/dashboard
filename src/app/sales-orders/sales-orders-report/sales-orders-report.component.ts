@@ -13,12 +13,20 @@ import { SalesOrderCustomerReport } from './sales-order-customer-report.interfac
   templateUrl: './sales-orders-report.component.html',
   styleUrls: ['./sales-orders-report.component.scss'],
 })
+<<<<<<< HEAD
 export class SalesOrdersReportComponent {
   @ViewChild('customersReportTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
   loading = false;
   startDate: string;
   endDate: string;
   groupByOptions: ComboBoxOption[] = [
+=======
+export class SalesOrdersReportComponent implements OnInit {
+  @ViewChild('ReportTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
+  loading: boolean = true;
+  formFields: FormGroup;
+  groupBy: ComboBoxOption[] = [
+>>>>>>> relátorio de vendas agrupado por produtos
     { label: 'Cliente', value: 'CUSTOMER' },
     { label: 'Produto', value: 'PRODUCT' },
   ];
