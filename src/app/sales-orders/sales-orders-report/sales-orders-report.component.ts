@@ -23,6 +23,7 @@ export class SalesOrdersReportComponent implements OnInit {
     { label: 'Produto', value: 'PRODUCT' },
   ];
   showReport: string;
+  showWarnig: boolean;
   selectedGroupBy: ComboBoxOption = this.groupBy[0];
   queryParams: QueryParam[] = [];
   query: string;
@@ -44,7 +45,7 @@ export class SalesOrdersReportComponent implements OnInit {
     const startDate = this.formatDate(formFieldsValues.initialDate);
     const endDate = this.formatDate(formFieldsValues.finalDate);
     const groupBy = this.showReport || 'CUSTOMER';
-    const data = this.salesOrdersService.loadDataGroupBy(
+    return this.salesOrdersService.loadDataGroupBy(
       startDate,
       endDate,
       groupBy,
@@ -54,7 +55,6 @@ export class SalesOrdersReportComponent implements OnInit {
       sortDirectionAscending,
       queryParams
     );
-    return data;
   }
 
   private configureFormFields() {
@@ -72,12 +72,17 @@ export class SalesOrdersReportComponent implements OnInit {
   }
 
   private formatDate(date: String) {
-    const dateRecived = date.split('/').reverse();
-    return `${dateRecived[0]}-${dateRecived[1]}-${dateRecived[2]}`;
+    const dateRecived = date.split('/');
+    return `${dateRecived[2]}-${dateRecived[1]}-${dateRecived[0]}`;
   }
 
   submitReport() {
+    this.loading = true;
+    this.showWarnig = false;
     const formValues = this.formFields.value;
+    if (formValues.initialDate === '' || formValues.finalDate === '') {
+      return (this.showWarnig = true);
+    }
     this.showReport = formValues.groupBy;
 
     this.queryParams = [{ key: 'query', value: this.query }];
