@@ -32,8 +32,7 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
   constructor(
     private breadcrumbsService: BreadcrumbsService,
     private salesOrdersService: SalesOrdersService,
-    private confirmationService: ConfirmationService,
-    private router: Router
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
