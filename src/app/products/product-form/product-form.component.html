@@ -3,7 +3,7 @@
     <label>Atualize os dados do seu produto no formulário abaixo.</label>
   </p>
   <div class="actions">
-    <a routerLink="/products"><button pButton type="button" class="ui-button-secondary" label="Voltar"></button></a>
+    <app-button-back fallbackURL="/products"></app-button-back>
     <button (click)="submitProductDetails()" pButton type="button" label="Salvar"></button>
   </div>
 </div>
