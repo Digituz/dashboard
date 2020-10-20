@@ -112,4 +112,45 @@
     </tr>
   </tbody>
 </dgz-table>
+<<<<<<< HEAD
 >>>>>>> relátorio de vendas agrupado por produtos
+=======
+
+<dgz-table
+  #ReportTable
+  [dataProvider]="this"
+  name="ReportTable"
+  [showPaginationArea]="false"
+  *ngIf="showReport === 'PRODUCT_VARIATION'"
+>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Descrição da Variação</th>
+      <th>SKU</th>
+      <th>Valor Vendido</th>
+      <th>Detalhes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let productVariationReport of ReportTable.currentData">
+      <td>{{ productVariationReport.title }}</td>
+      <td class="centered">{{ productVariationReport.description }}</td>
+      <td class="centered">{{ productVariationReport.sku }}</td>
+      <td>{{ productVariationReport.sellingPrice }}</td>
+      <td class="centered">
+        <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productVariationReport.sku">
+          <button
+            pButton
+            type="button"
+            class="ui-button-secondary"
+            [icon]="'fal fa-search'"
+            [pTooltip]="'Visualizar venda.'"
+            tooltipPosition="top"
+          ></button>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>
+>>>>>>> tabela do relatorio de vendas por variação do produto

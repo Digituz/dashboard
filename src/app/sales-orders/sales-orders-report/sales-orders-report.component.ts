@@ -29,6 +29,7 @@ export class SalesOrdersReportComponent implements OnInit {
 >>>>>>> relátorio de vendas agrupado por produtos
     { label: 'Cliente', value: 'CUSTOMER' },
     { label: 'Produto', value: 'PRODUCT' },
+    { label: 'Variação do Produto', value: 'PRODUCT_VARIATION' },
   ];
   groupBy = this.groupByOptions[0];
   showWarnig: boolean;
