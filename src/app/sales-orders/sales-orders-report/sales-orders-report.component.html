@@ -96,7 +96,7 @@
     <tr *ngFor="let productReport of ReportTable.currentData">
       <td class="">{{ productReport.title }}</td>
       <td class="centered">{{ productReport.sku }}</td>
-      <td>{{ productReport.sellingPrice }}</td>
+      <td class="centered">{{ productReport.sellingPrice }}</td>
       <td class="centered">
         <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productReport.sku">
           <button
@@ -137,7 +137,7 @@
       <td>{{ productVariationReport.title }}</td>
       <td class="centered">{{ productVariationReport.description }}</td>
       <td class="centered">{{ productVariationReport.sku }}</td>
-      <td>{{ productVariationReport.sellingPrice }}</td>
+      <td class="centered">{{ productVariationReport.sellingPrice }}</td>
       <td class="centered">
         <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productVariationReport.sku">
           <button
