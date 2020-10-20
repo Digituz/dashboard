@@ -46,7 +46,7 @@
     <tr *ngFor="let customerReport of customersReportTable.currentData">
       <td class="centered">{{ customerReport.name }}</td>
       <td class="centered">{{ customerReport.email }}</td>
-      <td>{{ customerReport.phoneNumber }}</td>
+      <td class="centered">{{ customerReport.phoneNumber }}</td>
       <td class="currency">{{ customerReport.total | reais }}</td>
       <td class="centered">
         <a [title]="'Detalhes do cliente'" [routerLink]="'/customers/' + customerReport.id">
