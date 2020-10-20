@@ -44,6 +44,7 @@ export class SalesOrdersReportComponent implements OnInit {
     sortDirectionAscending?: boolean,
     queryParams?: QueryParam[]
   ): Observable<Pagination<SalesOrderCustomerReport>> {
+<<<<<<< HEAD
     if (queryParams === undefined) {
       queryParams = [
         { key: 'startDate', value: this.formatDate(this.startDate) },
@@ -52,6 +53,22 @@ export class SalesOrdersReportComponent implements OnInit {
       ];
     }
     return this.salesOrdersService.loadReport(queryParams);
+=======
+    const formFieldsValues = this.formFields.value;
+    const startDate = this.formatDate(formFieldsValues.initialDate);
+    const endDate = this.formatDate(formFieldsValues.finalDate);
+    const groupBy = this.showReport || 'CUSTOMER';
+    return this.salesOrdersService.loadDataGroupBy(
+      startDate,
+      endDate,
+      groupBy,
+      pageNumber,
+      pageSize,
+      sortedBy,
+      sortDirectionAscending,
+      queryParams
+    );
+>>>>>>> gerando a tabela só com os dados necessarios
   }
 
   private defineDefaultDates() {
