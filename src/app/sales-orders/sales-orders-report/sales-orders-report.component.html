@@ -84,7 +84,7 @@
     <tr *ngFor="let productReport of ReportTable.currentData">
       <td class="">{{ productReport.title }}</td>
       <td class="centered">{{ productReport.sku }}</td>
-      <td>{{ productReport.selling_price }}</td>
+      <td>{{ productReport.sellingPrice }}</td>
       <td class="centered">
         <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productReport.sku">
           <button
