@@ -12,11 +12,11 @@ export class ImageService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public loadImages(page: number): Observable<Image[]> {
+  loadImages(page: number): Observable<Image[]> {
     return this.httpClient.get<Image[]>(`${this.IMAGES_ENDPOINT}/?page=${page}`);
   }
 
-  public applyTags(images: Image[], tags: Tag[]): Observable<void> {
+  applyTags(images: Image[], tags: Tag[]): Observable<void> {
     return merge(
       ...images.map((image) => {
         return this.httpClient.post<void>(
@@ -27,11 +27,11 @@ export class ImageService {
     );
   }
 
-  public removeTag(image: Image, tag: Tag): Observable<void> {
+  removeTag(image: Image, tag: Tag): Observable<void> {
     return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}/tag/${tag.label}`);
   }
 
-  public archiveImages(images: Image[]): Observable<void> {
+  archiveImages(images: Image[]): Observable<void> {
     return merge(
       ...images.map((image) => {
         return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}`);
@@ -39,7 +39,7 @@ export class ImageService {
     );
   }
 
-  public withTags(tagLabel: string): Observable<Image[]> {
+  withTags(tagLabel: string): Observable<Image[]> {
     return this.httpClient.get<Image[]>(`${this.IMAGES_ENDPOINT}/with-tag/${tagLabel}`);
   }
 
@@ -47,7 +47,7 @@ export class ImageService {
     return this.httpClient.get<Image>(`${this.IMAGES_ENDPOINT}/${id}`);
   }
 
-  public byTag(tagLabel: string, page: number): Observable<Image[]> {
+  byTag(tagLabel: string, page: number): Observable<Image[]> {
     return this.httpClient.get<Image[]>(`${this.IMAGES_ENDPOINT}/by-tag/?tagLabel=${tagLabel}&page=${page}`);
   }
 }
