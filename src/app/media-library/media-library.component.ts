@@ -24,7 +24,6 @@ export class MediaLibraryComponent implements OnInit {
   private searchChange$ = new BehaviorSubject('');
   page: number = 0;
   pageByTag: number = -1;
-  currentLabel: string;
   images: Image[];
   isModalVisible = false;
   isSpinning = false;
