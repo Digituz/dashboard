@@ -35,7 +35,6 @@
         (completeMethod)="search($event)"
         [multiple]="true"
         field="label"
-        (ngModelChange)="onTagSelection($event)"
       >
         <ng-template let-tag pTemplate="item">
           <div>{{ tag.label }} - {{ tag.description }}</div>

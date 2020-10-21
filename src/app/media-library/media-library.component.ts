@@ -195,8 +195,4 @@ export class MediaLibraryComponent implements OnInit {
       this.images.push(...images);
     });
   }
-
-  onTagSelection(event: any) {
-    this.page = 0;
-  }
 }
