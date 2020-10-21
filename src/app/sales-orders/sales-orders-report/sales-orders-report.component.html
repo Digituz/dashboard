@@ -7,17 +7,17 @@
   </div>
 </div>
 <p-card>
-  <form [formGroup]="formFields" (ngSubmit)="submitReport()">
+  <form (ngSubmit)="submitReport()">
     <div class="p-fluid p-formgrid p-grid">
       <div class="orderForm">
         <label class="marginHorizontal">De:</label>
-        <p-inputMask mask="99/99/9999" formControlName="initialDate"></p-inputMask>
+        <p-inputMask mask="99/99/9999" name="startDate" [(ngModel)]="startDate"></p-inputMask>
         <p class="marginHorizontal">Até:</p>
-        <p-inputMask mask="99/99/9999" formControlName="finalDate"></p-inputMask>
+        <p-inputMask mask="99/99/9999" name="endDate" [(ngModel)]="endDate"></p-inputMask>
       </div>
       <div class="orderForm">
         <label class="marginHorizontal">Agrupar Por:</label>
-        <p-dropdown [options]="groupBy" [showClear]="true" formControlName="groupBy"></p-dropdown>
+        <p-dropdown [options]="groupByOptions" [showClear]="true" name="groupBy" [(ngModel)]="groupBy"></p-dropdown>
       </div>
       <div class="orderForm">
         <button pButton type="submit" class="ui-button-primary" label="Agrupar"></button>
@@ -27,11 +27,12 @@
 </p-card>
 
 <dgz-table
+  *ngIf="!loading && groupBy.value === 'CUSTOMER'"
   #customersReportTable
   [dataProvider]="this"
+  (updateQueryParams)="updateQueryParams($event)"
   name="customersReportTable"
   [showPaginationArea]="false"
-  *ngIf="loading === false && showReport === 'CUSTOMER'"
 >
   <thead>
     <tr>

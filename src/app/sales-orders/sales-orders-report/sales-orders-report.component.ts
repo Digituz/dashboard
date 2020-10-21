@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
 import { format, subMonths } from 'date-fns';
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import { ComboBoxOption } from '@app/util/combo-box-option.interface';
@@ -14,25 +13,20 @@ import { SalesOrderCustomerReport } from './sales-order-customer-report.interfac
   templateUrl: './sales-orders-report.component.html',
   styleUrls: ['./sales-orders-report.component.scss'],
 })
-export class SalesOrdersReportComponent implements OnInit {
+export class SalesOrdersReportComponent {
   @ViewChild('customersReportTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
-  loading: boolean = true;
-  formFields: FormGroup;
-  groupBy: ComboBoxOption[] = [
+  loading = false;
+  startDate: string;
+  endDate: string;
+  groupByOptions: ComboBoxOption[] = [
     { label: 'Cliente', value: 'CUSTOMER' },
     { label: 'Produto', value: 'PRODUCT' },
   ];
-  showReport: string;
+  groupBy = this.groupByOptions[0];
   showWarnig: boolean;
-  selectedGroupBy: ComboBoxOption = this.groupBy[0];
   queryParams: QueryParam[] = [];
-  query: string;
 
-  constructor(private salesOrdersService: SalesOrdersService, private fb: FormBuilder) {}
-
-  ngOnInit(): void {
-    this.configureFormFields();
-  }
+  constructor(private salesOrdersService: SalesOrdersService) {}
 
   loadData(
     pageNumber: number,
@@ -41,34 +35,27 @@ export class SalesOrdersReportComponent implements OnInit {
     sortDirectionAscending?: boolean,
     queryParams?: QueryParam[]
   ): Observable<Pagination<SalesOrderCustomerReport>> {
-    const formFieldsValues = this.formFields.value;
-    const startDate = this.formatDate(formFieldsValues.initialDate);
-    const endDate = this.formatDate(formFieldsValues.finalDate);
-    const groupBy = this.showReport || 'CUSTOMER';
-    return this.salesOrdersService.loadDataGroupBy(
-      startDate,
-      endDate,
-      groupBy,
-      pageNumber,
-      pageSize,
-      sortedBy,
-      sortDirectionAscending,
-      queryParams
-    );
+    return this.salesOrdersService.loadReport(queryParams);
   }
 
-  private configureFormFields() {
+  private defineDefaultDates() {
     const currentDay = new Date();
     const pastMonthDate = subMonths(currentDay, 1);
 
-    const initalDate = format(pastMonthDate, 'dd/MM/yyyy');
-    const finalDate = format(new Date(), 'dd/MM/yyyy');
+    this.startDate = format(pastMonthDate, 'dd/MM/yyyy');
+    this.endDate = format(new Date(), 'dd/MM/yyyy');
+  }
 
-    this.formFields = this.fb.group({
-      initialDate: [initalDate],
-      finalDate: [finalDate],
-      groupBy: [this.selectedGroupBy.value],
-    });
+  updateQueryParams(queryParams: QueryParam[]) {
+    this.startDate = queryParams.find((q) => q.key === 'startDate')?.value.toString();
+    this.endDate = queryParams.find((q) => q.key === 'endDate')?.value.toString();
+
+    if (!this.startDate || !this.endDate) {
+      this.defineDefaultDates();
+    }
+
+    const savedGroupBy = queryParams.find((q) => q.key === 'groupBy')?.value.toString();
+    this.groupBy = this.groupByOptions.find((o) => o.value === savedGroupBy);
   }
 
   private formatDate(date: String) {
@@ -79,13 +66,17 @@ export class SalesOrdersReportComponent implements OnInit {
   submitReport() {
     this.loading = true;
     this.showWarnig = false;
-    const formValues = this.formFields.value;
-    if (formValues.initialDate === '' || formValues.finalDate === '') {
-      return (this.showWarnig = true);
+    if (this.startDate === '' || this.endDate === '') {
+      this.showWarnig = true;
+      return;
     }
-    this.showReport = formValues.groupBy;
 
-    this.queryParams = [{ key: 'query', value: this.query }];
+    this.queryParams = [
+      { key: 'startDate', value: this.formatDate(this.startDate) },
+      { key: 'endDate', value: this.formatDate(this.endDate) },
+      { key: 'groupBy', value: this.groupBy.value },
+    ];
+
     this.loading = false;
     if (this.resultsTable) {
       this.resultsTable.reload(this.queryParams);
