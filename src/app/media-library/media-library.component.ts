@@ -36,7 +36,6 @@ export class MediaLibraryComponent implements OnInit {
   imagesSelectedForUpload: File[] = [];
   selectedTags: Tag[];
   tagsFound: Tag[];
-
   selectedImage: Image;
   selectedImages: Image[] = [];
   constructor(
@@ -48,9 +47,10 @@ export class MediaLibraryComponent implements OnInit {
   ) {}
 
   private reloadImages() {
+    const tags = this.selectedTags?.map((tag) => tag.label).join();
     this.loading = true;
     this.imageService
-      .loadImages(this.page)
+      .loadImages(this.page, tags)
       .pipe(delay(350))
       .subscribe((images) => {
         this.loading = false;
@@ -180,12 +180,23 @@ export class MediaLibraryComponent implements OnInit {
     });
   }
 
-  showMore() {
-    this.page += 1;
-    this.imageService.loadImages(this.page).subscribe((images) => {
+  showMore(resetResults?: boolean) {
+    const tags = this.selectedTags?.map((tag) => tag.label).join();
+    if (resetResults) {
+      this.page = 0;
+    } else {
+      this.page++;
+    }
+    this.imageService.loadImages(this.page, tags).subscribe((images) => {
       this.loading = false;
+      if (resetResults) {
+        this.images = [];
+      }
       this.images.push(...images);
-      this.selectedImages = [];
     });
+  }
+
+  onTagSelection(event: any) {
+    this.page = 0;
   }
 }

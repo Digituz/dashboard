@@ -35,6 +35,7 @@
         (completeMethod)="search($event)"
         [multiple]="true"
         field="label"
+        (ngModelChange)="onTagSelection($event)"
       >
         <ng-template let-tag pTemplate="item">
           <div>{{ tag.label }} - {{ tag.description }}</div>
@@ -63,10 +64,10 @@
       [disabled]="selectedImages?.length === 0"
       (click)="archiveImages()"
     ></button>
-    <button pButton label="Filtrar"></button>
+    <button pButton label="Filtrar" (click)="showMore(true)"></button>
   </div>
 </div>
-<div class="dgz-table dgz-table-info" *ngIf="!loading && images.length === 0">
+<div class="dgz-table dgz-table-info" *ngIf="!loading && images?.length === 0">
   <i class="fal fa-exclamation-circle"></i>
   <p>Nenhuma imagem encontrada.</p>
 </div>
@@ -74,7 +75,7 @@
   <i class="fal fa-spinner"></i>
   <p>Carregando informações.</p>
 </div>
-<div class="container" *ngIf="!loading && images.length > 0">
+<div class="container" *ngIf="!loading && images?.length > 0">
   <div
     class="image-in-gallery"
     *ngFor="let image of images"
