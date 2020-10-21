@@ -27,7 +27,7 @@
 </p-card>
 
 <dgz-table
-  *ngIf="!loading && groupBy.value === 'CUSTOMER'"
+  *ngIf="selectedReport === 'CUSTOMER'"
   #ReportTable
   [dataProvider]="this"
   (updateQueryParams)="updateQueryParams($event)"
@@ -66,11 +66,11 @@
 </dgz-table>
 
 <dgz-table
+  *ngIf="selectedReport === 'PRODUCT'"
   #ReportTable
   [dataProvider]="this"
   name="ReportTable"
   [showPaginationArea]="false"
-  *ngIf="groupBy.value === 'PRODUCT'"
 >
   <thead>
     <tr>

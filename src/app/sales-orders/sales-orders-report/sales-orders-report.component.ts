@@ -22,13 +22,15 @@ export class SalesOrdersReportComponent {
     { label: 'Cliente', value: 'CUSTOMER' },
     { label: 'Produto', value: 'PRODUCT' },
   ];
-  groupBy = this.groupByOptions[0];
+  groupBy = this.groupByOptions[0].value;
+  selectedReport: string;
   showWarnig: boolean;
   queryParams: QueryParam[] = [];
 
   constructor(private salesOrdersService: SalesOrdersService) {
     this.defineDefaultDates();
   }
+
   loadData(
     pageNumber: number,
     pageSize: number,
@@ -40,7 +42,7 @@ export class SalesOrdersReportComponent {
       queryParams = [
         { key: 'startDate', value: this.formatDate(this.startDate) },
         { key: 'endDate', value: this.formatDate(this.endDate) },
-        { key: 'groupBy', value: this.groupBy.value },
+        { key: 'groupBy', value: this.groupBy },
       ];
     }
     return this.salesOrdersService.loadReport(queryParams);
@@ -63,9 +65,9 @@ export class SalesOrdersReportComponent {
       this.startDate = format(parse(this.startDate, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
       this.endDate = format(parse(this.endDate, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
     }
-
     const savedGroupBy = queryParams.find((q) => q.key === 'groupBy')?.value.toString();
-    this.groupBy = this.groupByOptions.find((o) => o.value === savedGroupBy);
+
+    this.groupBy = this.groupByOptions.find((o) => o.value === savedGroupBy).value.toString();
   }
 
   private formatDate(date: String) {
@@ -74,20 +76,21 @@ export class SalesOrdersReportComponent {
   }
 
   submitReport() {
-    this.loading = true;
     this.showWarnig = false;
     if (this.startDate === '' || this.endDate === '') {
       this.showWarnig = true;
       return;
     }
 
+    this.selectedReport = this.groupBy.toString();
+
     this.queryParams = [
       { key: 'startDate', value: this.formatDate(this.startDate) },
       { key: 'endDate', value: this.formatDate(this.endDate) },
-      { key: 'groupBy', value: this.groupBy.value },
+      { key: 'groupBy', value: this.groupBy },
     ];
-
     this.loading = false;
+
     if (this.resultsTable) {
       this.resultsTable.reload(this.queryParams);
     }
