@@ -27,17 +27,12 @@
 </p-card>
 
 <dgz-table
-<<<<<<< HEAD
-  *ngIf="!loading && groupBy.value === 'CUSTOMER'"
-  #customersReportTable
+  *ngIf="!showWarnig && selectedReport === 'CUSTOMER'"
+  #ReportTable
   [dataProvider]="this"
   (updateQueryParams)="updateQueryParams($event)"
   name="customersReportTable"
-=======
-  #ReportTable
-  [dataProvider]="this"
   name="ReportTable"
->>>>>>> relátorio de vendas agrupado por produtos
   [showPaginationArea]="false"
 >
   <thead>
@@ -71,31 +66,25 @@
   </tbody>
 </dgz-table>
 
-<<<<<<< HEAD
-<div class="dgz-table dgz-table-info" *ngIf="loading && showWarnig">
-  <i class="fal fa-exclamation-circle"></i>
-  <p>Para gerar relatórios, insira um período válido.</p>
-</div>
-=======
 <dgz-table
+  *ngIf="!showWarnig && selectedReport === 'PRODUCT'"
   #ReportTable
   [dataProvider]="this"
   name="ReportTable"
   [showPaginationArea]="false"
-  *ngIf="showReport === 'PRODUCT'"
 >
   <thead>
     <tr>
-      <th>Nome</th>
       <th>SKU</th>
+      <th>Nome</th>
       <th>Valor Vendido</th>
       <th>Detalhes</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let productReport of ReportTable.currentData">
-      <td class="">{{ productReport.title }}</td>
       <td class="centered">{{ productReport.sku }}</td>
+      <td class="">{{ productReport.title }}</td>
       <td class="centered">{{ productReport.sellingPrice }}</td>
       <td class="centered">
         <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productReport.sku">
@@ -112,31 +101,33 @@
     </tr>
   </tbody>
 </dgz-table>
-<<<<<<< HEAD
->>>>>>> relátorio de vendas agrupado por produtos
-=======
+
+<div class="dgz-table dgz-table-info" *ngIf="showWarnig">
+  <i class="fal fa-exclamation-circle"></i>
+  <p>Para gerar relatórios, insira um período válido.</p>
+</div>
 
 <dgz-table
   #ReportTable
   [dataProvider]="this"
   name="ReportTable"
   [showPaginationArea]="false"
-  *ngIf="showReport === 'PRODUCT_VARIATION'"
+  *ngIf="!showWarnig && selectedReport === 'PRODUCT_VARIATION'"
 >
   <thead>
     <tr>
+      <th>SKU</th>
       <th>Nome</th>
       <th>Descrição da Variação</th>
-      <th>SKU</th>
       <th>Valor Vendido</th>
       <th>Detalhes</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let productVariationReport of ReportTable.currentData">
+      <td class="centered">{{ productVariationReport.sku }}</td>
       <td>{{ productVariationReport.title }}</td>
       <td class="centered">{{ productVariationReport.description }}</td>
-      <td class="centered">{{ productVariationReport.sku }}</td>
       <td class="centered">{{ productVariationReport.sellingPrice }}</td>
       <td class="centered">
         <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productVariationReport.sku">
@@ -153,4 +144,3 @@
     </tr>
   </tbody>
 </dgz-table>
->>>>>>> tabela do relatorio de vendas por variação do produto
