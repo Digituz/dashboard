@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { IDataProvider, QueryParam, Pagination } from '@app/util/pagination';
 import { SalesOrderDTO } from '../sales-order.dto';
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
