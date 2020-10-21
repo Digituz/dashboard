@@ -12,8 +12,12 @@ export class ImageService {
 
   constructor(private httpClient: HttpClient) {}
 
-  loadImages(page: number): Observable<Image[]> {
-    return this.httpClient.get<Image[]>(`${this.IMAGES_ENDPOINT}/?page=${page}`);
+  loadImages(page: number, tags?: string): Observable<Image[]> {
+    let endpoint = `${this.IMAGES_ENDPOINT}/?page=${page}`;
+    if (tags) {
+      endpoint += `&tags=${tags}`;
+    }
+    return this.httpClient.get<Image[]>(endpoint);
   }
 
   applyTags(images: Image[], tags: Tag[]): Observable<void> {
@@ -45,9 +49,5 @@ export class ImageService {
 
   loadImage(id: number) {
     return this.httpClient.get<Image>(`${this.IMAGES_ENDPOINT}/${id}`);
-  }
-
-  byTag(tagLabel: string, page: number): Observable<Image[]> {
-    return this.httpClient.get<Image[]>(`${this.IMAGES_ENDPOINT}/by-tag/?tagLabel=${tagLabel}&page=${page}`);
   }
 }

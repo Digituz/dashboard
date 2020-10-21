@@ -23,7 +23,6 @@ export class MediaLibraryComponent implements OnInit {
   @ViewChild('uploader') uploader: FileUpload;
   private searchChange$ = new BehaviorSubject('');
   page: number = 0;
-  pageByTag: number = -1;
   images: Image[];
   isModalVisible = false;
   isSpinning = false;
@@ -37,7 +36,6 @@ export class MediaLibraryComponent implements OnInit {
   imagesSelectedForUpload: File[] = [];
   selectedTags: Tag[];
   tagsFound: Tag[];
-
   selectedImage: Image;
   selectedImages: Image[] = [];
   constructor(
@@ -49,9 +47,10 @@ export class MediaLibraryComponent implements OnInit {
   ) {}
 
   private reloadImages() {
+    const tags = this.selectedTags?.map((tag) => tag.label).join();
     this.loading = true;
     this.imageService
-      .loadImages(this.page)
+      .loadImages(this.page, tags)
       .pipe(delay(350))
       .subscribe((images) => {
         this.loading = false;
@@ -181,35 +180,23 @@ export class MediaLibraryComponent implements OnInit {
     });
   }
 
-  showMore() {
-    if (this.pageByTag === -1) {
-      this.page++;
-      this.imageService.loadImages(this.page).subscribe((images) => {
-        this.loading = false;
-        this.images.push(...images);
-      });
+  showMore(resetResults?: boolean) {
+    const tags = this.selectedTags?.map((tag) => tag.label).join();
+    if (resetResults) {
+      this.page = 0;
     } else {
-      this.showByTag();
+      this.page++;
     }
-  }
-
-  showByTag() {
-    this.pageByTag++;
-    const labels = this.selectedTags.map((tag) => {
-      return tag.label;
-    });
-
-    this.imageService.byTag(labels.toString(), this.pageByTag).subscribe((images) => {
+    this.imageService.loadImages(this.page, tags).subscribe((images) => {
       this.loading = false;
-      if (this.pageByTag === 0) {
-        this.images = images;
-      } else {
-        this.images.push(...images);
+      if (resetResults) {
+        this.images = [];
       }
+      this.images.push(...images);
     });
   }
 
   onTagSelection(event: any) {
-    this.pageByTag = -1;
+    this.page = 0;
   }
 }

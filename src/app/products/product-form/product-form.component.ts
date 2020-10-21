@@ -133,7 +133,6 @@ export class ProductFormComponent implements OnInit {
       order: idx,
       image,
     }));
-    console.log(this.images);
   }
 
   editProductVariation(productVariation: ProductVariation): void {
