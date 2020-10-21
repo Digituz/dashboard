@@ -54,11 +54,13 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
 
   loadReport(queryParams?: QueryParam[]): Observable<Pagination<SalesOrderCustomerReport>> {
     let query = `${this.SALES_ORDERS_ENDPOINT}/report?page=1`;
-    query += queryParams
-      .filter((queryParam) => queryParam !== null)
-      .filter((queryParam) => !!queryParam.value)
-      .map((queryParam) => `&${queryParam.key}=${queryParam.value}`)
-      .join('');
+    if (queryParams) {
+      query += queryParams
+        .filter((queryParam) => queryParam !== null)
+        .filter((queryParam) => !!queryParam.value)
+        .map((queryParam) => `&${queryParam.key}=${queryParam.value}`)
+        .join('');
+    }
     return this.httpClient.get<Pagination<SalesOrderCustomerReport>>(query);
   }
 }

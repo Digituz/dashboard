@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { format, subMonths } from 'date-fns';
+import { format, subMonths, parse } from 'date-fns';
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import { ComboBoxOption } from '@app/util/combo-box-option.interface';
 
@@ -26,8 +26,9 @@ export class SalesOrdersReportComponent {
   showWarnig: boolean;
   queryParams: QueryParam[] = [];
 
-  constructor(private salesOrdersService: SalesOrdersService) {}
-
+  constructor(private salesOrdersService: SalesOrdersService) {
+    this.defineDefaultDates();
+  }
   loadData(
     pageNumber: number,
     pageSize: number,
@@ -35,6 +36,13 @@ export class SalesOrdersReportComponent {
     sortDirectionAscending?: boolean,
     queryParams?: QueryParam[]
   ): Observable<Pagination<SalesOrderCustomerReport>> {
+    if (queryParams === undefined) {
+      queryParams = [
+        { key: 'startDate', value: this.formatDate(this.startDate) },
+        { key: 'endDate', value: this.formatDate(this.endDate) },
+        { key: 'groupBy', value: this.groupBy.value },
+      ];
+    }
     return this.salesOrdersService.loadReport(queryParams);
   }
 
@@ -43,15 +51,17 @@ export class SalesOrdersReportComponent {
     const pastMonthDate = subMonths(currentDay, 1);
 
     this.startDate = format(pastMonthDate, 'dd/MM/yyyy');
-    this.endDate = format(new Date(), 'dd/MM/yyyy');
+    this.endDate = format(currentDay, 'dd/MM/yyyy');
   }
 
   updateQueryParams(queryParams: QueryParam[]) {
     this.startDate = queryParams.find((q) => q.key === 'startDate')?.value.toString();
     this.endDate = queryParams.find((q) => q.key === 'endDate')?.value.toString();
-
     if (!this.startDate || !this.endDate) {
       this.defineDefaultDates();
+    } else {
+      this.startDate = format(parse(this.startDate, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
+      this.endDate = format(parse(this.endDate, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
     }
 
     const savedGroupBy = queryParams.find((q) => q.key === 'groupBy')?.value.toString();
