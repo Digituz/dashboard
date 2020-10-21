@@ -6,6 +6,7 @@ import { Shell } from '@app/shell/shell.service';
 import { SalesOrdersComponent } from './sales-orders.component';
 import { SalesOrderFormComponent } from './sales-order-form/sales-order-form.component';
 import { SalesOrderListComponent } from './sales-order-list/sales-order-list.component';
+import { SalesOrdersReportComponent } from './sales-orders-report/sales-orders-report.component';
 
 const routes: Routes = [
   Shell.childRoutes([
@@ -24,6 +25,10 @@ const routes: Routes = [
             title: 'Lista de Vendas',
             breadcrumb: 'Lista',
           },
+        },
+        {
+          path: 'report',
+          component: SalesOrdersReportComponent,
         },
         {
           path: ':referenceCode',

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { SalesOrderDTO } from './sales-order.dto';
-import { IDataProvider, Pagination } from '@app/util/pagination';
+import { IDataProvider, Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { SalesOrderCustomerReport } from './sales-orders-report/sales-order-customer-report.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
     pageSize: number,
     sortedBy?: string,
     sortDirectionAscending?: boolean,
-    queryParams?: import('../util/pagination').QueryParam[]
+    queryParams?: QueryParam[]
   ): Observable<Pagination<SalesOrderDTO>> {
     let query = `${this.SALES_ORDERS_ENDPOINT}?page=${pageNumber}&limit=${pageSize}`;
 
@@ -49,5 +50,17 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
 
   cancelOnBling(salesOrder: SalesOrderDTO) {
     return this.httpClient.delete<void>(`${this.SALES_ORDERS_ENDPOINT}/${salesOrder.referenceCode}`);
+  }
+
+  loadReport(queryParams?: QueryParam[]): Observable<Pagination<SalesOrderCustomerReport>> {
+    let query = `${this.SALES_ORDERS_ENDPOINT}/report?page=1`;
+    if (queryParams) {
+      query += queryParams
+        .filter((queryParam) => queryParam !== null)
+        .filter((queryParam) => !!queryParam.value)
+        .map((queryParam) => `&${queryParam.key}=${queryParam.value}`)
+        .join('');
+    }
+    return this.httpClient.get<Pagination<SalesOrderCustomerReport>>(query);
   }
 }

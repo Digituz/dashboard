@@ -1,0 +1,71 @@
+<div class="feature-header">
+  <p>
+    <label>Utilize o formulário abaixo para gerar relatórios agrupados.</label>
+  </p>
+  <div class="actions">
+    <app-button-back fallbackURL="/sales-orders"></app-button-back>
+  </div>
+</div>
+<p-card>
+  <form (ngSubmit)="submitReport()">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="orderForm">
+        <label class="marginHorizontal">De:</label>
+        <p-inputMask mask="99/99/9999" name="startDate" [(ngModel)]="startDate"></p-inputMask>
+        <p class="marginHorizontal">Até:</p>
+        <p-inputMask mask="99/99/9999" name="endDate" [(ngModel)]="endDate"></p-inputMask>
+      </div>
+      <div class="orderForm">
+        <label class="marginHorizontal">Agrupar Por:</label>
+        <p-dropdown [options]="groupByOptions" [showClear]="true" name="groupBy" [(ngModel)]="groupBy"></p-dropdown>
+      </div>
+      <div class="orderForm">
+        <button pButton type="submit" class="ui-button-primary" label="Agrupar"></button>
+      </div>
+    </div>
+  </form>
+</p-card>
+
+<dgz-table
+  *ngIf="!loading && groupBy.value === 'CUSTOMER'"
+  #customersReportTable
+  [dataProvider]="this"
+  (updateQueryParams)="updateQueryParams($event)"
+  name="customersReportTable"
+  [showPaginationArea]="false"
+>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Telefone</th>
+      <th>Total</th>
+      <th>Detalhes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let customerReport of customersReportTable.currentData">
+      <td class="centered">{{ customerReport.name }}</td>
+      <td class="centered">{{ customerReport.email }}</td>
+      <td class="centered">{{ customerReport.phoneNumber }}</td>
+      <td class="currency">{{ customerReport.total | reais }}</td>
+      <td class="centered">
+        <a [title]="'Detalhes do cliente'" [routerLink]="'/customers/' + customerReport.id">
+          <button
+            pButton
+            type="button"
+            class="ui-button-secondary"
+            [icon]="'fal fa-search'"
+            [pTooltip]="'Visualizar cliente.'"
+            tooltipPosition="top"
+          ></button>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>
+
+<div class="dgz-table dgz-table-info" *ngIf="loading && showWarnig">
+  <i class="fal fa-exclamation-circle"></i>
+  <p>Para gerar relatórios, insira um período válido.</p>
+</div>

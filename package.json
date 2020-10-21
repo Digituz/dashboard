@@ -35,6 +35,7 @@
     "@ngxs/store": "^3.6.2",
     "cep-promise": "^3.0.9",
     "chart.js": "^2.9.3",
+    "date-fns": "^2.16.1",
     "jwt-decode": "^2.2.0",
     "medium-editor": "^5.23.3",
     "primeflex": "^1.2.0",
