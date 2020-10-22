@@ -76,7 +76,7 @@
   <thead>
     <tr>
       <th>SKU</th>
-      <th>Nome</th>
+      <th>Produto</th>
       <th>Valor Vendido</th>
       <th>Detalhes</th>
     </tr>
@@ -117,8 +117,8 @@
   <thead>
     <tr>
       <th>SKU</th>
-      <th>Nome</th>
-      <th>Descrição da Variação</th>
+      <th>Produto</th>
+      <th>Unidades Vendidas</th>
       <th>Valor Vendido</th>
       <th>Detalhes</th>
     </tr>
@@ -126,11 +126,11 @@
   <tbody>
     <tr *ngFor="let productVariationReport of ReportTable.currentData">
       <td class="centered">{{ productVariationReport.sku }}</td>
-      <td>{{ productVariationReport.title }}</td>
-      <td class="centered">{{ productVariationReport.description }}</td>
-      <td class="centered">{{ productVariationReport.sellingPrice }}</td>
+      <td>{{ productVariationReport.title }} {{ productVariationReport.description }}</td>
+      <td class="centered">{{ productVariationReport.amount }}</td>
+      <td class="centered">{{ productVariationReport.total | reais }}</td>
       <td class="centered">
-        <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productVariationReport.sku">
+        <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productVariationReport.productSku">
           <button
             pButton
             type="button"
