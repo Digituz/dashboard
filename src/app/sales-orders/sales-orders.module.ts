@@ -10,6 +10,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
+import { CalendarModule } from 'primeng/calendar';
 
 import { SharedModule } from '@app/@shared';
 import { SalesOrdersComponent } from './sales-orders.component';
@@ -34,6 +35,7 @@ import { SalesOrdersReportComponent } from './sales-orders-report/sales-orders-r
     SharedModule,
     CommonModule,
     InputMaskModule,
+    CalendarModule,
     SalesOrdersRoutingModule,
   ],
 })

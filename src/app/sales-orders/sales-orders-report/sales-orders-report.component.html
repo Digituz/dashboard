@@ -11,9 +11,9 @@
     <div class="p-fluid p-formgrid p-grid">
       <div class="orderForm">
         <label class="marginHorizontal">De:</label>
-        <p-inputMask mask="99/99/9999" name="startDate" [(ngModel)]="startDate"></p-inputMask>
+        <p-calendar name="startCalendarDate" [(ngModel)]="startCalendarDate" dateFormat="dd/mm/yy"></p-calendar>
         <p class="marginHorizontal">Até:</p>
-        <p-inputMask mask="99/99/9999" name="endDate" [(ngModel)]="endDate"></p-inputMask>
+        <p-calendar name="endCalendarDate" [(ngModel)]="endCalendarDate" dateFormat="dd/mm/yy"></p-calendar>
       </div>
       <div class="orderForm">
         <label class="marginHorizontal">Agrupar Por:</label>

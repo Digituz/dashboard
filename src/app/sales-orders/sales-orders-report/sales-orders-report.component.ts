@@ -14,6 +14,8 @@ import { SalesOrderCustomerReport } from './sales-order-customer-report.interfac
 export class SalesOrdersReportComponent {
   @ViewChild('resultsTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
   loading = false;
+  startCalendarDate: Date;
+  endCalendarDate: Date;
   startDate: string;
   endDate: string;
   groupByOptions: ComboBoxOption[] = [
@@ -27,6 +29,10 @@ export class SalesOrdersReportComponent {
   queryParams: QueryParam[] = [];
 
   constructor(private salesOrdersService: SalesOrdersService) {
+    this.startCalendarDate = subMonths(new Date(), 1);
+    this.endCalendarDate = new Date();
+
+    console.log(this.startDate, this.endDate);
     this.defineDefaultDates();
   }
 
@@ -75,16 +81,19 @@ export class SalesOrdersReportComponent {
 
   submitReport() {
     this.showWarnig = false;
-    if (this.startDate === '' || this.endDate === '') {
+    if (this.startCalendarDate === null || this.endCalendarDate === null) {
       this.showWarnig = true;
       return;
     }
 
+    this.startDate = format(this.startCalendarDate, 'yyyy-MM-dd');
+    this.endDate = format(this.endCalendarDate, 'yyyy-MM-dd');
+
     this.selectedReport = this.groupBy.toString();
 
     this.queryParams = [
-      { key: 'startDate', value: this.formatDate(this.startDate) },
-      { key: 'endDate', value: this.formatDate(this.endDate) },
+      { key: 'startDate', value: this.startDate },
+      { key: 'endDate', value: this.endDate },
       { key: 'groupBy', value: this.groupBy },
     ];
     this.loading = false;
