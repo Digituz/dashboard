@@ -101,7 +101,7 @@
     </tr>
   </thead>
   <tbody *ngIf="!showWarnig && selectedReport === 'PRODUCT_VARIATION'">
-    <tr *ngFor="let productVariationReport of ReportTable.currentData">
+    <tr *ngFor="let productVariationReport of resultsTable.currentData">
       <td class="centered">{{ productVariationReport.sku }}</td>
       <td>{{ productVariationReport.title }} {{ productVariationReport.description }}</td>
       <td class="centered">{{ productVariationReport.amount }}</td>
