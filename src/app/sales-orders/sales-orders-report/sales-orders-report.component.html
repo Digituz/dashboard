@@ -26,8 +26,14 @@
   </form>
 </p-card>
 
-<dgz-table #resultsTable [dataProvider]="this" name="report-table" [showPaginationArea]="false">
-  <thead *ngIf="selectedReport === 'CUSTOMER'">
+<dgz-table
+  #resultsTable
+  [dataProvider]="this"
+  name="report-table"
+  [showPaginationArea]="false"
+  (updateQueryParams)="updateQueryParams($event)"
+>
+  <thead *ngIf="!showWarnig && selectedReport === 'CUSTOMER'">
     <tr>
       <th>Nome</th>
       <th>Email</th>
@@ -36,7 +42,7 @@
       <th>Detalhes</th>
     </tr>
   </thead>
-  <tbody *ngIf="selectedReport === 'CUSTOMER'">
+  <tbody *ngIf="!showWarnig && selectedReport === 'CUSTOMER'">
     <tr *ngFor="let customerReport of resultsTable.currentData">
       <td class="centered">{{ customerReport.name }}</td>
       <td class="centered">{{ customerReport.email }}</td>
@@ -56,7 +62,7 @@
       </td>
     </tr>
   </tbody>
-  <thead *ngIf="selectedReport === 'PRODUCT'">
+  <thead *ngIf="!showWarnig && selectedReport === 'PRODUCT'">
     <tr>
       <th>SKU</th>
       <th>Nome</th>
@@ -65,7 +71,7 @@
       <th>Detalhes</th>
     </tr>
   </thead>
-  <tbody *ngIf="selectedReport === 'PRODUCT'">
+  <tbody *ngIf="!showWarnig && selectedReport === 'PRODUCT'">
     <tr *ngFor="let productReport of resultsTable.currentData">
       <td class="centered">{{ productReport.sku }}</td>
       <td class="">{{ productReport.title }}</td>
@@ -85,9 +91,38 @@
       </td>
     </tr>
   </tbody>
+  <thead *ngIf="!showWarnig && selectedReport === 'PRODUCT_VARIATION'">
+    <tr>
+      <th>SKU</th>
+      <th>Produto</th>
+      <th>Unidades Vendidas</th>
+      <th>Valor Vendido</th>
+      <th>Detalhes</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="!showWarnig && selectedReport === 'PRODUCT_VARIATION'">
+    <tr *ngFor="let productVariationReport of resultsTable.currentData">
+      <td class="centered">{{ productVariationReport.sku }}</td>
+      <td>{{ productVariationReport.title }} {{ productVariationReport.description }}</td>
+      <td class="centered">{{ productVariationReport.amount }}</td>
+      <td class="centered">{{ productVariationReport.total | reais }}</td>
+      <td class="centered">
+        <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productVariationReport.productSku">
+          <button
+            pButton
+            type="button"
+            class="ui-button-secondary"
+            [icon]="'fal fa-search'"
+            [pTooltip]="'Visualizar venda.'"
+            tooltipPosition="top"
+          ></button>
+        </a>
+      </td>
+    </tr>
+  </tbody>
 </dgz-table>
 
-<div class="dgz-table dgz-table-info" *ngIf="loading && showWarnig">
+<div class="dgz-table dgz-table-info" *ngIf="showWarnig">
   <i class="fal fa-exclamation-circle"></i>
   <p>Para gerar relatórios, insira um período válido.</p>
 </div>

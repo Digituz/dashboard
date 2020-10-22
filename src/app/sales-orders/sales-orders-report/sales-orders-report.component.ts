@@ -2,12 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { format, subMonths, parse } from 'date-fns';
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import { ComboBoxOption } from '@app/util/combo-box-option.interface';
-
 import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 import { SalesOrdersService } from '../sales-orders.service';
 import { SalesOrderCustomerReport } from './sales-order-customer-report.interface';
-
 @Component({
   selector: 'app-sales-orders-report',
   templateUrl: './sales-orders-report.component.html',
@@ -21,6 +19,7 @@ export class SalesOrdersReportComponent {
   groupByOptions: ComboBoxOption[] = [
     { label: 'Cliente', value: 'CUSTOMER' },
     { label: 'Produto', value: 'PRODUCT' },
+    { label: 'Variação do Produto', value: 'PRODUCT_VARIATION' },
   ];
   groupBy = this.groupByOptions[0].value;
   selectedReport: string;
@@ -51,7 +50,6 @@ export class SalesOrdersReportComponent {
   private defineDefaultDates() {
     const currentDay = new Date();
     const pastMonthDate = subMonths(currentDay, 1);
-
     this.startDate = format(pastMonthDate, 'dd/MM/yyyy');
     this.endDate = format(currentDay, 'dd/MM/yyyy');
   }
@@ -66,8 +64,8 @@ export class SalesOrdersReportComponent {
       this.endDate = format(parse(this.endDate, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
     }
     const savedGroupBy = queryParams.find((q) => q.key === 'groupBy')?.value.toString();
-
     this.groupBy = this.groupByOptions.find((o) => o.value === savedGroupBy).value.toString();
+    this.selectedReport = this.groupBy;
   }
 
   private formatDate(date: String) {
