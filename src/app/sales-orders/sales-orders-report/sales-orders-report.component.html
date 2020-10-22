@@ -17,7 +17,7 @@
       </div>
       <div class="orderForm">
         <label class="marginHorizontal">Agrupar Por:</label>
-        <p-dropdown [options]="groupByOptions" [showClear]="true" name="groupBy" [(ngModel)]="groupBy"></p-dropdown>
+        <p-dropdown [options]="groupByOptions" name="groupBy" [(ngModel)]="groupBy"></p-dropdown>
       </div>
       <div class="orderForm">
         <button pButton type="submit" class="ui-button-primary" label="Agrupar"></button>
@@ -27,15 +27,13 @@
 </p-card>
 
 <dgz-table
-  *ngIf="!showWarnig && selectedReport === 'CUSTOMER'"
-  #ReportTable
+  #resultsTable
   [dataProvider]="this"
-  (updateQueryParams)="updateQueryParams($event)"
-  name="customersReportTable"
-  name="ReportTable"
+  name="report-table"
   [showPaginationArea]="false"
+  (updateQueryParams)="updateQueryParams($event)"
 >
-  <thead>
+  <thead *ngIf="!showWarnig && selectedReport === 'CUSTOMER'">
     <tr>
       <th>Nome</th>
       <th>Email</th>
@@ -44,8 +42,8 @@
       <th>Detalhes</th>
     </tr>
   </thead>
-  <tbody>
-    <tr *ngFor="let customerReport of ReportTable.currentData">
+  <tbody *ngIf="!showWarnig && selectedReport === 'CUSTOMER'">
+    <tr *ngFor="let customerReport of resultsTable.currentData">
       <td class="centered">{{ customerReport.name }}</td>
       <td class="centered">{{ customerReport.email }}</td>
       <td class="centered">{{ customerReport.phoneNumber }}</td>
@@ -64,28 +62,21 @@
       </td>
     </tr>
   </tbody>
-</dgz-table>
-
-<dgz-table
-  *ngIf="!showWarnig && selectedReport === 'PRODUCT'"
-  #ReportTable
-  [dataProvider]="this"
-  name="ReportTable"
-  [showPaginationArea]="false"
->
-  <thead>
+  <thead *ngIf="!showWarnig && selectedReport === 'PRODUCT'">
     <tr>
       <th>SKU</th>
-      <th>Produto</th>
+      <th>Nome</th>
+      <th>Qtde. Vendida</th>
       <th>Valor Vendido</th>
       <th>Detalhes</th>
     </tr>
   </thead>
-  <tbody>
-    <tr *ngFor="let productReport of ReportTable.currentData">
+  <tbody *ngIf="!showWarnig && selectedReport === 'PRODUCT'">
+    <tr *ngFor="let productReport of resultsTable.currentData">
       <td class="centered">{{ productReport.sku }}</td>
       <td class="">{{ productReport.title }}</td>
-      <td class="centered">{{ productReport.sellingPrice }}</td>
+      <td class="centered">{{ productReport.amount }}</td>
+      <td class="centered">{{ productReport.total | reais }}</td>
       <td class="centered">
         <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productReport.sku">
           <button
@@ -100,21 +91,7 @@
       </td>
     </tr>
   </tbody>
-</dgz-table>
-
-<div class="dgz-table dgz-table-info" *ngIf="showWarnig">
-  <i class="fal fa-exclamation-circle"></i>
-  <p>Para gerar relatórios, insira um período válido.</p>
-</div>
-
-<dgz-table
-  #ReportTable
-  [dataProvider]="this"
-  name="ReportTable"
-  [showPaginationArea]="false"
-  *ngIf="!showWarnig && selectedReport === 'PRODUCT_VARIATION'"
->
-  <thead>
+  <thead *ngIf="!showWarnig && selectedReport === 'PRODUCT_VARIATION'">
     <tr>
       <th>SKU</th>
       <th>Produto</th>
@@ -123,7 +100,7 @@
       <th>Detalhes</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody *ngIf="!showWarnig && selectedReport === 'PRODUCT_VARIATION'">
     <tr *ngFor="let productVariationReport of ReportTable.currentData">
       <td class="centered">{{ productVariationReport.sku }}</td>
       <td>{{ productVariationReport.title }} {{ productVariationReport.description }}</td>
@@ -144,3 +121,8 @@
     </tr>
   </tbody>
 </dgz-table>
+
+<div class="dgz-table dgz-table-info" *ngIf="showWarnig">
+  <i class="fal fa-exclamation-circle"></i>
+  <p>Para gerar relatórios, insira um período válido.</p>
+</div>

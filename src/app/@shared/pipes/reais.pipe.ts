@@ -7,7 +7,7 @@ export class ReaisPipe implements PipeTransform {
   transform(value: string | number): string {
     return (
       'R$ ' +
-      parseFloat(value.toString() || '0')
+      parseFloat(value?.toString() || '0')
         .toFixed(2)
         .toString()
         .replace('.', ',')

@@ -12,7 +12,7 @@ import { SalesOrderCustomerReport } from './sales-order-customer-report.interfac
   styleUrls: ['./sales-orders-report.component.scss'],
 })
 export class SalesOrdersReportComponent {
-  @ViewChild('ReportTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
+  @ViewChild('resultsTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
   loading = false;
   startDate: string;
   endDate: string;
@@ -61,7 +61,6 @@ export class SalesOrdersReportComponent {
       this.startDate = format(parse(this.startDate, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
       this.endDate = format(parse(this.endDate, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
     }
-
     const savedGroupBy = queryParams.find((q) => q.key === 'groupBy')?.value.toString();
     this.groupBy = this.groupByOptions.find((o) => o.value === savedGroupBy).value.toString();
   }
@@ -72,7 +71,6 @@ export class SalesOrdersReportComponent {
   }
 
   submitReport() {
-    this.loading = true;
     this.showWarnig = false;
     if (this.startDate === '' || this.endDate === '') {
       this.showWarnig = true;
@@ -86,7 +84,6 @@ export class SalesOrdersReportComponent {
       { key: 'endDate', value: this.formatDate(this.endDate) },
       { key: 'groupBy', value: this.groupBy },
     ];
-
     this.loading = false;
 
     if (this.resultsTable) {
