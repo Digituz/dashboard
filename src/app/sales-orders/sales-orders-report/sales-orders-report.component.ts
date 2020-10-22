@@ -14,8 +14,8 @@ import { SalesOrderCustomerReport } from './sales-order-customer-report.interfac
 export class SalesOrdersReportComponent {
   @ViewChild('resultsTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
   loading = false;
-  startDate: string;
-  endDate: string;
+  startCalendarDate: Date;
+  endCalendarDate: Date;
   groupByOptions: ComboBoxOption[] = [
     { label: 'Cliente', value: 'CUSTOMER' },
     { label: 'Produto', value: 'PRODUCT' },
@@ -27,6 +27,8 @@ export class SalesOrdersReportComponent {
   queryParams: QueryParam[] = [];
 
   constructor(private salesOrdersService: SalesOrdersService) {
+    this.startCalendarDate = subMonths(new Date(), 1);
+    this.endCalendarDate = new Date();
     this.defineDefaultDates();
   }
 
@@ -39,8 +41,8 @@ export class SalesOrdersReportComponent {
   ): Observable<Pagination<SalesOrderCustomerReport>> {
     if (queryParams === undefined) {
       queryParams = [
-        { key: 'startDate', value: this.formatDate(this.startDate) },
-        { key: 'endDate', value: this.formatDate(this.endDate) },
+        { key: 'startDate', value: format(this.startCalendarDate, 'yyyy-MM-dd') },
+        { key: 'endDate', value: format(this.endCalendarDate, 'yyyy-MM-dd') },
         { key: 'groupBy', value: this.groupBy },
       ];
     }
@@ -48,34 +50,27 @@ export class SalesOrdersReportComponent {
   }
 
   private defineDefaultDates() {
-    const currentDay = new Date();
-    const pastMonthDate = subMonths(currentDay, 1);
-    this.startDate = format(pastMonthDate, 'dd/MM/yyyy');
-    this.endDate = format(currentDay, 'dd/MM/yyyy');
+    this.startCalendarDate = new Date();
+    this.endCalendarDate = subMonths(this.startCalendarDate, 1);
   }
 
   updateQueryParams(queryParams: QueryParam[]) {
-    this.startDate = queryParams.find((q) => q.key === 'startDate')?.value.toString();
-    this.endDate = queryParams.find((q) => q.key === 'endDate')?.value.toString();
-    if (!this.startDate || !this.endDate) {
+    const startDate = queryParams.find((q) => q.key === 'startDate')?.value.toString();
+    const endDate = queryParams.find((q) => q.key === 'endDate')?.value.toString();
+    if (!startDate || !endDate) {
       this.defineDefaultDates();
     } else {
-      this.startDate = format(parse(this.startDate, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
-      this.endDate = format(parse(this.endDate, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
+      this.startCalendarDate = parse(startDate, 'yyyy-MM-dd', new Date());
+      this.endCalendarDate = parse(endDate, 'yyyy-MM-dd', new Date());
     }
     const savedGroupBy = queryParams.find((q) => q.key === 'groupBy')?.value.toString();
     this.groupBy = this.groupByOptions.find((o) => o.value === savedGroupBy).value.toString();
     this.selectedReport = this.groupBy;
   }
 
-  private formatDate(date: String) {
-    const dateRecived = date.split('/');
-    return `${dateRecived[2]}-${dateRecived[1]}-${dateRecived[0]}`;
-  }
-
   submitReport() {
     this.showWarnig = false;
-    if (this.startDate === '' || this.endDate === '') {
+    if (this.startCalendarDate === null || this.endCalendarDate === null) {
       this.showWarnig = true;
       return;
     }
@@ -83,8 +78,8 @@ export class SalesOrdersReportComponent {
     this.selectedReport = this.groupBy.toString();
 
     this.queryParams = [
-      { key: 'startDate', value: this.formatDate(this.startDate) },
-      { key: 'endDate', value: this.formatDate(this.endDate) },
+      { key: 'startDate', value: format(this.startCalendarDate, 'yyyy-MM-dd') },
+      { key: 'endDate', value: format(this.endCalendarDate, 'yyyy-MM-dd') },
       { key: 'groupBy', value: this.groupBy },
     ];
     this.loading = false;
