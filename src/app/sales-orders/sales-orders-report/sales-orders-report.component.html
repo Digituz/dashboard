@@ -101,6 +101,41 @@
   </tbody>
 </dgz-table>
 
+<dgz-table
+  *ngIf="selectedReport === 'DATE_APPROVAL'"
+  #ReportTable
+  [dataProvider]="this"
+  name="ReportTable"
+  [showPaginationArea]="false"
+>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>SKU</th>
+      <th>Valor Vendido</th>
+      <th>Detalhes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let productReport of ReportTable.currentData">
+      <td class="">{{ productReport.DateApproval }}</td>
+      <td class="centered">{{ productReport.paymentStatus }}</td>
+      <td class="centered">
+        <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productReport.sku">
+          <button
+            pButton
+            type="button"
+            class="ui-button-secondary"
+            [icon]="'fal fa-search'"
+            [pTooltip]="'Visualizar venda.'"
+            tooltipPosition="top"
+          ></button>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>
+
 <div class="dgz-table dgz-table-info" *ngIf="loading && showWarnig">
   <i class="fal fa-exclamation-circle"></i>
   <p>Para gerar relatórios, insira um período válido.</p>

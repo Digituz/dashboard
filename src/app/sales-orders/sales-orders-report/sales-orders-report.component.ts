@@ -7,6 +7,7 @@ import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 import { SalesOrdersService } from '../sales-orders.service';
 import { SalesOrderCustomerReport } from './sales-order-customer-report.interface';
+import { groupBy, map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sales-orders-report',
@@ -21,6 +22,7 @@ export class SalesOrdersReportComponent {
   groupByOptions: ComboBoxOption[] = [
     { label: 'Cliente', value: 'CUSTOMER' },
     { label: 'Produto', value: 'PRODUCT' },
+    { label: 'Data de Aprovação', value: 'APPROVAL_DATE' },
   ];
   groupBy = this.groupByOptions[0].value;
   selectedReport: string;
@@ -37,7 +39,7 @@ export class SalesOrdersReportComponent {
     sortedBy?: string,
     sortDirectionAscending?: boolean,
     queryParams?: QueryParam[]
-  ): Observable<Pagination<SalesOrderCustomerReport>> {
+  ): Observable<Pagination<any>> {
     if (queryParams === undefined) {
       queryParams = [
         { key: 'startDate', value: this.formatDate(this.startDate) },
