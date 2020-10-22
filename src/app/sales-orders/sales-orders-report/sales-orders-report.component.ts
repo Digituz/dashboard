@@ -46,12 +46,14 @@ export class SalesOrdersReportComponent {
     }
     return this.salesOrdersService.loadReport(queryParams);
   }
+
   private defineDefaultDates() {
     const currentDay = new Date();
     const pastMonthDate = subMonths(currentDay, 1);
     this.startDate = format(pastMonthDate, 'dd/MM/yyyy');
     this.endDate = format(currentDay, 'dd/MM/yyyy');
   }
+
   updateQueryParams(queryParams: QueryParam[]) {
     this.startDate = queryParams.find((q) => q.key === 'startDate')?.value.toString();
     this.endDate = queryParams.find((q) => q.key === 'endDate')?.value.toString();
@@ -63,6 +65,7 @@ export class SalesOrdersReportComponent {
     }
     const savedGroupBy = queryParams.find((q) => q.key === 'groupBy')?.value.toString();
     this.groupBy = this.groupByOptions.find((o) => o.value === savedGroupBy).value.toString();
+    this.selectedReport = this.groupBy;
   }
 
   private formatDate(date: String) {
