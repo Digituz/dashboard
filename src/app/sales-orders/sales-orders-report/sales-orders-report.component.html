@@ -17,7 +17,7 @@
       </div>
       <div class="orderForm">
         <label class="marginHorizontal">Agrupar Por:</label>
-        <p-dropdown [options]="groupByOptions" [showClear]="true" name="groupBy" [(ngModel)]="groupBy"></p-dropdown>
+        <p-dropdown [options]="groupByOptions" name="groupBy" [(ngModel)]="groupBy"></p-dropdown>
       </div>
       <div class="orderForm">
         <button pButton type="submit" class="ui-button-primary" label="Agrupar"></button>
@@ -26,15 +26,8 @@
   </form>
 </p-card>
 
-<dgz-table
-  *ngIf="!loading && groupBy.value === 'CUSTOMER'"
-  #customersReportTable
-  [dataProvider]="this"
-  (updateQueryParams)="updateQueryParams($event)"
-  name="customersReportTable"
-  [showPaginationArea]="false"
->
-  <thead>
+<dgz-table #resultsTable [dataProvider]="this" name="report-table" [showPaginationArea]="false">
+  <thead *ngIf="selectedReport === 'CUSTOMER'">
     <tr>
       <th>Nome</th>
       <th>Email</th>
@@ -43,8 +36,8 @@
       <th>Detalhes</th>
     </tr>
   </thead>
-  <tbody>
-    <tr *ngFor="let customerReport of customersReportTable.currentData">
+  <tbody *ngIf="selectedReport === 'CUSTOMER'">
+    <tr *ngFor="let customerReport of resultsTable.currentData">
       <td class="centered">{{ customerReport.name }}</td>
       <td class="centered">{{ customerReport.email }}</td>
       <td class="centered">{{ customerReport.phoneNumber }}</td>
@@ -57,6 +50,35 @@
             class="ui-button-secondary"
             [icon]="'fal fa-search'"
             [pTooltip]="'Visualizar cliente.'"
+            tooltipPosition="top"
+          ></button>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+  <thead *ngIf="selectedReport === 'PRODUCT'">
+    <tr>
+      <th>SKU</th>
+      <th>Nome</th>
+      <th>Qtde. Vendida</th>
+      <th>Valor Vendido</th>
+      <th>Detalhes</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="selectedReport === 'PRODUCT'">
+    <tr *ngFor="let productReport of resultsTable.currentData">
+      <td class="centered">{{ productReport.sku }}</td>
+      <td class="">{{ productReport.title }}</td>
+      <td class="centered">{{ productReport.amount }}</td>
+      <td class="centered">{{ productReport.total | reais }}</td>
+      <td class="centered">
+        <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productReport.sku">
+          <button
+            pButton
+            type="button"
+            class="ui-button-secondary"
+            [icon]="'fal fa-search'"
+            [pTooltip]="'Visualizar venda.'"
             tooltipPosition="top"
           ></button>
         </a>
