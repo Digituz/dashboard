@@ -14,7 +14,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ToastModule } from 'primeng/toast';
 import { MessagesComponent } from './messages/messages.component';
-import { SupplierComponent } from './supplier/supplier.component';
 
 @NgModule({
   imports: [
@@ -32,7 +31,7 @@ import { SupplierComponent } from './supplier/supplier.component';
     ShellModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
-  declarations: [AppComponent, MessagesComponent, SupplierComponent],
+  declarations: [AppComponent, MessagesComponent],
   providers: [],
   bootstrap: [AppComponent],
 })
