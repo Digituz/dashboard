@@ -17,7 +17,7 @@ const routes: Routes = [
       },
       children: [
         {
-          path: ':referenceCode',
+          path: '',
           component: SupplierListComponent,
           data: {
             title: 'Lista de Fornecedores',
@@ -25,7 +25,7 @@ const routes: Routes = [
           },
         },
         {
-          path: '',
+          path: ':id',
           component: SupplierFormComponent,
           data: {
             title: 'Editar Fornecedor',

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Supplier } from '../supplier.entity';
 import { SupplierService } from '../supplier.service';
 
@@ -9,19 +10,28 @@ import { SupplierService } from '../supplier.service';
   styleUrls: ['./supplier-form.component.scss'],
 })
 export class SupplierFormComponent implements OnInit {
-  loading: true;
   supplier: Supplier;
   formFields: FormGroup;
-  constructor(private supplierService: SupplierService, private fb: FormBuilder) {
-    const id = 'new';
+  loading: boolean = true;
+  activatedButton: boolean = true;
+  constructor(
+    private supplierService: SupplierService,
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.params.id;
+
     if (id === 'new') {
       this.supplier = {};
       this.configureFormFields(this.supplier);
     } else {
-      /* this.supplierService.loadSupplier(id).subscribe((supplier) => {
+      this.supplierService.loadSupplier(id).subscribe((supplier) => {
         this.supplier = supplier;
         this.configureFormFields(supplier);
-      }); */
+      });
     }
   }
 
@@ -30,12 +40,15 @@ export class SupplierFormComponent implements OnInit {
       cnpj: [supplier.cnpj || ''],
       name: [supplier.name || ''],
     });
+    this.loading = false;
   }
-  ngOnInit(): void {}
 
   submit() {
     const supplierFromFields = this.formFields.value;
-    console.log(supplierFromFields);
-    this.supplierService.createSupplier(supplierFromFields).subscribe();
+    supplierFromFields.id = this.supplier.id;
+
+    this.supplierService.createSupplier(supplierFromFields).subscribe(() => {
+      this.router.navigate(['/supplier']);
+    });
   }
 }
