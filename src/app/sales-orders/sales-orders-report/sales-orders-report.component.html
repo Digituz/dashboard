@@ -17,7 +17,7 @@
       </div>
       <div class="orderForm">
         <label class="marginHorizontal">Agrupar Por:</label>
-        <p-dropdown [options]="groupByOptions" [showClear]="true" name="groupBy" [(ngModel)]="groupBy"></p-dropdown>
+        <p-dropdown [options]="groupByOptions" name="groupBy" [(ngModel)]="groupBy"></p-dropdown>
       </div>
       <div class="orderForm">
         <button pButton type="submit" class="ui-button-primary" label="Agrupar"></button>
@@ -31,7 +31,7 @@
   #ReportTable
   [dataProvider]="this"
   (updateQueryParams)="updateQueryParams($event)"
-  name="ReportTable"
+  name="report-table"
   [showPaginationArea]="false"
 >
   <thead>
@@ -69,22 +69,24 @@
   *ngIf="selectedReport === 'PRODUCT'"
   #ReportTable
   [dataProvider]="this"
-  name="ReportTable"
+  name="report-table"
   [showPaginationArea]="false"
 >
   <thead>
     <tr>
-      <th>Nome</th>
       <th>SKU</th>
+      <th>Nome</th>
+      <th>Qtde. Vendida</th>
       <th>Valor Vendido</th>
       <th>Detalhes</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let productReport of ReportTable.currentData">
-      <td class="">{{ productReport.title }}</td>
       <td class="centered">{{ productReport.sku }}</td>
-      <td>{{ productReport.sellingPrice }}</td>
+      <td class="">{{ productReport.title }}</td>
+      <td class="centered">{{ productReport.amount }}</td>
+      <td class="centered">{{ productReport.total | reais }}</td>
       <td class="centered">
         <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productReport.sku">
           <button
