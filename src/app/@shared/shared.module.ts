@@ -9,6 +9,7 @@ import { DgzTableComponent } from './dgz-table/dgz-table.component';
 import { DgzSortableDirective } from './dgz-table/dgz-sortable.directive';
 import { ReaisPipe } from './pipes/reais.pipe';
 import { ButtonBackComponent } from './button-back/button-back.component';
+import { CnpjPipe } from './pipes/cnpj.pipe';
 
 @NgModule({
   imports: [CommonModule, ButtonModule],
@@ -19,6 +20,7 @@ import { ButtonBackComponent } from './button-back/button-back.component';
     DgzSortableDirective,
     ReaisPipe,
     ButtonBackComponent,
+    CnpjPipe,
   ],
   exports: [
     LoaderComponent,
@@ -26,6 +28,7 @@ import { ButtonBackComponent } from './button-back/button-back.component';
     DgzTableComponent,
     DgzSortableDirective,
     ReaisPipe,
+    CnpjPipe,
     ButtonBackComponent,
   ],
 })

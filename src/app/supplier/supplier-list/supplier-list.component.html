@@ -1,3 +1,18 @@
+<div class="search-container">
+  <form (ngSubmit)="querySupplier()">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="query">Pesquisa</label>
+        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <button pButton type="submit" label="Pesquisar"></button>
+      </div>
+    </div>
+  </form>
+</div>
 <div class="feature-header">
   <p>
     <label>Controle seus fornecedores de forma simplificada.</label>
@@ -8,7 +23,13 @@
     ></a>
   </div>
 </div>
-<dgz-table #supplierTable [dataProvider]="this" name="supplier-list">
+<dgz-table
+  #supplierTable
+  [dataProvider]="this"
+  name="supplier-list"
+  [queryParams]="queryParams"
+  (updateQueryParams)="updateQueryParams($event)"
+>
   <thead>
     <tr>
       <th dgz-sortable="cnpj">CNPJ</th>
@@ -18,7 +39,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let supplier of supplierTable.currentData">
-      <td class="centered">{{ supplier.cnpj }}</td>
+      <td class="centered">{{ supplier.cnpj | cnpj }}</td>
       <td>{{ supplier.name }}</td>
       <td class="actions">
         <a [title]="'Fornecedores'" [routerLink]="'/suppliers/' + supplier.id"
