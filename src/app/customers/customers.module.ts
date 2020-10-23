@@ -20,7 +20,6 @@ import { CardModule } from 'primeng/card';
     SharedModule,
     ButtonModule,
     CardModule,
-    SharedModule,
     InputTextModule,
     BreadcrumbsModule,
     CommonModule,

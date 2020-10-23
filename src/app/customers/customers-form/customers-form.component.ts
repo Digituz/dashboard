@@ -38,7 +38,7 @@ export class CustomersFormComponent implements OnInit {
   private configureFormFields(customer: Customer) {
     let birthDay: string;
     if (customer.birthday) {
-      let customerBirthDay = customer.birthday.toString().split('-');
+      const customerBirthDay = customer.birthday.toString().split('-');
       birthDay = `${customerBirthDay[2]}/${customerBirthDay[1]}/${customerBirthDay[0]}`;
     }
     this.formFields = this.fb.group({

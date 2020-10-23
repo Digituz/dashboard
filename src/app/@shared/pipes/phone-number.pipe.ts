@@ -11,6 +11,6 @@ export class PhoneNumberPipe implements PipeTransform {
     if (value.length === 13) {
       return value.replace(/(d\{2})(\d{2})(\d{1})(\d{4})(\d{4})/g, '+$1 ($2) $3 $4-$5');
     }
-    return null;
+    return value;
   }
 }
