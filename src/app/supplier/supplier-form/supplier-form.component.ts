@@ -14,6 +14,7 @@ export class SupplierFormComponent implements OnInit {
   formFields: FormGroup;
   loading: boolean = true;
   activatedButton: boolean = true;
+  display: boolean = false;
   constructor(
     private supplierService: SupplierService,
     private fb: FormBuilder,
@@ -46,9 +47,11 @@ export class SupplierFormComponent implements OnInit {
   submit() {
     const supplierFromFields = this.formFields.value;
     supplierFromFields.id = this.supplier.id;
-
+    if (supplierFromFields.cnpj === '' || name === supplierFromFields.name) {
+      return (this.display = true);
+    }
     this.supplierService.createSupplier(supplierFromFields).subscribe(() => {
-      this.router.navigate(['/supplier']);
+      this.router.navigate(['/suppliers']);
     });
   }
 }

@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { InputMaskModule } from 'primeng/inputmask';
+import { DialogModule } from 'primeng/dialog';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
 
 import { SupplierComponent } from './supplier.component';
@@ -25,6 +26,7 @@ import { SupplierListComponent } from './supplier-list/supplier-list.component';
     InputMaskModule,
     BreadcrumbsModule,
     CardModule,
+    DialogModule,
     SupplierRoutingModule,
   ],
 })
