@@ -47,14 +47,7 @@
       </div>
       <div class="p-field p-col-6">
         <label for="birthday">Data de Nascimento</label>
-        <input
-          id="birthday"
-          name="birthday"
-          type="text"
-          formControlName="birthday"
-          pInputText
-          placeholder="Ex. 23/11/1970"
-        />
+        <p-inputMask mask="99/99/9999" formControlName="birthday" placeholder="Ex. 23/11/1970"></p-inputMask>
       </div>
       <div class="p-field p-col-6">
         <label for="zipAddress">CEP</label>

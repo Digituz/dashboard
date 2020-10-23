@@ -36,12 +36,17 @@ export class CustomersFormComponent implements OnInit {
   }
 
   private configureFormFields(customer: Customer) {
+    let birthDay: string;
+    if (customer.birthday) {
+      let customerBirthDay = customer.birthday.toString().split('-');
+      birthDay = `${customerBirthDay[2]}/${customerBirthDay[1]}/${customerBirthDay[0]}`;
+    }
     this.formFields = this.fb.group({
       cpf: [customer.cpf || ''],
       name: [customer.name || ''],
       phoneNumber: [customer.phoneNumber || ''],
       email: [customer.email || ''],
-      birthday: [customer.birthday || null],
+      birthday: [birthDay || null],
       zipAddress: [customer.zipAddress || ''],
       state: [customer.state || ''],
       city: [customer.city || ''],
@@ -54,10 +59,13 @@ export class CustomersFormComponent implements OnInit {
   }
 
   submitCustomer() {
-    const customerFromFields = this.formFields.value;
-    customerFromFields.id = this.customer.id;
+    const customerFormFields = this.formFields.value;
+    customerFormFields.id = this.customer.id;
 
-    this.customersService.saveCustomer(customerFromFields).subscribe(() => {
+    const birthDayformatToDatabase = customerFormFields.birthday.split('/');
+    customerFormFields.birthday = `${birthDayformatToDatabase[2]}-${birthDayformatToDatabase[1]}-${birthDayformatToDatabase[0]}`;
+
+    this.customersService.saveCustomer(customerFormFields).subscribe(() => {
       this.router.navigate(['/customers']);
     });
   }
