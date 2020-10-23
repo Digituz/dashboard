@@ -13,7 +13,7 @@
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
         <label for="cpf">CPF</label>
-        <input id="cpf" name="cpf" type="text" formControlName="cpf" pInputText placeholder="ex. 123.456.789-00" />
+        <p-inputMask mask="999.999.999-99" formControlName="cpf" placeholder="ex. 123.456.789-00"></p-inputMask>
       </div>
       <div class="p-field p-col-6">
         <label for="name">Nome</label>
@@ -69,6 +69,7 @@
           pInputText
           placeholder="Ex. 01305-000"
         />
+        <p-inputMask mask="99999-999" formControlName="cpf" placeholder="Ex. 01305-000"></p-inputMask>
       </div>
       <div class="p-field p-col-6">
         <label for="state">UF</label>

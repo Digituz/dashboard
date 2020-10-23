@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
 import { CustomersRoutingModule } from './customers-routing.module';
+import { InputMaskModule } from 'primeng/inputmask';
 import { CardModule } from 'primeng/card';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { CardModule } from 'primeng/card';
     InputTextModule,
     BreadcrumbsModule,
     CommonModule,
+    InputMaskModule,
     CustomersRoutingModule,
   ],
 })
