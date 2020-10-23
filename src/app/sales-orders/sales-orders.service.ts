@@ -63,4 +63,23 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
     }
     return this.httpClient.get<Pagination<SalesOrderCustomerReport>>(query);
   }
+
+  download(groupBy: string, startDate: string, endDate: string): Observable<any> {
+    const path = `${this.SALES_ORDERS_ENDPOINT}/report/xls?groupBy=${groupBy}&startDate=${startDate}&endDate=${endDate}`;
+    return this.httpClient.get(path, { responseType: 'blob' });
+  }
+
+  static createAndDownloadBlobFile(body: any, options: any, filename: any) {
+    const blob = new Blob([body], options);
+
+    const link = document.createElement('a');
+
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 }

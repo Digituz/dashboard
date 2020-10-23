@@ -89,4 +89,14 @@ export class SalesOrdersReportComponent {
       this.resultsTable.reload(this.queryParams);
     }
   }
+
+  xlsExport() {
+    const startDate = format(this.startCalendarDate, 'yyyy-MM-dd');
+    const endDate = format(this.endCalendarDate, 'yyyy-MM-dd');
+    this.salesOrdersService.download(this.groupBy.toString(), startDate, endDate).subscribe((res) => {
+      const options = { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' };
+      const filename = 'Vendas.xlsx';
+      SalesOrdersService.createAndDownloadBlobFile(res, options, filename);
+    });
+  }
 }
