@@ -120,6 +120,24 @@
       </td>
     </tr>
   </tbody>
+  <thead *ngIf="!showWarnig && selectedReport === 'APPROVAL_DATE'">
+    <tr>
+      <th>Data de Aprovação</th>
+      <th># Boleto</th>
+      <th>Boleto</th>
+      <th># Cartão</th>
+      <th>Cartão</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="!showWarnig && selectedReport === 'APPROVAL_DATE'">
+    <tr *ngFor="let result of resultsTable.currentData">
+      <td class="centered">{{ result.approvalDate | date: 'yyyy/MM/dd' }}</td>
+      <td class="centered">{{ result.bankSlipCount }}</td>
+      <td class="centered">{{ result.bankSlip | reais }}</td>
+      <td class="centered">{{ result.cardCount }}</td>
+      <td class="centered">{{ result.card | reais }}</td>
+    </tr>
+  </tbody>
 </dgz-table>
 
 <div class="dgz-table dgz-table-info" *ngIf="showWarnig">

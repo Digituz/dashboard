@@ -20,6 +20,7 @@ export class SalesOrdersReportComponent {
     { label: 'Cliente', value: 'CUSTOMER' },
     { label: 'Produto', value: 'PRODUCT' },
     { label: 'Variação do Produto', value: 'PRODUCT_VARIATION' },
+    { label: 'Data de Aprovação', value: 'APPROVAL_DATE' },
   ];
   groupBy = this.groupByOptions[0].value;
   selectedReport: string;
