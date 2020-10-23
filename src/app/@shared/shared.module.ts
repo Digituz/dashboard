@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ButtonModule } from 'primeng/button';
 
 import { LoaderComponent } from './loader/loader.component';
@@ -10,6 +9,7 @@ import { DgzSortableDirective } from './dgz-table/dgz-sortable.directive';
 import { ReaisPipe } from './pipes/reais.pipe';
 import { ButtonBackComponent } from './button-back/button-back.component';
 import { CnpjPipe } from './pipes/cnpj.pipe';
+import { PhoneNumberPipe } from './pipes/phone-number.pipe';
 
 @NgModule({
   imports: [CommonModule, ButtonModule],
@@ -21,6 +21,7 @@ import { CnpjPipe } from './pipes/cnpj.pipe';
     ReaisPipe,
     ButtonBackComponent,
     CnpjPipe,
+    PhoneNumberPipe,
   ],
   exports: [
     LoaderComponent,
@@ -30,6 +31,7 @@ import { CnpjPipe } from './pipes/cnpj.pipe';
     ReaisPipe,
     CnpjPipe,
     ButtonBackComponent,
+    PhoneNumberPipe,
   ],
 })
 export class SharedModule {}

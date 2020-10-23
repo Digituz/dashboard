@@ -40,7 +40,7 @@
     <tr *ngFor="let customer of customersTable.currentData">
       <td>{{ customer.name }}</td>
       <td class="centered">{{ customer.city }} / {{ customer.state }}</td>
-      <td class="centered">{{ customer.phoneNumber }}</td>
+      <td class="centered">{{ customer.phoneNumber | phoneNumber }}</td>
       <td class="actions">
         <button
           [title]="'Cliente'"
