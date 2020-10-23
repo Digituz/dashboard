@@ -9,7 +9,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
 
 import { SupplierComponent } from './supplier.component';
-import { SupplierRoutinModule } from './supplier-routing.module';
+import { SupplierRoutingModule } from './supplier-routing.module';
 import { SupplierFormComponent } from './supplier-form/supplier-form.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 
@@ -25,7 +25,7 @@ import { SupplierListComponent } from './supplier-list/supplier-list.component';
     InputMaskModule,
     BreadcrumbsModule,
     CardModule,
-    SupplierRoutinModule,
+    SupplierRoutingModule,
   ],
 })
 export class SupplierModule {}

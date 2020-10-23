@@ -3,7 +3,7 @@
     <label>Controle seus fornecedores de forma simplificada.</label>
   </p>
   <div class="actions">
-    <a title="Novo Fornecedor" routerLink="/supplier/new"
+    <a title="Novo Fornecedor" routerLink="/suppliers/new"
       ><button pButton type="button" label="Novo Fornecedor"></button
     ></a>
   </div>
@@ -21,7 +21,7 @@
       <td class="centered">{{ supplier.cnpj }}</td>
       <td>{{ supplier.name }}</td>
       <td class="actions">
-        <a [title]="'Fornecedores'" [routerLink]="'/supplier/' + supplier.id"
+        <a [title]="'Fornecedores'" [routerLink]="'/suppliers/' + supplier.id"
           ><button pButton type="button" label="Editar"></button
         ></a>
       </td>

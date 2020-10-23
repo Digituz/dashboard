@@ -18,7 +18,7 @@ export class SupplierService {
     sortDirectionAscending?: boolean,
     queryParams?: import('../util/pagination').QueryParam[]
   ): Observable<Pagination<Supplier>> {
-    let query = `${this.SUPPLIERS_ENDPOINT}?page=${pageNumber}&limit=${pageSize}`;
+    let query = `${this.SUPPLIERS_ENDPOINT}/?page=${pageNumber}&limit=${pageSize}`;
 
     if (sortedBy) {
       query += `&sortedBy=${sortedBy}`;
@@ -26,15 +26,12 @@ export class SupplierService {
     if (sortDirectionAscending !== undefined) {
       query += `&sortDirectionAscending=${sortDirectionAscending}`;
     }
-
     if (queryParams) {
-      queryParams
-        .filter((queryParam) => {
-          return queryParam !== null && queryParam.value !== null && queryParam.value !== undefined;
-        })
-        .forEach((queryParam) => {
-          query += `&${queryParam.key}=${queryParam.value}`;
-        });
+      query += queryParams
+        .filter((queryParam) => queryParam !== null)
+        .filter((queryParam) => !!queryParam.value)
+        .map((queryParam) => `&${queryParam.key}=${queryParam.value}`)
+        .join('');
     }
     return this.httpClient.get<Pagination<Supplier>>(query);
   }
@@ -44,7 +41,6 @@ export class SupplierService {
   }
 
   createSupplier(supplier: Supplier) {
-    console.log(supplier.id);
     if (supplier.id) {
       return this.httpClient.put<void>(`${this.SUPPLIERS_ENDPOINT}/${supplier.id}`, supplier);
     }
