@@ -14,7 +14,7 @@ import { createAndDownloadBlobFile } from '../../util/util';
   styleUrls: ['./sales-orders-report.component.scss'],
 })
 export class SalesOrdersReportComponent {
-  @ViewChild('resultsTable') resultsTable: DgzTableComponent<SalesOrderCustomerReport>;
+  @ViewChild('resultsTable') resultsTable: DgzTableComponent<any>;
   loading = false;
   startCalendarDate: Date;
   endCalendarDate: Date;

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Customer } from '../customer.entity';
 import { CustomersService } from '../customers.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { format, parse } from 'date-fns';
 
 @Component({
   selector: 'app-customers-form',
@@ -59,13 +60,16 @@ export class CustomersFormComponent implements OnInit {
   }
 
   submitCustomer() {
-    const customerFormFields = this.formFields.value;
-    customerFormFields.id = this.customer.id;
+    const customer = {
+      ...this.formFields.value,
+      id: this.customer.id,
+    };
 
-    const birthDayformatToDatabase = customerFormFields.birthday.split('/');
-    customerFormFields.birthday = `${birthDayformatToDatabase[2]}-${birthDayformatToDatabase[1]}-${birthDayformatToDatabase[0]}`;
-
-    this.customersService.saveCustomer(customerFormFields).subscribe(() => {
+    const birthDayformatToDatabase = customer.birthday.split('/');
+    customer.birthday = `${birthDayformatToDatabase[2]}-${birthDayformatToDatabase[1]}-${birthDayformatToDatabase[0]}`;
+    //console.log(parse('08/06/1198', 'yyyy-MM-dd', new Date()));
+    //console.log(customer.birthday);
+    this.customersService.saveCustomer(customer).subscribe(() => {
       this.router.navigate(['/customers']);
     });
   }
