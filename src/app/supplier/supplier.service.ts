@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Pagination } from '@app/util/pagination';
 
+import { QueryParam } from '../util/pagination';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,7 +18,7 @@ export class SupplierService {
     pageSize: number,
     sortedBy?: string,
     sortDirectionAscending?: boolean,
-    queryParams?: import('../util/pagination').QueryParam[]
+    queryParams?: QueryParam[]
   ): Observable<Pagination<Supplier>> {
     let query = `${this.SUPPLIERS_ENDPOINT}/?page=${pageNumber}&limit=${pageSize}`;
 
