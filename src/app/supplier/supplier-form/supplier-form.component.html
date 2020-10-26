@@ -1,0 +1,28 @@
+<div class="feature-header">
+  <p>
+    <label>Atualize os dados do Fornecedor no formulário abaixo.</label>
+  </p>
+  <div class="actions">
+    <app-button-back fallbackURL="/suppliers"></app-button-back>
+
+    <button (click)="submit()" pButton type="button" label="Salvar"></button>
+  </div>
+</div>
+<p-card>
+  <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <label for="cnpj">CNPJ</label>
+        <p-inputMask mask="99.999.999/9999-99" placeholder="ex. 12.345.678/9123-45" formControlName="cnpj">
+        </p-inputMask>
+      </div>
+      <div class="p-field p-col-6">
+        <label for="name">Nome</label>
+        <input id="name" name="name" type="text" formControlName="name" pInputText placeholder="Ex. Digituz LTDA" />
+      </div>
+    </div>
+  </form>
+</p-card>
+<p-dialog header="Preencha Todos os Campos" [(visible)]="display">
+  É necessario preencher todos os campos para que possa salvar o formulário
+</p-dialog>
