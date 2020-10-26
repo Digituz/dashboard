@@ -67,18 +67,4 @@ export class InventoryService implements IDataProvider<Inventory> {
     const path = `${this.INVENTORY_ENDPOINT}/xls`;
     return this.httpClient.get(path, { responseType: 'blob' });
   }
-
-  static createAndDownloadBlobFile(body: any, options: any, filename: any) {
-    const blob = new Blob([body], options);
-
-    const link = document.createElement('a');
-
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', filename);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
 }
