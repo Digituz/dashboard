@@ -71,7 +71,7 @@ export class CustomersFormComponent implements OnInit {
 
     customer.birthday = parse(customer.birthday, 'dd/MM/yyyy', new Date());
 
-    if (!this.validateDate(customer.birthday)) {
+    if (!this.validationDate(customer.birthday)) {
       this.showDialog();
       return;
     }
@@ -83,7 +83,7 @@ export class CustomersFormComponent implements OnInit {
     });
   }
 
-  validateDate(date: string) {
+  validationDate(date: string) {
     const dataEmValidacao = new Date(date);
     if (isValid(dataEmValidacao)) {
       if (isAfter(dataEmValidacao, new Date())) {
