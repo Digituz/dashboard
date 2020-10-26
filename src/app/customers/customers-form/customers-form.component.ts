@@ -44,6 +44,7 @@ export class CustomersFormComponent implements OnInit {
       //a data com 1 dia subitraido ex: no banco 08/06 no form 07/06
       birthDay = format(addDays(new Date(customer.birthday), 1), 'dd/MM/yyyy');
     }
+
     this.formFields = this.fb.group({
       cpf: [customer.cpf || ''],
       name: [customer.name || ''],
@@ -60,9 +61,11 @@ export class CustomersFormComponent implements OnInit {
     });
     this.loading = false;
   }
+
   showDialog() {
     this.display = true;
   }
+
   submitCustomer() {
     const customer = {
       ...this.formFields.value,
