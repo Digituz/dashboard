@@ -31,6 +31,7 @@
 >
   <thead>
     <tr>
+      <th></th>
       <th dgz-sortable="sku">SKU</th>
       <th dgz-sortable="title">Título</th>
       <th dgz-sortable="currentPosition">Estoque</th>
@@ -39,7 +40,15 @@
   </thead>
   <tbody>
     <tr *ngFor="let inventory of inventoryTable.currentData">
-      <td>{{ inventory.productVariationDetails.sku }}</td>
+      <td class="thumbnail">
+        <div>
+          <i *ngIf="!inventory.productVariationDetails.thumbnail" class="fal fa-images"></i>
+          <div class="square" *ngIf="inventory.productVariationDetails.thumbnail">
+            <img [src]="inventory.productVariationDetails.thumbnail" [alt]="inventory.productVariationDetails.title" />
+          </div>
+        </div>
+      </td>
+      <td class="centered">{{ inventory.productVariationDetails.sku }}</td>
       <td>{{ inventory.productVariationDetails.title }}</td>
       <td class="currency">{{ inventory.currentPosition }}</td>
       <td class="actions">
