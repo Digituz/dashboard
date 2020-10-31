@@ -43,6 +43,7 @@
 >
   <thead>
     <tr>
+      <th></th>
       <th dgz-sortable="sku">SKU</th>
       <th dgz-sortable="title">Título</th>
       <th dgz-sortable="sellingPrice">Preço</th>
@@ -53,7 +54,15 @@
   </thead>
   <tbody>
     <tr *ngFor="let product of productsTable.currentData">
-      <td>{{ product.sku }}</td>
+      <td class="thumbnail">
+        <div>
+          <i *ngIf="!product.thumbnail" class="fal fa-images"></i>
+          <div class="square" *ngIf="product.thumbnail">
+            <img [src]="product.thumbnail" [alt]="product.title" />
+          </div>
+        </div>
+      </td>
+      <td class="centered">{{ product.sku }}</td>
       <td>{{ product.title }}</td>
       <td class="currency">{{ product.sellingPrice | reais }}</td>
       <td class="centered">

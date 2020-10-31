@@ -16,6 +16,7 @@ export default class Product {
   weight?: number;
   isActive?: boolean;
   ncm?: string;
+  thumbnail?: string;
   variationsSize?: number = 0;
   productVariations?: ProductVariation[];
   productComposition?: ProductComposition[];

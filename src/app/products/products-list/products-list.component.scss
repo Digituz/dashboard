@@ -1,0 +1,41 @@
+.thumbnail {
+  padding: 0;
+  width: 50px;
+  padding: 5px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    div.square {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      border: 2px solid #f4f4f4;
+      border-radius: 10px;
+
+      img {
+        position: absolute;
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    i {
+      height: 40px;
+      width: 40px;
+      border: 2px solid #f4f4f4;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+    }
+  }
+}
