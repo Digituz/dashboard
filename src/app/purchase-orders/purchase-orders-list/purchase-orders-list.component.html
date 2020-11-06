@@ -1,0 +1,51 @@
+<div class="search-container">
+  <form (ngSubmit)="querySupplier()">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="query">Pesquisa</label>
+        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <button pButton type="submit" label="Pesquisar"></button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="feature-header">
+  <p>
+    <label>Controle seus fornecedores de forma simplificada.</label>
+  </p>
+  <div class="actions">
+    <a title="Novo Fornecedor" routerLink="/suppliers/new"
+      ><button pButton type="button" label="Novo Fornecedor"></button
+    ></a>
+  </div>
+</div>
+<dgz-table
+  #purchaseOrderTable
+  [dataProvider]="this"
+  name="supplier-list"
+  [queryParams]="queryParams"
+  (updateQueryParams)="updateQueryParams($event)"
+>
+  <thead>
+    <tr>
+      <th dgz-sortable="cnpj">CNPJ</th>
+      <th dgz-sortable="name">Nome</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let purchaseOrder of purchaseOrderTable.currentData">
+      <td class="centered">{{ purchaseOrder.cnpj | cnpj }}</td>
+      <td>{{ purchaseOrder.name }}</td>
+      <td class="actions">
+        <a [title]="'Fornecedores'" [routerLink]="'/suppliers/' + purchaseOrder.id"
+          ><button pButton type="button" label="Editar"></button
+        ></a>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>

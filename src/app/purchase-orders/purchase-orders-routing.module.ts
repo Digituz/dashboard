@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { extract } from '@app/i18n';
 import { Shell } from '@app/shell/shell.service';
+import { PurchaseOrdersFormComponent } from './purchase-orders-form/purchase-orders-form.component';
+import { PurchaseOrdersListComponent } from './purchase-orders-list/purchase-orders-list.component';
 import { PurchaseOrdersComponent } from './purchase-orders.component';
 
 const routes: Routes = [
@@ -17,10 +19,18 @@ const routes: Routes = [
       children: [
         {
           path: '',
-          component: PurchaseOrdersComponent,
+          component: PurchaseOrdersListComponent,
           data: {
             title: 'Lista de Compras',
             breadcrumb: 'Lista',
+          },
+        },
+        {
+          path: ':referenceCode',
+          component: PurchaseOrdersFormComponent,
+          data: {
+            title: 'Nova Compra',
+            breadcrumb: 'Compra',
           },
         },
       ],
