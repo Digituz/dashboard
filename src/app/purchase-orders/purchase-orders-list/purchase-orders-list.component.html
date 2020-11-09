@@ -26,23 +26,27 @@
 <dgz-table
   #purchaseOrderTable
   [dataProvider]="this"
-  name="supplier-list"
+  name="purchase-order-list"
   [queryParams]="queryParams"
   (updateQueryParams)="updateQueryParams($event)"
 >
   <thead>
     <tr>
-      <th dgz-sortable="cnpj">CNPJ</th>
-      <th dgz-sortable="name">Nome</th>
+      <th dgz-sortable="referenceCode">Código</th>
+      <th dgz-sortable="creationDate">Data de criação</th>
+      <th dgz-sortable="discount">Desconto</th>
+      <th dgz-sortable="shippingPrice">Taxa de Entrega</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let purchaseOrder of purchaseOrderTable.currentData">
-      <td class="centered">{{ purchaseOrder.cnpj | cnpj }}</td>
-      <td>{{ purchaseOrder.name }}</td>
+      <td class="centered">{{ purchaseOrder.referenceCode }}</td>
+      <td class="centered">{{ purchaseOrder.creationDate | date }}</td>
+      <td class="centered">{{ purchaseOrder.discount }}</td>
+      <td class="centered">{{ purchaseOrder.shippingPrice }}</td>
       <td class="actions">
-        <a [title]="'Fornecedores'" [routerLink]="'/suppliers/' + purchaseOrder.id"
+        <a [title]="'Fornecedores'" [routerLink]="'/purchase-orders/' + purchaseOrder.id"
           ><button pButton type="button" label="Editar"></button
         ></a>
       </td>
