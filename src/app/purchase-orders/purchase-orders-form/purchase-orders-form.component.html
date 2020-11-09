@@ -5,11 +5,11 @@
   <div class="actions">
     <app-button-back fallbackURL="/purchase-orders"></app-button-back>
 
-    <button pButton type="button" label="Salvar"></button>
+    <button (click)="submit()" pButton type="button" label="Salvar"></button>
   </div>
 </div>
 <p-card>
-  <form [formGroup]="formFields" (ngSubmit)="submit()">
+  <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
         <label for="referenceCode">Código de Referencia</label>
@@ -24,14 +24,7 @@
       </div>
       <div class="p-field p-col-6">
         <label for="creationDate">Data do Pedido</label>
-        <input
-          id="creationDate"
-          name="creationDate"
-          type="text"
-          formControlName="creationDate"
-          pInputText
-          placeholder="Ex. 08/06/2020"
-        />
+        <p-inputMask mask="99/99/9999" placeholder="ex. 01/06/2020" formControlName="creationDate"></p-inputMask>
       </div>
       <div class="p-field p-col-4">
         <label class="input-label" for="total">Total (R$)</label>
