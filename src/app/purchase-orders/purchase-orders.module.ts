@@ -5,7 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { PurchaseOrdersComponent } from './purchase-orders.component';
 import { PurchaseOrdersRoutingModule } from './purchase-orders-routing.module';
@@ -23,7 +23,7 @@ import { PurchaseOrdersListComponent } from './purchase-orders-list/purchase-ord
     ReactiveFormsModule,
     ButtonModule,
     CardModule,
-    InputMaskModule,
+    InputNumberModule,
   ],
 })
 export class PurchaseOrdersModule {}
