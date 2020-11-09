@@ -6,14 +6,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputMaskModule } from 'primeng/inputmask';
 
 import { PurchaseOrdersComponent } from './purchase-orders.component';
 import { PurchaseOrdersRoutingModule } from './purchase-orders-routing.module';
 import { PurchaseOrdersFormComponent } from './purchase-orders-form/purchase-orders-form.component';
 import { PurchaseOrdersListComponent } from './purchase-orders-list/purchase-orders-list.component';
+import { PurchaseOrdersItensFormComponent } from './purchase-orders-itens-form/purchase-orders-itens-form.component';
 
 @NgModule({
-  declarations: [PurchaseOrdersComponent, PurchaseOrdersFormComponent, PurchaseOrdersListComponent],
+  declarations: [
+    PurchaseOrdersComponent,
+    PurchaseOrdersFormComponent,
+    PurchaseOrdersListComponent,
+    PurchaseOrdersItensFormComponent,
+  ],
   imports: [
     CommonModule,
     PurchaseOrdersRoutingModule,
@@ -24,6 +31,7 @@ import { PurchaseOrdersListComponent } from './purchase-orders-list/purchase-ord
     ButtonModule,
     CardModule,
     InputNumberModule,
+    InputMaskModule,
   ],
 })
 export class PurchaseOrdersModule {}
