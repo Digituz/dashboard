@@ -4,6 +4,8 @@ import { SharedModule } from '@app/@shared';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputMaskModule } from 'primeng/inputmask';
 
 import { PurchaseOrdersComponent } from './purchase-orders.component';
 import { PurchaseOrdersRoutingModule } from './purchase-orders-routing.module';
@@ -20,6 +22,8 @@ import { PurchaseOrdersListComponent } from './purchase-orders-list/purchase-ord
     FormsModule,
     ReactiveFormsModule,
     ButtonModule,
+    CardModule,
+    InputMaskModule,
   ],
 })
 export class PurchaseOrdersModule {}
