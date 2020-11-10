@@ -1,1 +1,3 @@
-export interface PurchaseOrderItem {}
+export interface PurchaseOrderItem {
+  quantity?: number;
+}
