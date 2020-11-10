@@ -153,10 +153,10 @@ export class PurchaseOrdersFormComponent implements OnInit {
     });
   }
 
-  private createItemsForSalesOrder(salesOrderDTO: SalesOrderDTO): FormArray {
-    return this.fb.array(
-      salesOrderDTO.items.map((item) => this.createItem(item)),
+  private createItemsPurchaseOrder(purchaseOrder: PurchaseOrder): FormArray {
+    return; /* this.fb.array(
+      purchaseOrder.items.map((item) => this.createItem(item)),
       [Validators.required, Validators.minLength(1)]
-    );
+    ); */
   }
 }
