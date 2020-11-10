@@ -37,6 +37,7 @@
           locale="pt-BR"
           [minFractionDigits]="2"
           [maxFractionDigits]="2"
+          [disabled]="true"
           placeholder="ex. R$ 10,00"
         ></p-inputNumber>
       </div>
@@ -70,4 +71,68 @@
       </div>
     </div>
   </form>
+  <div class="actions">
+    <button (click)="addItem()" pButton type="button" label="Adicionar Produto"></button>
+  </div>
 </p-card>
+
+<div style="margin-top: 20px;">
+  <div class="feature-header">
+    <p>
+      <label>Produtos</label>
+    </p>
+    <div class="actions">
+      <button (click)="addItem()" pButton type="button" label="Adicionar Produto"></button>
+    </div>
+  </div>
+  <p-card>
+    <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
+      <div class="p-col-12" formArrayName="items" *ngFor="let control of purchaseOrderItems.controls; index as i">
+        <div [formGroupName]="i" class="p-fluid p-formgrid p-grid p-col-12">
+          <div class="p-field p-col-7">
+            <p-autoComplete
+              formControlName="productVariation"
+              [suggestions]="productVariations"
+              (completeMethod)="searchProductVariations($event)"
+              (onBlur)="selectProductVariation($event, i)"
+              [multiple]="false"
+              field="completeDescription"
+              placeholder="Selecione um produto"
+            >
+              <ng-template let-productVariation pTemplate="item">
+                <div>{{ productVariation.sku }} - {{ productVariation.title }}</div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+          <div class="p-field p-col-2">
+            <p-spinner formControlName="amount" [min]="0" (onChange)="updatePrice()"></p-spinner>
+          </div>
+          <div class="p-field p-col-2">
+            <p-inputNumber
+              id="price"
+              name="price"
+              formControlName="price"
+              currency="BRL"
+              mode="currency"
+              locale="pt-BR"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              [disabled]="true"
+              placeholder="ex. R$ 10,00"
+            ></p-inputNumber>
+          </div>
+          <div class="p-field p-col-1">
+            <button
+              pButton
+              icon="fal fa-trash"
+              class="ui-button-danger"
+              style="width: 100%;"
+              pTooltip="Remover item"
+              (click)="removeItem(i)"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>
