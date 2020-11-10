@@ -39,4 +39,8 @@ export class PurchaseOrdersService {
   save(purchaseOrder: PurchaseOrder): Observable<void> {
     return this.httpClient.post<void>(this.PURCHASE_ORDER_ENDPOINT, purchaseOrder);
   }
+
+  loadPurchaseOrder(referenceCode: string): Observable<PurchaseOrder> {
+    return this.httpClient.get<PurchaseOrder>(`${this.PURCHASE_ORDER_ENDPOINT}/${referenceCode}`);
+  }
 }

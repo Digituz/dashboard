@@ -33,16 +33,33 @@ export class PurchaseOrdersFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params.referenceCode;
+    const referenceCode = this.route.snapshot.params.referenceCode;
 
-    if (id === 'new') {
+    if (referenceCode === 'new') {
       this.purchaseOrder = {};
       this.configureFormFields(this.purchaseOrder);
     } else {
+      const purchaseOrder = this.purcahseOrderService.loadPurchaseOrder(referenceCode).subscribe((results) => {
+        console.log(results);
+        const order: PurchaseOrder = {
+          creationDate: results.creationDate,
+          discount: results.discount,
+          referenceCode: results.referenceCode,
+          total: results.total,
+          shippingPrice: results.shippingPrice,
+          supplier: results.supplier,
+          items: results.items,
+        };
+        this.configureFormFields(order);
+      });
+      console.log(purchaseOrder);
     }
   }
 
   configureFormFields(purchaseOrder: PurchaseOrder) {
+    const itemsField = purchaseOrder.items
+      ? this.createItemsPurchaseOrder(purchaseOrder)
+      : this.fb.array([this.createItem()], [Validators.required, Validators.minLength(1)]);
     this.formFields = this.fb.group({
       supplier: [purchaseOrder.supplier || ''],
       referenceCode: [purchaseOrder.referenceCode || ''],
@@ -50,7 +67,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
       total: [purchaseOrder.total || 0.0],
       discount: [purchaseOrder.discount || 0.0],
       shippingPrice: [purchaseOrder.shippingPrice || 0.0],
-      items: this.purchaseOrderItems,
+      items: itemsField,
     });
     this.loading = false;
   }
@@ -79,9 +96,8 @@ export class PurchaseOrdersFormComponent implements OnInit {
 
   createItem(purchaseOrderItem?: PurchaseOrderItem): FormGroup {
     return this.fb.group({
-      productVariation: [purchaseOrderItem || null],
+      productVariation: [purchaseOrderItem.productVariation || null],
       price: [purchaseOrderItem ? purchaseOrderItem.productVariation.sellingPrice : 0],
-      discount: [purchaseOrderItem ? purchaseOrderItem.discount : 0],
       amount: [purchaseOrderItem ? purchaseOrderItem.amount : 0],
     });
   }
@@ -116,7 +132,13 @@ export class PurchaseOrdersFormComponent implements OnInit {
     const total = values.total;
     const discount = values.discount;
     const shippingPrice = values.shippingPrice;
-    const items = values.items;
+    const items = values.items.map((item: any) => {
+      return {
+        amount: item.amount,
+        price: item.price,
+        productVariation: item.productVariation.id,
+      };
+    });
     const purchaseOrder: PurchaseOrder = {
       supplier,
       referenceCode,
@@ -129,5 +151,12 @@ export class PurchaseOrdersFormComponent implements OnInit {
     this.purcahseOrderService.save(purchaseOrder).subscribe(() => {
       this.router.navigate(['/purchase-orders']);
     });
+  }
+
+  private createItemsForSalesOrder(salesOrderDTO: SalesOrderDTO): FormArray {
+    return this.fb.array(
+      salesOrderDTO.items.map((item) => this.createItem(item)),
+      [Validators.required, Validators.minLength(1)]
+    );
   }
 }
