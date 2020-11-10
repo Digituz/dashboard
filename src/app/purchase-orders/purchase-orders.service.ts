@@ -35,4 +35,8 @@ export class PurchaseOrdersService {
     }
     return this.httpClient.get<Pagination<PurchaseOrder>>(query);
   }
+
+  save(purchaseOrder: PurchaseOrder): Observable<void> {
+    return this.httpClient.post<void>(this.PURCHASE_ORDER_ENDPOINT, purchaseOrder);
+  }
 }
