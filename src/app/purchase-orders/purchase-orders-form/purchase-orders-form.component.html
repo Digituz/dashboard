@@ -11,6 +11,17 @@
 <p-card>
   <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
     <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="referenceCode">Fornecedor</label>
+        <p-autoComplete
+          formControlName="supplier"
+          [suggestions]="supplierSugestion"
+          (completeMethod)="searchSuppliers($event)"
+          [multiple]="false"
+          field="completeDescription"
+          placeholder="Selecione fornecedor"
+        ></p-autoComplete>
+      </div>
       <div class="p-field p-col-6">
         <label for="referenceCode">Código de Referencia</label>
         <input
@@ -47,6 +58,7 @@
           id="discount"
           name="discount"
           formControlName="discount"
+          (onBlur)="updatePrice()"
           currency="BRL"
           mode="currency"
           locale="pt-BR"
@@ -71,9 +83,6 @@
       </div>
     </div>
   </form>
-  <div class="actions">
-    <button (click)="addItem()" pButton type="button" label="Adicionar Produto"></button>
-  </div>
 </p-card>
 
 <div style="margin-top: 20px;">
@@ -89,12 +98,21 @@
     <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
       <div class="p-col-12" formArrayName="items" *ngFor="let control of purchaseOrderItems.controls; index as i">
         <div [formGroupName]="i" class="p-fluid p-formgrid p-grid p-col-12">
+          <div class="p-col-7">
+            <label class="input-label">Produto</label>
+          </div>
+          <div class="p-col-2">
+            <label class="input-label">Preço</label>
+          </div>
+          <div class="p-col-2">
+            <label class="input-label">Quant.</label>
+          </div>
           <div class="p-field p-col-7">
             <p-autoComplete
               formControlName="productVariation"
-              [suggestions]="productVariations"
+              [suggestions]="productVariationsSugestion"
               (completeMethod)="searchProductVariations($event)"
-              (onBlur)="selectProductVariation($event, i)"
+              (ngModelChange)="selectProductVariation($event, i)"
               [multiple]="false"
               field="completeDescription"
               placeholder="Selecione um produto"
@@ -103,9 +121,6 @@
                 <div>{{ productVariation.sku }} - {{ productVariation.title }}</div>
               </ng-template>
             </p-autoComplete>
-          </div>
-          <div class="p-field p-col-2">
-            <p-spinner formControlName="amount" [min]="0" (onChange)="updatePrice()"></p-spinner>
           </div>
           <div class="p-field p-col-2">
             <p-inputNumber
@@ -120,6 +135,9 @@
               [disabled]="true"
               placeholder="ex. R$ 10,00"
             ></p-inputNumber>
+          </div>
+          <div class="p-field p-col-2">
+            <p-spinner formControlName="amount" [min]="0" (onChange)="updatePrice()"></p-spinner>
           </div>
           <div class="p-field p-col-1">
             <button

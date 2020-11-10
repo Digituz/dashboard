@@ -1,3 +1,7 @@
+import { ProductVariationDetailsDTO } from '@app/products/product-variation-details.dto';
+
 export interface PurchaseOrderItem {
-  quantity?: number;
+  productVariation?: ProductVariationDetailsDTO;
+  discount?: number;
+  amount?: number;
 }
