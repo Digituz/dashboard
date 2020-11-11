@@ -53,7 +53,7 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
   }
 
   loadReport(queryParams?: QueryParam[]): Observable<Pagination<SalesOrderCustomerReport>> {
-    let query = `${this.SALES_ORDERS_ENDPOINT}/report?page=1`;
+    let query = `${this.SALES_ORDERS_ENDPOINT}/report?page=1&xlsx=false`;
     if (queryParams) {
       query += queryParams
         .filter((queryParam) => queryParam !== null)
@@ -62,5 +62,10 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
         .join('');
     }
     return this.httpClient.get<Pagination<SalesOrderCustomerReport>>(query);
+  }
+
+  download(groupBy: string, startDate: string, endDate: string): Observable<any> {
+    const path = `${this.SALES_ORDERS_ENDPOINT}/report?groupBy=${groupBy}&startDate=${startDate}&endDate=${endDate}&xlsx=true`;
+    return this.httpClient.get(path, { responseType: 'blob' });
   }
 }

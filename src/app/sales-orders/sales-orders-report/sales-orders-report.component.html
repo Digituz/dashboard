@@ -22,6 +22,7 @@
       <div class="orderForm">
         <button pButton type="submit" class="ui-button-primary" label="Agrupar"></button>
       </div>
+      <button pButton type="submit" class="ui-button-secondary" label="Baixar Relátorio" (click)="xlsExport()"></button>
     </div>
   </form>
 </p-card>
@@ -107,7 +108,7 @@
       <td class="centered">{{ productVariationReport.amount }}</td>
       <td class="centered">{{ productVariationReport.total | reais }}</td>
       <td class="centered">
-        <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productVariationReport.productSku">
+        <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productVariationReport.productsku">
           <button
             pButton
             type="button"

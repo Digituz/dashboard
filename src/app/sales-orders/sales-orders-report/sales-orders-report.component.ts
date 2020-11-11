@@ -6,6 +6,8 @@ import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 import { SalesOrdersService } from '../sales-orders.service';
 import { SalesOrderCustomerReport } from './sales-order-customer-report.interface';
+import { createAndDownloadBlobFile } from '../../util/util';
+
 @Component({
   selector: 'app-sales-orders-report',
   templateUrl: './sales-orders-report.component.html',
@@ -88,5 +90,15 @@ export class SalesOrdersReportComponent {
     if (this.resultsTable) {
       this.resultsTable.reload(this.queryParams);
     }
+  }
+
+  xlsExport() {
+    const startDate = format(this.startCalendarDate, 'yyyy-MM-dd');
+    const endDate = format(this.endCalendarDate, 'yyyy-MM-dd');
+    this.salesOrdersService.download(this.groupBy.toString(), startDate, endDate).subscribe((res) => {
+      const options = { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' };
+      const filename = 'Vendas.xlsx';
+      createAndDownloadBlobFile(res, options, filename);
+    });
   }
 }

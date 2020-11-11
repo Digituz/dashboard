@@ -5,6 +5,7 @@ import { Pagination, IDataProvider, QueryParam } from '@app/util/pagination';
 import { Inventory } from '@app/inventory/inventory.entity';
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import { MoveInventoryDialogComponent } from '../move-inventory-dialog/move-inventory-dialog.component';
+import { createAndDownloadBlobFile } from '../../util/util';
 
 @Component({
   selector: 'app-inventory-list',
@@ -49,7 +50,7 @@ export class InventoryListComponent implements OnInit, IDataProvider<Inventory> 
     this.inventoryService.download().subscribe((res) => {
       const options = { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' };
       const filename = 'Estoque.xlsx';
-      InventoryService.createAndDownloadBlobFile(res, options, filename);
+      createAndDownloadBlobFile(res, options, filename);
     });
   }
 }
