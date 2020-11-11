@@ -1,0 +1,15 @@
+<p-dialog
+  [(visible)]="isModalVisible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [resizable]="false"
+  [draggable]="false"
+  [style]="{ width: '400px', heigth: '200px' }"
+>
+  <p-header> Ouve um Erro</p-header>
+  <p>{{ errorMessage }}</p>
+
+  <p-footer>
+    <button pButton type="button" class="ui-button-primary" (click)="close()" label="Ok"></button>
+  </p-footer>
+</p-dialog>

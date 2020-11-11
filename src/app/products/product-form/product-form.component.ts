@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductsService } from '../products.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import Product from '../product.entity';
@@ -22,7 +22,8 @@ interface Category {
 })
 export class ProductFormComponent implements OnInit {
   @ViewChild('productCompositionComponent') productCompositionComponent: ProductCompositionComponent;
-
+  showErrorModal = false;
+  errorMessage: string;
   formFields: FormGroup;
   formFieldsVariation: FormGroup;
   productDetails: string;
@@ -80,17 +81,17 @@ export class ProductFormComponent implements OnInit {
 
   private configureFormFields(product: Product) {
     this.formFields = this.fb.group({
-      sku: [{ value: product.sku || '', disabled: !!product.id }],
-      ncm: [product.ncm || ''],
-      title: [product.title || ''],
-      description: [product.description || ''],
+      sku: [{ value: product.sku || '', disabled: !!product.id }, Validators.required],
+      ncm: [product.ncm || '', Validators.required],
+      title: [product.title || '', Validators.required],
+      description: [product.description || '', Validators.required],
       sellingPrice: [{ value: product.sellingPrice || null, disabled: true }],
       height: [product.height || null],
       width: [product.width || null],
       length: [product.length || null],
       weight: [product.weight || null],
-      isActive: [product.isActive || false],
-      category: [product.category || false],
+      isActive: [product.isActive || false, Validators.required],
+      category: [product.category || false, Validators.required],
     });
     this.productDetails = product.productDetails || '';
     this.loading = false;
@@ -108,6 +109,12 @@ export class ProductFormComponent implements OnInit {
       product.sku = this.product.sku;
     }
 
+    if (!this.formFields.valid) {
+      this.errorMessage = 'Pensando';
+      this.showErrorModal = true;
+    } else {
+    }
+
     this.productService.saveProduct(product).subscribe(() => {
       this.router.navigate(['/products']);
     });
@@ -119,9 +126,9 @@ export class ProductFormComponent implements OnInit {
 
   newProductVariation(): void {
     this.formFieldsVariation = this.fb.group({
-      sku: '',
-      description: '',
-      sellingPrice: '',
+      sku: [null, Validators.required],
+      description: [null, Validators.required],
+      sellingPrice: [null, Validators.required],
     });
     this.isModalVisible = true;
     this.showRemoveButton = false;
@@ -154,17 +161,31 @@ export class ProductFormComponent implements OnInit {
 
   submitVariation(): void {
     const inputValues = this.formFieldsVariation.value;
-    if (this.variationBeingEdited) {
-      Object.assign(this.variationBeingEdited, inputValues);
-      this.variations = [...this.variations];
+    if (!this.formFieldsVariation.valid) {
+      this.showErrorModal = true;
+      this.errorMessage = 'Preencha todos os Campos do Formulario';
     } else {
-      const variation: ProductVariation = {
-        parentSku: this.product.sku,
-        ...inputValues,
-      };
-      this.variations = [...this.variations, variation];
+      if (this.variationBeingEdited) {
+        Object.assign(this.variationBeingEdited, inputValues);
+        this.variations = [...this.variations];
+      } else {
+        const variation: ProductVariation = {
+          parentSku: this.product.sku,
+          ...inputValues,
+        };
+
+        this.productService.findProductVariations(inputValues.sku).subscribe((results) => {
+          console.log(results);
+          if (results.length > 0) {
+            this.errorMessage = 'Já existe uma variação cadastrada com este SKU';
+            this.showErrorModal = true;
+          } else {
+            this.variations = [...this.variations, variation];
+            this.isModalVisible = false;
+          }
+        });
+      }
     }
-    this.isModalVisible = false;
   }
 
   removeItemFromComposition(removedItem: ProductComposition) {
@@ -190,5 +211,9 @@ export class ProductFormComponent implements OnInit {
         },
       },
     });
+  }
+
+  changeVisibilityError(event: any) {
+    if (event === 'false') this.showErrorModal = false;
   }
 }

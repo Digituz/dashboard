@@ -274,3 +274,8 @@
   </p-footer>
 </p-dialog>
 <app-product-composition #productCompositionComponent (onItemChosen)="onItemChosen($event)"></app-product-composition>
+<app-alert
+  [errorMessage]="errorMessage"
+  [isModalVisible]="showErrorModal"
+  (changeVisibilityError)="changeVisibilityError($event)"
+></app-alert>
