@@ -11,7 +11,6 @@ import { DgzSortableDirective } from './dgz-table/dgz-sortable.directive';
 import { ReaisPipe } from './pipes/reais.pipe';
 import { ButtonBackComponent } from './button-back/button-back.component';
 import { CnpjPipe } from './pipes/cnpj.pipe';
-import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   imports: [CommonModule, ButtonModule, DialogModule],
@@ -23,7 +22,6 @@ import { AlertComponent } from './alert/alert.component';
     ReaisPipe,
     ButtonBackComponent,
     CnpjPipe,
-    AlertComponent,
   ],
   exports: [
     LoaderComponent,
@@ -33,7 +31,6 @@ import { AlertComponent } from './alert/alert.component';
     ReaisPipe,
     CnpjPipe,
     ButtonBackComponent,
-    AlertComponent,
   ],
 })
 export class SharedModule {}

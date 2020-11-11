@@ -21,11 +21,15 @@
           placeholder="SKU do seu produto"
           pTooltip="Depois de salvo, o SKU não pode ser alterado."
           tooltipPosition="top"
+          aria-describedby="sku-help"
         />
+        <small [hidden]="!isFieldValid('sku')" id="sku-help" class="p-invalid">Insira um SKU</small>
+        <small [hidden]="duplicateSku" id="sku-help" class="p-invalid">Já Existe um produto com este SKU</small>
       </div>
       <div class="p-field p-col">
         <label for="ncm">NCM</label>
         <input id="ncm" name="ncm" type="text" formControlName="ncm" pInputText placeholder="Ex. 1234.12.34" />
+        <small [hidden]="!isFieldValid('ncm')" id="ncm-help" class="p-invalid">Insira o NCM</small>
       </div>
       <div class="p-field p-col">
         <label for="productActive">Ativo</label>
@@ -41,6 +45,7 @@
           pInputText
           placeholder="Título do seu produto"
         />
+        <small [hidden]="!isFieldValid('title')" id="title-help" class="p-invalid">Insira o titulo do produto</small>
       </div>
       <div class="p-field p-col">
         <label for="sellingPrice">Preço mínimo</label>
@@ -121,6 +126,9 @@
           pInputText
           placeholder="Descrição curta do produto"
         />
+        <small [hidden]="!isFieldValid('description')" id="description-help" class="p-invalid"
+          >Insira a descrição curta do produto</small
+        >
       </div>
       <div class="p-field p-col-12">
         <label for="description">Descrição Detalhada</label>
@@ -233,6 +241,9 @@
       <div class="p-field p-col-12">
         <label for="variationSku">SKU</label>
         <input pInputText name="variationSku" id="variationSku" placeholder="SKU da variação" formControlName="sku" />
+        <small [hidden]="!isFieldValid('sku')" id="sku-variation-help" class="p-invalid"
+          >Insira um SKU para a variação</small
+        >
       </div>
       <div class="p-field p-col-12">
         <label for="variationDescription">Descrição</label>
@@ -274,8 +285,3 @@
   </p-footer>
 </p-dialog>
 <app-product-composition #productCompositionComponent (onItemChosen)="onItemChosen($event)"></app-product-composition>
-<app-alert
-  [errorMessage]="errorMessage"
-  [isModalVisible]="showErrorModal"
-  (changeVisibilityError)="changeVisibilityError($event)"
-></app-alert>

@@ -22,9 +22,9 @@ interface Category {
 })
 export class ProductFormComponent implements OnInit {
   @ViewChild('productCompositionComponent') productCompositionComponent: ProductCompositionComponent;
-  showErrorModal = false;
-  errorMessage: string;
+
   formFields: FormGroup;
+  duplicateSku: boolean = true;
   formFieldsVariation: FormGroup;
   productDetails: string;
   product: Product;
@@ -99,25 +99,23 @@ export class ProductFormComponent implements OnInit {
 
   submitProductDetails() {
     if (!this.formFields.valid) {
-      this.errorMessage = 'Pensando';
-      this.showErrorModal = true; // return mas sem modal
-      return;
+      this.validateFormFields(this.formFields);
+    } else {
+      const product = this.formFields.value;
+      product.productDetails = this.productDetails;
+      product.productVariations = this.variations;
+      product.productImages = this.images;
+      product.productComposition = this.product.productComposition?.map((item) => item.productVariation.sku);
+
+      if (this.product.id) {
+        // field is disabled, so the form doesn't provide it
+        product.sku = this.product.sku;
+      }
+
+      this.productService.saveProduct(product).subscribe(() => {
+        this.router.navigate(['/products']);
+      });
     }
-
-    const product = this.formFields.value;
-    product.productDetails = this.productDetails;
-    product.productVariations = this.variations;
-    product.productImages = this.images;
-    product.productComposition = this.product.productComposition?.map((item) => item.productVariation.sku);
-
-    if (this.product.id) {
-      // field is disabled, so the form doesn't provide it
-      product.sku = this.product.sku;
-    }
-
-    this.productService.saveProduct(product).subscribe(() => {
-      this.router.navigate(['/products']);
-    });
   }
 
   handleCancel(): void {
@@ -126,9 +124,9 @@ export class ProductFormComponent implements OnInit {
 
   newProductVariation(): void {
     this.formFieldsVariation = this.fb.group({
-      sku: [null, Validators.required],
-      description: [null, Validators.required],
-      sellingPrice: [null, Validators.required],
+      sku: ['', Validators.required],
+      description: ['', Validators.required],
+      sellingPrice: ['', Validators.required],
     });
     this.isModalVisible = true;
     this.showRemoveButton = false;
@@ -144,9 +142,9 @@ export class ProductFormComponent implements OnInit {
 
   editProductVariation(productVariation: ProductVariation): void {
     this.formFieldsVariation = this.fb.group({
-      sku: productVariation.sku,
-      description: productVariation.description,
-      sellingPrice: productVariation.sellingPrice,
+      sku: [productVariation.sku, Validators.required],
+      description: [productVariation.description, Validators.required],
+      sellingPrice: [productVariation.sellingPrice, Validators.required],
     });
     this.isModalVisible = true;
     this.showRemoveButton = true;
@@ -160,11 +158,10 @@ export class ProductFormComponent implements OnInit {
   }
 
   submitVariation(): void {
-    const inputValues = this.formFieldsVariation.value;
     if (!this.formFieldsVariation.valid) {
-      this.showErrorModal = true;
-      this.errorMessage = 'Preencha todos os Campos do Formulario';
+      this.validateFormFields(this.formFieldsVariation);
     } else {
+      const inputValues = this.formFieldsVariation.value;
       if (this.variationBeingEdited) {
         Object.assign(this.variationBeingEdited, inputValues);
         this.variations = [...this.variations];
@@ -177,8 +174,6 @@ export class ProductFormComponent implements OnInit {
         this.productService.findProductVariations(inputValues.sku).subscribe((results) => {
           console.log(results);
           if (results.length > 0) {
-            this.errorMessage = 'Já existe uma variação cadastrada com este SKU';
-            this.showErrorModal = true;
           } else {
             this.variations = [...this.variations, variation];
             this.isModalVisible = false;
@@ -213,7 +208,14 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  changeVisibilityError(event: any) {
-    if (event === 'false') this.showErrorModal = false;
+  validateFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((field) => {
+      const control = formGroup.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+  }
+
+  isFieldValid(field: string) {
+    return !this.formFields.get(field).valid && this.formFields.get(field).touched;
   }
 }
