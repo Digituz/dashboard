@@ -98,6 +98,12 @@ export class ProductFormComponent implements OnInit {
   }
 
   submitProductDetails() {
+    if (!this.formFields.valid) {
+      this.errorMessage = 'Pensando';
+      this.showErrorModal = true; // return mas sem modal
+      return;
+    }
+
     const product = this.formFields.value;
     product.productDetails = this.productDetails;
     product.productVariations = this.variations;
@@ -107,12 +113,6 @@ export class ProductFormComponent implements OnInit {
     if (this.product.id) {
       // field is disabled, so the form doesn't provide it
       product.sku = this.product.sku;
-    }
-
-    if (!this.formFields.valid) {
-      this.errorMessage = 'Pensando';
-      this.showErrorModal = true;
-    } else {
     }
 
     this.productService.saveProduct(product).subscribe(() => {

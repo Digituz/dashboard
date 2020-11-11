@@ -12,3 +12,13 @@
 // Theme customization
 @import "theme/primeng-customization";
 @import "theme/theme";
+
+.ng-valid[required],
+.ng-valid.required {
+  border-left: 5px solid #42a948; /* green */
+}
+
+.ui-inputtext.ui-corner-all.ng-invalid:not(form):not(.ng-untouched),
+.ng-invalid:not(form):not(.ng-untouched) {
+  border-left: 5px solid #a94442; /* red */
+}
