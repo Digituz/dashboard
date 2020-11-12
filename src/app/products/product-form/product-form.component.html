@@ -21,10 +21,9 @@
           placeholder="SKU do seu produto"
           pTooltip="Depois de salvo, o SKU não pode ser alterado."
           tooltipPosition="top"
-          aria-describedby="sku-help"
         />
-        <div *ngIf="formFields.getError('required', ['sku'])">
-          <small [hidden]="!isFieldValid('sku')" id="sku-help" class="p-invalid">Insira um SKU</small>
+        <div *ngIf="formFields.getError('required', ['sku']) && isFieldValid('sku')">
+          <small id="sku-help" class="p-invalid">Insira um SKU</small>
         </div>
         <div class="p-invalid" *ngIf="formFields.getError('existingSku', ['sku']) as error">
           <small>{{ error.message }}</small>
@@ -49,7 +48,7 @@
           pInputText
           placeholder="Título do seu produto"
         />
-        <small [hidden]="!isFieldValid('title')" id="title-help" class="p-invalid">Insira o titulo do produto</small>
+        <small [hidden]="!isFieldValid('title')" id="title-help" class="p-invalid">Insira o título do produto</small>
       </div>
       <div class="p-field p-col">
         <label for="sellingPrice">Preço mínimo</label>
@@ -252,10 +251,10 @@
           formControlName="skuVariation"
           aria-describedby="sku-variation-help"
         />
-        <div *ngIf="formFieldsVariation.getError('required', ['skuVariation'])">
-          <small [hidden]="!isFieldVariationValid('skuVariation')" id="sku-variation-help" class="p-invalid"
-            >Insira um SKU para a variação</small
-          >
+        <div
+          *ngIf="formFieldsVariation.getError('required', ['skuVariation']) && isFieldVariationValid('skuVariation')"
+        >
+          <small id="sku-variation-help" class="p-invalid">Insira um SKU para a variação</small>
         </div>
         <div class="p-invalid" *ngIf="formFieldsVariation.getError('existingSku', ['skuVariation']) as error">
           <small>{{ error.message }}</small>

@@ -26,36 +26,10 @@ export class CustomSkuValidator {
           take(1),
           switchMap((_) =>
             this.productService
-              .loadProductSku(control.value)
+              .isSkuAvaliable(control.value)
               .pipe(
                 map((sku) =>
-                  sku ? { existingSku: { message: 'Já existe um produto cadastraco com este SKU' } } : null
-                )
-              )
-          )
-        );
-      }
-    };
-  }
-
-  existingSkuVariation(sku: string = ''): AsyncValidatorFn {
-    return (
-      control: AbstractControl
-    ): Promise<{ [key: string]: any } | null> | Observable<{ [key: string]: any } | null> => {
-      if (isEmptyInputValue(control.value)) {
-        return of(null);
-      } else if (control.value === sku) {
-        return of(null);
-      } else {
-        return control.valueChanges.pipe(
-          debounceTime(500),
-          take(1),
-          switchMap((_) =>
-            this.productService
-              .loadVariationsSku(control.value)
-              .pipe(
-                map((sku) =>
-                  sku ? { existingSku: { message: 'Já existe uma variação cadastrada com este SKU' } } : null
+                  sku ? { existingSku: { message: 'Já existe um produto cadastrado com este SKU' } } : null
                 )
               )
           )

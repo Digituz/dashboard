@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
 
 import { LoaderComponent } from './loader/loader.component';
 import { MediumEditorComponent } from './medium-editor/medium-editor.component';
@@ -13,7 +12,7 @@ import { ButtonBackComponent } from './button-back/button-back.component';
 import { CnpjPipe } from './pipes/cnpj.pipe';
 
 @NgModule({
-  imports: [CommonModule, ButtonModule, DialogModule],
+  imports: [CommonModule, ButtonModule],
   declarations: [
     LoaderComponent,
     MediumEditorComponent,

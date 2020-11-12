@@ -26,6 +26,7 @@ export class ProductFormComponent implements OnInit {
 
   formFields: FormGroup;
   formFieldsVariation: FormGroup;
+  editProductVariationSku: string;
   productDetails: string;
   product: Product;
   variations: ProductVariation[];
@@ -103,7 +104,7 @@ export class ProductFormComponent implements OnInit {
 
   submitProductDetails() {
     if (!this.formFields.valid) {
-      this.validateFormFields(this.formFields);
+      this.markAllFieldsAsTouched(this.formFields);
     } else {
       const product = this.formFields.value;
       product.productDetails = this.productDetails;
@@ -128,7 +129,7 @@ export class ProductFormComponent implements OnInit {
 
   newProductVariation(): void {
     this.formFieldsVariation = this.fb.group({
-      skuVariation: ['', Validators.required, this.customSkuValidator.existingSkuVariation()],
+      skuVariation: ['', Validators.required, this.customSkuValidator.existingSku()],
       descriptionVariation: ['', Validators.required],
       sellingPriceVariation: ['', Validators.required],
     });
@@ -145,8 +146,13 @@ export class ProductFormComponent implements OnInit {
   }
 
   editProductVariation(productVariation: ProductVariation): void {
+    this.editProductVariationSku = productVariation.sku;
     this.formFieldsVariation = this.fb.group({
-      skuVariation: [{ value: productVariation.sku || '', disabled: !!productVariation.sku }, Validators.required],
+      skuVariation: [
+        { value: productVariation.sku, disabled: !!productVariation.sku },
+        Validators.required,
+        this.customSkuValidator.existingSku(),
+      ],
       descriptionVariation: [productVariation.description, Validators.required],
       sellingPriceVariation: [productVariation.sellingPrice, Validators.required],
     });
@@ -163,25 +169,28 @@ export class ProductFormComponent implements OnInit {
 
   submitVariation(): void {
     if (!this.formFieldsVariation.valid) {
-      this.validateFormFields(this.formFieldsVariation);
+      this.markAllFieldsAsTouched(this.formFieldsVariation);
     } else {
-      const variationRenamedFields = this.formFieldsVariation.value;
-      const inputValues = {
-        sku: variationRenamedFields.skuVariation,
-        description: variationRenamedFields.descriptionVariation,
-        sellingPrice: variationRenamedFields.sellingPriceVariation,
+      const variationFields = this.formFieldsVariation.value;
+      const productVariation = {
+        sku: variationFields.skuVariation,
+        description: variationFields.descriptionVariation,
+        sellingPrice: variationFields.sellingPriceVariation,
       };
       if (this.variationBeingEdited) {
-        Object.assign(this.variationBeingEdited, inputValues);
+        if (this.editProductVariationSku) {
+          productVariation.sku = this.editProductVariationSku;
+        }
+        Object.assign(this.variationBeingEdited, productVariation);
         this.variations = [...this.variations];
       } else {
         const variation: ProductVariation = {
           parentSku: this.product.sku,
-          ...inputValues,
+          ...productVariation,
         };
         this.variations = [...this.variations, variation];
-        this.isModalVisible = false;
       }
+      this.isModalVisible = false;
     }
   }
 
@@ -210,7 +219,7 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  validateFormFields(formGroup: FormGroup) {
+  markAllFieldsAsTouched(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
       control.markAsTouched({ onlySelf: true });
