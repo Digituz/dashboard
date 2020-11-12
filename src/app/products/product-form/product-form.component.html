@@ -24,7 +24,9 @@
           aria-describedby="sku-help"
         />
         <small [hidden]="!isFieldValid('sku')" id="sku-help" class="p-invalid">Insira um SKU</small>
-        <small [hidden]="duplicateSku" id="sku-help" class="p-invalid">Já Existe um produto com este SKU</small>
+        <div class="p-invalid" *ngIf="formFields.getError('existingSku', ['sku']) as error">
+          <small>{{ error.message }}</small>
+        </div>
       </div>
       <div class="p-field p-col">
         <label for="ncm">NCM</label>
@@ -251,6 +253,9 @@
         <small [hidden]="!isFieldVariationValid('skuVariation')" id="sku-variation-help" class="p-invalid"
           >Insira um SKU para a variação</small
         >
+        <div class="p-invalid" *ngIf="formFieldsVariation.getError('existingSku', ['skuVariation']) as error">
+          <small>{{ error.message }}</small>
+        </div>
       </div>
       <div class="p-field p-col-12">
         <label for="variationDescription">Descrição</label>

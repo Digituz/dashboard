@@ -10,7 +10,6 @@ import { ProductCategory } from '../product-category.enum';
 import { ProductComposition } from '../product-composition.entity';
 import { ProductCompositionComponent } from '../product-composition/product-composition.component';
 import { CustomSkuValidator } from '../sku.validator';
-import { CustomSkuVariationValidator } from '../sku-variation.validator';
 
 interface Category {
   label: string;
@@ -26,7 +25,6 @@ export class ProductFormComponent implements OnInit {
   @ViewChild('productCompositionComponent') productCompositionComponent: ProductCompositionComponent;
 
   formFields: FormGroup;
-  duplicateSku: boolean = true;
   formFieldsVariation: FormGroup;
   productDetails: string;
   product: Product;
@@ -53,8 +51,7 @@ export class ProductFormComponent implements OnInit {
     private productService: ProductsService,
     private router: Router,
     private route: ActivatedRoute,
-    private customSkuValidate: CustomSkuValidator,
-    private customSkuVariationValidator: CustomSkuVariationValidator
+    private customSkuValidator: CustomSkuValidator
   ) {}
 
   ngOnInit(): void {
@@ -87,7 +84,7 @@ export class ProductFormComponent implements OnInit {
       sku: [
         { value: product.sku || '', disabled: !!product.id },
         Validators.required,
-        this.customSkuValidate.existingSku(),
+        this.customSkuValidator.existingSku(),
       ],
       ncm: [product.ncm || '', Validators.required],
       title: [product.title || '', Validators.required],
@@ -131,7 +128,7 @@ export class ProductFormComponent implements OnInit {
 
   newProductVariation(): void {
     this.formFieldsVariation = this.fb.group({
-      skuVariation: ['', Validators.required, this.customSkuVariationValidator.existingSku()],
+      skuVariation: ['', Validators.required, this.customSkuValidator.existingSkuVariation()],
       descriptionVariation: ['', Validators.required],
       sellingPriceVariation: ['', Validators.required],
     });
