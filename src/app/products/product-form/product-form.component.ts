@@ -222,7 +222,6 @@ export class ProductFormComponent implements OnInit {
   markAllFieldsAsTouched(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
-      console.log(field);
       control.markAsTouched({ onlySelf: true });
     });
   }
