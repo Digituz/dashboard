@@ -107,7 +107,7 @@ export class ProductFormComponent implements OnInit {
     if (!this.formFields.valid) {
       this.markAllFieldsAsTouched(this.formFields);
     } else {
-      const validVariations = this.variations.filter((variation) => variation.sku === null);
+      const validVariations = this.variations.find((variation) => variation.sku === null);
       if (validVariations) {
         return (this.showSkuVariationMessage = true);
       }
@@ -176,6 +176,7 @@ export class ProductFormComponent implements OnInit {
     if (!this.formFieldsVariation.valid) {
       this.markAllFieldsAsTouched(this.formFieldsVariation);
     } else {
+      this.showSkuVariationMessage = false;
       const variationFields = this.formFieldsVariation.value;
       const productVariation = {
         sku: variationFields.skuVariation,
