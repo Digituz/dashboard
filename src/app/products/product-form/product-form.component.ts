@@ -9,6 +9,8 @@ import { ProductImage } from '../product-image.entity';
 import { ProductCategory } from '../product-category.enum';
 import { ProductComposition } from '../product-composition.entity';
 import { ProductCompositionComponent } from '../product-composition/product-composition.component';
+import { CustomSkuValidator } from '../sku.validator';
+import { CustomSkuVariationValidator } from '../sku-variation.validator';
 
 interface Category {
   label: string;
@@ -50,7 +52,9 @@ export class ProductFormComponent implements OnInit {
     private fb: FormBuilder,
     private productService: ProductsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private customSkuValidate: CustomSkuValidator,
+    private customSkuVariationValidator: CustomSkuVariationValidator
   ) {}
 
   ngOnInit(): void {
@@ -80,7 +84,11 @@ export class ProductFormComponent implements OnInit {
 
   private configureFormFields(product: Product) {
     this.formFields = this.fb.group({
-      sku: [{ value: product.sku || '', disabled: !!product.id }, Validators.required],
+      sku: [
+        { value: product.sku || '', disabled: !!product.id },
+        Validators.required,
+        this.customSkuValidate.existingSku(),
+      ],
       ncm: [product.ncm || '', Validators.required],
       title: [product.title || '', Validators.required],
       description: [product.description || '', Validators.required],
@@ -123,7 +131,7 @@ export class ProductFormComponent implements OnInit {
 
   newProductVariation(): void {
     this.formFieldsVariation = this.fb.group({
-      skuVariation: ['', Validators.required],
+      skuVariation: ['', Validators.required, this.customSkuVariationValidator.existingSku()],
       descriptionVariation: ['', Validators.required],
       sellingPriceVariation: ['', Validators.required],
     });
@@ -174,16 +182,8 @@ export class ProductFormComponent implements OnInit {
           parentSku: this.product.sku,
           ...inputValues,
         };
-        console.log(inputValues);
-
-        this.productService.findProductVariations(inputValues.sku).subscribe((results) => {
-          console.log(results);
-          if (results.length > 0) {
-          } else {
-            this.variations = [...this.variations, variation];
-            this.isModalVisible = false;
-          }
-        });
+        this.variations = [...this.variations, variation];
+        this.isModalVisible = false;
       }
     }
   }

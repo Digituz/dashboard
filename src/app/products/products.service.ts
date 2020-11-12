@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IDataProvider, Pagination, QueryParam } from '@app/util/pagination';
 import { ProductVariationDetailsDTO } from './product-variation-details.dto';
 import { map } from 'rxjs/operators';
+import { ProductVariation } from './product-variation.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -70,5 +71,9 @@ export class ProductsService implements IDataProvider<Product> {
 
   loadProduct(productId: string) {
     return this.httpClient.get<Product>(`${this.PRODUCTS_ENDPOINT}/${productId}`);
+  }
+
+  loadVariations(sku: string) {
+    return this.httpClient.get<ProductVariation>(`${this.PRODUCTS_ENDPOINT}/variations/${sku}`);
   }
 }
