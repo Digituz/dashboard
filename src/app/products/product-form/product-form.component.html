@@ -240,8 +240,15 @@
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-12">
         <label for="variationSku">SKU</label>
-        <input pInputText name="variationSku" id="variationSku" placeholder="SKU da variação" formControlName="sku" />
-        <small [hidden]="!isFieldValid('sku')" id="sku-variation-help" class="p-invalid"
+        <input
+          pInputText
+          name="variationSku"
+          id="variationSku"
+          placeholder="SKU da variação"
+          formControlName="skuVariation"
+          aria-describedby="sku-variation-help"
+        />
+        <small [hidden]="!isFieldVariationValid('skuVariation')" id="sku-variation-help" class="p-invalid"
           >Insira um SKU para a variação</small
         >
       </div>
@@ -252,22 +259,36 @@
           name="variationDescription"
           id="variationDescription"
           placeholder="Descrição da variação"
-          formControlName="description"
+          formControlName="descriptionVariation"
+          aria-describedby="description-variation-help"
         />
+        <small
+          [hidden]="!isFieldVariationValid('descriptionVariation')"
+          id="description-variation-help"
+          class="p-invalid"
+          >Insira a descrição da variação</small
+        >
       </div>
       <div class="p-field p-col-12">
         <label for="variationSellingPrice">Preço de Venda</label>
         <p-inputNumber
           id="variationSellingPrice"
           name="variationSellingPrice"
-          formControlName="sellingPrice"
+          formControlName="sellingPriceVariation"
           currency="BRL"
           mode="currency"
           locale="pt-BR"
           [minFractionDigits]="2"
           [maxFractionDigits]="2"
           placeholder="ex. R$ 10,00"
+          aria-describedby="selleing-price-variation-help"
         ></p-inputNumber>
+        <small
+          [hidden]="!isFieldVariationValid('sellingPriceVariation')"
+          id="selleing-price-variation-help"
+          class="p-invalid"
+          >Insira o preço da variação produto</small
+        >
       </div>
     </div>
   </form>

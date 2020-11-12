@@ -55,7 +55,6 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit(): void {
     const sku = this.route.snapshot.params.sku;
-
     if (sku === 'new') {
       this.product = {};
       this.variations = [
@@ -124,9 +123,9 @@ export class ProductFormComponent implements OnInit {
 
   newProductVariation(): void {
     this.formFieldsVariation = this.fb.group({
-      sku: ['', Validators.required],
-      description: ['', Validators.required],
-      sellingPrice: ['', Validators.required],
+      skuVariation: ['', Validators.required],
+      descriptionVariation: ['', Validators.required],
+      sellingPriceVariation: ['', Validators.required],
     });
     this.isModalVisible = true;
     this.showRemoveButton = false;
@@ -142,9 +141,9 @@ export class ProductFormComponent implements OnInit {
 
   editProductVariation(productVariation: ProductVariation): void {
     this.formFieldsVariation = this.fb.group({
-      sku: [productVariation.sku, Validators.required],
-      description: [productVariation.description, Validators.required],
-      sellingPrice: [productVariation.sellingPrice, Validators.required],
+      skuVariation: [productVariation.sku, Validators.required],
+      descriptionVariation: [productVariation.description, Validators.required],
+      sellingPriceVariation: [productVariation.sellingPrice, Validators.required],
     });
     this.isModalVisible = true;
     this.showRemoveButton = true;
@@ -161,7 +160,12 @@ export class ProductFormComponent implements OnInit {
     if (!this.formFieldsVariation.valid) {
       this.validateFormFields(this.formFieldsVariation);
     } else {
-      const inputValues = this.formFieldsVariation.value;
+      const variationRenamedFields = this.formFieldsVariation.value;
+      const inputValues = {
+        sku: variationRenamedFields.skuVariation,
+        description: variationRenamedFields.descriptionVariation,
+        sellingPrice: variationRenamedFields.sellingPriceVariation,
+      };
       if (this.variationBeingEdited) {
         Object.assign(this.variationBeingEdited, inputValues);
         this.variations = [...this.variations];
@@ -170,6 +174,7 @@ export class ProductFormComponent implements OnInit {
           parentSku: this.product.sku,
           ...inputValues,
         };
+        console.log(inputValues);
 
         this.productService.findProductVariations(inputValues.sku).subscribe((results) => {
           console.log(results);
@@ -217,5 +222,9 @@ export class ProductFormComponent implements OnInit {
 
   isFieldValid(field: string) {
     return !this.formFields.get(field).valid && this.formFields.get(field).touched;
+  }
+
+  isFieldVariationValid(field: string) {
+    return !this.formFieldsVariation.get(field).valid && this.formFieldsVariation.get(field).touched;
   }
 }
