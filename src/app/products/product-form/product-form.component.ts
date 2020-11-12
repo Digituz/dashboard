@@ -24,6 +24,7 @@ interface Category {
 export class ProductFormComponent implements OnInit {
   @ViewChild('productCompositionComponent') productCompositionComponent: ProductCompositionComponent;
 
+  showSkuVariationMessage = false;
   formFields: FormGroup;
   formFieldsVariation: FormGroup;
   editProductVariationSku: string;
@@ -106,6 +107,10 @@ export class ProductFormComponent implements OnInit {
     if (!this.formFields.valid) {
       this.markAllFieldsAsTouched(this.formFields);
     } else {
+      const validVariations = this.variations.filter((variation) => variation.sku === null);
+      if (validVariations) {
+        return (this.showSkuVariationMessage = true);
+      }
       const product = this.formFields.value;
       product.productDetails = this.productDetails;
       product.productVariations = this.variations;
