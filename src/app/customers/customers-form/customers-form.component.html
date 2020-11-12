@@ -14,9 +14,7 @@
       <div class="p-field p-col-6">
         <label for="cpf">CPF</label>
         <p-inputMask mask="999.999.999-99" formControlName="cpf" placeholder="ex. 123.456.789-00"></p-inputMask>
-        <small [hidden]="!isFieldValid('cpf')" id="cpf-help" class="p-invalid"
-          >Insira o preço da variação produto</small
-        >
+        <small [hidden]="!isFieldValid('cpf')" id="cpf-help" style="color: #f44336;">Insira o CPF</small>
       </div>
       <div class="p-field p-col-6">
         <label for="name">Nome</label>
@@ -28,6 +26,7 @@
           pInputText
           placeholder="Ex. Joana Maria da Silva"
         />
+        <small [hidden]="!isFieldValid('name')" id="cpf-help" style="color: #f44336;">Insira o Nome</small>
       </div>
       <div class="p-field p-col-6">
         <label for="phoneNumber">Telefone</label>
@@ -47,6 +46,12 @@
           pInputText
           placeholder="Ex. joanasilva@gmail.com"
         />
+        <div *ngIf="formFields.getError('required', ['email']) && isFieldValid('email')">
+          <small style="color: #f44336;" id="sku-help">Insira um Email</small>
+        </div>
+        <div *ngIf="formFields.getError('email', ['email'])">
+          <small style="color: #f44336;">Insira um Email valido</small>
+        </div>
       </div>
       <div class="p-field p-col-6">
         <label for="birthday">Data de Nascimento</label>
@@ -55,15 +60,17 @@
       <div class="p-field p-col-6">
         <label for="zipAddress">CEP</label>
         <p-inputMask mask="99999-999" formControlName="zipAddress" placeholder="Ex. 01305-000"></p-inputMask>
-        <small [hidden]="!isFieldValid('zipAddress')" id="zip-help" class="p-invalid">Insira o CEP</small>
+        <small [hidden]="!isFieldValid('zipAddress')" id="zip-help" style="color: #f44336;">Insira o CEP</small>
       </div>
       <div class="p-field p-col-6">
         <label for="state">UF</label>
         <input id="state" name="state" type="text" formControlName="state" pInputText placeholder="Ex. SP" />
+        <small [hidden]="!isFieldValid('state')" id="state-help" style="color: #f44336;">Insira o Estado</small>
       </div>
       <div class="p-field p-col-6">
         <label for="city">Cidade</label>
         <input id="city" name="city" type="text" formControlName="city" pInputText placeholder="Ex. São Paulo" />
+        <small [hidden]="!isFieldValid('city')" id="zip-help" style="color: #f44336;">Insira a Cidade</small>
       </div>
       <div class="p-field p-col-6">
         <label for="neighborhood">Bairro</label>
@@ -75,6 +82,9 @@
           pInputText
           placeholder="Ex. Consolação"
         />
+        <small [hidden]="!isFieldValid('neighborhood')" id="neighborhood-help" style="color: #f44336;"
+          >Insira a Rua</small
+        >
       </div>
       <div class="p-field p-col-6">
         <label for="streetAddress">Logradouro</label>
@@ -86,6 +96,9 @@
           pInputText
           placeholder="Ex. Rua Augusta"
         />
+        <small [hidden]="!isFieldValid('streetAddress')" id="street-help" style="color: #f44336;"
+          >Insira o Bairro</small
+        >
       </div>
       <div class="p-field p-col-6">
         <label for="streetNumber">Número</label>
@@ -97,6 +110,9 @@
           pInputText
           placeholder="Ex. 123"
         />
+        <small [hidden]="!isFieldValid('streetNumber')" id="streetNumber-help" style="color: #f44336;"
+          >Insira o Nº</small
+        >
       </div>
       <div class="p-field p-col-6">
         <label for="streetNumber2">Complemento</label>

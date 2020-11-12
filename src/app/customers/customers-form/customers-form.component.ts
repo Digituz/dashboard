@@ -75,14 +75,19 @@ export class CustomersFormComponent implements OnInit {
         id: this.customer.id,
       };
 
-      customer.birthday = parse(customer.birthday, 'dd/MM/yyyy', new Date());
+      if (customer.birthday) {
+        console.log('aqui');
+        customer.birthday = parse(customer.birthday, 'dd/MM/yyyy', new Date());
 
-      if (!this.validationDate(customer.birthday)) {
-        this.showDialog();
-        return;
+        if (!this.validationDate(customer.birthday)) {
+          this.showDialog();
+          return;
+        } else {
+          customer.birthday = null;
+        }
+
+        customer.birthday = format(customer.birthday, 'yyyy-MM-dd');
       }
-
-      customer.birthday = format(customer.birthday, 'yyyy-MM-dd');
 
       this.customersService.saveCustomer(customer).subscribe(() => {
         this.router.navigate(['/customers']);
