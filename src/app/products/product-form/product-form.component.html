@@ -23,7 +23,9 @@
           tooltipPosition="top"
           aria-describedby="sku-help"
         />
-        <small [hidden]="!isFieldValid('sku')" id="sku-help" class="p-invalid">Insira um SKU</small>
+        <div *ngIf="formFields.getError('required', ['sku'])">
+          <small [hidden]="!isFieldValid('sku')" id="sku-help" class="p-invalid">Insira um SKU</small>
+        </div>
         <div class="p-invalid" *ngIf="formFields.getError('existingSku', ['sku']) as error">
           <small>{{ error.message }}</small>
         </div>
@@ -250,9 +252,11 @@
           formControlName="skuVariation"
           aria-describedby="sku-variation-help"
         />
-        <small [hidden]="!isFieldVariationValid('skuVariation')" id="sku-variation-help" class="p-invalid"
-          >Insira um SKU para a variação</small
-        >
+        <div *ngIf="formFieldsVariation.getError('required', ['skuVariation'])">
+          <small [hidden]="!isFieldVariationValid('skuVariation')" id="sku-variation-help" class="p-invalid"
+            >Insira um SKU para a variação</small
+          >
+        </div>
         <div class="p-invalid" *ngIf="formFieldsVariation.getError('existingSku', ['skuVariation']) as error">
           <small>{{ error.message }}</small>
         </div>
