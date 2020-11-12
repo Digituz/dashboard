@@ -8,11 +8,6 @@
   </div>
 </div>
 <p-card>
-  <div *ngIf="showSkuVariationMessage">
-    <p class="p-invalid">
-      O sku de alguma variação está vazio
-    </p>
-  </div>
   <form [formGroup]="formFields" (ngSubmit)="submitProductDetails()" *ngIf="!loading">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">

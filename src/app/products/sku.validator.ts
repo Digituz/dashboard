@@ -12,7 +12,7 @@ function isEmptyInputValue(value: any): boolean {
 @Injectable({ providedIn: 'root' })
 export class CustomSkuValidator {
   constructor(private productService: ProductsService) {}
-  existingSku(sku: string = ''): AsyncValidatorFn {
+  existingSku(isProductVariation: Boolean, sku: string = ''): AsyncValidatorFn {
     return (
       control: AbstractControl
     ): Promise<{ [key: string]: any } | null> | Observable<{ [key: string]: any } | null> => {
@@ -24,15 +24,24 @@ export class CustomSkuValidator {
         return control.valueChanges.pipe(
           debounceTime(500),
           take(1),
-          switchMap((_) =>
-            this.productService
-              .isSkuAvaliable(control.value)
+          switchMap((_) => {
+            if (isProductVariation) {
+              return this.productService
+                .isSkuAvaliable(control.value, isProductVariation)
+                .pipe(
+                  map((sku) =>
+                    sku ? { existingSku: { message: 'Já existe um produto cadastrado com este SKU' } } : null
+                  )
+                );
+            }
+            return this.productService
+              .isSkuAvaliable(control.value, false)
               .pipe(
                 map((sku) =>
                   sku ? { existingSku: { message: 'Já existe um produto cadastrado com este SKU' } } : null
                 )
-              )
-          )
+              );
+          })
         );
       }
     };

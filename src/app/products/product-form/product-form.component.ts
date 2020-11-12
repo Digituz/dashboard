@@ -10,7 +10,7 @@ import { ProductCategory } from '../product-category.enum';
 import { ProductComposition } from '../product-composition.entity';
 import { ProductCompositionComponent } from '../product-composition/product-composition.component';
 import { CustomSkuValidator } from '../sku.validator';
-
+import { MessagesService } from '@app/messages/messages.service';
 interface Category {
   label: string;
   value: ProductCategory;
@@ -24,7 +24,6 @@ interface Category {
 export class ProductFormComponent implements OnInit {
   @ViewChild('productCompositionComponent') productCompositionComponent: ProductCompositionComponent;
 
-  showSkuVariationMessage = false;
   formFields: FormGroup;
   formFieldsVariation: FormGroup;
   editProductVariationSku: string;
@@ -53,7 +52,8 @@ export class ProductFormComponent implements OnInit {
     private productService: ProductsService,
     private router: Router,
     private route: ActivatedRoute,
-    private customSkuValidator: CustomSkuValidator
+    private customSkuValidator: CustomSkuValidator,
+    private messagesService: MessagesService
   ) {}
 
   ngOnInit(): void {
@@ -86,7 +86,7 @@ export class ProductFormComponent implements OnInit {
       sku: [
         { value: product.sku || '', disabled: !!product.id },
         Validators.required,
-        this.customSkuValidator.existingSku(),
+        this.customSkuValidator.existingSku(false),
       ],
       ncm: [product.ncm || '', Validators.required],
       title: [product.title || '', [Validators.required, Validators.minLength(5)]],
@@ -97,7 +97,7 @@ export class ProductFormComponent implements OnInit {
       length: [product.length || null],
       weight: [product.weight || null],
       isActive: [product.isActive || false, Validators.required],
-      category: [product.category || false, Validators.required],
+      category: [product.category || false],
     });
     this.productDetails = product.productDetails || '';
     this.loading = false;
@@ -107,9 +107,9 @@ export class ProductFormComponent implements OnInit {
     if (!this.formFields.valid) {
       this.markAllFieldsAsTouched(this.formFields);
     } else {
-      const validVariations = this.variations.find((variation) => variation.sku === null);
-      if (validVariations) {
-        return (this.showSkuVariationMessage = true);
+      const invalidVariation = this.variations.find((variation) => !variation.sku);
+      if (invalidVariation) {
+        return this.messagesService.showError('Uma variação não tem SKU definido.');
       }
       const product = this.formFields.value;
       product.productDetails = this.productDetails;
@@ -134,7 +134,7 @@ export class ProductFormComponent implements OnInit {
 
   newProductVariation(): void {
     this.formFieldsVariation = this.fb.group({
-      skuVariation: ['', Validators.required, this.customSkuValidator.existingSku()],
+      skuVariation: ['', Validators.required, this.customSkuValidator.existingSku(true)],
       descriptionVariation: ['', Validators.required],
       sellingPriceVariation: ['', Validators.required],
     });
@@ -156,7 +156,7 @@ export class ProductFormComponent implements OnInit {
       skuVariation: [
         { value: productVariation.sku, disabled: !!productVariation.sku },
         Validators.required,
-        this.customSkuValidator.existingSku(),
+        this.customSkuValidator.existingSku(true),
       ],
       descriptionVariation: [productVariation.description, Validators.required],
       sellingPriceVariation: [productVariation.sellingPrice, Validators.required],
@@ -176,7 +176,6 @@ export class ProductFormComponent implements OnInit {
     if (!this.formFieldsVariation.valid) {
       this.markAllFieldsAsTouched(this.formFieldsVariation);
     } else {
-      this.showSkuVariationMessage = false;
       const variationFields = this.formFieldsVariation.value;
       const productVariation = {
         sku: variationFields.skuVariation,

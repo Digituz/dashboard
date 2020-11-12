@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IDataProvider, Pagination, QueryParam } from '@app/util/pagination';
 import { ProductVariationDetailsDTO } from './product-variation-details.dto';
 import { map } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -71,7 +72,9 @@ export class ProductsService implements IDataProvider<Product> {
     return this.httpClient.get<Product>(`${this.PRODUCTS_ENDPOINT}/${productId}`);
   }
 
-  isSkuAvaliable(sku: string) {
-    return this.httpClient.get<Boolean>(`${this.PRODUCTS_ENDPOINT}/is-sku-available?sku=${sku}`);
+  isSkuAvaliable(sku: string, isProductVariation: Boolean) {
+    return this.httpClient.get<Boolean>(
+      `${this.PRODUCTS_ENDPOINT}/is-sku-available?sku=${sku}&product-variation=${isProductVariation}`
+    );
   }
 }
