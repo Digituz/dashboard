@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Customer } from '../customer.entity';
 import { CustomersService } from '../customers.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -46,17 +46,17 @@ export class CustomersFormComponent implements OnInit {
     }
 
     this.formFields = this.fb.group({
-      cpf: [customer.cpf || ''],
-      name: [customer.name || ''],
+      cpf: [customer.cpf || '', [Validators.required]],
+      name: [customer.name || '', [Validators.required]],
       phoneNumber: [customer.phoneNumber || ''],
-      email: [customer.email || ''],
+      email: [customer.email || '', [Validators.required, Validators.email]],
       birthday: [birthDay || null],
-      zipAddress: [customer.zipAddress || ''],
-      state: [customer.state || ''],
-      city: [customer.city || ''],
-      neighborhood: [customer.neighborhood || ''],
-      streetAddress: [customer.streetAddress || ''],
-      streetNumber: [customer.streetNumber || ''],
+      zipAddress: [customer.zipAddress || '', [Validators.required]],
+      state: [customer.state || '', [Validators.required]],
+      city: [customer.city || '', [Validators.required]],
+      neighborhood: [customer.neighborhood || '', [Validators.required]],
+      streetAddress: [customer.streetAddress || '', [Validators.required]],
+      streetNumber: [customer.streetNumber || '', [Validators.required]],
       streetNumber2: [customer.streetNumber2 || ''],
     });
     this.loading = false;
@@ -67,23 +67,27 @@ export class CustomersFormComponent implements OnInit {
   }
 
   submitCustomer() {
-    const customer = {
-      ...this.formFields.value,
-      id: this.customer.id,
-    };
+    if (!this.formFields.valid) {
+      this.markAllFieldsAsTouched(this.formFields);
+    } else {
+      const customer = {
+        ...this.formFields.value,
+        id: this.customer.id,
+      };
 
-    customer.birthday = parse(customer.birthday, 'dd/MM/yyyy', new Date());
+      customer.birthday = parse(customer.birthday, 'dd/MM/yyyy', new Date());
 
-    if (!this.validationDate(customer.birthday)) {
-      this.showDialog();
-      return;
+      if (!this.validationDate(customer.birthday)) {
+        this.showDialog();
+        return;
+      }
+
+      customer.birthday = format(customer.birthday, 'yyyy-MM-dd');
+
+      this.customersService.saveCustomer(customer).subscribe(() => {
+        this.router.navigate(['/customers']);
+      });
     }
-
-    customer.birthday = format(customer.birthday, 'yyyy-MM-dd');
-
-    this.customersService.saveCustomer(customer).subscribe(() => {
-      this.router.navigate(['/customers']);
-    });
   }
 
   validationDate(date: string) {
@@ -102,5 +106,16 @@ export class CustomersFormComponent implements OnInit {
       this.display = false;
       return false;
     }
+  }
+
+  markAllFieldsAsTouched(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((field) => {
+      const control = formGroup.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+  }
+
+  isFieldValid(field: string) {
+    return !this.formFields.get(field).valid && this.formFields.get(field).touched;
   }
 }
