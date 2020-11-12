@@ -88,7 +88,7 @@ export class ProductFormComponent implements OnInit {
         this.customSkuValidator.existingSku(),
       ],
       ncm: [product.ncm || '', Validators.required],
-      title: [product.title || '', Validators.required],
+      title: [product.title || '', [Validators.required, Validators.minLength(5)]],
       description: [product.description || '', Validators.required],
       sellingPrice: [{ value: product.sellingPrice || null, disabled: true }],
       height: [product.height || null],
@@ -222,6 +222,7 @@ export class ProductFormComponent implements OnInit {
   markAllFieldsAsTouched(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
+      console.log(field);
       control.markAsTouched({ onlySelf: true });
     });
   }

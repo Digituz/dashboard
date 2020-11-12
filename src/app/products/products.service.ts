@@ -5,8 +5,6 @@ import { Observable } from 'rxjs';
 import { IDataProvider, Pagination, QueryParam } from '@app/util/pagination';
 import { ProductVariationDetailsDTO } from './product-variation-details.dto';
 import { map } from 'rxjs/operators';
-import { ProductVariation } from './product-variation.entity';
-
 @Injectable({
   providedIn: 'root',
 })

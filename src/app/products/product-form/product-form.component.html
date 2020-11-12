@@ -48,7 +48,12 @@
           pInputText
           placeholder="Título do seu produto"
         />
-        <small [hidden]="!isFieldValid('title')" id="title-help" class="p-invalid">Insira o título do produto</small>
+        <div *ngIf="formFields.getError('required', ['title']) && isFieldValid('title')">
+          <small id="title-help" class="p-invalid">Insira o Título</small>
+        </div>
+        <div class="p-invalid" *ngIf="formFields.getError('minlength', ['title']) as error">
+          <small>O título deve ter no minimo 5 caracteres</small>
+        </div>
       </div>
       <div class="p-field p-col">
         <label for="sellingPrice">Preço mínimo</label>
