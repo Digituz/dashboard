@@ -146,7 +146,7 @@ export class ProductFormComponent implements OnInit {
 
   editProductVariation(productVariation: ProductVariation): void {
     this.formFieldsVariation = this.fb.group({
-      skuVariation: [productVariation.sku, Validators.required],
+      skuVariation: [{ value: productVariation.sku || '', disabled: !!productVariation.sku }, Validators.required],
       descriptionVariation: [productVariation.description, Validators.required],
       sellingPriceVariation: [productVariation.sellingPrice, Validators.required],
     });
