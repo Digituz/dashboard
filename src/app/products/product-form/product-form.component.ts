@@ -111,6 +111,9 @@ export class ProductFormComponent implements OnInit {
       if (invalidVariation) {
         return this.messagesService.showError('Uma variação não tem SKU definido.');
       }
+      if (this.variations.length === 0) {
+        return this.messagesService.showError('O produto deve ter ao menos uma variação.');
+      }
       const product = this.formFields.value;
       product.productDetails = this.productDetails;
       product.productVariations = this.variations;
