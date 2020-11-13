@@ -23,6 +23,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "allowedCommonJsDependencies": ["@angularclass/hmr", "jwt-decode", "chart.js"],
             "assets": [
               "src/favicon.ico",
               "src/apple-touch-icon.png",
