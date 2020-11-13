@@ -71,4 +71,10 @@ export class ProductsService implements IDataProvider<Product> {
   loadProduct(productId: string) {
     return this.httpClient.get<Product>(`${this.PRODUCTS_ENDPOINT}/${productId}`);
   }
+
+  isSkuAvailable(sku: string, isProductVariation: boolean) {
+    return this.httpClient.get<boolean>(
+      `${this.PRODUCTS_ENDPOINT}/is-sku-available?sku=${sku}&is-product-variation=${isProductVariation}`
+    );
+  }
 }

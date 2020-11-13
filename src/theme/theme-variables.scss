@@ -8,6 +8,7 @@ $button-font-size: 13px;
 $button-primary-color: rgb(24, 144, 255);
 $button-primary-border-color: rgb(64, 169, 255);
 $button-primary-color-hover: #40a9ff;
+$danger: #f44336;
 
 @mixin button-primary {
   font-size: $button-font-size;

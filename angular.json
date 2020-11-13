@@ -135,5 +135,8 @@
       }
     }
   },
-  "defaultProject": "ng-x-rocket"
+  "defaultProject": "ng-x-rocket",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductsService } from '../products.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import Product from '../product.entity';
@@ -9,7 +9,8 @@ import { ProductImage } from '../product-image.entity';
 import { ProductCategory } from '../product-category.enum';
 import { ProductComposition } from '../product-composition.entity';
 import { ProductCompositionComponent } from '../product-composition/product-composition.component';
-
+import { CustomSkuValidator } from '../sku.validator';
+import { MessagesService } from '@app/messages/messages.service';
 interface Category {
   label: string;
   value: ProductCategory;
@@ -25,6 +26,7 @@ export class ProductFormComponent implements OnInit {
 
   formFields: FormGroup;
   formFieldsVariation: FormGroup;
+  editProductVariationSku: string;
   productDetails: string;
   product: Product;
   variations: ProductVariation[];
@@ -49,12 +51,13 @@ export class ProductFormComponent implements OnInit {
     private fb: FormBuilder,
     private productService: ProductsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private customSkuValidator: CustomSkuValidator,
+    private messagesService: MessagesService
   ) {}
 
   ngOnInit(): void {
     const sku = this.route.snapshot.params.sku;
-
     if (sku === 'new') {
       this.product = {};
       this.variations = [
@@ -80,16 +83,20 @@ export class ProductFormComponent implements OnInit {
 
   private configureFormFields(product: Product) {
     this.formFields = this.fb.group({
-      sku: [{ value: product.sku || '', disabled: !!product.id }],
-      ncm: [product.ncm || ''],
-      title: [product.title || ''],
-      description: [product.description || ''],
+      sku: [
+        { value: product.sku || '', disabled: !!product.id },
+        Validators.required,
+        this.customSkuValidator.existingSku(false),
+      ],
+      ncm: [product.ncm || '', Validators.required],
+      title: [product.title || '', [Validators.required, Validators.minLength(5)]],
+      description: [product.description || '', Validators.required],
       sellingPrice: [{ value: product.sellingPrice || null, disabled: true }],
       height: [product.height || null],
       width: [product.width || null],
       length: [product.length || null],
       weight: [product.weight || null],
-      isActive: [product.isActive || false],
+      isActive: [product.isActive || false, Validators.required],
       category: [product.category || false],
     });
     this.productDetails = product.productDetails || '';
@@ -97,20 +104,31 @@ export class ProductFormComponent implements OnInit {
   }
 
   submitProductDetails() {
-    const product = this.formFields.value;
-    product.productDetails = this.productDetails;
-    product.productVariations = this.variations;
-    product.productImages = this.images;
-    product.productComposition = this.product.productComposition?.map((item) => item.productVariation.sku);
+    if (!this.formFields.valid) {
+      this.markAllFieldsAsTouched(this.formFields);
+    } else {
+      const invalidVariation = this.variations.find((variation) => !variation.sku);
+      if (this.variations.length === 0) {
+        return this.messagesService.showError('O produto deve ter ao menos uma variação.');
+      }
+      if (invalidVariation) {
+        return this.messagesService.showError('Uma variação não tem SKU definido.');
+      }
+      const product = this.formFields.value;
+      product.productDetails = this.productDetails;
+      product.productVariations = this.variations;
+      product.productImages = this.images;
+      product.productComposition = this.product.productComposition?.map((item) => item.productVariation.sku);
 
-    if (this.product.id) {
-      // field is disabled, so the form doesn't provide it
-      product.sku = this.product.sku;
+      if (this.product.id) {
+        // field is disabled, so the form doesn't provide it
+        product.sku = this.product.sku;
+      }
+
+      this.productService.saveProduct(product).subscribe(() => {
+        this.router.navigate(['/products']);
+      });
     }
-
-    this.productService.saveProduct(product).subscribe(() => {
-      this.router.navigate(['/products']);
-    });
   }
 
   handleCancel(): void {
@@ -119,9 +137,9 @@ export class ProductFormComponent implements OnInit {
 
   newProductVariation(): void {
     this.formFieldsVariation = this.fb.group({
-      sku: '',
-      description: '',
-      sellingPrice: '',
+      skuVariation: ['', Validators.required, this.customSkuValidator.existingSku(true)],
+      descriptionVariation: ['', Validators.required],
+      sellingPriceVariation: ['', Validators.required],
     });
     this.isModalVisible = true;
     this.showRemoveButton = false;
@@ -136,10 +154,15 @@ export class ProductFormComponent implements OnInit {
   }
 
   editProductVariation(productVariation: ProductVariation): void {
+    this.editProductVariationSku = productVariation.sku;
     this.formFieldsVariation = this.fb.group({
-      sku: productVariation.sku,
-      description: productVariation.description,
-      sellingPrice: productVariation.sellingPrice,
+      skuVariation: [
+        { value: productVariation.sku, disabled: !!productVariation.sku },
+        Validators.required,
+        this.customSkuValidator.existingSku(true),
+      ],
+      descriptionVariation: [productVariation.description, Validators.required],
+      sellingPriceVariation: [productVariation.sellingPrice, Validators.required],
     });
     this.isModalVisible = true;
     this.showRemoveButton = true;
@@ -153,18 +176,30 @@ export class ProductFormComponent implements OnInit {
   }
 
   submitVariation(): void {
-    const inputValues = this.formFieldsVariation.value;
-    if (this.variationBeingEdited) {
-      Object.assign(this.variationBeingEdited, inputValues);
-      this.variations = [...this.variations];
+    if (!this.formFieldsVariation.valid) {
+      this.markAllFieldsAsTouched(this.formFieldsVariation);
     } else {
-      const variation: ProductVariation = {
-        parentSku: this.product.sku,
-        ...inputValues,
+      const variationFields = this.formFieldsVariation.value;
+      const productVariation = {
+        sku: variationFields.skuVariation,
+        description: variationFields.descriptionVariation,
+        sellingPrice: variationFields.sellingPriceVariation,
       };
-      this.variations = [...this.variations, variation];
+      if (this.variationBeingEdited) {
+        if (this.editProductVariationSku) {
+          productVariation.sku = this.editProductVariationSku;
+        }
+        Object.assign(this.variationBeingEdited, productVariation);
+        this.variations = [...this.variations];
+      } else {
+        const variation: ProductVariation = {
+          parentSku: this.product.sku,
+          ...productVariation,
+        };
+        this.variations = [...this.variations, variation];
+      }
+      this.isModalVisible = false;
     }
-    this.isModalVisible = false;
   }
 
   removeItemFromComposition(removedItem: ProductComposition) {
@@ -190,5 +225,20 @@ export class ProductFormComponent implements OnInit {
         },
       },
     });
+  }
+
+  markAllFieldsAsTouched(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((field) => {
+      const control = formGroup.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+  }
+
+  isFieldInvalid(field: string) {
+    return !this.formFields.get(field).valid && this.formFields.get(field).touched;
+  }
+
+  isFieldVariationInvalid(field: string) {
+    return !this.formFieldsVariation.get(field).valid && this.formFieldsVariation.get(field).touched;
   }
 }
