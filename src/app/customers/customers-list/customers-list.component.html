@@ -18,7 +18,7 @@
     <label>Controle seus clientes de forma simplificada.</label>
   </p>
   <div class="actions">
-    <a title="Novo Cliente" routerLink="/customers/new"><button pButton type="button" label="Novo Cliente"></button></a>
+    <button title="Novo Cliente" routerLink="/customers/new" pButton type="button" label="Novo Cliente"></button>
   </div>
 </div>
 <dgz-table
@@ -42,9 +42,13 @@
       <td>{{ customer.city }} / {{ customer.state }}</td>
       <td class="centered">{{ customer.phoneNumber }}</td>
       <td class="actions">
-        <a [title]="'Cliente'" [routerLink]="'/customers/' + customer.id"
-          ><button pButton type="button" label="Editar"></button
-        ></a>
+        <button
+          [title]="'Cliente'"
+          [routerLink]="'/customers/' + customer.id"
+          pButton
+          type="button"
+          label="Editar"
+        ></button>
       </td>
     </tr>
   </tbody>
