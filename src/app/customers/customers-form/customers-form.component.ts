@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Customer } from '../customer.entity';
 import { CustomersService } from '../customers.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -50,7 +50,7 @@ export class CustomersFormComponent implements OnInit {
       name: [customer.name || '', [Validators.required]],
       phoneNumber: [customer.phoneNumber || ''],
       email: [customer.email || '', [Validators.required, Validators.email]],
-      birthday: [birthDay || null],
+      birthday: [birthDay || null, this.isValidDate()],
       zipAddress: [customer.zipAddress || '', [Validators.required]],
       state: [customer.state || '', [Validators.required]],
       city: [customer.city || '', [Validators.required]],
@@ -76,16 +76,7 @@ export class CustomersFormComponent implements OnInit {
       };
 
       if (customer.birthday) {
-        console.log('aqui');
         customer.birthday = parse(customer.birthday, 'dd/MM/yyyy', new Date());
-
-        if (!this.validationDate(customer.birthday)) {
-          this.showDialog();
-          return;
-        } else {
-          customer.birthday = null;
-        }
-
         customer.birthday = format(customer.birthday, 'yyyy-MM-dd');
       }
 
@@ -95,22 +86,24 @@ export class CustomersFormComponent implements OnInit {
     }
   }
 
-  validationDate(date: string) {
-    const dataEmValidacao = new Date(date);
-    if (isValid(dataEmValidacao)) {
-      if (isAfter(dataEmValidacao, new Date())) {
-        this.display = false;
-        return false;
-      } else if (isBefore(dataEmValidacao, new Date('01/01/1990'))) {
-        this.display = false;
-        return false;
+  isValidDate(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const dataEmValidacao = new Date(control.value);
+      if (isValid(dataEmValidacao)) {
+        if (isAfter(dataEmValidacao, new Date())) {
+          this.display = false;
+          return { invalidDate: true };
+        } else if (isBefore(dataEmValidacao, new Date('01/01/1990'))) {
+          this.display = false;
+          return { invalidDate: true };
+        } else {
+          return null;
+        }
       } else {
-        return true;
+        this.display = false;
+        return { invalidDate: true };
       }
-    } else {
-      this.display = false;
-      return false;
-    }
+    };
   }
 
   markAllFieldsAsTouched(formGroup: FormGroup) {

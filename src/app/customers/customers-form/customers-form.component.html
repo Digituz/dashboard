@@ -56,6 +56,9 @@
       <div class="p-field p-col-6">
         <label for="birthday">Data de Nascimento</label>
         <p-inputMask mask="99/99/9999" formControlName="birthday" placeholder="Ex. 23/11/1970"></p-inputMask>
+        <small [hidden]="!isFieldValid('birthday')" style="color: #f44336;"
+          >Insira uma Data Valida(se vazio esse campo não é obrigatorio)</small
+        >
       </div>
       <div class="p-field p-col-6">
         <label for="zipAddress">CEP</label>
@@ -128,13 +131,3 @@
     </div>
   </form>
 </p-card>
-<!--Ideia de como validar as datas,
-  não sei ou consegui pensar em omo aplicar isso como um bloco independente,
- a minha ideia é usar algo como isso e deixar no modulo shared para validar todas as datas
-que o digituz vier a ter-->
-<p-dialog [(visible)]="display">
-  <p-header>
-    Data Invalida
-  </p-header>
-  Insira uma data valida
-</p-dialog>
