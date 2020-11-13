@@ -7,7 +7,7 @@ import {
   EventEmitter,
   Output,
   OnChanges,
-  ɵlooseIdentical,
+  //ɵlooseIdentical, ver para que serve e como manter ou trocar por algo equivalente
   Input,
   OnDestroy,
 } from '@angular/core';
@@ -81,7 +81,7 @@ export class MediumEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     if (change.isFirstChange()) {
       return true;
     }
-    return !ɵlooseIdentical(viewModel, change.currentValue);
+    return; //!ɵlooseIdentical(viewModel, change.currentValue)
   }
 
   refreshView() {
