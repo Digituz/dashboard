@@ -22,7 +22,7 @@
           pTooltip="Depois de salvo, o SKU não pode ser alterado."
           tooltipPosition="top"
         />
-        <div *ngIf="formFields.getError('required', ['sku']) && isFieldValid('sku')">
+        <div *ngIf="formFields.getError('required', ['sku']) && isFieldInvalid('sku')">
           <small id="sku-help" class="p-invalid">Insira um SKU</small>
         </div>
         <div class="p-invalid" *ngIf="formFields.getError('existingSku', ['sku']) as error">
@@ -32,7 +32,7 @@
       <div class="p-field p-col">
         <label for="ncm">NCM</label>
         <input id="ncm" name="ncm" type="text" formControlName="ncm" pInputText placeholder="Ex. 1234.12.34" />
-        <small [hidden]="!isFieldValid('ncm')" id="ncm-help" class="p-invalid">Insira o NCM</small>
+        <small [hidden]="!isFieldInvalid('ncm')" id="ncm-help" class="p-invalid">Insira o NCM</small>
       </div>
       <div class="p-field p-col">
         <label for="productActive">Ativo</label>
@@ -48,11 +48,11 @@
           pInputText
           placeholder="Título do seu produto"
         />
-        <div *ngIf="formFields.getError('required', ['title']) && isFieldValid('title')">
-          <small id="title-help" class="p-invalid">Insira o Título</small>
+        <div *ngIf="formFields.getError('required', ['title']) && isFieldInvalid('title')">
+          <small id="title-help" class="p-invalid">Insira o título</small>
         </div>
         <div class="p-invalid" *ngIf="formFields.getError('minlength', ['title']) as error">
-          <small>O título deve ter no minimo 5 caracteres</small>
+          <small>O título deve ter no mínimo 5 caracteres</small>
         </div>
       </div>
       <div class="p-field p-col">
@@ -134,7 +134,7 @@
           pInputText
           placeholder="Descrição curta do produto"
         />
-        <small [hidden]="!isFieldValid('description')" id="description-help" class="p-invalid"
+        <small [hidden]="!isFieldInvalid('description')" id="description-help" class="p-invalid"
           >Insira a descrição curta do produto</small
         >
       </div>
@@ -257,7 +257,7 @@
           aria-describedby="sku-variation-help"
         />
         <div
-          *ngIf="formFieldsVariation.getError('required', ['skuVariation']) && isFieldVariationValid('skuVariation')"
+          *ngIf="formFieldsVariation.getError('required', ['skuVariation']) && isFieldVariationInvalid('skuVariation')"
         >
           <small id="sku-variation-help" class="p-invalid">Insira um SKU para a variação</small>
         </div>
@@ -276,7 +276,7 @@
           aria-describedby="description-variation-help"
         />
         <small
-          [hidden]="!isFieldVariationValid('descriptionVariation')"
+          [hidden]="!isFieldVariationInvalid('descriptionVariation')"
           id="description-variation-help"
           class="p-invalid"
           >Insira a descrição da variação</small
@@ -297,7 +297,7 @@
           aria-describedby="selleing-price-variation-help"
         ></p-inputNumber>
         <small
-          [hidden]="!isFieldVariationValid('sellingPriceVariation')"
+          [hidden]="!isFieldVariationInvalid('sellingPriceVariation')"
           id="selleing-price-variation-help"
           class="p-invalid"
           >Insira o preço da variação produto</small

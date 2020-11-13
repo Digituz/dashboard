@@ -108,11 +108,11 @@ export class ProductFormComponent implements OnInit {
       this.markAllFieldsAsTouched(this.formFields);
     } else {
       const invalidVariation = this.variations.find((variation) => !variation.sku);
-      if (invalidVariation) {
-        return this.messagesService.showError('Uma variação não tem SKU definido.');
-      }
       if (this.variations.length === 0) {
         return this.messagesService.showError('O produto deve ter ao menos uma variação.');
+      }
+      if (invalidVariation) {
+        return this.messagesService.showError('Uma variação não tem SKU definido.');
       }
       const product = this.formFields.value;
       product.productDetails = this.productDetails;
@@ -234,11 +234,11 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  isFieldValid(field: string) {
+  isFieldInvalid(field: string) {
     return !this.formFields.get(field).valid && this.formFields.get(field).touched;
   }
 
-  isFieldVariationValid(field: string) {
+  isFieldVariationInvalid(field: string) {
     return !this.formFieldsVariation.get(field).valid && this.formFieldsVariation.get(field).touched;
   }
 }

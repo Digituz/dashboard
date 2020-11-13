@@ -12,30 +12,19 @@ function isEmptyInputValue(value: any): boolean {
 @Injectable({ providedIn: 'root' })
 export class CustomSkuValidator {
   constructor(private productService: ProductsService) {}
-  existingSku(isProductVariation: Boolean, sku: string = ''): AsyncValidatorFn {
+  existingSku(isProductVariation: boolean, sku: string = ''): AsyncValidatorFn {
     return (
       control: AbstractControl
     ): Promise<{ [key: string]: any } | null> | Observable<{ [key: string]: any } | null> => {
-      if (isEmptyInputValue(control.value)) {
-        return of(null);
-      } else if (control.value === sku) {
+      if (isEmptyInputValue(control.value) || control.value === sku) {
         return of(null);
       } else {
         return control.valueChanges.pipe(
           debounceTime(500),
           take(1),
-          switchMap((_) => {
-            if (isProductVariation) {
-              return this.productService
-                .isSkuAvaliable(control.value, isProductVariation)
-                .pipe(
-                  map((sku) =>
-                    sku ? { existingSku: { message: 'Já existe um produto cadastrado com este SKU' } } : null
-                  )
-                );
-            }
+          switchMap(() => {
             return this.productService
-              .isSkuAvaliable(control.value, false)
+              .isSkuAvailable(control.value, isProductVariation)
               .pipe(
                 map((sku) =>
                   sku ? { existingSku: { message: 'Já existe um produto cadastrado com este SKU' } } : null
