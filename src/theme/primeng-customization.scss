@@ -12,15 +12,15 @@ body .ui-widget:disabled {
 }
 
 p-fileupload {
-  .ui-fileupload-buttonbar {
+  .p-fileupload-buttonbar {
     border-radius: 0;
   }
 
-  .ui-fileupload-content {
+  .p-fileupload-content {
     border-radius: 0;
     position: relative;
 
-    .ui-progressbar {
+    .p-progressbar {
       display: none;
     }
 
