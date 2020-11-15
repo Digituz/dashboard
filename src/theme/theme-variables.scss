@@ -2,19 +2,19 @@
  * Application global variables.
  */
 
-$default-border-radius: 1px;
+$border-radius: 1px;
 
-$button-font-size: 13px;
+$font-size: 13px;
 $button-primary-color: rgb(24, 144, 255);
 $button-primary-border-color: rgb(64, 169, 255);
 $button-primary-color-hover: #40a9ff;
 $danger: #f44336;
 
 @mixin button-primary {
-  font-size: $button-font-size;
+  font-size: $font-size;
   background-color: $button-primary-color;
   border-color: $button-primary-border-color;
-  border-radius: $default-border-radius;
+  border-radius: $border-radius;
 
   &:not(.ui-state-disabled):hover {
     background-color: $button-primary-color-hover;

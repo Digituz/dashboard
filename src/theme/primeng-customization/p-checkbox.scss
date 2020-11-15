@@ -1,7 +1,7 @@
 @import "../theme-variables.scss";
 
 body .ui-chkbox .ui-chkbox-box {
-  border-radius: $default-border-radius;
+  border-radius: $border-radius;
 }
 
 body .ui-chkbox .ui-chkbox-box.ui-state-active:not(.ui-state-disabled) {

@@ -1,3 +1,5 @@
+@import "../../theme/theme-variables.scss";
+
 .sign-container {
   height: 100%;
   width: 100%;
@@ -31,4 +33,11 @@
 
 .input {
   width: 100%;
+  border-radius: $border-radius;
+}
+
+@media (max-width: 767px) {
+  .sign-in-form {
+    background-color: transparent;
+  }
 }

@@ -1,9 +1,10 @@
-body .ui-button {
+body .p-button {
   background-color: rgb(24, 144, 255);
   border-color: rgb(64, 169, 255);
-  border-radius: 2px;
+  border-radius: $border-radius;
   box-shadow: none;
-  font-size: 13px;
+  font-size: $font-size;
+  line-height: 20px;
 
   &.ui-state-default.ui-button-secondary {
     color: #333333;
@@ -37,7 +38,7 @@ body .ui-button {
   }
 
   .ui-button-text {
-    font-size: 13px;
+    font-size: $font-size;
     padding: 7px 15px;
     line-height: 19px;
   }
