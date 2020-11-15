@@ -1,24 +1,37 @@
-.ui-toast .ui-toast-message-text-content {
-  margin-left: 15px;
-}
+.p-toast {
+  .p-toast-message {
+    border-radius: 1px;
 
-body .ui-toast div.ui-toast-message.ui-toast-message-error {
-  .ui-toast-close-icon {
-    font-size: 10px;
-    color: #884646;
-    margin-top: 10px;
-    margin-right: 10px;
-  }
+    .p-toast-message-content {
+      padding: 10px;
 
-  .ui-toast-icon {
-    font-size: 12px;
-    margin-top: 10px;
-    margin-left: 5px;
-  }
+      .p-toast-detail {
+        margin-bottom: 3px;
+      }
+    }
 
-  div.ui-toast-message-content {
-    background-color: #ffd0d0;
-    border: 1px solid #d5a8a8;
-    color: #884646;
+    .p-toast-icon-close {
+      margin-top: -5px;
+
+      span.p-toast-icon-close-icon {
+        margin-top: 1px;
+      }
+    }
+
+    &.p-toast-message-error {
+      color: #884646;
+
+      .pi-times {
+        color: #884646;
+        font-size: 10px;
+        margin-top: -5px;
+      }
+
+      .pi-times-circle {
+        font-size: 15px;
+        color: #884646;
+        margin-right: 5px;
+      }
+    }
   }
 }
