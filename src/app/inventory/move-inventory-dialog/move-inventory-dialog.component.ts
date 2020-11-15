@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { InventoryMovement } from '@app/inventory/inventory-movement.entity';
 import { ProductsService } from '@app/products/products.service';
@@ -16,6 +16,8 @@ interface MovementType {
   styleUrls: ['./move-inventory-dialog.component.scss'],
 })
 export class MoveInventoryDialogComponent implements OnInit {
+  @Output() onComplete = new EventEmitter();
+
   formFields: FormGroup;
   loading: boolean = false;
   isModalVisible: boolean = false;
@@ -60,6 +62,7 @@ export class MoveInventoryDialogComponent implements OnInit {
     };
     this.inventoryService.addMovement(movement).subscribe(() => {
       this.handleCancel();
+      this.onComplete.emit();
     });
   }
 

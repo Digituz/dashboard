@@ -18,6 +18,7 @@
           [multiple]="false"
           field="title"
           placeholder="Selecione um produto"
+          [forceSelection]="true"
         >
           <ng-template let-productVariation pTemplate="item">
             <div>{{ productVariation.sku }} - {{ productVariation.title }}</div>
@@ -25,12 +26,12 @@
         </p-autoComplete>
       </div>
       <div class="p-field p-col-12">
-        <label for="variationDescription">Descrição</label>
+        <label for="movement-description">Motivo</label>
         <input
           pInputText
-          name="variationDescription"
-          id="variationDescription"
-          placeholder="Descrição da variação"
+          name="movement-description"
+          id="movement-description"
+          placeholder="Motivo da movimentação"
           formControlName="description"
         />
       </div>
