@@ -5,6 +5,7 @@
 @import "primeng-customization/p-fileupload";
 @import "primeng-customization/p-inputnumber";
 @import "primeng-customization/p-toast";
+@import "../theme/theme-variables.scss";
 
 body .ui-state-disabled,
 body .ui-widget:disabled {
@@ -59,11 +60,13 @@ p-fileupload {
   }
 }
 
-.ui-inputtext {
-  &.ui-corner-all {
-    border-radius: 1px;
-    border-color: #ccc;
-    outline: 0;
+.p-inputtext {
+  border-radius: 1px;
+  border-color: #ccc;
+  color: $color;
+
+  &:enabled:hover {
+    border-color: #767676;
   }
 }
 
@@ -82,6 +85,7 @@ body .ui-inputtext:enabled:focus:not(.ui-state-error) {
     label {
       display: block;
       width: 100%;
+      color: $color;
     }
 
     input {
