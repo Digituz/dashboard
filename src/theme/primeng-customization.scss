@@ -2,7 +2,6 @@
 @import "primeng-customization/p-button";
 @import "primeng-customization/p-checkbox";
 @import "primeng-customization/p-confirm-dialog";
-@import "primeng-customization/p-fileupload";
 @import "primeng-customization/p-inputnumber";
 @import "primeng-customization/p-toast";
 @import "../theme/theme-variables.scss";
@@ -13,16 +12,25 @@ body .ui-widget:disabled {
 }
 
 p-fileupload {
-  .ui-fileupload-buttonbar {
-    border-radius: 0;
-  }
-
-  .ui-fileupload-content {
+  .p-fileupload-content {
     border-radius: 0;
     position: relative;
 
-    .ui-progressbar {
+    .p-progressbar {
       display: none;
+    }
+
+    .p-fileupload-row {
+      .p-button.p-button-icon-only {
+        padding: 3px 7px;
+        width: auto;
+
+        @include button-danger;
+
+        .pi.pi-times {
+          font-size: 11px;
+        }
+      }
     }
 
     .uploading {
@@ -35,11 +43,10 @@ p-fileupload {
       align-items: center;
       height: 100%;
       width: 100%;
-      background-color: rgba(100, 100, 100, 0.3);
+      background-color: rgba(255, 255, 255, 0.8);
 
       i {
         font-size: 30px;
-        margin-bottom: 20px;
         animation: rotation 2s infinite linear;
       }
     }
@@ -53,7 +60,6 @@ p-fileupload {
 
       i {
         font-size: 30px;
-        margin-bottom: 20px;
         color: #666;
       }
     }

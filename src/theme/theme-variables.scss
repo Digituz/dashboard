@@ -23,3 +23,16 @@ $color: #555;
     cursor: pointer;
   }
 }
+
+@mixin button-danger {
+  font-size: $font-size;
+  border-radius: $border-radius;
+  background-color: #ff2a3c;
+  border-color: #f21b2d;
+
+  &:not(.ui-state-disabled):hover {
+    background-color: #ff2a3c;
+    border-color: #f21b2d;
+    cursor: pointer;
+  }
+}
