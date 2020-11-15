@@ -96,6 +96,16 @@ table.digituz {
 
     td.actions {
       text-align: right;
+      white-space: nowrap;
+
+      * {
+        vertical-align: middle;
+      }
+
+      > i.fal {
+        color: #666;
+        margin-right: 5px;
+      }
     }
 
     td.currency {
@@ -181,7 +191,6 @@ body app-root div.dgz-table.dgz-table-info {
 }
 
 input::placeholder {
-  // color: transparent !important;
   color: #aaa;
 }
 

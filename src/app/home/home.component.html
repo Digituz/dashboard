@@ -1,11 +1,11 @@
 <div class="p-grid">
-  <div class="p-col-6">
+  <div class="p-col-12">
     <div class="feature-header">
       <p>
         <label>Vendas confirmadas nos últimos 3 dias.</label>
       </p>
     </div>
-    <div style="height: 345px; min-height: 345px; background-color: #fff; overflow: scroll;">
+    <div style="height: 345px; min-height: 345px; background-color: #fff; overflow: auto;">
       <dgz-table
         #salesOrderTable
         [dataProvider]="this"
@@ -15,12 +15,8 @@
       >
         <thead>
           <tr>
-            <th>Data</th>
-            <th>Cliente</th>
-            <th>Cidade/UF</th>
-            <th>Envio</th>
-            <th>Total</th>
-            <th></th>
+            <th style="width: 85px;">Data</th>
+            <th colspan="2">Detalhes</th>
           </tr>
         </thead>
         <tbody>
@@ -32,24 +28,33 @@
               </div>
             </td>
             <td>
-              <div style="width: 150px; overflow: scroll; white-space: nowrap;">{{ salesOrder.customer.name }}</div>
+              <div style="overflow: hidden; white-space: nowrap;">{{ salesOrder.customer.name }}</div>
             </td>
-            <td class="centered">
-              {{ salesOrder.shipmentDetails.shippingCity }}/{{ salesOrder.shipmentDetails.shippingState }}
-            </td>
-            <td class="centered">{{ salesOrder.shipmentDetails.shippingType }}</td>
-            <td class="currency">{{ salesOrder.paymentDetails.total | reais }}</td>
             <td class="actions">
-              <a [routerLink]="'/sales-orders/' + salesOrder.referenceCode">
-                <button pButton class="ui-button-secondary" [icon]="'fal fa-edit'" tooltipPosition="top"></button>
-              </a>
+              <i
+                class="fal fa-piggy-bank"
+                [pTooltip]="salesOrder.paymentDetails.total | reais"
+                tooltipPosition="top"
+              ></i>
+              <i class="fal fa-truck" [pTooltip]="salesOrder.shipmentDetails.shippingType" tooltipPosition="top"></i>
+              <i
+                class="fal fa-map-marked-alt"
+                [pTooltip]="salesOrder.shipmentDetails.shippingCity + '/' + salesOrder.shipmentDetails.shippingState"
+                tooltipPosition="top"
+              ></i>
+              <button
+                pButton
+                class="p-button-secondary"
+                [icon]="'fal fa-edit'"
+                [routerLink]="'/sales-orders/' + salesOrder.referenceCode"
+              ></button>
             </td>
           </tr>
         </tbody>
       </dgz-table>
     </div>
   </div>
-  <div class="p-col-6">
+  <div class="p-col-12">
     <div class="feature-header">
       <p>
         <label>Vendas, em reais, confirmadas nos últimos 7 dias.</label>
