@@ -166,6 +166,10 @@ div.search-container {
   &:first-child {
     margin-top: 0;
   }
+
+  button.p-button {
+    width: auto;
+  }
 }
 
 body app-root div.dgz-table.dgz-table-info {
