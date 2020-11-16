@@ -15,6 +15,8 @@ export class CustomersFormComponent implements OnInit {
   customer: Customer;
   loading: boolean = true;
   display: boolean = false;
+  minBirthdayDate = parse('01/01/1900', 'dd/MM/yyyy', new Date());
+  maxBirtdayDate = new Date();
 
   constructor(
     private fb: FormBuilder,
@@ -62,10 +64,6 @@ export class CustomersFormComponent implements OnInit {
     this.loading = false;
   }
 
-  showDialog() {
-    this.display = true;
-  }
-
   submitCustomer() {
     if (!this.formFields.valid) {
       this.markAllFieldsAsTouched(this.formFields);
@@ -88,21 +86,13 @@ export class CustomersFormComponent implements OnInit {
 
   isValidDate(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
-      const dataEmValidacao = new Date(control.value);
-      if (isValid(dataEmValidacao)) {
-        if (isAfter(dataEmValidacao, new Date())) {
-          this.display = false;
-          return { invalidDate: true };
-        } else if (isBefore(dataEmValidacao, new Date('01/01/1990'))) {
-          this.display = false;
-          return { invalidDate: true };
-        } else {
-          return null;
-        }
-      } else {
-        this.display = false;
-        return { invalidDate: true };
+      if (!control.value || !control.value.trim()) return null;
+
+      const date = parse(control.value, 'dd/MM/yyyy', new Date());
+      if (isValid(date) && !isAfter(date, this.maxBirtdayDate) && !isBefore(date, this.minBirthdayDate)) {
+        return null;
       }
+      return { invalidDate: true };
     };
   }
 
@@ -113,7 +103,7 @@ export class CustomersFormComponent implements OnInit {
     });
   }
 
-  isFieldValid(field: string) {
+  isFieldInvalid(field: string) {
     return !this.formFields.get(field).valid && this.formFields.get(field).touched;
   }
 }
