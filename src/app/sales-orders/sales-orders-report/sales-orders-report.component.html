@@ -55,7 +55,7 @@
     <tr *ngFor="let customerReport of resultsTable.currentData">
       <td class="centered">{{ customerReport.name }}</td>
       <td class="centered">{{ customerReport.email }}</td>
-      <td class="centered">{{ customerReport.phoneNumber }}</td>
+      <td class="centered">{{ customerReport.phoneNumber | phoneNumber }}</td>
       <td class="currency">{{ customerReport.total | reais }}</td>
       <td class="actions">
         <button

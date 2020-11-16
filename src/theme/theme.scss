@@ -215,6 +215,10 @@ div.no-data-container {
   i {
     font-size: 40px;
   }
+
+  .p-invalid {
+    color: $danger;
+  }
 }
 
 .p-invalid {

@@ -12,11 +12,12 @@
   <form [formGroup]="formFields" (ngSubmit)="submitCustomer()" *ngIf="!loading">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
-        <label for="cpf">CPF</label>
-        <input id="cpf" name="cpf" type="text" formControlName="cpf" pInputText placeholder="ex. 123.456.789-00" />
+        <label for="cpf">CPF <i class="fal fa-asterisk"></i></label>
+        <p-inputMask mask="999.999.999-99" formControlName="cpf" placeholder="ex. 123.456.789-00"></p-inputMask>
+        <small [hidden]="!isFieldInvalid('cpf')" id="cpf-help" style="color: #f44336;">Insira o CPF</small>
       </div>
       <div class="p-field p-col-6">
-        <label for="name">Nome</label>
+        <label for="name">Nome <i class="fal fa-asterisk"></i></label>
         <input
           id="name"
           name="name"
@@ -25,20 +26,18 @@
           pInputText
           placeholder="Ex. Joana Maria da Silva"
         />
+        <small [hidden]="!isFieldInvalid('name')" id="cpf-help" style="color: #f44336;">Insira o Nome</small>
       </div>
       <div class="p-field p-col-6">
         <label for="phoneNumber">Telefone</label>
-        <input
-          id="phoneNumber"
-          name="phoneNumber"
-          type="text"
+        <p-inputMask
+          mask="(99) 9 9999-9999"
           formControlName="phoneNumber"
-          pInputText
-          placeholder="Ex. (11) 98765-4321"
-        />
+          placeholder="ex. (11) 98765-4321"
+        ></p-inputMask>
       </div>
       <div class="p-field p-col-6">
-        <label for="email">E-mail</label>
+        <label for="email">E-mail <i class="fal fa-asterisk"></i></label>
         <input
           id="email"
           name="email"
@@ -47,39 +46,37 @@
           pInputText
           placeholder="Ex. joanasilva@gmail.com"
         />
+        <div *ngIf="formFields.getError('required', ['email']) && isFieldInvalid('email')">
+          <small style="color: #f44336;" id="sku-help">Insira um e-mail</small>
+        </div>
+        <div *ngIf="formFields.getError('email', ['email'])">
+          <small style="color: #f44336;">Insira um e-mail válido</small>
+        </div>
       </div>
       <div class="p-field p-col-6">
-        <label for="birthday">Data de Nascimento</label>
-        <input
-          id="birthday"
-          name="birthday"
-          type="text"
-          formControlName="birthday"
-          pInputText
-          placeholder="Ex. 23/11/1970"
-        />
+        <label for="birthday">Data de Nascimento <i class="fal fa-asterisk"></i></label>
+        <p-inputMask mask="99/99/9999" formControlName="birthday" placeholder="Ex. 23/11/1970"></p-inputMask>
+        <small [hidden]="!isFieldInvalid('birthday')" style="color: #f44336;">
+          Insira uma data válida (se vazio esse campo não é obrigatorio)
+        </small>
       </div>
       <div class="p-field p-col-6">
-        <label for="zipAddress">CEP</label>
-        <input
-          id="zipAddress"
-          name="zipAddress"
-          type="text"
-          formControlName="zipAddress"
-          pInputText
-          placeholder="Ex. 01305-000"
-        />
+        <label for="zipAddress">CEP <i class="fal fa-asterisk"></i></label>
+        <p-inputMask mask="99999-999" formControlName="zipAddress" placeholder="Ex. 01305-000"></p-inputMask>
+        <small [hidden]="!isFieldInvalid('zipAddress')" id="zip-help" style="color: #f44336;">Insira o CEP</small>
       </div>
       <div class="p-field p-col-6">
-        <label for="state">UF</label>
+        <label for="state">UF <i class="fal fa-asterisk"></i></label>
         <input id="state" name="state" type="text" formControlName="state" pInputText placeholder="Ex. SP" />
+        <small [hidden]="!isFieldInvalid('state')" id="state-help" style="color: #f44336;">Insira o estado</small>
       </div>
       <div class="p-field p-col-6">
-        <label for="city">Cidade</label>
+        <label for="city">Cidade <i class="fal fa-asterisk"></i></label>
         <input id="city" name="city" type="text" formControlName="city" pInputText placeholder="Ex. São Paulo" />
+        <small [hidden]="!isFieldInvalid('city')" id="zip-help" style="color: #f44336;">Insira a cidade</small>
       </div>
       <div class="p-field p-col-6">
-        <label for="neighborhood">Bairro</label>
+        <label for="neighborhood">Bairro <i class="fal fa-asterisk"></i></label>
         <input
           id="neighborhood"
           name="neighborhood"
@@ -88,9 +85,12 @@
           pInputText
           placeholder="Ex. Consolação"
         />
+        <small [hidden]="!isFieldInvalid('neighborhood')" id="neighborhood-help" style="color: #f44336;"
+          >Insira a rua</small
+        >
       </div>
       <div class="p-field p-col-6">
-        <label for="streetAddress">Logradouro</label>
+        <label for="streetAddress">Logradouro <i class="fal fa-asterisk"></i></label>
         <input
           id="streetAddress"
           name="streetAddress"
@@ -99,9 +99,12 @@
           pInputText
           placeholder="Ex. Rua Augusta"
         />
+        <small [hidden]="!isFieldInvalid('streetAddress')" id="street-help" style="color: #f44336;"
+          >Insira o bairro</small
+        >
       </div>
       <div class="p-field p-col-6">
-        <label for="streetNumber">Número</label>
+        <label for="streetNumber">Número <i class="fal fa-asterisk"></i></label>
         <input
           id="streetNumber"
           name="streetNumber"
@@ -110,6 +113,9 @@
           pInputText
           placeholder="Ex. 123"
         />
+        <small [hidden]="!isFieldInvalid('streetNumber')" id="streetNumber-help" style="color: #f44336;"
+          >Insira o número do endereço</small
+        >
       </div>
       <div class="p-field p-col-6">
         <label for="streetNumber2">Complemento</label>
