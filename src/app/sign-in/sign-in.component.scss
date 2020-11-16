@@ -1,3 +1,5 @@
+@import "../../theme/theme-variables.scss";
+
 .sign-container {
   height: 100%;
   width: 100%;
@@ -27,4 +29,16 @@
 
 .sign-in-button-container {
   margin-top: 15px;
+}
+
+.input {
+  width: 100%;
+  border-radius: $border-radius;
+  line-height: 22px;
+}
+
+@media (max-width: 767px) {
+  .sign-in-form {
+    background-color: transparent;
+  }
 }

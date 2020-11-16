@@ -41,7 +41,7 @@
         </ng-template>
       </p-autoComplete>
     </div>
-    <div class="p-field p-col-fixed" style="width: 120px;">
+    <div class="p-field p-col-fixed" style="width: 140px;">
       <label>&nbsp;</label>
       <div>
         <button style="width: 100%;" pButton label="Aplicar Tags" (click)="applyTags()"></button>
@@ -58,7 +58,7 @@
   <div class="">
     <button
       pButton
-      class="ui-button-danger"
+      class="p-button-danger"
       label="Arquivar"
       [disabled]="selectedImages?.length === 0"
       (click)="archiveImages()"

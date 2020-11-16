@@ -28,15 +28,15 @@
     </div>
   </form>
   <p-footer>
-    <button pButton type="button" class="ui-button-secondary" (click)="handleCancel()" label="Cancelar"></button>
+    <button pButton type="button" class="p-button-secondary" (click)="handleCancel()" label="Cancelar"></button>
     <button
       pButton
       type="button"
-      class="ui-button-danger"
+      class="p-button-danger"
       (click)="handleCancel()"
       *ngIf="showRemoveButton"
       label="Remover"
     ></button>
-    <button pButton type="button" class="ui-button-primary" (click)="submitProductVariation()" label="Salvar"></button>
+    <button pButton type="button" (click)="submitProductVariation()" label="Salvar"></button>
   </p-footer>
 </p-dialog>

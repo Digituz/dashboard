@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import decode from 'jwt-decode';
+import { single } from 'rxjs/operators';
 
 @Injectable()
 export class SignInService {
@@ -17,15 +18,16 @@ export class SignInService {
   }
 
   signIn(credentials: { username: string; password: string }): Observable<any> {
-    const request = this.httpClient.post<any>(SignInService.SIGN_IN_ENDPOINT, credentials);
-    request.subscribe((response) => {
-      const { access_token } = response;
-      this.token = access_token;
-      this.tokenInfo = decode(this.token);
-      localStorage.setItem(SignInService.tokenStorage, this.token);
-      localStorage.setItem(SignInService.tokenInfoStorage, JSON.stringify(this.tokenInfo));
-    });
-    return request;
+    return this.httpClient.post<any>(SignInService.SIGN_IN_ENDPOINT, credentials).pipe(
+      single((response) => {
+        const { access_token } = response;
+        this.token = access_token;
+        this.tokenInfo = decode(this.token);
+        localStorage.setItem(SignInService.tokenStorage, this.token);
+        localStorage.setItem(SignInService.tokenInfoStorage, JSON.stringify(this.tokenInfo));
+        return true;
+      })
+    );
   }
 
   signOut() {

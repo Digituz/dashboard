@@ -21,8 +21,12 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(catchError((error) => this.errorHandler(error)));
   }
 
-  private errorHandler(response: HttpEvent<any>): Observable<HttpEvent<any>> {
-    this.messagesService.showError('Um erro inesperado aconteceu.');
-    throw response;
+  private errorHandler(error: any): Observable<HttpEvent<any>> {
+    if (error.status !== 401) {
+      this.messagesService.showError('Um erro inesperado aconteceu.');
+    } else {
+      this.messagesService.showError('Acesso não permitido.');
+    }
+    throw error;
   }
 }

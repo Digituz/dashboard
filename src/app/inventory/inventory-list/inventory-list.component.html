@@ -18,7 +18,7 @@
     <label>Controle o estoque dos seus produtos.</label>
   </p>
   <div class="actions">
-    <button pButton class="ui-button-secondary" type="button" label="Gerar Relátorio" (click)="xlsExport()"></button>
+    <button pButton class="p-button-secondary" type="button" label="Gerar Relátorio" (click)="xlsExport()"></button>
     <button pButton type="button" label="Nova Movimentação" (click)="openMovementDialog()"></button>
   </div>
 </div>
@@ -52,9 +52,9 @@
       <td>{{ inventory.productVariationDetails.title }}</td>
       <td class="currency">{{ inventory.currentPosition }}</td>
       <td class="actions">
-        <a [routerLink]="'/inventory/' + inventory.id"><button pButton type="button" label="Detalhes"></button></a>
+        <button [routerLink]="'/inventory/' + inventory.id" pButton type="button" label="Detalhes"></button>
       </td>
     </tr>
   </tbody>
 </dgz-table>
-<app-move-inventory-dialog #movementDialog></app-move-inventory-dialog>
+<app-move-inventory-dialog #movementDialog (onComplete)="queryInventory()"></app-move-inventory-dialog>

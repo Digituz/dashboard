@@ -31,7 +31,7 @@
     <label>Controle os seus produtos de forma simplificada.</label>
   </p>
   <div class="actions">
-    <a title="Novo Produto" routerLink="/products/new"><button pButton type="button" label="Novo Produto"></button></a>
+    <button title="Novo Produto" routerLink="/products/new" pButton type="button" label="Novo Produto"></button>
   </div>
 </div>
 <dgz-table
@@ -75,9 +75,13 @@
         <i class="fal fa-times" style="color: #df6666;" *ngIf="!product.isActive"></i>
       </td>
       <td class="actions">
-        <a [title]="'Início'" [routerLink]="'/products/' + product.sku"
-          ><button pButton type="button" label="Editar"></button
-        ></a>
+        <button
+          [title]="'Início'"
+          [routerLink]="'/products/' + product.sku"
+          pButton
+          type="button"
+          label="Editar"
+        ></button>
       </td>
     </tr>
   </tbody>

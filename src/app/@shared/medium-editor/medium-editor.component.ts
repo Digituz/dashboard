@@ -7,7 +7,6 @@ import {
   EventEmitter,
   Output,
   OnChanges,
-  ɵlooseIdentical,
   Input,
   OnDestroy,
 } from '@angular/core';
@@ -81,7 +80,7 @@ export class MediumEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     if (change.isFirstChange()) {
       return true;
     }
-    return !ɵlooseIdentical(viewModel, change.currentValue);
+    return !Object.is(viewModel, change.currentValue);
   }
 
   refreshView() {

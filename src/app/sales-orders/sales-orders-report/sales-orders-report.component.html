@@ -20,9 +20,17 @@
         <p-dropdown [options]="groupByOptions" name="groupBy" [(ngModel)]="groupBy"></p-dropdown>
       </div>
       <div class="orderForm">
-        <button pButton type="submit" class="ui-button-primary" label="Agrupar"></button>
+        <button pButton type="submit" label="Agrupar"></button>
       </div>
-      <button pButton type="submit" class="ui-button-secondary" label="Baixar Relátorio" (click)="xlsExport()"></button>
+      <div class="orderForm">
+        <button
+          pButton
+          class="p-button-secondary"
+          type="button"
+          label="Baixar Relátorio"
+          (click)="xlsExport()"
+        ></button>
+      </div>
     </div>
   </form>
 </p-card>
@@ -49,17 +57,17 @@
       <td class="centered">{{ customerReport.email }}</td>
       <td class="centered">{{ customerReport.phoneNumber }}</td>
       <td class="currency">{{ customerReport.total | reais }}</td>
-      <td class="centered">
-        <a [title]="'Detalhes do cliente'" [routerLink]="'/customers/' + customerReport.id">
-          <button
-            pButton
-            type="button"
-            class="ui-button-secondary"
-            [icon]="'fal fa-search'"
-            [pTooltip]="'Visualizar cliente.'"
-            tooltipPosition="top"
-          ></button>
-        </a>
+      <td class="actions">
+        <button
+          [title]="'Detalhes do cliente'"
+          [routerLink]="'/customers/' + customerReport.id"
+          pButton
+          type="button"
+          class="p-button-secondary"
+          [icon]="'fal fa-search'"
+          [pTooltip]="'Visualizar cliente.'"
+          tooltipPosition="top"
+        ></button>
       </td>
     </tr>
   </tbody>
@@ -78,17 +86,17 @@
       <td class="">{{ productReport.title }}</td>
       <td class="centered">{{ productReport.amount }}</td>
       <td class="centered">{{ productReport.total | reais }}</td>
-      <td class="centered">
-        <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productReport.sku">
-          <button
-            pButton
-            type="button"
-            class="ui-button-secondary"
-            [icon]="'fal fa-search'"
-            [pTooltip]="'Visualizar venda.'"
-            tooltipPosition="top"
-          ></button>
-        </a>
+      <td class="actions">
+        <button
+          [title]="'Detalhes do produto'"
+          [routerLink]="'/products/' + productReport.sku"
+          pButton
+          type="button"
+          class="p-button-secondary"
+          [icon]="'fal fa-search'"
+          [pTooltip]="'Visualizar venda.'"
+          tooltipPosition="top"
+        ></button>
       </td>
     </tr>
   </tbody>
@@ -108,16 +116,17 @@
       <td class="centered">{{ productVariationReport.amount }}</td>
       <td class="centered">{{ productVariationReport.total | reais }}</td>
       <td class="centered">
-        <a [title]="'Detalhes do produto'" [routerLink]="'/products/' + productVariationReport.productsku">
-          <button
-            pButton
-            type="button"
-            class="ui-button-secondary"
-            [icon]="'fal fa-search'"
-            [pTooltip]="'Visualizar venda.'"
-            tooltipPosition="top"
-          ></button>
-        </a>
+        <button
+          a
+          [title]="'Detalhes do produto'"
+          [routerLink]="'/products/' + productVariationReport.productsku"
+          pButton
+          type="button"
+          class="p-button-secondary"
+          [icon]="'fal fa-search'"
+          [pTooltip]="'Visualizar venda.'"
+          tooltipPosition="top"
+        ></button>
       </td>
     </tr>
   </tbody>

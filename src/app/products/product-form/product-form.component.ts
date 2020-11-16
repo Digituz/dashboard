@@ -88,7 +88,7 @@ export class ProductFormComponent implements OnInit {
         Validators.required,
         this.customSkuValidator.existingSku(false),
       ],
-      ncm: [product.ncm || '', Validators.required],
+      ncm: [product.ncm || '', [Validators.required, Validators.maxLength(10)]],
       title: [product.title || '', [Validators.required, Validators.minLength(5)]],
       description: [product.description || '', Validators.required],
       sellingPrice: [{ value: product.sellingPrice || null, disabled: true }],

@@ -2,77 +2,32 @@
 @import "primeng-customization/p-button";
 @import "primeng-customization/p-checkbox";
 @import "primeng-customization/p-confirm-dialog";
-@import "primeng-customization/p-fileupload";
 @import "primeng-customization/p-inputnumber";
 @import "primeng-customization/p-toast";
+@import "primeng-customization/p-fileupload";
+@import "../theme/theme-variables.scss";
 
-body .ui-state-disabled,
-body .ui-widget:disabled {
+body .p-disabled,
+body .p-widget:disabled {
   opacity: 0.7;
 }
 
-p-fileupload {
-  .ui-fileupload-buttonbar {
-    border-radius: 0;
-  }
+.p-inputtext {
+  border-radius: 1px;
+  border-color: #ccc;
+  color: $color;
 
-  .ui-fileupload-content {
-    border-radius: 0;
-    position: relative;
-
-    .ui-progressbar {
-      display: none;
-    }
-
-    .uploading {
-      position: absolute;
-      left: 0;
-      top: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      width: 100%;
-      background-color: rgba(100, 100, 100, 0.3);
-
-      i {
-        font-size: 30px;
-        margin-bottom: 20px;
-        animation: rotation 2s infinite linear;
-      }
-    }
-
-    .upload-message {
-      display: flex;
-      flex-direction: column;
-      height: 150px;
-      justify-content: center;
-      align-items: center;
-
-      i {
-        font-size: 30px;
-        margin-bottom: 20px;
-        color: #666;
-      }
-    }
+  &:enabled:hover {
+    border-color: #767676;
   }
 }
 
-.ui-inputtext {
-  &.ui-corner-all {
-    border-radius: 1px;
-    border-color: #ccc;
-    outline: 0;
-  }
-}
-
-body .ui-inputtext {
-  font-size: 13px;
+body .p-inputtext {
+  font-size: $font-size;
   color: #666;
 }
 
-body .ui-inputtext:enabled:focus:not(.ui-state-error) {
+body .p-inputtext:enabled:focus:not(.p-error) {
   box-shadow: none;
   border-color: #ccc;
 }
@@ -80,8 +35,15 @@ body .ui-inputtext:enabled:focus:not(.ui-state-error) {
 .p-fluid.p-formgrid.p-grid {
   .p-field {
     label {
-      display: block;
-      width: 100%;
+      display: flex;
+      color: $color;
+      flex-direction: row;
+    }
+
+    i {
+      font-size: 7px;
+      margin-top: 2px;
+      margin-left: 1px;
     }
 
     input {
@@ -103,19 +65,26 @@ body .ui-inputtext:enabled:focus:not(.ui-state-error) {
   }
 }
 
-body .ui-card {
+body .p-card {
   box-shadow: none;
   border-radius: 0;
 
-  .ui-card-body {
+  .p-card-body {
     padding: 15px;
   }
 }
 
-body .ui-inputgroup .ui-button:last-child {
+body .p-inputgroup .p-button:last-child {
   border-radius: 1px;
   padding: 0 5px;
   margin-left: -10px;
   font-size: 8px;
   border: none;
+}
+
+.p-component {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  font-weight: 300;
 }

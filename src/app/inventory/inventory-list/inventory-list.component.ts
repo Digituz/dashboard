@@ -43,7 +43,7 @@ export class InventoryListComponent implements OnInit, IDataProvider<Inventory> 
   }
 
   updateQueryParams(queryParams: QueryParam[]) {
-    this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
+    this.query = queryParams.find((q) => q.key === 'query')?.value?.toString();
   }
 
   xlsExport() {

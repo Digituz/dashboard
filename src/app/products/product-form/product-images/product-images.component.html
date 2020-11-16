@@ -37,7 +37,7 @@
       <td class="actions">
         <button
           pButton
-          class="ui-button-secondary"
+          class="p-button-secondary"
           type="button"
           icon="fal fa-angle-up"
           [disabled]="i === 0"
@@ -45,7 +45,7 @@
         ></button>
         <button
           pButton
-          class="ui-button-secondary"
+          class="p-button-secondary"
           type="button"
           icon="fal fa-angle-down"
           [disabled]="i === productImages.length - 1"
@@ -53,7 +53,7 @@
         ></button>
         <button
           pButton
-          class="ui-button-danger"
+          class="p-button-danger"
           type="button"
           icon="fal fa-trash"
           (click)="removeImage(productImage)"
@@ -103,11 +103,10 @@
     </div>
   </div>
   <p-footer>
-    <button pButton type="button" class="ui-button-secondary" (click)="closeDialog()" label="Cancelar"></button>
+    <button pButton type="button" class="p-button-secondary" (click)="closeDialog()" label="Cancelar"></button>
     <button
       pButton
       type="button"
-      class="ui-button-primary"
       (click)="saveProductImages()"
       label="Salvar"
       [disabled]="!selectedImages || selectedImages.length === 0"

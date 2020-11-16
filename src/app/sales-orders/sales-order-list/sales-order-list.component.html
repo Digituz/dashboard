@@ -27,10 +27,15 @@
     <label>Controle as suas vendas de forma simplificada.</label>
   </p>
   <div class="actions">
-    <a title="Gerar Relátorio de Vendas" routerLink="/sales-orders/report"
-      ><button pButton class="ui-button-secondary" type="button" label="Relátorios"></button
-    ></a>
-    <a title="Nova Venda" routerLink="/sales-orders/new"><button pButton type="button" label="Nova Venda"></button></a>
+    <button
+      title="Gerar Relátorio de Vendas"
+      routerLink="/sales-orders/report"
+      pButton
+      class="p-button-secondary"
+      type="button"
+      label="Relátorios"
+    ></button>
+    <button title="Nova Venda" routerLink="/sales-orders/new" pButton type="button" label="Nova Venda"></button>
   </div>
 </div>
 <dgz-table
@@ -103,21 +108,22 @@
         </div>
       </td>
       <td class="actions">
-        <a [title]="'Venda'" [routerLink]="'/sales-orders/' + salesOrder.referenceCode">
-          <button
-            pButton
-            type="button"
-            class="ui-button-secondary"
-            [icon]="!!salesOrder.blingStatus ? 'fal fa-search' : 'fal fa-edit'"
-            [pTooltip]="!!salesOrder.blingStatus ? 'Visualizar venda.' : 'Editar detalhes.'"
-            tooltipPosition="top"
-          ></button>
-        </a>
+        <button
+          [title]="'Venda'"
+          [routerLink]="'/sales-orders/' + salesOrder.referenceCode"
+          pButton
+          type="button"
+          class="p-button-secondary"
+          [icon]="!!salesOrder.blingStatus ? 'fal fa-search' : 'fal fa-edit'"
+          [pTooltip]="!!salesOrder.blingStatus ? 'Visualizar venda.' : 'Editar detalhes.'"
+          tooltipPosition="top"
+        ></button>
+
         <button
           pButton
           type="button"
           [icon]="salesOrder.duplicatingSalesOrder ? 'fal fa-sync fa-spin' : 'fal fa-copy'"
-          class="ui-button-secondary"
+          class="p-button-secondary"
           pTooltip="Duplicar venda."
           tooltipPosition="top"
           (click)="duplicateOrder(salesOrder)"
@@ -126,7 +132,7 @@
           pButton
           type="button"
           [icon]="salesOrder.cancellingOnBling ? 'fal fa-sync fa-spin' : 'fal fa-times'"
-          class="ui-button-danger"
+          class="p-button-danger"
           pTooltip="Cancelar venda no Bling."
           tooltipPosition="top"
           (click)="cancelOnBling(salesOrder)"

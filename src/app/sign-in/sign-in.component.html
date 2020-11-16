@@ -1,6 +1,6 @@
 <div class="sign-container">
   <div class="p-grid p-nogutter p-align-center">
-    <div class="p-col-4 p-offset-4 p-col-align-center">
+    <div class="p-col-12 p-md-6 p-md-offset-3 p-xl-4 p-xl-offset-4 p-col-align-center">
       <div class="sign-in-form">
         <form [formGroup]="formFields" (ngSubmit)="signIn()" *ngIf="!loading">
           <div class="logo">
@@ -9,12 +9,20 @@
           <div class="ui-fluid">
             <div class="p-field">
               <label for="username">Usuário</label>
-              <input id="username" type="text" placeholder="Digite seu e-mail" formControlName="username" pInputText />
+              <input
+                class="input"
+                id="username"
+                type="text"
+                placeholder="Digite seu e-mail"
+                formControlName="username"
+                pInputText
+              />
             </div>
             <div class="p-field">
               <label for="password">Senha</label>
               <input
                 id="password"
+                class="input"
                 type="password"
                 placeholder="Digite sua senha"
                 formControlName="password"

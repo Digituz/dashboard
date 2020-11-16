@@ -1,3 +1,5 @@
+@import "../../../theme/theme-variables.scss";
+
 div.pagination-area {
   display: flex;
   flex-direction: row-reverse;
@@ -10,7 +12,7 @@ div.pagination-area {
     margin: 0;
     margin-right: 5px;
     color: #999;
-    font-size: 13px;
+    font-size: $font-size;
   }
 
   button {

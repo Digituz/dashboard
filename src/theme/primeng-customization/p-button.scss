@@ -1,11 +1,12 @@
-body .ui-button {
+body .p-button {
   background-color: rgb(24, 144, 255);
   border-color: rgb(64, 169, 255);
-  border-radius: 2px;
+  border-radius: $border-radius;
   box-shadow: none;
-  font-size: 13px;
+  font-size: $font-size;
+  line-height: 20px;
 
-  &.ui-state-default.ui-button-secondary {
+  &.p-button-secondary {
     color: #333333;
     background-color: #d6d6d6;
     border: 1px solid #d6d6d6;
@@ -15,6 +16,7 @@ body .ui-button {
       box-shadow: none;
       background-color: #e5e5e5;
       border: 1px solid #e5e5e5;
+      color: #666;
     }
   }
 
@@ -25,24 +27,24 @@ body .ui-button {
     box-shadow: none;
   }
 
-  &.ui-state-default.ui-button-danger:enabled:hover,
-  &.ui-state-default.ui-button-danger:enabled:focus {
+  &.p-state-default.p-button-danger:enabled:hover,
+  &.p-state-default.p-button-danger:enabled:focus {
     background-color: #ff2a3c;
     border-color: #f21b2d;
     box-shadow: none;
   }
 
-  &.ui-button-danger:disabled {
+  &.p-button-danger:disabled {
     cursor: not-allowed;
   }
 
-  .ui-button-text {
-    font-size: 13px;
+  .p-button-text {
+    font-size: $font-size;
     padding: 7px 15px;
     line-height: 19px;
   }
 
-  span.ui-button-icon-left {
+  span.p-button-icon-left {
     font-size: 12px;
   }
 
