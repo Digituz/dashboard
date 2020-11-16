@@ -23,13 +23,7 @@
         <button pButton type="submit" class="ui-button-primary" label="Agrupar"></button>
       </div>
       <div class="orderForm">
-        <button
-          pButton
-          type="submit"
-          class="p-button-secondary"
-          label="Baixar Relátorio"
-          (click)="xlsExport()"
-        ></button>
+        <button pButton class="p-button-secondary" label="Baixar Relátorio" (click)="xlsExport()"></button>
       </div>
     </div>
   </form>
@@ -57,13 +51,13 @@
       <td class="centered">{{ customerReport.email }}</td>
       <td class="centered">{{ customerReport.phoneNumber }}</td>
       <td class="currency">{{ customerReport.total | reais }}</td>
-      <td class="centered">
+      <td class="actions">
         <button
           [title]="'Detalhes do cliente'"
           [routerLink]="'/customers/' + customerReport.id"
           pButton
           type="button"
-          class="ui-button-secondary"
+          class="p-button-secondary"
           [icon]="'fal fa-search'"
           [pTooltip]="'Visualizar cliente.'"
           tooltipPosition="top"
@@ -86,13 +80,13 @@
       <td class="">{{ productReport.title }}</td>
       <td class="centered">{{ productReport.amount }}</td>
       <td class="centered">{{ productReport.total | reais }}</td>
-      <td class="centered">
+      <td class="actions">
         <button
           [title]="'Detalhes do produto'"
           [routerLink]="'/products/' + productReport.sku"
           pButton
           type="button"
-          class="ui-button-secondary"
+          class="p-button-secondary"
           [icon]="'fal fa-search'"
           [pTooltip]="'Visualizar venda.'"
           tooltipPosition="top"
@@ -122,7 +116,7 @@
           [routerLink]="'/products/' + productVariationReport.productsku"
           pButton
           type="button"
-          class="ui-button-secondary"
+          class="p-button-secondary"
           [icon]="'fal fa-search'"
           [pTooltip]="'Visualizar venda.'"
           tooltipPosition="top"

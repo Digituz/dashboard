@@ -11,7 +11,7 @@
   <form [formGroup]="formFields" (ngSubmit)="submitProductDetails()" *ngIf="!loading">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
-        <label for="sku">SKU</label>
+        <label for="sku">SKU <i class="fal fa-asterisk"></i></label>
         <input
           id="sku"
           name="sku"
@@ -30,13 +30,13 @@
         </div>
       </div>
       <div class="p-field p-col">
-        <label for="ncm">NCM</label>
+        <label for="ncm">NCM <i class="fal fa-asterisk"></i></label>
         <input id="ncm" name="ncm" type="text" formControlName="ncm" pInputText placeholder="Ex. 1234.12.34" />
         <div *ngIf="formFields.getError('required', ['ncm']) && isFieldInvalid('ncm')">
           <small id="title-help" class="p-invalid">Insira o ncm</small>
         </div>
         <div class="p-invalid" *ngIf="formFields.getError('maxlength', ['ncm']) as error">
-          <small>O tamanho maximo do nmc é 10 caracteres</small>
+          <small>O tamanho maximo do NCM é 10 caracteres</small>
         </div>
       </div>
       <div class="p-field p-col">
@@ -44,7 +44,7 @@
         <p-inputSwitch id="productActive" name="productActive" formControlName="isActive"></p-inputSwitch>
       </div>
       <div class="p-field p-col-6">
-        <label for="title">Título</label>
+        <label for="title">Título <i class="fal fa-asterisk"></i></label>
         <input
           id="title"
           name="title"
@@ -130,7 +130,7 @@
         />
       </div>
       <div class="p-field p-col-12">
-        <label for="description">Descrição Curta</label>
+        <label for="description">Descrição Curta <i class="fal fa-asterisk"></i></label>
         <input
           id="description"
           name="description"
@@ -252,7 +252,7 @@
   <form nz-form [formGroup]="formFieldsVariation" (ngSubmit)="submitVariation()" *ngIf="isModalVisible">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-12">
-        <label for="variationSku">SKU</label>
+        <label for="variationSku">SKU <i class="fal fa-asterisk"></i></label>
         <input
           pInputText
           name="variationSku"
@@ -271,7 +271,7 @@
         </div>
       </div>
       <div class="p-field p-col-12">
-        <label for="variationDescription">Descrição</label>
+        <label for="variationDescription">Descrição <i class="fal fa-asterisk"></i></label>
         <input
           pInputText
           name="variationDescription"
@@ -288,7 +288,7 @@
         >
       </div>
       <div class="p-field p-col-12">
-        <label for="variationSellingPrice">Preço de Venda</label>
+        <label for="variationSellingPrice">Preço de Venda <i class="fal fa-asterisk"></i></label>
         <p-inputNumber
           id="variationSellingPrice"
           name="variationSellingPrice"

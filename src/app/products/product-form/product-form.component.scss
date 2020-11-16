@@ -1,0 +1,10 @@
+.p-fluid.p-grid label {
+  display: flex;
+  flex-direction: row;
+
+  i {
+    font-size: 7px;
+    margin-top: 2px;
+    margin-left: 1px;
+  }
+}
