@@ -7,7 +7,6 @@ import {
   EventEmitter,
   Output,
   OnChanges,
-  //ɵlooseIdentical, ver para que serve e como manter ou trocar por algo equivalente
   Input,
   OnDestroy,
 } from '@angular/core';

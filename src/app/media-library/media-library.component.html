@@ -10,7 +10,7 @@
   (onRemove)="onImageRemoved($event)"
   (uploadHandler)="uploadFiles($event)"
 >
-  <ng-template pTemplate="content" class="test">
+  <ng-template pTemplate="content">
     <div
       class="upload-message"
       *ngIf="(!imagesSelectedForUpload || imagesSelectedForUpload.length === 0) && !isUploading"
