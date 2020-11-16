@@ -17,7 +17,7 @@ $color: #555;
   border-color: $button-primary-border-color;
   border-radius: $border-radius;
 
-  &:not(.ui-state-disabled):hover {
+  &:not(.p-disabled):hover {
     background-color: $button-primary-color-hover;
     border-color: $button-primary-color-hover;
     cursor: pointer;
@@ -30,7 +30,7 @@ $color: #555;
   background-color: #ff2a3c;
   border-color: #f21b2d;
 
-  &:not(.ui-state-disabled):hover {
+  &:not(.p-disabled):hover {
     background-color: #ff2a3c;
     border-color: #f21b2d;
     cursor: pointer;

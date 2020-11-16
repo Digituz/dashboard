@@ -7,8 +7,8 @@
 @import "primeng-customization/p-fileupload";
 @import "../theme/theme-variables.scss";
 
-body .ui-state-disabled,
-body .ui-widget:disabled {
+body .p-disabled,
+body .p-widget:disabled {
   opacity: 0.7;
 }
 
@@ -27,7 +27,7 @@ body .p-inputtext {
   color: #666;
 }
 
-body .p-inputtext:enabled:focus:not(.ui-state-error) {
+body .p-inputtext:enabled:focus:not(.p-error) {
   box-shadow: none;
   border-color: #ccc;
 }
@@ -59,11 +59,11 @@ body .p-inputtext:enabled:focus:not(.ui-state-error) {
   }
 }
 
-body .ui-card {
+body .p-card {
   box-shadow: none;
   border-radius: 0;
 
-  .ui-card-body {
+  .p-card-body {
     padding: 15px;
   }
 }
