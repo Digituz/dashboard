@@ -113,7 +113,7 @@
           [routerLink]="'/sales-orders/' + salesOrder.referenceCode"
           pButton
           type="button"
-          class="ui-button-secondary"
+          class="p-button-secondary"
           [icon]="!!salesOrder.blingStatus ? 'fal fa-search' : 'fal fa-edit'"
           [pTooltip]="!!salesOrder.blingStatus ? 'Visualizar venda.' : 'Editar detalhes.'"
           tooltipPosition="top"
@@ -123,7 +123,7 @@
           pButton
           type="button"
           [icon]="salesOrder.duplicatingSalesOrder ? 'fal fa-sync fa-spin' : 'fal fa-copy'"
-          class="ui-button-secondary"
+          class="p-button-secondary"
           pTooltip="Duplicar venda."
           tooltipPosition="top"
           (click)="duplicateOrder(salesOrder)"
