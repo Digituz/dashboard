@@ -76,12 +76,12 @@ p-fileupload {
   }
 }
 
-body .ui-inputtext {
+body .p-inputtext {
   font-size: $font-size;
   color: #666;
 }
 
-body .ui-inputtext:enabled:focus:not(.ui-state-error) {
+body .p-inputtext:enabled:focus:not(.ui-state-error) {
   box-shadow: none;
   border-color: #ccc;
 }
@@ -122,7 +122,7 @@ body .ui-card {
   }
 }
 
-body .ui-inputgroup .ui-button:last-child {
+body .p-inputgroup .p-button:last-child {
   border-radius: 1px;
   padding: 0 5px;
   margin-left: -10px;

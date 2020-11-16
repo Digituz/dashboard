@@ -22,14 +22,14 @@ div.badge {
 }
 
 td.actions {
-  a:first-child > .ui-button,
-  button.ui-button:not(:last-child) {
+  a:first-child > .p-button,
+  button.p-button:not(:last-child) {
     background-color: #d6d6d6;
     border-color: #d6d6d6;
     color: #333333;
   }
 
-  button.ui-button:last-child {
+  button.p-button:last-child {
     background-color: #e91224;
     border-color: #ee4c5a;
     color: #fff;

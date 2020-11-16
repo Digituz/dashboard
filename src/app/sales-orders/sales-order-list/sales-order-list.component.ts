@@ -71,8 +71,7 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
         'Deseja duplicar essa venda? Uma nova venda com status de ' +
         'pagamento "Em Processamento" será criada com base na venda selecionada.',
       header: 'Duplicar Venda?',
-      acceptButtonStyleClass: 'ui-button-primary',
-      rejectButtonStyleClass: 'ui-button-danger',
+      rejectButtonStyleClass: 'p-button-danger',
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
       accept: () => {
@@ -96,8 +95,7 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
     this.confirmationService.confirm({
       message: 'Deseja realmente cancelar a venda no Bling?',
       header: 'Cancelar Venda?',
-      acceptButtonStyleClass: 'ui-button-primary',
-      rejectButtonStyleClass: 'ui-button-danger',
+      rejectButtonStyleClass: 'p-button-danger',
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
       accept: () => {

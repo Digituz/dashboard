@@ -4,22 +4,22 @@ p-autocomplete {
   width: 100%;
   display: block;
 
-  .ui-autocomplete,
-  .ui-autocomplete ul {
+  .p-autocomplete,
+  .p-autocomplete ul {
     width: 100%;
     display: block;
   }
 
-  .ui-autocomplete.ui-autocomplete-multiple {
-    .ui-autocomplete-multiple-container {
-      li.ui-autocomplete-token {
+  .p-autocomplete.p-autocomplete-multiple {
+    .p-autocomplete-multiple-container {
+      li.p-autocomplete-token {
         @include button-primary;
 
-        span.ui-autocomplete-token-label {
+        span.p-autocomplete-token-label {
           margin-right: 22px;
         }
 
-        span.ui-autocomplete-token-icon {
+        span.p-autocomplete-token-icon {
           font-size: 10px;
           margin-right: 3px;
           margin-top: -4px;

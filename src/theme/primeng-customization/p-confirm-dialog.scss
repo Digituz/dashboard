@@ -1,6 +1,6 @@
-div.ui-dialog-mask {
-  div.ui-dialog.ui-confirmdialog {
-    div.ui-dialog-content {
+div.p-dialog-mask {
+  div.p-dialog.ui-confirmdialog {
+    div.p-dialog-content {
       padding: 25px 15px;
       border-bottom-color: #fff;
 
@@ -9,14 +9,14 @@ div.ui-dialog-mask {
       }
     }
 
-    .ui-dialog-footer {
+    .p-dialog-footer {
       display: flex;
       flex-direction: row-reverse;
     }
   }
 }
 
-div.ui-dialog-titlebar-icons {
+div.p-dialog-titlebar-icons {
   display: grid;
   place-items: center;
   margin-top: 4px;

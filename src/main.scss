@@ -18,13 +18,13 @@
   border-left: 5px solid #42a948; /* green */
 }
 
-.ui-inputtext.ui-corner-all.ng-invalid:not(form):not(.ng-untouched),
+.p-inputtext.ui-corner-all.ng-invalid:not(form):not(.ng-untouched),
 .ng-invalid:not(form):not(.ng-untouched) {
   border-color: $danger !important ;
 }
 
-p-inputnumber.ng-dirty.ng-invalid .ui-inputtext,
-p-inputnumber.ng-touched.ng-invalid .ui-inputtext {
+p-inputnumber.ng-dirty.ng-invalid .p-inputtext,
+p-inputnumber.ng-touched.ng-invalid .p-inputtext {
   border: 1px solid red !important;
   border-color: $danger !important ;
 }
