@@ -23,17 +23,21 @@ div.images-container {
 
     div.image-details {
       padding: 5px;
-      justify-content: center;
       display: flex;
+      justify-content: center;
       flex-direction: column;
 
       i {
         font-size: 11px;
         margin-left: 2px;
       }
-
       p {
-        line-height: 25px;
+        margin: 0;
+        padding: 0;
+        line-height: 20px;
+      }
+      a {
+        text-decoration: none;
       }
     }
   }
