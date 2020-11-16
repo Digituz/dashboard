@@ -9,7 +9,6 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
 import { CustomersRoutingModule } from './customers-routing.module';
-import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { CardModule } from 'primeng/card';
 
@@ -25,7 +24,6 @@ import { CardModule } from 'primeng/card';
     BreadcrumbsModule,
     CommonModule,
     InputMaskModule,
-    DialogModule,
     CustomersRoutingModule,
   ],
 })
