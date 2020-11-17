@@ -120,6 +120,10 @@ export class ProductFormComponent implements OnInit {
       product.productImages = this.images;
       product.productComposition = this.product.productComposition?.map((item) => item.productVariation.sku);
 
+      product.height = product.height.replace(',', '.');
+      product.width = product.width.replace(',', '.');
+      product.length = product.length.replace(',', '.');
+      product.weight = product.weight.replace(',', '.');
       if (this.product.id) {
         // field is disabled, so the form doesn't provide it
         product.sku = this.product.sku;
