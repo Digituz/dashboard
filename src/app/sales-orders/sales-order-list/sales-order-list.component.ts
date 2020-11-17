@@ -112,9 +112,7 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
   clearStorage() {
     this.query = '';
     this.paymentStatus = this.paymentStatusOptions[0];
-    const setLocaStorageValues = JSON.parse(localStorage.getItem('sales-orders-list'));
-    setLocaStorageValues.queryParams[0].value = '';
-    setLocaStorageValues.queryParams[1].value = null;
-    return localStorage.setItem('sales-orders-list', JSON.stringify(setLocaStorageValues));
+
+    return localStorage.setItem('sales-orders-list', null);
   }
 }

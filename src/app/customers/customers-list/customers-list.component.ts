@@ -43,6 +43,6 @@ export class CustomersListComponent implements OnInit, IDataProvider<Customer> {
 
   clearStorage() {
     this.query = '';
-    return localStorage.setItem('customer-list', '');
+    return localStorage.setItem('customer-list', null);
   }
 }

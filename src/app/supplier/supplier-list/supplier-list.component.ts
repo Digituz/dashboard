@@ -41,6 +41,6 @@ export class SupplierListComponent implements OnInit {
 
   clearStorage() {
     this.query = '';
-    return localStorage.setItem('supplier-list', '');
+    return localStorage.setItem('supplier-list', null);
   }
 }
