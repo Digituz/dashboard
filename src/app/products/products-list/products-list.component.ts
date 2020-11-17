@@ -74,4 +74,16 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
       this.isActive = this.isActiveOptions.find((o) => o.value === selectedActiveOption);
     }
   }
+
+  clearStorage() {
+    this.query = '';
+    this.isActive = this.isActiveOptions[0];
+    this.withVariations = this.withVariationsOptions[0];
+
+    const setLocaStorageValues = JSON.parse(localStorage.getItem('product-list'));
+    setLocaStorageValues.queryParams[0].value = '';
+    setLocaStorageValues.queryParams[1].value = null;
+    setLocaStorageValues.queryParams[2].value = null;
+    return localStorage.setItem('product-list', JSON.stringify(setLocaStorageValues));
+  }
 }

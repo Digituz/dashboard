@@ -40,4 +40,9 @@ export class CustomersListComponent implements OnInit, IDataProvider<Customer> {
   updateQueryParams(queryParams: QueryParam[]) {
     this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
   }
+
+  clearStorage() {
+    this.query = '';
+    return localStorage.setItem('customer-list', '');
+  }
 }
