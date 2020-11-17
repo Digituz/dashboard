@@ -176,7 +176,7 @@ export class MediaLibraryComponent implements OnInit {
   }
 
   archiveImages() {
-    this.imageService.archiveImages(this.selectedImages).subscribe(() => {
+    this.imageService.archiveImages(this.selectedImages, true).subscribe(() => {
       this.reloadImages();
     });
   }

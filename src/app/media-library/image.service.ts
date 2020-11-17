@@ -35,10 +35,14 @@ export class ImageService {
     return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}/tag/${tag.label}`);
   }
 
-  archiveImages(images: Image[]): Observable<void> {
+  archiveImages(images: Image[], archived: boolean): Observable<void> {
     return merge(
       ...images.map((image) => {
-        return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}`);
+        if (archived) {
+          return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}`);
+        } else {
+          return this.httpClient.put<void>(`${this.IMAGES_ENDPOINT}/${image.id}`, null);
+        }
       })
     );
   }
