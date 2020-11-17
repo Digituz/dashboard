@@ -12,8 +12,8 @@ export class ImageService {
 
   constructor(private httpClient: HttpClient) {}
 
-  loadImages(page: number, tags?: string): Observable<Image[]> {
-    let endpoint = `${this.IMAGES_ENDPOINT}/?page=${page}`;
+  loadImages(page: number, tags?: string, archived?: boolean): Observable<Image[]> {
+    let endpoint = `${this.IMAGES_ENDPOINT}/?page=${page}&showArchived=${archived}`;
     if (tags) {
       endpoint += `&tags=${tags}`;
     }

@@ -38,6 +38,7 @@ export class MediaLibraryComponent implements OnInit {
   tagsFound: Tag[];
   selectedImage: Image;
   selectedImages: Image[] = [];
+  archived: boolean = false;
   constructor(
     private breadcrumbsService: BreadcrumbsService,
     private productsService: ProductsService,
@@ -50,7 +51,7 @@ export class MediaLibraryComponent implements OnInit {
     const tags = this.selectedTags?.map((tag) => tag.label).join();
     this.loading = true;
     this.imageService
-      .loadImages(this.page, tags)
+      .loadImages(this.page, tags, this.archived)
       .pipe(delay(350))
       .subscribe((images) => {
         this.loading = false;
@@ -180,14 +181,15 @@ export class MediaLibraryComponent implements OnInit {
     });
   }
 
-  showMore(resetResults?: boolean) {
+  showMore(resetResults?: boolean, archived?: boolean) {
     const tags = this.selectedTags?.map((tag) => tag.label).join();
     if (resetResults) {
       this.page = 0;
     } else {
       this.page++;
     }
-    this.imageService.loadImages(this.page, tags).subscribe((images) => {
+    this.archived = archived;
+    this.imageService.loadImages(this.page, tags, archived).subscribe((images) => {
       this.loading = false;
       if (resetResults) {
         this.images = [];
