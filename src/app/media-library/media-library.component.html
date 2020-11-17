@@ -56,10 +56,10 @@
   </p>
   <div class="buttons-area">
     <div *ngIf="!archived">
-      <button pButton class="p-button-secondary" label="Imagens Arquivadas" (click)="showMore(true, true)"></button>
+      <button pButton class="p-button-secondary" label="Arquivadas" (click)="showMore(true, true)"></button>
     </div>
     <div *ngIf="archived">
-      <button pButton class="p-button-secondary" label="Imagens Disponiveis" (click)="showMore(true, false)"></button>
+      <button pButton class="p-button-secondary" label="Ativas" (click)="showMore(true, false)"></button>
     </div>
     <div *ngIf="!archived">
       <button
@@ -76,7 +76,8 @@
         style="margin-left: 5px;"
         pButton
         class="p-button-danger"
-        label="Disponibilizar Imagem"
+        label="Recuperar"
+        [disabled]="selectedImages?.length === 0"
         (click)="archiveImages()"
       ></button>
     </div>
