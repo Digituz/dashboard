@@ -87,47 +87,63 @@
       </div>
       <div class="p-field p-col-6">
         <label for="height">Altura do Produto (cm)</label>
-        <input
+        <p-inputNumber
           id="height"
           name="height"
-          type="text"
           formControlName="height"
-          pInputText
-          placeholder="Altura do produto em centímetros"
-        />
+          mode="decimal"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          placeholder="ex. 10,00"
+          tooltipPosition="Altura do produto em centímetros"
+          pTooltip="Altura do produto em centímetros."
+        ></p-inputNumber>
       </div>
       <div class="p-field p-col-6">
         <label for="width">Largura do Produto (cm)</label>
-        <input
+        <p-inputNumber
           id="width"
           name="width"
-          type="text"
           formControlName="width"
-          pInputText
-          placeholder="Largura do produto em centímetros"
-        />
+          mode="decimal"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          placeholder="ex. 10,00"
+          tooltipPosition="Largura do produto em centímetros"
+          pTooltip="Largura do produto em centímetros."
+        ></p-inputNumber>
       </div>
       <div class="p-field p-col-6">
         <label for="length">Comprimento do Produto (cm)</label>
-        <input
+        <p-inputNumber
           id="length"
           name="length"
-          type="text"
           formControlName="length"
-          pInputText
-          placeholder="Comprimento do produto em centímetros"
-        />
+          mode="decimal"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          placeholder="ex. 10,00"
+          tooltipPosition="Comprimento do produto em centímetros"
+          pTooltip="Comprimento do produto em centímetros."
+        ></p-inputNumber>
       </div>
       <div class="p-field p-col-6">
         <label for="weight">Peso do Produto (kg)</label>
-        <input
+        <p-inputNumber
           id="weight"
           name="weight"
-          type="text"
           formControlName="weight"
-          pInputText
-          placeholder="Peso do produto em quilogramas (kg)"
-        />
+          mode="decimal"
+          locale="pt-BR"
+          [minFractionDigits]="3"
+          [maxFractionDigits]="3"
+          placeholder="ex. 10,000"
+          tooltipPosition="Peso do produto em quilogramas (kg)"
+          pTooltip="Peso do produto em quilogramas (kg)."
+        ></p-inputNumber>
       </div>
       <div class="p-field p-col-12">
         <label for="description">Descrição Curta <i class="fal fa-asterisk"></i></label>
