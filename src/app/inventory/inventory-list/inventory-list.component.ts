@@ -53,4 +53,9 @@ export class InventoryListComponent implements OnInit, IDataProvider<Inventory> 
       createAndDownloadBlobFile(res, options, filename);
     });
   }
+
+  resetFilter() {
+    this.query = '';
+    return localStorage.removeItem('inventory-list');
+  }
 }

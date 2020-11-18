@@ -74,4 +74,11 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
       this.isActive = this.isActiveOptions.find((o) => o.value === selectedActiveOption);
     }
   }
+
+  resetFilter() {
+    this.query = '';
+    this.isActive = this.isActiveOptions[0];
+    this.withVariations = this.withVariationsOptions[0];
+    return localStorage.removeItem('product-list');
+  }
 }

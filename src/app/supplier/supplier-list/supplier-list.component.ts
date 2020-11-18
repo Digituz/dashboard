@@ -38,4 +38,9 @@ export class SupplierListComponent implements OnInit {
   updateQueryParams(queryParams: QueryParam[]) {
     this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
   }
+
+  resetFilter() {
+    this.query = '';
+    return localStorage.removeItem('supplier-list');
+  }
 }
