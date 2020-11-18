@@ -10,4 +10,8 @@ export class MessagesService {
   showError(error: string) {
     this.messageNotificationChange.next({ severity: 'error', summary: 'Ops!', detail: error, life: 3000 });
   }
+
+  showUpdate(message: string) {
+    this.messageNotificationChange.next({ severity: 'warn', summary: 'Atualização!', detail: message, life: 3000 });
+  }
 }

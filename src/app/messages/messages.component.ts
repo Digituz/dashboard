@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 export class MessagesComponent implements OnInit {
   message: Message[] = [];
   messageSubscription: Subscription;
-
+  isUpdate = false;
   constructor(private messagesService: MessagesService, private messageService: MessageService) {}
 
   ngOnInit(): void {
@@ -21,7 +21,22 @@ export class MessagesComponent implements OnInit {
 
   subscribeToMessageNotifications() {
     this.messageSubscription = this.messagesService.messageNotificationChange.subscribe((notification: Message) => {
-      this.messageService.add(notification);
+      if (notification.severity === 'warn') {
+        this.isUpdate = true;
+        notification.life = 300000;
+      } else {
+        this.isUpdate = false;
+      }
+      setTimeout(() => this.messageService.add(notification), 1);
     });
+  }
+
+  onSubmit() {
+    console.log('aqui');
+    window.location.reload();
+  }
+
+  onCancel() {
+    this.messageService.clear();
   }
 }

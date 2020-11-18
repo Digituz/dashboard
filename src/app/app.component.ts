@@ -8,6 +8,8 @@ import { filter, map, switchMap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, untilDestroyed } from '@core';
 import { I18nService } from '@app/i18n';
+import { SwUpdate } from '@angular/service-worker';
+import { MessagesService } from './messages/messages.service';
 
 const log = new Logger('App');
 
@@ -22,7 +24,9 @@ export class AppComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
     private translateService: TranslateService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
+    private swUpdate: SwUpdate,
+    private messagesService: MessagesService
   ) {}
 
   ngOnInit() {
@@ -30,6 +34,10 @@ export class AppComponent implements OnInit, OnDestroy {
     if (environment.production) {
       Logger.enableProductionMode();
     }
+
+    this.swUpdate.available.subscribe(() => {
+      this.messagesService.showUpdate('Existe uma atualização disponivel gostaria de recarregar a pagina?');
+    });
 
     log.debug('init');
 
