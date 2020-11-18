@@ -13,17 +13,23 @@
 <table class="digituz" *ngIf="!loading">
   <thead>
     <tr>
+      <th style="width: 85px;">Data</th>
       <th>Descrição</th>
       <th>Quantidade</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let movement of inventory.movements">
+      <td class="centered">
+        <div style="line-height: 20px; display: flex; flex-direction: column; width: 80px;">
+          {{ movement.created | date: 'dd/MM' }}<small>{{ movement.created | date: 'HH:mm' }}</small>
+        </div>
+      </td>
       <td>{{ movement.description }}</td>
       <td class="centered" [ngClass]="movement.amount > 0 ? 'positive' : 'negative'">{{ movement.amount }}</td>
     </tr>
     <tr *ngIf="!inventory.movements || inventory.movements.length === 0">
-      <td colspan="2">
+      <td colspan="3">
         <div class="no-data-container">
           <i class="fal fa-inbox"></i>
           <p>Produto sem movimentações cadastradas.</p>
