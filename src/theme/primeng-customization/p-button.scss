@@ -7,6 +7,10 @@ body .p-button {
   line-height: 20px;
   padding: 4px 14px;
 
+  &.p-button-icon-only {
+    padding: 4px 14px;
+  }
+
   &.p-button-secondary {
     color: #333333;
     background-color: #d6d6d6;

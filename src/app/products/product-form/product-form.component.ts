@@ -59,7 +59,7 @@ export class ProductFormComponent implements OnInit {
   ngOnInit(): void {
     const sku = this.route.snapshot.params.sku;
     if (sku === 'new') {
-      this.product = {};
+      this.product = this.productService.getCopiedProduct() || {};
       this.variations = [
         {
           parentSku: null,
