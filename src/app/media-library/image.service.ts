@@ -12,8 +12,8 @@ export class ImageService {
 
   constructor(private httpClient: HttpClient) {}
 
-  loadImages(page: number, tags?: string): Observable<Image[]> {
-    let endpoint = `${this.IMAGES_ENDPOINT}/?page=${page}`;
+  loadImages(page: number, tags?: string, archived?: boolean): Observable<Image[]> {
+    let endpoint = `${this.IMAGES_ENDPOINT}/?page=${page}&showArchived=${archived}`;
     if (tags) {
       endpoint += `&tags=${tags}`;
     }
@@ -35,10 +35,14 @@ export class ImageService {
     return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}/tag/${tag.label}`);
   }
 
-  archiveImages(images: Image[]): Observable<void> {
+  archiveImages(images: Image[], archived: boolean): Observable<void> {
     return merge(
       ...images.map((image) => {
-        return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}`);
+        if (archived) {
+          return this.httpClient.delete<void>(`${this.IMAGES_ENDPOINT}/${image.id}`);
+        } else {
+          return this.httpClient.put<void>(`${this.IMAGES_ENDPOINT}/${image.id}`, null);
+        }
       })
     );
   }

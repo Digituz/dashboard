@@ -54,16 +54,34 @@
   <p>
     <label>Controle as imagens do seu negócio de forma simplificada.</label>
   </p>
-  <div></div>
-  <div class="">
-    <button
-      pButton
-      class="p-button-danger"
-      label="Arquivar"
-      [disabled]="selectedImages?.length === 0"
-      (click)="archiveImages()"
-    ></button>
-    <button pButton label="Filtrar" (click)="showMore(true)"></button>
+  <div class="buttons-area">
+    <div *ngIf="!archived">
+      <button pButton class="p-button-secondary" label="Arquivadas" (click)="showMore(true, true)"></button>
+    </div>
+    <div *ngIf="archived">
+      <button pButton class="p-button-secondary" label="Ativas" (click)="showMore(true, false)"></button>
+    </div>
+    <div *ngIf="!archived">
+      <button
+        style="margin-left: 5px;"
+        pButton
+        class="p-button-danger"
+        label="Arquivar"
+        [disabled]="selectedImages?.length === 0"
+        (click)="archiveImages()"
+      ></button>
+    </div>
+    <div *ngIf="archived">
+      <button
+        style="margin-left: 5px;"
+        pButton
+        class="p-button-danger"
+        label="Recuperar"
+        [disabled]="selectedImages?.length === 0"
+        (click)="archiveImages()"
+      ></button>
+    </div>
+    <button style="margin-left: 5px;" pButton label="Filtrar" (click)="showMore(true)"></button>
   </div>
 </div>
 <div class="dgz-table dgz-table-info" *ngIf="!loading && images?.length === 0">
@@ -95,8 +113,11 @@
     </span>
   </div>
 </div>
-<div class="showMore">
+<div class="showMore" *ngIf="!archived">
   <button pButton label="Mostrar mais" (click)="showMore()"></button>
+</div>
+<div class="showMore" *ngIf="archived">
+  <button pButton label="Mostrar mais" (click)="showMore(false, true)"></button>
 </div>
 
 <p-dialog
