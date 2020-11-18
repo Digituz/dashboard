@@ -41,8 +41,8 @@ export class CustomersListComponent implements OnInit, IDataProvider<Customer> {
     this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
   }
 
-  clearStorage() {
+  resetFilter() {
     this.query = '';
-    return localStorage.setItem('customer-list', null);
+    return localStorage.removeItem('customer-list');
   }
 }

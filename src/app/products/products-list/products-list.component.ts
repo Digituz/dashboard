@@ -75,10 +75,10 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
     }
   }
 
-  clearStorage() {
+  resetFilter() {
     this.query = '';
     this.isActive = this.isActiveOptions[0];
     this.withVariations = this.withVariationsOptions[0];
-    return localStorage.setItem('product-list', null);
+    return localStorage.removeItem('product-list');
   }
 }

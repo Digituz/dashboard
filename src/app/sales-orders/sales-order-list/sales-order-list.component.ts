@@ -109,10 +109,10 @@ export class SalesOrderListComponent implements OnInit, IDataProvider<SalesOrder
     });
   }
 
-  clearStorage() {
+  resetFilter() {
     this.query = '';
     this.paymentStatus = this.paymentStatusOptions[0];
 
-    return localStorage.setItem('sales-orders-list', null);
+    return localStorage.removeItem('sales-orders-list');
   }
 }

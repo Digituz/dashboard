@@ -39,8 +39,8 @@ export class SupplierListComponent implements OnInit {
     this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
   }
 
-  clearStorage() {
+  resetFilter() {
     this.query = '';
-    return localStorage.setItem('supplier-list', null);
+    return localStorage.removeItem('supplier-list');
   }
 }

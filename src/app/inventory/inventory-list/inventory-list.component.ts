@@ -54,8 +54,8 @@ export class InventoryListComponent implements OnInit, IDataProvider<Inventory> 
     });
   }
 
-  clearStorage() {
+  resetFilter() {
     this.query = '';
-    return localStorage.setItem('inventory-list', null);
+    return localStorage.removeItem('inventory-list');
   }
 }
