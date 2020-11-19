@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs';
 export class MessagesComponent implements OnInit {
   message: Message[] = [];
   messageSubscription: Subscription;
-  isUpdate = false;
   constructor(private messagesService: MessagesService, private messageService: MessageService) {}
 
   ngOnInit(): void {
