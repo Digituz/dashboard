@@ -11,6 +11,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { InputMaskModule } from 'primeng/inputmask';
 
 import { SharedModule } from '../@shared/shared.module';
 import { ProductsRoutingModule } from './products-routing.module';
@@ -48,6 +49,7 @@ import { ProductCompositionComponent } from './product-composition/product-compo
     ProductsRoutingModule,
     BreadcrumbsModule,
     AutoCompleteModule,
+    InputMaskModule,
   ],
   providers: [ImageService],
 })

@@ -1,1 +1,13 @@
-<p-toast></p-toast>
+<p-toast>
+  <ng-template let-message pTemplate="message">
+    <div class="p-d-flex p-jc-center">
+      <i class="pi pi-exclamation-triangle" style="font-size: 3rem;"></i>
+      <h4>{{ message.summary }}</h4>
+    </div>
+    <p>{{ message.detail }}</p>
+    <div class="actions" *ngIf="message.data?.update">
+      <button pButton type="button" class="p-button-success" (click)="onSubmit()" label="Sim"></button>
+      <button pButton type="button" class="p-button-secondary" (click)="onCancel()" label="Não"></button>
+    </div>
+  </ng-template>
+</p-toast>
