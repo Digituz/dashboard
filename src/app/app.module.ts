@@ -13,6 +13,7 @@ import { ShellModule } from './shell/shell.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
 import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { MessagesComponent } from './messages/messages.component';
     }),
     TranslateModule.forRoot(),
     ToastModule,
+    ButtonModule,
     CoreModule,
     SharedModule,
     ShellModule,

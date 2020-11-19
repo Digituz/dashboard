@@ -21,7 +21,7 @@ export class MessagesComponent implements OnInit {
 
   subscribeToMessageNotifications() {
     this.messageSubscription = this.messagesService.messageNotificationChange.subscribe((notification: Message) => {
-      if (notification.severity === 'warn') {
+      if (notification.severity === 'info') {
         this.isUpdate = true;
         notification.life = 300000;
       } else {

@@ -12,6 +12,6 @@ export class MessagesService {
   }
 
   showUpdate(message: string) {
-    this.messageNotificationChange.next({ severity: 'warn', summary: 'Atualização!', detail: message, life: 3000 });
+    this.messageNotificationChange.next({ severity: 'info', summary: 'Atualização!', detail: message, life: 3000 });
   }
 }
