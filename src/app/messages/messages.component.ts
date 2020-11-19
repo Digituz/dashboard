@@ -21,18 +21,11 @@ export class MessagesComponent implements OnInit {
 
   subscribeToMessageNotifications() {
     this.messageSubscription = this.messagesService.messageNotificationChange.subscribe((notification: Message) => {
-      if (notification.severity === 'info') {
-        this.isUpdate = true;
-        notification.life = 300000;
-      } else {
-        this.isUpdate = false;
-      }
-      setTimeout(() => this.messageService.add(notification), 1);
+      this.messageService.add(notification);
     });
   }
 
   onSubmit() {
-    console.log('aqui');
     window.location.reload();
   }
 

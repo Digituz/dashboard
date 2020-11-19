@@ -36,7 +36,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     this.swUpdate.available.subscribe(() => {
-      this.messagesService.showUpdate('Existe uma atualização disponivel gostaria de recarregar a pagina?');
+      this.messagesService.showUpdate();
     });
 
     log.debug('init');

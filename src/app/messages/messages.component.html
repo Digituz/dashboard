@@ -1,22 +1,13 @@
-<div *ngIf="!isUpdate"><p-toast></p-toast></div>
-<div *ngIf="isUpdate">
-  <p-toast>
-    <ng-template let-message pTemplate="message">
-      <div class="p-flex p-flex-column" style="flex: 1;">
-        <div class="p-text-center">
-          <i class="pi pi-exclamation-triangle" style="font-size: 3rem;"></i>
-          <h4>{{ message.summary }}</h4>
-          <p>{{ message.detail }}</p>
-        </div>
-        <div class="p-grid p-fluid">
-          <div class="p-col-6">
-            <button pButton type="button" class="p-button-success" (click)="onSubmit()" label="Sim"></button>
-          </div>
-          <div class="p-col-6">
-            <button pButton type="button" class="p-button-secondary" (click)="onCancel()" label="Não"></button>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-  </p-toast>
-</div>
+<p-toast>
+  <ng-template let-message pTemplate="message">
+    <div class="p-d-flex p-jc-center">
+      <i class="pi pi-exclamation-triangle" style="font-size: 3rem;"></i>
+      <h4>{{ message.summary }}</h4>
+    </div>
+    <p>{{ message.detail }}</p>
+    <div class="actions" *ngIf="message.data?.update">
+      <button pButton type="button" class="p-button-success" (click)="onSubmit()" label="Sim"></button>
+      <button pButton type="button" class="p-button-secondary" (click)="onCancel()" label="Não"></button>
+    </div>
+  </ng-template>
+</p-toast>
