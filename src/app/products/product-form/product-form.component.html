@@ -31,9 +31,9 @@
       </div>
       <div class="p-field p-col">
         <label for="ncm">NCM <i class="fal fa-asterisk"></i></label>
-        <p-inputMask mask="?9999.99.99" formControlName="ncm" placeholder="Ex. 1234.12.34"></p-inputMask>
+        <p-inputMask mask="9999.99.99" formControlName="ncm" placeholder="Ex. 1234.12.34"></p-inputMask>
         <div *ngIf="formFields.getError('required', ['ncm']) && isFieldInvalid('ncm')">
-          <small id="ncpm-help" class="p-invalid">Insira o NCM</small>
+          <small class="p-invalid">Insira o NCM</small>
         </div>
         <div class="p-invalid" *ngIf="formFields.getError('maxlength', ['ncm']) as error">
           <small>O tamanho máximo do NCM é 10 caracteres</small>
