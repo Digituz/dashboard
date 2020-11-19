@@ -9,5 +9,5 @@ export interface PurchaseOrder {
   shippingPrice?: Number;
   total?: Number;
   supplier?: Supplier;
-  items?: PurchaseOrderItem;
+  items?: PurchaseOrderItem[];
 }

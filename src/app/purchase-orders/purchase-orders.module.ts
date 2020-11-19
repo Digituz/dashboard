@@ -8,7 +8,6 @@ import { CardModule } from 'primeng/card';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputMaskModule } from 'primeng/inputmask';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { SpinnerModule } from 'primeng/spinner';
 
 import { PurchaseOrdersComponent } from './purchase-orders.component';
 import { PurchaseOrdersRoutingModule } from './purchase-orders-routing.module';
@@ -29,7 +28,7 @@ import { PurchaseOrdersListComponent } from './purchase-orders-list/purchase-ord
     InputNumberModule,
     InputMaskModule,
     AutoCompleteModule,
-    SpinnerModule,
+    InputNumberModule,
   ],
 })
 export class PurchaseOrdersModule {}

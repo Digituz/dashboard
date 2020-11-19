@@ -29,6 +29,12 @@ p-inputnumber.ng-touched.ng-invalid .p-inputtext {
   border-color: $danger !important ;
 }
 
+p-autocomplete.ng-dirty.ng-invalid .p-inputtext,
+p-autocomplete.ng-touched.ng-invalid .p-inputtext {
+  border: 1px solid red !important;
+  border-color: $danger !important ;
+}
+
 p-inputmask.ng-dirty.ng-invalid .p-inputtext,
 p-inputmask.ng-touched.ng-invalid .p-inputtext {
   border: 1px solid red !important;

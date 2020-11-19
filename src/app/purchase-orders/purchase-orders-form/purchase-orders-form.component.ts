@@ -21,7 +21,6 @@ export class PurchaseOrdersFormComponent implements OnInit {
   productVariationsSugestion: ProductVariationDetailsDTO[] = [];
   supplierSugestion: Supplier[] = [];
   purchaseOrderItems = new FormArray([]);
-  skillsForm: FormGroup;
   loading: boolean = true;
   constructor(
     private fb: FormBuilder,
@@ -39,9 +38,8 @@ export class PurchaseOrdersFormComponent implements OnInit {
       this.purchaseOrder = {};
       this.configureFormFields(this.purchaseOrder);
     } else {
-      const purchaseOrder = this.purcahseOrderService.loadPurchaseOrder(referenceCode).subscribe((results) => {
-        console.log(results);
-        const order: PurchaseOrder = {
+      this.purcahseOrderService.loadPurchaseOrder(referenceCode).subscribe((results) => {
+        const purchaseOrder: PurchaseOrder = {
           creationDate: results.creationDate,
           discount: results.discount,
           referenceCode: results.referenceCode,
@@ -50,9 +48,10 @@ export class PurchaseOrdersFormComponent implements OnInit {
           supplier: results.supplier,
           items: results.items,
         };
-        this.configureFormFields(order);
+        console.log(results.supplier);
+        console.log(results.items);
+        this.configureFormFields(purchaseOrder);
       });
-      console.log(purchaseOrder);
     }
   }
 
@@ -61,54 +60,75 @@ export class PurchaseOrdersFormComponent implements OnInit {
       ? this.createItemsPurchaseOrder(purchaseOrder)
       : this.fb.array([this.createItem()], [Validators.required, Validators.minLength(1)]);
     this.formFields = this.fb.group({
-      supplier: [purchaseOrder.supplier || ''],
-      referenceCode: [purchaseOrder.referenceCode || ''],
-      creationDate: [purchaseOrder.creationDate || format(new Date(), 'dd/MM/yyyy')],
-      total: [purchaseOrder.total || 0.0],
+      supplier: [purchaseOrder.supplier || '', [Validators.required]],
+      referenceCode: [purchaseOrder.referenceCode || '', [Validators.required]],
+      creationDate: [purchaseOrder.creationDate || format(new Date(), 'dd/MM/yyyy'), [Validators.required]],
+      total: [purchaseOrder.total || 0.0, [Validators.required]],
       discount: [purchaseOrder.discount || 0.0],
-      shippingPrice: [purchaseOrder.shippingPrice || 0.0],
+      shippingPrice: [purchaseOrder.shippingPrice || 0.0, [Validators.required]],
       items: itemsField,
     });
     this.loading = false;
   }
 
-  searchProductVariations(event: any) {
-    this.productService.findProductVariations(event.query).subscribe((results) => {
-      this.productVariationsSugestion = results;
-    });
-  }
-
-  searchSuppliers(event: any) {
-    this.supplierService.loadSuppliers(event.query).subscribe((results) => {
-      this.supplierSugestion = results;
-    });
-  }
-
   addItem() {
-    const newItem = this.createItem();
-    const items = this.formFields.get('items') as FormArray;
-    items.push(newItem);
+    const items = this.formFields.controls.items as FormArray;
+    items.push(this.createItem());
   }
 
   removeItem(index: number) {
-    this.purchaseOrderItems.removeAt(index);
+    const items = this.formFields.controls.items as FormArray;
+    items.removeAt(index);
   }
 
   createItem(purchaseOrderItem?: PurchaseOrderItem): FormGroup {
     return this.fb.group({
-      productVariation: [purchaseOrderItem.productVariation || null],
-      price: [purchaseOrderItem ? purchaseOrderItem.productVariation.sellingPrice : 0],
-      amount: [purchaseOrderItem ? purchaseOrderItem.amount : 0],
+      productVariation: [purchaseOrderItem.productVariation || null, [Validators.required]],
+      price: [purchaseOrderItem ? purchaseOrderItem.productVariation.sellingPrice : 0, [Validators.required]],
+      amount: [purchaseOrderItem ? purchaseOrderItem.amount : 0, [Validators.required]],
     });
   }
 
-  selectProductVariation(value: ProductVariationDetailsDTO, index: number) {
-    const items = this.formFields.get('items') as FormArray;
-    const formGroup = items.at(index) as FormGroup;
-    formGroup.patchValue({ price: value.sellingPrice });
-    formGroup.patchValue({ discount: 0 });
-    formGroup.patchValue({ amount: 1 });
-    this.updatePrice();
+  private createItemsPurchaseOrder(purchaseOrder: PurchaseOrder): FormArray {
+    return this.fb.array(
+      purchaseOrder.items.map((item) => this.createItem(item)),
+      [Validators.required, Validators.minLength(1)]
+    );
+  }
+
+  submit() {
+    if (!this.formFields.valid) {
+      this.markAllFieldsAsTouched(this.formFields);
+    } else {
+      const values = this.formFields.value;
+      const itemsValues = this.purchaseOrderItems.value;
+
+      const supplier = values.supplier;
+      const referenceCode = values.referenceCode;
+      const creationDate = ''; //format(new Date(values.creationDate), 'yyyy-MM-dd');
+      const total = values.total;
+      const discount = values.discount;
+      const shippingPrice = values.shippingPrice;
+      const items = itemsValues.map((item: any) => {
+        return {
+          amount: item.amount,
+          price: item.price,
+          productVariation: item.productVariation.id,
+        };
+      });
+      const purchaseOrder: PurchaseOrder = {
+        supplier,
+        referenceCode,
+        creationDate,
+        total,
+        discount,
+        shippingPrice,
+        items,
+      };
+      this.purcahseOrderService.save(purchaseOrder).subscribe(() => {
+        this.router.navigate(['/purchase-orders']);
+      });
+    }
   }
 
   updatePrice() {
@@ -124,39 +144,35 @@ export class PurchaseOrdersFormComponent implements OnInit {
     }
   }
 
-  submit() {
-    const values = this.formFields.value;
-    const supplier = values.supplier;
-    const referenceCode = values.referenceCode;
-    const creationDate = format(new Date(values.creationDate), 'yyyy-MM-dd');
-    const total = values.total;
-    const discount = values.discount;
-    const shippingPrice = values.shippingPrice;
-    const items = values.items.map((item: any) => {
-      return {
-        amount: item.amount,
-        price: item.price,
-        productVariation: item.productVariation.id,
-      };
-    });
-    const purchaseOrder: PurchaseOrder = {
-      supplier,
-      referenceCode,
-      creationDate,
-      total,
-      discount,
-      shippingPrice,
-      items,
-    };
-    this.purcahseOrderService.save(purchaseOrder).subscribe(() => {
-      this.router.navigate(['/purchase-orders']);
+  searchProductVariations(event: any) {
+    this.productService.findProductVariations(event.query).subscribe((results) => {
+      this.productVariationsSugestion = results;
     });
   }
 
-  private createItemsPurchaseOrder(purchaseOrder: PurchaseOrder): FormArray {
-    return; /* this.fb.array(
-      purchaseOrder.items.map((item) => this.createItem(item)),
-      [Validators.required, Validators.minLength(1)]
-    ); */
+  searchSuppliers(event: any) {
+    this.supplierService.loadSuppliers(event.query).subscribe((results) => {
+      this.supplierSugestion = results;
+    });
+  }
+
+  selectProductVariation(value: ProductVariationDetailsDTO, index: number) {
+    const items = this.formFields.get('items') as FormArray;
+    const formGroup = items.at(index) as FormGroup;
+    formGroup.patchValue({ price: value.sellingPrice });
+    formGroup.patchValue({ discount: 0 });
+    formGroup.patchValue({ amount: 1 });
+    this.updatePrice();
+  }
+
+  markAllFieldsAsTouched(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((field) => {
+      const control = formGroup.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+  }
+
+  isFieldInvalid(field: string) {
+    return !this.formFields.get(field).valid && this.formFields.get(field).touched;
   }
 }
