@@ -9,6 +9,13 @@
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
         <button pButton type="submit" label="Pesquisar"></button>
+        <button
+          pButton
+          type="submit"
+          class="p-button-secondary"
+          (click)="resetFilter()"
+          label="Limpar Filtros"
+        ></button>
       </div>
     </div>
   </form>
@@ -18,9 +25,13 @@
     <label>Controle seus fornecedores de forma simplificada.</label>
   </p>
   <div class="actions">
-    <a title="Novo Pedido de Compra" routerLink="/purchase-orders/new"
-      ><button pButton type="button" label="Novo Pedido de Compra"></button
-    ></a>
+    <button
+      title="Novo Pedido de Compra"
+      routerLink="/purchase-orders/new"
+      pButton
+      type="button"
+      label="Novo Pedido de Compra"
+    ></button>
   </div>
 </div>
 <dgz-table
@@ -34,7 +45,7 @@
     <tr>
       <th dgz-sortable="referenceCode">Código</th>
       <th dgz-sortable="creationDate">Data de criação</th>
-      <th dgz-sortable="discount">Desconto</th>
+      <th dgz-sortable="discount">Total</th>
       <th dgz-sortable="shippingPrice">Taxa de Entrega</th>
       <th></th>
     </tr>
@@ -43,12 +54,16 @@
     <tr *ngFor="let purchaseOrder of purchaseOrderTable.currentData">
       <td class="centered">{{ purchaseOrder.referenceCode }}</td>
       <td class="centered">{{ purchaseOrder.creationDate | date }}</td>
-      <td class="centered">{{ purchaseOrder.discount }}</td>
-      <td class="centered">{{ purchaseOrder.shippingPrice }}</td>
+      <td class="centered">{{ purchaseOrder.total | reais }}</td>
+      <td class="centered">{{ purchaseOrder.shippingPrice | reais }}</td>
       <td class="actions">
-        <a [title]="'Fornecedores'" [routerLink]="'/purchase-orders/' + purchaseOrder.id"
-          ><button pButton type="button" label="Editar"></button
-        ></a>
+        <button
+          [title]="'Fornecedores'"
+          [routerLink]="'/purchase-orders/' + purchaseOrder.id"
+          pButton
+          type="button"
+          label="Editar"
+        ></button>
       </td>
     </tr>
   </tbody>
