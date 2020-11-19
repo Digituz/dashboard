@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs';
 export class MessagesComponent implements OnInit {
   message: Message[] = [];
   messageSubscription: Subscription;
-
   constructor(private messagesService: MessagesService, private messageService: MessageService) {}
 
   ngOnInit(): void {
@@ -23,5 +22,13 @@ export class MessagesComponent implements OnInit {
     this.messageSubscription = this.messagesService.messageNotificationChange.subscribe((notification: Message) => {
       this.messageService.add(notification);
     });
+  }
+
+  onSubmit() {
+    window.location.reload();
+  }
+
+  onCancel() {
+    this.messageService.clear();
   }
 }
