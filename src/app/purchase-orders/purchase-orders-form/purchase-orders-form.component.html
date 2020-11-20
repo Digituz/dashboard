@@ -116,7 +116,7 @@
           <label class="input-label">Quant.</label>
         </div>
       </div>
-      <div class="p-col-12" formArrayName="items" *ngFor="let control of formFields.controls.items?.value; index as i">
+      <div class="p-col-12" formArrayName="items" *ngFor="let control of items.controls; index as i">
         <div [formGroupName]="i" class="p-fluid p-formgrid p-grid p-col-12">
           <div class="p-field p-col-7">
             <p-autoComplete
@@ -132,7 +132,9 @@
                 >Insira o produto</small
               > -->
               <ng-template let-productVariation pTemplate="item">
-                <div>{{ productVariation.sku }} - {{ productVariation.title }}</div>
+                <div>
+                  {{ productVariation.sku }} - {{ productVariation.title }} - {{ productVariation.description }}
+                </div>
               </ng-template>
             </p-autoComplete>
           </div>

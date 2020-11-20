@@ -5,7 +5,7 @@ import { ProductVariationDetailsDTO } from '@app/products/product-variation-deta
 import { ProductsService } from '@app/products/products.service';
 import { Supplier } from '@app/supplier/supplier.entity';
 import { SupplierService } from '@app/supplier/supplier.service';
-import { format } from 'date-fns';
+import { format, toDate } from 'date-fns';
 import { PurchaseOrderItem } from '../purchase-order-item.entity';
 import { PurchaseOrder } from '../purchase-order.entity';
 import { PurchaseOrdersService } from '../purchase-orders.service';
@@ -40,16 +40,21 @@ export class PurchaseOrdersFormComponent implements OnInit {
     } else {
       this.purcahseOrderService.loadPurchaseOrder(referenceCode).subscribe((results) => {
         const purchaseOrder: PurchaseOrder = {
-          creationDate: results.creationDate,
+          creationDate: format(new Date(results.creationDate), 'dd/MM/yyyy'),
+          completionDate: results.completionDate ? format(new Date(results.completionDate), 'dd/MM/yyyy') : null,
           discount: results.discount,
           referenceCode: results.referenceCode,
           total: results.total,
           shippingPrice: results.shippingPrice,
           supplier: results.supplier,
-          items: results.items,
+          items: results.items.map((item) => {
+            return {
+              ...item,
+              completeDescription: 'teste',
+            };
+          }),
         };
-        console.log(results.supplier);
-        console.log(results.items);
+        console.log(purchaseOrder);
         this.configureFormFields(purchaseOrder);
       });
     }
@@ -63,6 +68,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
       supplier: [purchaseOrder.supplier || '', [Validators.required]],
       referenceCode: [purchaseOrder.referenceCode || '', [Validators.required]],
       creationDate: [purchaseOrder.creationDate || format(new Date(), 'dd/MM/yyyy'), [Validators.required]],
+      completionDate: [purchaseOrder.completionDate || null],
       total: [purchaseOrder.total || 0.0, [Validators.required]],
       discount: [purchaseOrder.discount || 0.0],
       shippingPrice: [purchaseOrder.shippingPrice || 0.0, [Validators.required]],
@@ -82,10 +88,16 @@ export class PurchaseOrdersFormComponent implements OnInit {
   }
 
   createItem(purchaseOrderItem?: PurchaseOrderItem): FormGroup {
+    if (!purchaseOrderItem) {
+      purchaseOrderItem = {};
+    }
     return this.fb.group({
       productVariation: [purchaseOrderItem.productVariation || null, [Validators.required]],
-      price: [purchaseOrderItem ? purchaseOrderItem.productVariation.sellingPrice : 0, [Validators.required]],
-      amount: [purchaseOrderItem ? purchaseOrderItem.amount : 0, [Validators.required]],
+      price: [
+        purchaseOrderItem.productVariation ? purchaseOrderItem.productVariation.sellingPrice : 0,
+        [Validators.required],
+      ],
+      amount: [purchaseOrderItem.productVariation ? purchaseOrderItem.amount : 0, [Validators.required]],
     });
   }
 
@@ -96,20 +108,24 @@ export class PurchaseOrdersFormComponent implements OnInit {
     );
   }
 
+  get items(): FormArray {
+    return this.formFields.get('items') as FormArray;
+  }
+
   submit() {
     if (!this.formFields.valid) {
       this.markAllFieldsAsTouched(this.formFields);
     } else {
       const values = this.formFields.value;
-      const itemsValues = this.purchaseOrderItems.value;
-
       const supplier = values.supplier;
       const referenceCode = values.referenceCode;
-      const creationDate = ''; //format(new Date(values.creationDate), 'yyyy-MM-dd');
+      const date = values.creationDate.split('/').reverse();
+      values.creationDate = `${date[0]}-${date[1]}-${date[2]}`;
+      const creationDate = format(new Date(values.creationDate), 'yyyy-MM-dd');
       const total = values.total;
       const discount = values.discount;
       const shippingPrice = values.shippingPrice;
-      const items = itemsValues.map((item: any) => {
+      const items = values.items.map((item: any) => {
         return {
           amount: item.amount,
           price: item.price,
