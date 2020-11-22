@@ -10,4 +10,5 @@ export interface PurchaseOrder {
   total?: Number;
   supplier?: Supplier;
   items?: PurchaseOrderItem[];
+  id?: number;
 }

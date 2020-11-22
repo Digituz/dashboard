@@ -18,14 +18,14 @@
           [suggestions]="supplierSugestion"
           (completeMethod)="searchSuppliers($event)"
           [multiple]="false"
-          field="completeDescription"
+          field="name"
           placeholder="Selecione fornecedor"
         ></p-autoComplete>
         <small [hidden]="!isFieldInvalid('supplier')" id="description-help" class="p-invalid"
           >Insira o Fornecedor do Pedido</small
         >
       </div>
-      <div class="p-field p-col-6">
+      <div class="p-field p-col-4">
         <label for="referenceCode">Código de Referencia</label>
         <input
           id="referenceCode"
@@ -39,9 +39,16 @@
           >Insira o Código de referencia do Pedido</small
         >
       </div>
-      <div class="p-field p-col-6">
+      <div class="p-field p-col-4">
         <label for="creationDate">Data do Pedido</label>
         <p-inputMask mask="99/99/9999" placeholder="ex. 01/06/2020" formControlName="creationDate"></p-inputMask>
+        <small [hidden]="!isFieldInvalid('creationDate')" id="description-help" class="p-invalid"
+          >Insira a data de criação do pedido</small
+        >
+      </div>
+      <div class="p-field p-col-4">
+        <label for="completionDate">Data de Conclusão do Pedido</label>
+        <p-inputMask mask="99/99/9999" placeholder="ex. 01/06/2020" formControlName="completionDate"></p-inputMask>
       </div>
       <div class="p-field p-col-4">
         <label class="input-label" for="total">Total (R$)</label>
@@ -128,12 +135,9 @@
               field="completeDescription"
               placeholder="Selecione um produto"
             >
-              <!-- <small [hidden]="!isFieldInvalid('productVariation')" id="description-help" class="p-invalid"
-                >Insira o produto</small
-              > -->
               <ng-template let-productVariation pTemplate="item">
                 <div>
-                  {{ productVariation.sku }} - {{ productVariation.title }} - {{ productVariation.description }}
+                  {{ productVariation.sku }} - {{ productVariation.title }} ({{ productVariation.description }})
                 </div>
               </ng-template>
             </p-autoComplete>

@@ -22,6 +22,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
   supplierSugestion: Supplier[] = [];
   purchaseOrderItems = new FormArray([]);
   loading: boolean = true;
+  id: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -32,29 +33,25 @@ export class PurchaseOrdersFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const referenceCode = this.route.snapshot.params.referenceCode;
+    this.id = this.route.snapshot.params.referenceCode;
 
-    if (referenceCode === 'new') {
+    if (this.id === 'new') {
+      this.id = null;
       this.purchaseOrder = {};
       this.configureFormFields(this.purchaseOrder);
     } else {
-      this.purcahseOrderService.loadPurchaseOrder(referenceCode).subscribe((results) => {
+      this.purcahseOrderService.loadPurchaseOrder(this.id).subscribe((results) => {
         const purchaseOrder: PurchaseOrder = {
+          id: this.id,
           creationDate: format(new Date(results.creationDate), 'dd/MM/yyyy'),
-          completionDate: results.completionDate ? format(new Date(results.completionDate), 'dd/MM/yyyy') : null,
+          completionDate: format(new Date(results.completionDate), 'dd/MM/yyyy'),
           discount: results.discount,
           referenceCode: results.referenceCode,
           total: results.total,
           shippingPrice: results.shippingPrice,
           supplier: results.supplier,
-          items: results.items.map((item) => {
-            return {
-              ...item,
-              completeDescription: 'teste',
-            };
-          }),
+          items: results.items,
         };
-        console.log(purchaseOrder);
         this.configureFormFields(purchaseOrder);
       });
     }
@@ -68,7 +65,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
       supplier: [purchaseOrder.supplier || '', [Validators.required]],
       referenceCode: [purchaseOrder.referenceCode || '', [Validators.required]],
       creationDate: [purchaseOrder.creationDate || format(new Date(), 'dd/MM/yyyy'), [Validators.required]],
-      completionDate: [purchaseOrder.completionDate || null],
+      completionDate: [purchaseOrder.completionDate || ''],
       total: [purchaseOrder.total || 0.0, [Validators.required]],
       discount: [purchaseOrder.discount || 0.0],
       shippingPrice: [purchaseOrder.shippingPrice || 0.0, [Validators.required]],
@@ -92,7 +89,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
       purchaseOrderItem = {};
     }
     return this.fb.group({
-      productVariation: [purchaseOrderItem.productVariation || null, [Validators.required]],
+      productVariation: [purchaseOrderItem || null, [Validators.required]],
       price: [
         purchaseOrderItem.productVariation ? purchaseOrderItem.productVariation.sellingPrice : 0,
         [Validators.required],
@@ -119,28 +116,34 @@ export class PurchaseOrdersFormComponent implements OnInit {
       const values = this.formFields.value;
       const supplier = values.supplier;
       const referenceCode = values.referenceCode;
-      const date = values.creationDate.split('/').reverse();
-      values.creationDate = `${date[0]}-${date[1]}-${date[2]}`;
-      const creationDate = format(new Date(values.creationDate), 'yyyy-MM-dd');
+      const creationDate = this.formatDate(values.creationDate);
+      const completionDate = this.formatDate(values.completionDate);
       const total = values.total;
       const discount = values.discount;
       const shippingPrice = values.shippingPrice;
       const items = values.items.map((item: any) => {
+        if (item.productVariation.productVariation) {
+          item.productVariation = { ...item.productVariation, id: item.productVariation.productVariation.id };
+        }
         return {
           amount: item.amount,
           price: item.price,
           productVariation: item.productVariation.id,
         };
       });
-      const purchaseOrder: PurchaseOrder = {
+      let purchaseOrder: PurchaseOrder = {
         supplier,
         referenceCode,
         creationDate,
+        completionDate,
         total,
         discount,
         shippingPrice,
         items,
       };
+      if (this.id !== 'new') {
+        purchaseOrder = { ...purchaseOrder, id: Number.parseInt(this.id) };
+      }
       this.purcahseOrderService.save(purchaseOrder).subscribe(() => {
         this.router.navigate(['/purchase-orders']);
       });
@@ -190,5 +193,13 @@ export class PurchaseOrdersFormComponent implements OnInit {
 
   isFieldInvalid(field: string) {
     return !this.formFields.get(field).valid && this.formFields.get(field).touched;
+  }
+
+  formatDate(date: string) {
+    if (!date) {
+      return null;
+    }
+    const dateArray = date.split('/').reverse();
+    return `${dateArray[0]}-${dateArray[1]}-${dateArray[2]}`;
   }
 }
