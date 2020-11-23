@@ -1,0 +1,16 @@
+div.badge {
+  display: block;
+  border-radius: 3px;
+  color: white;
+  padding: 5px;
+  line-height: 22px;
+  font-size: 12px;
+  background-color: #eee;
+  color: #444;
+  text-align: center;
+  height: 100%;
+
+  &.danger {
+    color: #e91224;
+  }
+}

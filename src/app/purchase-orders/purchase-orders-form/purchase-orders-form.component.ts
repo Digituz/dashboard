@@ -22,6 +22,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
   formFields: FormGroup;
   productVariationsSugestion: ProductVariationDetailsDTO[] = [];
   supplierSugestion: Supplier[] = [];
+  originalItemsAndAmount: { sku: string; amount: number }[];
   purchaseOrderItems = new FormArray([]);
   loading: boolean = true;
   id: any;
@@ -214,5 +215,29 @@ export class PurchaseOrdersFormComponent implements OnInit {
     }
     const dateArray = date.split('/').reverse();
     return `${dateArray[0]}-${dateArray[1]}-${dateArray[2]}`;
+  }
+
+  showItemsInStockInfo(item: FormGroup) {
+    return !!item.value.productVariation && item.value.productVariation.sku;
+  }
+
+  getItemsInStockWithoutPurchaseOrder(item: FormGroup) {
+    if (!item.value.productVariation || !item.value.productVariation.sku) return null;
+
+    const { sku, currentPosition } = item.value.productVariation;
+
+    if (!this.originalItemsAndAmount) return currentPosition;
+
+    const originalItem = this.originalItemsAndAmount.find((item) => item.sku === sku);
+
+    if (!originalItem) return currentPosition;
+
+    return currentPosition + originalItem.amount;
+  }
+
+  getItemsInStockWithPurchaseOrder(item: FormGroup) {
+    if (!item.value.productVariation || !item.value.productVariation.sku) return null;
+    const currentPosition = this.getItemsInStockWithoutPurchaseOrder(item);
+    return currentPosition + item.value.amount;
   }
 }

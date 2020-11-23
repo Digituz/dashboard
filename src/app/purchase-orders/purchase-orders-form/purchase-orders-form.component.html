@@ -127,19 +127,22 @@
   <p-card>
     <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
       <div class="p-fluid p-formgrid p-grid p-col-12">
-        <div class="p-col-7">
+        <div class="p-col-6">
           <label class="input-label">Produto</label>
         </div>
         <div class="p-col-2">
           <label class="input-label">Preço</label>
         </div>
-        <div class="p-col-2">
+        <div class="p-col-1">
           <label class="input-label">Quant.</label>
         </div>
+        <div class="p-col-1">
+          <label class="input-label">Estoque</label>
+        </div>
       </div>
-      <div class="p-col-12" formArrayName="items" *ngFor="let control of items.controls; index as i">
+      <div class="p-col-12" formArrayName="items" *ngFor="let item of items.controls; index as i">
         <div [formGroupName]="i" class="p-fluid p-formgrid p-grid p-col-12">
-          <div class="p-field p-col-7">
+          <div class="p-field p-col-6">
             <p-autoComplete
               formControlName="productVariation"
               [suggestions]="productVariationsSugestion"
@@ -170,7 +173,7 @@
               placeholder="ex. R$ 10,00"
             ></p-inputNumber>
           </div>
-          <div class="p-field p-col-2">
+          <div class="p-field p-col-1">
             <p-inputNumber
               formControlName="amount"
               mode="decimal"
@@ -181,11 +184,28 @@
             ></p-inputNumber>
           </div>
           <div class="p-field p-col-1">
+            <div
+              class="badge"
+              [ngClass]="getItemsInStockWithPurchaseOrder(item) < 0 ? 'danger' : ''"
+              escape="true"
+              pTooltip="Estoque: Sem a venda > com a venda."
+              tooltipPosition="top"
+            >
+              {{ getItemsInStockWithoutPurchaseOrder(item) }}
+              <i
+                class="fal fa-arrow-right"
+                style="display: inline; font-size: 8px; bottom: 1px; position: relative; margin: 0 2px;"
+                *ngIf="showItemsInStockInfo(item)"
+              ></i>
+              {{ getItemsInStockWithPurchaseOrder(item) }}
+            </div>
+          </div>
+          <div class="p-field p-col-2">
             <button
               (click)="removeItem(i)"
               pButton
               icon="fal fa-trash"
-              class="p-button-danger"
+              class="p-button-danger actions"
               style="width: 100%;"
               pTooltip="Remover item"
             ></button>
