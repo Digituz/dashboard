@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductVariationDetailsDTO } from '@app/products/product-variation-details.dto';
 import { ProductsService } from '@app/products/products.service';
 import { Supplier } from '@app/supplier/supplier.entity';
 import { SupplierService } from '@app/supplier/supplier.service';
-import { format, toDate } from 'date-fns';
+import { ComboBoxOption } from '@app/util/combo-box-option.interface';
+import { format } from 'date-fns';
 import { PurchaseOrderItem } from '../purchase-order-item.entity';
 import { PurchaseOrder } from '../purchase-order.entity';
 import { PurchaseOrdersService } from '../purchase-orders.service';
+import { PurchaseOrderStatus } from '../purchase-orders.enum';
 
 @Component({
   selector: 'app-purchase-orders-form',
@@ -23,6 +25,13 @@ export class PurchaseOrdersFormComponent implements OnInit {
   purchaseOrderItems = new FormArray([]);
   loading: boolean = true;
   id: any;
+
+  purchaseOrderStatus: ComboBoxOption[] = [
+    { label: 'Em Processamento', value: PurchaseOrderStatus.IN_PROCESS },
+    { label: 'Completo', value: PurchaseOrderStatus.COMPLETED },
+    { label: 'Cancelada', value: PurchaseOrderStatus.CANCELLED },
+  ];
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -51,6 +60,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
           shippingPrice: results.shippingPrice,
           supplier: results.supplier,
           items: results.items,
+          status: results.status,
         };
         this.configureFormFields(purchaseOrder);
       });
@@ -70,6 +80,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
       discount: [purchaseOrder.discount || 0.0],
       shippingPrice: [purchaseOrder.shippingPrice || 0.0, [Validators.required]],
       items: itemsField,
+      status: [purchaseOrder.status || null, [Validators.required]],
     });
     this.loading = false;
   }
@@ -120,6 +131,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
       const completionDate = this.formatDate(values.completionDate);
       const total = values.total;
       const discount = values.discount;
+      const status = values.status;
       const shippingPrice = values.shippingPrice;
       const items = values.items.map((item: any) => {
         if (item.productVariation.productVariation) {
@@ -140,6 +152,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
         discount,
         shippingPrice,
         items,
+        status,
       };
       if (this.id !== 'new') {
         purchaseOrder = { ...purchaseOrder, id: Number.parseInt(this.id) };

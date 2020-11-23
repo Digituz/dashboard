@@ -40,3 +40,9 @@ p-inputmask.ng-touched.ng-invalid .p-inputtext {
   border: 1px solid red !important;
   border-color: $danger !important ;
 }
+
+p-dropdown.ng-dirty.ng-invalid .p-inputtext,
+p-dropdown.ng-touched.ng-invalid .p-inputtext {
+  border: 1px solid red !important;
+  border-color: $danger !important ;
+}

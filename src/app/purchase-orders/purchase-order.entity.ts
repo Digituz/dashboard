@@ -1,5 +1,6 @@
 import { Supplier } from '@app/supplier/supplier.entity';
 import { PurchaseOrderItem } from './purchase-order-item.entity';
+import { PurchaseOrderStatus } from './purchase-orders.enum';
 
 export interface PurchaseOrder {
   referenceCode?: number;
@@ -11,4 +12,5 @@ export interface PurchaseOrder {
   supplier?: Supplier;
   items?: PurchaseOrderItem[];
   id?: number;
+  status?: PurchaseOrderStatus;
 }

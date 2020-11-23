@@ -11,7 +11,7 @@
 <p-card>
   <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
     <div class="p-fluid p-formgrid p-grid">
-      <div class="p-field p-col-12">
+      <div class="p-field p-col-6">
         <label for="referenceCode">Fornecedor</label>
         <p-autoComplete
           formControlName="supplier"
@@ -25,7 +25,7 @@
           >Insira o Fornecedor do Pedido</small
         >
       </div>
-      <div class="p-field p-col-4">
+      <div class="p-field p-col-3">
         <label for="referenceCode">Código de Referencia</label>
         <input
           id="referenceCode"
@@ -37,6 +37,20 @@
         />
         <small [hidden]="!isFieldInvalid('supplier')" id="description-help" class="p-invalid"
           >Insira o Código de referencia do Pedido</small
+        >
+      </div>
+      <div class="p-field p-col-3">
+        <label for="referenceCode">Status</label>
+        <p-dropdown
+          id="status"
+          name="status"
+          [options]="purchaseOrderStatus"
+          formControlName="status"
+          placeholder="Selecione o status da ordem de compra"
+          [showClear]="false"
+        ></p-dropdown>
+        <small [hidden]="!isFieldInvalid('status')" id="description-help" class="p-invalid"
+          >Insira o status da Ordem de compra</small
         >
       </div>
       <div class="p-field p-col-4">
