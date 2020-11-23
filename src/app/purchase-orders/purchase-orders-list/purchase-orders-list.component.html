@@ -47,6 +47,7 @@
       <th dgz-sortable="creationDate">Data de criação</th>
       <th dgz-sortable="discount">Total</th>
       <th dgz-sortable="shippingPrice">Taxa de Entrega</th>
+      <th>Status</th>
       <th></th>
     </tr>
   </thead>
@@ -56,6 +57,33 @@
       <td class="centered">{{ purchaseOrder.creationDate | date }}</td>
       <td class="centered">{{ purchaseOrder.total | reais }}</td>
       <td class="centered">{{ purchaseOrder.shippingPrice | reais }}</td>
+      <td class="centered">
+        <div
+          class="badge"
+          [ngClass]="
+            (purchaseOrder.status === 'COMPLETED' && 'success') || (purchaseOrder.status === 'CANCELLED' && 'failure')
+          "
+        >
+          <i
+            class="fal fa-check"
+            *ngIf="purchaseOrder.status === 'COMPLETED'"
+            pTooltip="Pagamento aprovado"
+            tooltipPosition="top"
+          ></i>
+          <i
+            class="fal fa-times"
+            *ngIf="purchaseOrder.status === 'CANCELLED'"
+            pTooltip="Pagamento cancelado"
+            tooltipPosition="top"
+          ></i>
+          <i
+            class="fal fa-sync"
+            *ngIf="purchaseOrder.status === 'IN_PROCESS'"
+            pTooltip="Pagamento em processamento"
+            tooltipPosition="top"
+          ></i>
+        </div>
+      </td>
       <td class="actions">
         <button
           [title]="'Fornecedores'"
