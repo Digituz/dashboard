@@ -37,7 +37,7 @@
         ></p-inputMask>
       </div>
       <div class="p-field p-col-6">
-        <label for="email">E-mail <i class="fal fa-asterisk"></i></label>
+        <label for="email">E-mail</label>
         <input
           id="email"
           name="email"
@@ -54,29 +54,23 @@
         </div>
       </div>
       <div class="p-field p-col-6">
-        <label for="birthday">Data de Nascimento <i class="fal fa-asterisk"></i></label>
+        <label for="birthday">Data de Nascimento</label>
         <p-inputMask mask="99/99/9999" formControlName="birthday" placeholder="Ex. 23/11/1970"></p-inputMask>
-        <small [hidden]="!isFieldInvalid('birthday')" style="color: #f44336;">
-          Insira uma data válida (se vazio esse campo não é obrigatorio)
-        </small>
       </div>
       <div class="p-field p-col-6">
-        <label for="zipAddress">CEP <i class="fal fa-asterisk"></i></label>
+        <label for="zipAddress">CEP</label>
         <p-inputMask mask="99999-999" formControlName="zipAddress" placeholder="Ex. 01305-000"></p-inputMask>
-        <small [hidden]="!isFieldInvalid('zipAddress')" id="zip-help" style="color: #f44336;">Insira o CEP</small>
       </div>
       <div class="p-field p-col-6">
-        <label for="state">UF <i class="fal fa-asterisk"></i></label>
+        <label for="state">UF</label>
         <input id="state" name="state" type="text" formControlName="state" pInputText placeholder="Ex. SP" />
-        <small [hidden]="!isFieldInvalid('state')" id="state-help" style="color: #f44336;">Insira o estado</small>
       </div>
       <div class="p-field p-col-6">
-        <label for="city">Cidade <i class="fal fa-asterisk"></i></label>
+        <label for="city">Cidade</label>
         <input id="city" name="city" type="text" formControlName="city" pInputText placeholder="Ex. São Paulo" />
-        <small [hidden]="!isFieldInvalid('city')" id="zip-help" style="color: #f44336;">Insira a cidade</small>
       </div>
       <div class="p-field p-col-6">
-        <label for="neighborhood">Bairro <i class="fal fa-asterisk"></i></label>
+        <label for="neighborhood">Bairro</label>
         <input
           id="neighborhood"
           name="neighborhood"
@@ -85,12 +79,9 @@
           pInputText
           placeholder="Ex. Consolação"
         />
-        <small [hidden]="!isFieldInvalid('neighborhood')" id="neighborhood-help" style="color: #f44336;"
-          >Insira a rua</small
-        >
       </div>
       <div class="p-field p-col-6">
-        <label for="streetAddress">Logradouro <i class="fal fa-asterisk"></i></label>
+        <label for="streetAddress">Logradouro</label>
         <input
           id="streetAddress"
           name="streetAddress"
@@ -99,12 +90,9 @@
           pInputText
           placeholder="Ex. Rua Augusta"
         />
-        <small [hidden]="!isFieldInvalid('streetAddress')" id="street-help" style="color: #f44336;"
-          >Insira o bairro</small
-        >
       </div>
       <div class="p-field p-col-6">
-        <label for="streetNumber">Número <i class="fal fa-asterisk"></i></label>
+        <label for="streetNumber">Número</label>
         <input
           id="streetNumber"
           name="streetNumber"
@@ -113,9 +101,6 @@
           pInputText
           placeholder="Ex. 123"
         />
-        <small [hidden]="!isFieldInvalid('streetNumber')" id="streetNumber-help" style="color: #f44336;"
-          >Insira o número do endereço</small
-        >
       </div>
       <div class="p-field p-col-6">
         <label for="streetNumber2">Complemento</label>
