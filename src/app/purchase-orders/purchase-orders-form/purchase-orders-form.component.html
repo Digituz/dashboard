@@ -12,7 +12,7 @@
   <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
-        <label for="supplier">Fornecedor</label>
+        <label for="supplier">Fornecedor <i class="fal fa-asterisk"></i></label>
         <p-autoComplete
           formControlName="supplier"
           [suggestions]="supplierSugestion"
@@ -26,7 +26,7 @@
         >
       </div>
       <div class="p-field p-col-3">
-        <label for="referenceCode">Código de Referência</label>
+        <label for="referenceCode">Código de Referência <i class="fal fa-asterisk"></i></label>
         <input
           id="referenceCode"
           name="referenceCode"
@@ -40,7 +40,7 @@
         >
       </div>
       <div class="p-field p-col-3">
-        <label for="referenceCode">Status</label>
+        <label for="referenceCode">Status <i class="fal fa-asterisk"></i></label>
         <p-dropdown
           id="status"
           name="status"
@@ -119,104 +119,98 @@
 </p-card>
 
 <div style="margin-top: 20px;">
-  <div class="feature-header">
-    <p>
-      <label>Itens do pedido</label>
-    </p>
-    <div class="actions">
-      <button (click)="addItem()" pButton type="button" label="Adicionar Produto"></button>
-    </div>
-  </div>
   <p-card>
-    <div class="form">
-      <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
-        <div class="p-fluid p-formgrid p-grid p-col-12">
-          <div class="p-col-6">
-            <label class="input-label">Produto</label>
-          </div>
-          <div class="p-col-2">
-            <label class="input-label">Preço</label>
-          </div>
-          <div class="p-col-1">
-            <label class="input-label">Quant.</label>
-          </div>
-          <div class="p-col-1">
-            <label class="input-label">Estoque</label>
-          </div>
-        </div>
-        <div class="p-col-12" formArrayName="items" *ngFor="let item of items.controls; index as i">
-          <div [formGroupName]="i" class="p-fluid p-formgrid p-grid p-col-12">
-            <div class="p-field p-col-6">
-              <p-autoComplete
-                formControlName="productVariation"
-                [suggestions]="productVariationsSugestion"
-                (completeMethod)="searchProductVariations($event)"
-                (onSelect)="selectProductVariation($event, i)"
-                [multiple]="false"
-                field="completeDescription"
-                placeholder="Selecione um produto"
-              >
-                <ng-template let-productVariation pTemplate="item">
-                  <div>
-                    {{ productVariation.sku }} - {{ productVariation.title }} ({{ productVariation.description }})
-                  </div>
-                </ng-template>
-              </p-autoComplete>
-            </div>
-            <div class="p-field p-col-2">
-              <p-inputNumber
-                id="price"
-                name="price"
-                formControlName="price"
-                currency="BRL"
-                mode="currency"
-                locale="pt-BR"
-                [minFractionDigits]="2"
-                [maxFractionDigits]="2"
-                placeholder="ex. R$ 10,00"
-                (onBlur)="updatePrice()"
-              ></p-inputNumber>
-            </div>
-            <div class="p-field p-col-1">
-              <p-inputNumber
-                formControlName="amount"
-                mode="decimal"
-                [minFractionDigits]="0"
-                [maxFractionDigits]="0"
-                placeholder="ex. R$ 10,00"
-                [min]="0"
-                (onBlur)="updatePrice()"
-              ></p-inputNumber>
-            </div>
-            <div class="p-field p-col-1">
-              <div
-                class="badge"
-                [ngClass]="getItemsInStockWithPurchaseOrder(item) < 0 ? 'danger' : ''"
-                escape="true"
-                pTooltip="Estoque: Sem a Compra > com a Compra."
-                tooltipPosition="top"
-              >
-                {{ getItemsInStockWithoutPurchaseOrder(item) || 0 }}
-                <i
-                  class="fal fa-arrow-right"
-                  style="display: inline; font-size: 8px; bottom: 1px; position: relative; margin: 0 2px;"
-                ></i>
-                {{ getItemsInStockWithPurchaseOrder(item) || 0 }}
-              </div>
-            </div>
-            <div class="p-field p-col-1">
-              <button
-                (click)="removeItem(i)"
-                pButton
-                icon="fal fa-trash"
-                class="p-button-danger actions"
-                style="width: 100%;"
-                pTooltip="Remover item"
-              ></button>
-            </div>
-          </div>
-        </div>
-      </form>
+    <div class="product-variation-description">
+      <p>Seleciona os produtos a serem comprados</p>
+      <button pButton (click)="addItem()" label="Adicionar Item"></button>
     </div>
+    <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
+      <div class="p-fluid p-grid">
+        <div class="p-col-8">
+          <label class="input-label">Produto <i class="fal fa-asterisk"></i></label>
+        </div>
+        <div class="p-col-1">
+          <label class="input-label">Preço <i class="fal fa-asterisk"></i></label>
+        </div>
+        <div class="p-col-1">
+          <label class="input-label">Quant. <i class="fal fa-asterisk"></i></label>
+        </div>
+        <div class="p-col-1">
+          <label class="input-label">Estoque</label>
+        </div>
+      </div>
+      <div formArrayName="items" *ngFor="let item of items.controls; index as i">
+        <div [formGroupName]="i" class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col-8">
+            <p-autoComplete
+              formControlName="productVariation"
+              [suggestions]="productVariationsSugestion"
+              (completeMethod)="searchProductVariations($event)"
+              (onSelect)="selectProductVariation($event, i)"
+              [multiple]="false"
+              field="completeDescription"
+              placeholder="Selecione um produto"
+            >
+              <ng-template let-productVariation pTemplate="item">
+                <div>
+                  {{ productVariation.sku }} - {{ productVariation.title }} ({{ productVariation.description }})
+                </div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+          <div class="p-field p-col-1">
+            <p-inputNumber
+              id="price"
+              name="price"
+              formControlName="price"
+              currency="BRL"
+              mode="currency"
+              locale="pt-BR"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              placeholder="ex. R$ 10,00"
+              (onBlur)="updatePrice()"
+            ></p-inputNumber>
+          </div>
+          <div class="p-field p-col-1">
+            <p-inputNumber
+              formControlName="amount"
+              mode="decimal"
+              [minFractionDigits]="0"
+              [maxFractionDigits]="0"
+              placeholder="ex. R$ 10,00"
+              [min]="0"
+              (onBlur)="updatePrice()"
+            ></p-inputNumber>
+          </div>
+          <div class="p-field p-col-1">
+            <div
+              class="badge"
+              [ngClass]="getItemsInStockWithPurchaseOrder(item) < 0 ? 'danger' : ''"
+              escape="true"
+              pTooltip="Estoque: Sem a Compra > com a Compra."
+              tooltipPosition="top"
+            >
+              {{ getItemsInStockWithoutPurchaseOrder(item) || 0 }}
+              <i
+                class="fal fa-arrow-right"
+                style="display: inline; font-size: 8px; bottom: 1px; position: relative; margin: 0 2px;"
+              ></i>
+              {{ getItemsInStockWithPurchaseOrder(item) || 0 }}
+            </div>
+          </div>
+          <div class="p-field p-col-1">
+            <button
+              (click)="removeItem(i)"
+              pButton
+              icon="fal fa-trash"
+              class="p-button-danger"
+              style="width: 100%;"
+              pTooltip="Remover item"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </form>
   </p-card>
 </div>

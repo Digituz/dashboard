@@ -14,3 +14,26 @@ div.badge {
     color: #e91224;
   }
 }
+
+.product-variation-description {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  align-items: center;
+
+  p {
+    line-height: 30px;
+    flex-grow: 2;
+  }
+}
+
+.p-fluid.p-grid label.input-label {
+  display: flex;
+  flex-direction: row;
+
+  i {
+    font-size: 7px;
+    margin-top: 2px;
+    margin-left: 1px;
+  }
+}
