@@ -161,6 +161,9 @@
                 </div>
               </ng-template>
             </p-autoComplete>
+            <small [hidden]="!isItemFieldInvalid('productVariation', i)" id="description-help" class="p-invalid"
+              >Insira o Produto</small
+            >
           </div>
           <div class="p-field p-col-1">
             <p-inputNumber
@@ -177,6 +180,9 @@
               [disabled]="formFields.get('status').value === 'COMPLETED'"
               (onBlur)="updatePrice()"
             ></p-inputNumber>
+            <small [hidden]="!isItemFieldInvalid('price', i)" id="description-help" class="p-invalid"
+              >O preço tem que ser maior que 0</small
+            >
           </div>
           <div class="p-field p-col-1">
             <p-inputNumber
@@ -189,6 +195,9 @@
               [disabled]="formFields.get('status').value === 'COMPLETED'"
               (onBlur)="updatePrice()"
             ></p-inputNumber>
+            <small [hidden]="!isItemFieldInvalid('amount', i)" id="description-help" class="p-invalid"
+              >A quantidade tem que no minimo 1</small
+            >
           </div>
           <div class="p-field p-col-1">
             <div

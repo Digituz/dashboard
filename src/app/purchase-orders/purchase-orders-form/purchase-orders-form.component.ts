@@ -98,16 +98,16 @@ export class PurchaseOrdersFormComponent implements OnInit {
 
   createItem(purchaseOrderItem?: PurchaseOrderItem): FormGroup {
     if (!purchaseOrderItem) {
-      purchaseOrderItem = {};
+      purchaseOrderItem = null;
     }
     return this.fb.group({
       productVariation: [purchaseOrderItem || null, [Validators.required]],
       price: [
-        purchaseOrderItem.productVariation ? purchaseOrderItem.price : 0,
+        purchaseOrderItem?.productVariation ? purchaseOrderItem.price : 0,
         [Validators.required, Validators.min(1)],
       ],
       amount: [
-        purchaseOrderItem.productVariation ? purchaseOrderItem.amount : 0,
+        purchaseOrderItem?.productVariation ? purchaseOrderItem.amount : 0,
         [Validators.required, Validators.min(1)],
       ],
     });
@@ -209,7 +209,12 @@ export class PurchaseOrdersFormComponent implements OnInit {
   }
 
   isFieldInvalid(field: string) {
-    return !this.formFields.get(field).valid && this.formFields.get(field).touched;
+    return !this.formFields.get(field)?.valid && this.formFields.get(field)?.touched;
+  }
+
+  isItemFieldInvalid(field: string, index: number) {
+    const items = this.formFields.get('items') as FormArray;
+    return !items.controls[index].get(field)?.valid && items.controls[index].get(field)?.touched;
   }
 
   formatDate(date: string) {
