@@ -63,11 +63,6 @@ export class PurchaseOrdersFormComponent implements OnInit {
           items: results.items,
           status: results.status,
         };
-
-        this.originalItemsAndAmount = purchaseOrder.items.map((item) => ({
-          sku: item.productVariation.sku,
-          amount: item.amount,
-        }));
         this.configureFormFields(purchaseOrder);
       });
     }
@@ -81,7 +76,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
       supplier: [purchaseOrder.supplier || '', [Validators.required]],
       referenceCode: [purchaseOrder.referenceCode || '', [Validators.required]],
       creationDate: [purchaseOrder.creationDate || format(new Date(), 'dd/MM/yyyy'), [Validators.required]],
-      completionDate: [purchaseOrder.completionDate || format(new Date(), 'dd/MM/yyyy')],
+      completionDate: [purchaseOrder.completionDate || null],
       total: [purchaseOrder.total || 0.0, [Validators.required]],
       discount: [purchaseOrder.discount || 0.0],
       shippingPrice: [purchaseOrder.shippingPrice || 0.0],
@@ -107,7 +102,10 @@ export class PurchaseOrdersFormComponent implements OnInit {
     }
     return this.fb.group({
       productVariation: [purchaseOrderItem || null, [Validators.required]],
-      price: [purchaseOrderItem.productVariation ? purchaseOrderItem.price : 0, [Validators.required]],
+      price: [
+        purchaseOrderItem.productVariation ? purchaseOrderItem.price : 0,
+        [Validators.required, Validators.min(1)],
+      ],
       amount: [
         purchaseOrderItem.productVariation ? purchaseOrderItem.amount : 0,
         [Validators.required, Validators.min(1)],
@@ -228,16 +226,8 @@ export class PurchaseOrdersFormComponent implements OnInit {
 
   getItemsInStockWithoutPurchaseOrder(item: FormGroup) {
     if (!item.value.productVariation || !item.value.productVariation.sku) return null;
-
-    const { sku, currentPosition } = item.value.productVariation;
-
-    if (!this.originalItemsAndAmount) return currentPosition;
-
-    const originalItem = this.originalItemsAndAmount.find((item) => item.sku === sku);
-
-    if (!originalItem) return currentPosition;
-
-    return currentPosition + originalItem.amount;
+    const { currentPosition } = item.value.productVariation;
+    return currentPosition;
   }
 
   getItemsInStockWithPurchaseOrder(item: FormGroup) {

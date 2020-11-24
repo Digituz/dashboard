@@ -62,12 +62,7 @@
       </div>
       <div class="p-field p-col-3">
         <label for="completionDate">Data de Conclusão do Pedido</label>
-        <p-inputMask
-          [disabled]="true"
-          mask="99/99/9999"
-          placeholder="ex. 01/06/2020"
-          formControlName="completionDate"
-        ></p-inputMask>
+        <p-inputMask [disabled]="true" mask="99/99/9999" formControlName="completionDate"></p-inputMask>
       </div>
       <div class="p-field p-col-2">
         <label class="input-label" for="total">Total (R$)</label>
@@ -169,6 +164,7 @@
               [minFractionDigits]="2"
               [maxFractionDigits]="2"
               placeholder="ex. R$ 10,00"
+              [min]="0"
               (onBlur)="updatePrice()"
             ></p-inputNumber>
           </div>
