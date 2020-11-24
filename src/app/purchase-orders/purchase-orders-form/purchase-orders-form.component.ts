@@ -63,6 +63,11 @@ export class PurchaseOrdersFormComponent implements OnInit {
           items: results.items,
           status: results.status,
         };
+
+        this.originalItemsAndAmount = purchaseOrder.items.map((item) => ({
+          sku: item.productVariation.sku,
+          amount: item.amount,
+        }));
         this.configureFormFields(purchaseOrder);
       });
     }
@@ -76,7 +81,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
       supplier: [purchaseOrder.supplier || '', [Validators.required]],
       referenceCode: [purchaseOrder.referenceCode || '', [Validators.required]],
       creationDate: [purchaseOrder.creationDate || format(new Date(), 'dd/MM/yyyy'), [Validators.required]],
-      completionDate: [purchaseOrder.completionDate || ''],
+      completionDate: [purchaseOrder.completionDate || format(new Date(), 'dd/MM/yyyy')],
       total: [purchaseOrder.total || 0.0, [Validators.required]],
       discount: [purchaseOrder.discount || 0.0],
       shippingPrice: [purchaseOrder.shippingPrice || 0.0, [Validators.required]],
@@ -129,19 +134,21 @@ export class PurchaseOrdersFormComponent implements OnInit {
       const supplier = values.supplier;
       const referenceCode = values.referenceCode;
       const creationDate = this.formatDate(values.creationDate);
-      const completionDate = this.formatDate(values.completionDate);
-      const total = values.total;
       const discount = values.discount;
       const status = values.status;
       const shippingPrice = values.shippingPrice;
+      let completionDate;
+      if (status === PurchaseOrderStatus.COMPLETED) {
+        completionDate = this.formatDate(values.completionDate);
+      } else {
+        completionDate = null;
+      }
+      const total = values.total;
       const items = values.items.map((item: any) => {
-        if (item.productVariation.productVariation) {
-          item.productVariation = { ...item.productVariation, id: item.productVariation.productVariation.id };
-        }
         return {
+          productVariation: item.productVariation,
           amount: item.amount,
           price: item.price,
-          productVariation: item.productVariation.id,
         };
       });
       let purchaseOrder: PurchaseOrder = {
