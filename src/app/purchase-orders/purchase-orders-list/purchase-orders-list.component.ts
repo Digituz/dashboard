@@ -18,7 +18,9 @@ export class PurchaseOrdersListComponent implements OnInit {
 
   constructor(private purchaseOrdersService: PurchaseOrdersService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log();
+  }
 
   loadData(
     pageNumber: number,

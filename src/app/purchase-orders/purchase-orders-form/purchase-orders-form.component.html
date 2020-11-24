@@ -20,6 +20,7 @@
           [multiple]="false"
           field="name"
           placeholder="Selecione fornecedor"
+          [disabled]="formFields.get('status').value === 'COMPLETED'"
         ></p-autoComplete>
         <small [hidden]="!isFieldInvalid('supplier')" id="description-help" class="p-invalid"
           >Insira o Fornecedor do Pedido</small
@@ -91,6 +92,7 @@
           locale="pt-BR"
           [minFractionDigits]="2"
           [maxFractionDigits]="2"
+          [disabled]="formFields.get('status').value === 'COMPLETED'"
           placeholder="ex. R$ 10,00"
         ></p-inputNumber>
       </div>
@@ -106,6 +108,7 @@
           [minFractionDigits]="2"
           [maxFractionDigits]="2"
           [min]="0"
+          [disabled]="formFields.get('status').value === 'COMPLETED'"
           placeholder="ex. R$ 10,00"
         ></p-inputNumber>
       </div>
@@ -117,7 +120,12 @@
   <p-card>
     <div class="product-variation-description">
       <p>Seleciona os produtos a serem comprados</p>
-      <button pButton (click)="addItem()" label="Adicionar Item"></button>
+      <button
+        pButton
+        (click)="addItem()"
+        label="Adicionar Item"
+        [disabled]="formFields.get('status').value === 'COMPLETED'"
+      ></button>
     </div>
     <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
       <div class="p-fluid p-grid">
@@ -144,6 +152,7 @@
               (onSelect)="selectProductVariation($event, i)"
               [multiple]="false"
               field="completeDescription"
+              [disabled]="formFields.get('status').value === 'COMPLETED'"
               placeholder="Selecione um produto"
             >
               <ng-template let-productVariation pTemplate="item">
@@ -165,6 +174,7 @@
               [maxFractionDigits]="2"
               placeholder="ex. R$ 10,00"
               [min]="0"
+              [disabled]="formFields.get('status').value === 'COMPLETED'"
               (onBlur)="updatePrice()"
             ></p-inputNumber>
           </div>
@@ -176,6 +186,7 @@
               [maxFractionDigits]="0"
               placeholder="ex. R$ 10,00"
               [min]="0"
+              [disabled]="formFields.get('status').value === 'COMPLETED'"
               (onBlur)="updatePrice()"
             ></p-inputNumber>
           </div>
@@ -202,6 +213,7 @@
               icon="fal fa-trash"
               class="p-button-danger"
               style="width: 100%;"
+              [disabled]="formFields.get('status').value === 'COMPLETED'"
               pTooltip="Remover item"
             ></button>
           </div>

@@ -51,7 +51,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
       this.configureFormFields(this.purchaseOrder);
     } else {
       this.purcahseOrderService.loadPurchaseOrder(this.id).subscribe((results) => {
-        const purchaseOrder: PurchaseOrder = {
+        this.purchaseOrder = {
           id: this.id,
           creationDate: format(new Date(results.creationDate), 'dd/MM/yyyy'),
           completionDate: results.completionDate ? format(new Date(results.completionDate), 'dd/MM/yyyy') : null,
@@ -63,7 +63,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
           items: results.items,
           status: results.status,
         };
-        this.configureFormFields(purchaseOrder);
+        this.configureFormFields(this.purchaseOrder);
       });
     }
   }
