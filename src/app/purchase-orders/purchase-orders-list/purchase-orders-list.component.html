@@ -45,8 +45,8 @@
     <tr>
       <th dgz-sortable="creationDate">Data de criação</th>
       <th dgz-sortable="referenceCode">Código de Referência</th>
-      <th dgz-sortable="total">Total</th>
       <th dgz-sortable="supplier">Fornecedor</th>
+      <th dgz-sortable="total">Total</th>
       <th>Status</th>
       <th></th>
     </tr>
@@ -55,8 +55,8 @@
     <tr *ngFor="let purchaseOrder of purchaseOrderTable.currentData">
       <td class="centered">{{ purchaseOrder.creationDate | date }}</td>
       <td class="centered">{{ purchaseOrder.referenceCode }}</td>
-      <td class="centered">{{ purchaseOrder.total | reais }}</td>
       <td class="">{{ purchaseOrder.supplier.name }}</td>
+      <td class="centered">{{ purchaseOrder.total | reais }}</td>
       <td class="centered">
         <div
           class="badge"
