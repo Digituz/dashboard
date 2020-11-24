@@ -12,7 +12,7 @@
   <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
-        <label for="referenceCode">Fornecedor</label>
+        <label for="supplier">Fornecedor</label>
         <p-autoComplete
           formControlName="supplier"
           [suggestions]="supplierSugestion"
@@ -26,7 +26,7 @@
         >
       </div>
       <div class="p-field p-col-3">
-        <label for="referenceCode">Código de Referencia</label>
+        <label for="referenceCode">Código de Referência</label>
         <input
           id="referenceCode"
           name="referenceCode"
@@ -100,7 +100,7 @@
         ></p-inputNumber>
       </div>
       <div class="p-field p-col-2">
-        <label class="input-label" for="shippingPrice">Taxa de Entrega (R$)</label>
+        <label class="input-label" for="shippingPrice">Frete (R$)</label>
         <p-inputNumber
           id="shippingPrice"
           name="shippingPrice"
@@ -110,11 +110,9 @@
           locale="pt-BR"
           [minFractionDigits]="2"
           [maxFractionDigits]="2"
+          [min]="0"
           placeholder="ex. R$ 10,00"
         ></p-inputNumber>
-        <small [hidden]="!isFieldInvalid('supplier')" id="description-help" class="p-invalid"
-          >Insira a Taxa de entrega do Pedido</small
-        >
       </div>
     </div>
   </form>
@@ -175,8 +173,8 @@
                 locale="pt-BR"
                 [minFractionDigits]="2"
                 [maxFractionDigits]="2"
-                [disabled]="true"
                 placeholder="ex. R$ 10,00"
+                (onBlur)="updatePrice()"
               ></p-inputNumber>
             </div>
             <div class="p-field p-col-1">
@@ -186,6 +184,7 @@
                 [minFractionDigits]="0"
                 [maxFractionDigits]="0"
                 placeholder="ex. R$ 10,00"
+                [min]="0"
                 (onBlur)="updatePrice()"
               ></p-inputNumber>
             </div>
@@ -194,7 +193,7 @@
                 class="badge"
                 [ngClass]="getItemsInStockWithPurchaseOrder(item) < 0 ? 'danger' : ''"
                 escape="true"
-                pTooltip="Estoque: Sem a venda > com a venda."
+                pTooltip="Estoque: Sem a Compra > com a Compra."
                 tooltipPosition="top"
               >
                 {{ getItemsInStockWithoutPurchaseOrder(item) || 0 }}
@@ -205,7 +204,7 @@
                 {{ getItemsInStockWithPurchaseOrder(item) || 0 }}
               </div>
             </div>
-            <div class="p-field p-col-2">
+            <div class="p-field p-col-1">
               <button
                 (click)="removeItem(i)"
                 pButton

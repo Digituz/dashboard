@@ -54,7 +54,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
         const purchaseOrder: PurchaseOrder = {
           id: this.id,
           creationDate: format(new Date(results.creationDate), 'dd/MM/yyyy'),
-          completionDate: format(new Date(results.completionDate), 'dd/MM/yyyy'),
+          completionDate: results.completionDate ? format(new Date(results.completionDate), 'dd/MM/yyyy') : null,
           discount: results.discount,
           referenceCode: results.referenceCode,
           total: results.total,
@@ -84,7 +84,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
       completionDate: [purchaseOrder.completionDate || format(new Date(), 'dd/MM/yyyy')],
       total: [purchaseOrder.total || 0.0, [Validators.required]],
       discount: [purchaseOrder.discount || 0.0],
-      shippingPrice: [purchaseOrder.shippingPrice || 0.0, [Validators.required]],
+      shippingPrice: [purchaseOrder.shippingPrice || 0.0],
       items: itemsField,
       status: [purchaseOrder.status || null, [Validators.required]],
     });
@@ -107,11 +107,11 @@ export class PurchaseOrdersFormComponent implements OnInit {
     }
     return this.fb.group({
       productVariation: [purchaseOrderItem || null, [Validators.required]],
-      price: [
-        purchaseOrderItem.productVariation ? purchaseOrderItem.productVariation.sellingPrice : 0,
-        [Validators.required],
+      price: [purchaseOrderItem.productVariation ? purchaseOrderItem.price : 0, [Validators.required]],
+      amount: [
+        purchaseOrderItem.productVariation ? purchaseOrderItem.amount : 0,
+        [Validators.required, Validators.min(1)],
       ],
-      amount: [purchaseOrderItem.productVariation ? purchaseOrderItem.amount : 0, [Validators.required]],
     });
   }
 
@@ -137,12 +137,6 @@ export class PurchaseOrdersFormComponent implements OnInit {
       const discount = values.discount;
       const status = values.status;
       const shippingPrice = values.shippingPrice;
-      let completionDate;
-      if (status === PurchaseOrderStatus.COMPLETED) {
-        completionDate = this.formatDate(values.completionDate);
-      } else {
-        completionDate = null;
-      }
       const total = values.total;
       const items = values.items.map((item: any) => {
         return {
@@ -155,7 +149,6 @@ export class PurchaseOrdersFormComponent implements OnInit {
         supplier,
         referenceCode,
         creationDate,
-        completionDate,
         total,
         discount,
         shippingPrice,
@@ -165,6 +158,11 @@ export class PurchaseOrdersFormComponent implements OnInit {
       if (this.id !== 'new') {
         purchaseOrder = { ...purchaseOrder, id: Number.parseInt(this.id) };
       }
+      if (status === PurchaseOrderStatus.COMPLETED) {
+        const completionDate = this.formatDate(values.completionDate);
+        purchaseOrder = { ...purchaseOrder, completionDate: completionDate };
+      }
+
       this.purcahseOrderService.save(purchaseOrder).subscribe(() => {
         this.router.navigate(['/purchase-orders']);
       });

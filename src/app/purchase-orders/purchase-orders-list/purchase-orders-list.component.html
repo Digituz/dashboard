@@ -22,7 +22,7 @@
 </div>
 <div class="feature-header">
   <p>
-    <label>Controle seus fornecedores de forma simplificada.</label>
+    <label>Controle suas compras de forma simplificada.</label>
   </p>
   <div class="actions">
     <button
@@ -43,20 +43,18 @@
 >
   <thead>
     <tr>
-      <th dgz-sortable="referenceCode">Código</th>
       <th dgz-sortable="creationDate">Data de criação</th>
-      <th dgz-sortable="discount">Total</th>
-      <th dgz-sortable="shippingPrice">Taxa de Entrega</th>
+      <th dgz-sortable="referenceCode">Código de Referência</th>
+      <th dgz-sortable="total">Total</th>
       <th>Status</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let purchaseOrder of purchaseOrderTable.currentData">
-      <td class="centered">{{ purchaseOrder.referenceCode }}</td>
       <td class="centered">{{ purchaseOrder.creationDate | date }}</td>
+      <td class="centered">{{ purchaseOrder.referenceCode }}</td>
       <td class="centered">{{ purchaseOrder.total | reais }}</td>
-      <td class="centered">{{ purchaseOrder.shippingPrice | reais }}</td>
       <td class="centered">
         <div
           class="badge"

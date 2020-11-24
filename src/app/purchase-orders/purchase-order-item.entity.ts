@@ -4,4 +4,5 @@ export interface PurchaseOrderItem {
   productVariation?: ProductVariationDetailsDTO;
   discount?: number;
   amount?: number;
+  price?: number;
 }
