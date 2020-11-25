@@ -47,13 +47,8 @@ export class PurchaseOrdersListComponent implements OnInit {
     return localStorage.removeItem('purchase-order-list');
   }
 
-  // TODO:
-  // 1. Exibir modal explicando o efeito que causa e pedindo confirmação
-  // 2. Chamar endpoint específico para reabrir caso o usuário confirme o passo 1
-  // Nota: a UI mostra um icone spinning com base numa propriedade chamada 'reopening' que a gente vai adicionar no purchaseOrder
-  // Tem lógica similar no cancelar pedido de venda no bling (mas la eu chamei a propriedade de 'cancellingOnBling')
-
   completedPurchaseOrder(purchaseOrder: PurchaseOrder) {
+    purchaseOrder.complete = true;
     this.confirmationService.confirm({
       message:
         'Ao alterar o status da ordem de compra o estoque sera incrementado com todos os produtos do peido' +
@@ -63,18 +58,28 @@ export class PurchaseOrdersListComponent implements OnInit {
       acceptLabel: 'Alterar',
       rejectLabel: 'Cancelar',
       accept: () => {
-        purchaseOrder.reopening = true;
-        const purchaseOrderUpdatedStatus = purchaseOrder;
+        const purchaseOrderUpdatedStatus = { ...purchaseOrder };
         purchaseOrderUpdatedStatus.status = PurchaseOrderStatus.COMPLETED;
-        this.purchaseOrdersService.updateStatus(purchaseOrder).subscribe(() => {
-          delete purchaseOrder.reopening;
+        this.purchaseOrdersService.updateStatus(purchaseOrderUpdatedStatus).subscribe(() => {
+          delete purchaseOrder.complete;
           purchaseOrder.status = purchaseOrderUpdatedStatus.status;
         });
+      },
+      reject: () => {
+        delete purchaseOrder.complete;
       },
     });
   }
 
   reopenPurchaseOrder(purchaseOrder: PurchaseOrder, status: string) {
+    const purchaseOrderUpdatedStatus = { ...purchaseOrder };
+    if (status === PurchaseOrderStatus.CANCELLED) {
+      purchaseOrder.reopening = true;
+      purchaseOrderUpdatedStatus.status = PurchaseOrderStatus.CANCELLED;
+    } else {
+      purchaseOrder.inProgress = true;
+      purchaseOrderUpdatedStatus.status = PurchaseOrderStatus.IN_PROCESS;
+    }
     this.confirmationService.confirm({
       message:
         'Ao alterar o status da compra todos as movimentações de estoque desta compra serão apagadas' +
@@ -84,17 +89,15 @@ export class PurchaseOrdersListComponent implements OnInit {
       acceptLabel: 'Alterar',
       rejectLabel: 'Cancelar',
       accept: () => {
-        purchaseOrder.reopening = true;
-        const purchaseOrderUpdatedStatus = purchaseOrder;
-        if (status === PurchaseOrderStatus.CANCELLED) {
-          purchaseOrderUpdatedStatus.status = PurchaseOrderStatus.CANCELLED;
-        } else {
-          purchaseOrderUpdatedStatus.status = PurchaseOrderStatus.IN_PROCESS;
-        }
         this.purchaseOrdersService.updateStatus(purchaseOrderUpdatedStatus).subscribe(() => {
           delete purchaseOrder.reopening;
+          delete purchaseOrder.inProgress;
           purchaseOrder.status = purchaseOrderUpdatedStatus.status;
         });
+      },
+      reject: () => {
+        delete purchaseOrder.reopening;
+        delete purchaseOrder.inProgress;
       },
     });
   }

@@ -93,7 +93,7 @@
           pButton
           type="button"
           class="p-button-secondary"
-          [icon]="purchaseOrder.reopening ? 'fal fa-sync fa-spin' : 'fal fa-check'"
+          [icon]="purchaseOrder.complete ? 'fal fa-sync fa-spin' : 'fal fa-check'"
           [pTooltip]="'Pedido de compra completo'"
           (click)="completedPurchaseOrder(purchaseOrder)"
           [disabled]="purchaseOrder.status === 'COMPLETED'"
@@ -103,7 +103,7 @@
           pButton
           type="button"
           class="p-button-secondary"
-          [icon]="purchaseOrder.reopening ? 'fal fa-sync fa-spin' : 'fal fa-sync'"
+          [icon]="purchaseOrder.inProgress ? 'fal fa-sync fa-spin' : 'fal fa-sync'"
           (click)="reopenPurchaseOrder(purchaseOrder, 'IN_PROCESS')"
           [pTooltip]="'Altera o status da ordem de compra para em processo'"
           [disabled]="purchaseOrder.status === 'IN_PROCESS'"
