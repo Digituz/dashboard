@@ -21,9 +21,7 @@ export class PurchaseOrdersListComponent implements OnInit {
 
   constructor(private purchaseOrdersService: PurchaseOrdersService, private confirmationService: ConfirmationService) {}
 
-  ngOnInit(): void {
-    console.log();
-  }
+  ngOnInit(): void {}
 
   loadData(
     pageNumber: number,
@@ -79,7 +77,7 @@ export class PurchaseOrdersListComponent implements OnInit {
   reopenPurchaseOrder(purchaseOrder: PurchaseOrder, status: string) {
     this.confirmationService.confirm({
       message:
-        'Ao alterar o status da compra todos as movimentações do estoque serão apagadas' +
+        'Ao alterar o status da compra todos as movimentações de estoque desta compra serão apagadas' +
         '<br><br>Tem certeza que deseja realizar essa alteração?',
       header: 'Alterar status da ordem de compra?',
       rejectButtonStyleClass: 'p-button-danger',
@@ -94,6 +92,7 @@ export class PurchaseOrdersListComponent implements OnInit {
           purchaseOrderUpdatedStatus.status = PurchaseOrderStatus.IN_PROCESS;
         }
         this.purchaseOrdersService.updateStatus(purchaseOrderUpdatedStatus).subscribe(() => {
+          delete purchaseOrder.reopening;
           purchaseOrder.status = purchaseOrderUpdatedStatus.status;
         });
       },
