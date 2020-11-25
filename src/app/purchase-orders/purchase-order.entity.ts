@@ -13,4 +13,7 @@ export interface PurchaseOrder {
   items?: PurchaseOrderItem[];
   id?: number;
   status?: PurchaseOrderStatus;
+
+  //ui helpers
+  reopening?: true;
 }

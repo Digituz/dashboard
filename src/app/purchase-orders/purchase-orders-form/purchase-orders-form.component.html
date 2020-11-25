@@ -47,6 +47,7 @@
           [options]="purchaseOrderStatus"
           formControlName="status"
           placeholder="Selecione o status da ordem de compra"
+          [disabled]="true"
           [showClear]="false"
         ></p-dropdown>
         <small [hidden]="!isFieldInvalid('status')" id="description-help" class="p-invalid"
@@ -151,6 +152,7 @@
               (completeMethod)="searchProductVariations($event)"
               (onSelect)="selectProductVariation($event, i)"
               [multiple]="false"
+              [forceSelection]="true"
               field="completeDescription"
               placeholder="Selecione um produto"
             >

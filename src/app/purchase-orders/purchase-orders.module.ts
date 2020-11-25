@@ -10,6 +10,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DropdownModule } from 'primeng/dropdown';
 import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { PurchaseOrdersComponent } from './purchase-orders.component';
 import { PurchaseOrdersRoutingModule } from './purchase-orders-routing.module';
@@ -33,6 +34,7 @@ import { PurchaseOrdersListComponent } from './purchase-orders-list/purchase-ord
     InputNumberModule,
     TooltipModule,
     DropdownModule,
+    ConfirmDialogModule,
   ],
 })
 export class PurchaseOrdersModule {}
