@@ -80,11 +80,24 @@
       </td>
       <td class="actions">
         <button
-          [title]="'Fornecedores'"
+          title="Pedido de Compra"
           [routerLink]="'/purchase-orders/' + purchaseOrder.id"
           pButton
           type="button"
-          label="Editar"
+          class="p-button-secondary"
+          [icon]="purchaseOrder.status === 'COMPLETED' ? 'fal fa-search' : 'fal fa-edit'"
+          [pTooltip]="purchaseOrder.status === 'COMPLETED' ? 'Visualizar compra.' : 'Editar detalhes.'"
+          tooltipPosition="top"
+        ></button>
+        <button
+          pButton
+          type="button"
+          class="p-button-danger"
+          pTooltip="Reabrir pedido de compra."
+          tooltipPosition="top"
+          [icon]="purchaseOrder.reopening ? 'fal fa-sync fa-spin' : 'fal fa-times'"
+          (click)="reopenPurchaseOrder(purchaseOrder)"
+          [disabled]="purchaseOrder.status !== 'COMPLETED'"
         ></button>
       </td>
     </tr>

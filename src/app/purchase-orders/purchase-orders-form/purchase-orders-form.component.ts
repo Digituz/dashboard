@@ -30,8 +30,8 @@ export class PurchaseOrdersFormComponent implements OnInit {
 
   purchaseOrderStatus: ComboBoxOption[] = [
     { label: 'Em Processamento', value: PurchaseOrderStatus.IN_PROCESS },
-    { label: 'Completo', value: PurchaseOrderStatus.COMPLETED },
-    { label: 'Cancelada', value: PurchaseOrderStatus.CANCELLED },
+    { label: 'Recebido', value: PurchaseOrderStatus.COMPLETED },
+    { label: 'Cancelado', value: PurchaseOrderStatus.CANCELLED },
   ];
 
   constructor(
@@ -86,7 +86,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
       discount: [purchaseOrder.discount || 0.0],
       shippingPrice: [purchaseOrder.shippingPrice || 0.0],
       items: itemsField,
-      status: [purchaseOrder.status || null, [Validators.required]],
+      status: [purchaseOrder.status || PurchaseOrderStatus.IN_PROCESS, [Validators.required]],
     });
     this.loading = false;
   }

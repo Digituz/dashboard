@@ -45,4 +45,12 @@ export class PurchaseOrdersListComponent implements OnInit {
     this.query = '';
     return localStorage.removeItem('purchase-order-list');
   }
+
+  reopenPurchaseOrder(purchaseOrder: PurchaseOrder) {
+    // TODO:
+    // 1. Exibir modal explicando o efeito que causa e pedindo confirmação
+    // 2. Chamar endpoint específico para reabrir caso o usuário confirme o passo 1
+    // Nota: a UI mostra um icone spinning com base numa propriedade chamada 'reopening' que a gente vai adicionar no purchaseOrder
+    // Tem lógica similar no cancelar pedido de venda no bling (mas la eu chamei a propriedade de 'cancellingOnBling')
+  }
 }
