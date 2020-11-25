@@ -1,11 +1,10 @@
 <div class="feature-header">
   <p>
-    <label>Pedido de Compra</label>
+    <label>Informe os dados pedido de compra através do formulário abaixo.</label>
   </p>
   <div class="actions">
     <app-button-back fallbackURL="/purchase-orders"></app-button-back>
-
-    <button (click)="submit()" pButton type="button" label="Salvar"></button>
+    <button (click)="submit()" pButton type="button" label="Salvar" [disabled]="!allowsUpdate"></button>
   </div>
 </div>
 <p-card>
@@ -15,15 +14,15 @@
         <label for="supplier">Fornecedor <i class="fal fa-asterisk"></i></label>
         <p-autoComplete
           formControlName="supplier"
-          [suggestions]="supplierSugestion"
+          [suggestions]="supplierSuggestion"
           (completeMethod)="searchSuppliers($event)"
           [multiple]="false"
+          [forceSelection]="true"
           field="name"
-          placeholder="Selecione fornecedor"
-          [disabled]="formFields.get('status').value === 'COMPLETED'"
+          placeholder="Selecione o fornecedor"
         ></p-autoComplete>
         <small [hidden]="!isFieldInvalid('supplier')" id="description-help" class="p-invalid"
-          >Insira o Fornecedor do Pedido</small
+          >Selecione o fornecedor do pedido</small
         >
       </div>
       <div class="p-field p-col-3">
@@ -36,8 +35,8 @@
           pInputText
           placeholder="Ex. 41546514"
         />
-        <small [hidden]="!isFieldInvalid('supplier')" id="description-help" class="p-invalid"
-          >Insira o Código de referencia do Pedido</small
+        <small [hidden]="!isFieldInvalid('referenceCode')" id="description-help" class="p-invalid"
+          >Insira um código de referência para o pedido</small
         >
       </div>
       <div class="p-field p-col-3">
@@ -51,19 +50,25 @@
           [showClear]="false"
         ></p-dropdown>
         <small [hidden]="!isFieldInvalid('status')" id="description-help" class="p-invalid"
-          >Insira o status da Ordem de compra</small
+          >Selecione um status para o pedido</small
         >
       </div>
       <div class="p-field p-col-3">
-        <label for="creationDate">Data do Pedido</label>
+        <label for="creationDate">Data de Criação</label>
         <p-inputMask mask="99/99/9999" placeholder="ex. 01/06/2020" formControlName="creationDate"></p-inputMask>
         <small [hidden]="!isFieldInvalid('creationDate')" id="description-help" class="p-invalid"
           >Insira a data de criação do pedido</small
         >
       </div>
       <div class="p-field p-col-3">
-        <label for="completionDate">Data de Conclusão do Pedido</label>
-        <p-inputMask [disabled]="true" mask="99/99/9999" formControlName="completionDate"></p-inputMask>
+        <label for="completionDate">Data de Conclusão</label>
+        <p-inputMask
+          [disabled]="true"
+          mask="99/99/9999"
+          formControlName="completionDate"
+          pTooltip="Esse campo será automaticamente definido quando o pedido for aprovado."
+          tooltipPosition="top"
+        ></p-inputMask>
       </div>
       <div class="p-field p-col-2">
         <label class="input-label" for="total">Total (R$)</label>
@@ -78,6 +83,8 @@
           [maxFractionDigits]="2"
           [disabled]="true"
           placeholder="ex. R$ 10,00"
+          pTooltip="Esse campo é automaticamente calculado com base nas demais informações."
+          tooltipPosition="top"
         ></p-inputNumber>
       </div>
       <div class="p-field p-col-2">
@@ -92,7 +99,6 @@
           locale="pt-BR"
           [minFractionDigits]="2"
           [maxFractionDigits]="2"
-          [disabled]="formFields.get('status').value === 'COMPLETED'"
           placeholder="ex. R$ 10,00"
         ></p-inputNumber>
       </div>
@@ -108,7 +114,6 @@
           [minFractionDigits]="2"
           [maxFractionDigits]="2"
           [min]="0"
-          [disabled]="formFields.get('status').value === 'COMPLETED'"
           placeholder="ex. R$ 10,00"
         ></p-inputNumber>
       </div>
@@ -120,12 +125,7 @@
   <p-card>
     <div class="product-variation-description">
       <p>Seleciona os produtos a serem comprados</p>
-      <button
-        pButton
-        (click)="addItem()"
-        label="Adicionar Item"
-        [disabled]="formFields.get('status').value === 'COMPLETED'"
-      ></button>
+      <button pButton (click)="addItem()" label="Adicionar Item" [disabled]="!allowsUpdate"></button>
     </div>
     <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
       <div class="p-fluid p-grid">
@@ -152,7 +152,6 @@
               (onSelect)="selectProductVariation($event, i)"
               [multiple]="false"
               field="completeDescription"
-              [disabled]="formFields.get('status').value === 'COMPLETED'"
               placeholder="Selecione um produto"
             >
               <ng-template let-productVariation pTemplate="item">
@@ -177,7 +176,6 @@
               [maxFractionDigits]="2"
               placeholder="ex. R$ 10,00"
               [min]="0"
-              [disabled]="formFields.get('status').value === 'COMPLETED'"
               (onBlur)="updatePrice()"
             ></p-inputNumber>
             <small [hidden]="!isItemFieldInvalid('price', i)" id="description-help" class="p-invalid"
@@ -192,7 +190,6 @@
               [maxFractionDigits]="0"
               placeholder="ex. R$ 10,00"
               [min]="0"
-              [disabled]="formFields.get('status').value === 'COMPLETED'"
               (onBlur)="updatePrice()"
             ></p-inputNumber>
             <small [hidden]="!isItemFieldInvalid('amount', i)" id="description-help" class="p-invalid"
@@ -204,7 +201,7 @@
               class="badge"
               [ngClass]="getItemsInStockWithPurchaseOrder(item) < 0 ? 'danger' : ''"
               escape="true"
-              pTooltip="Estoque: Sem a Compra > com a Compra."
+              pTooltip="Sem pedido → Com pedido"
               tooltipPosition="top"
             >
               {{ getItemsInStockWithoutPurchaseOrder(item) || 0 }}
@@ -222,8 +219,8 @@
               icon="fal fa-trash"
               class="p-button-danger"
               style="width: 100%;"
-              [disabled]="formFields.get('status').value === 'COMPLETED'"
               pTooltip="Remover item"
+              [disabled]="!allowsUpdate"
             ></button>
           </div>
         </div>

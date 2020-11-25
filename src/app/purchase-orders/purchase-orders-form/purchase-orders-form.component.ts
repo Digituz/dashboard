@@ -21,11 +21,12 @@ export class PurchaseOrdersFormComponent implements OnInit {
   purchaseOrder: PurchaseOrder;
   formFields: FormGroup;
   productVariationsSugestion: ProductVariationDetailsDTO[] = [];
-  supplierSugestion: Supplier[] = [];
+  supplierSuggestion: Supplier[] = [];
   originalItemsAndAmount: { sku: string; amount: number }[];
   purchaseOrderItems = new FormArray([]);
-  loading: boolean = true;
+  loading = true;
   id: any;
+  allowsUpdate = true;
 
   purchaseOrderStatus: ComboBoxOption[] = [
     { label: 'Em Processamento', value: PurchaseOrderStatus.IN_PROCESS },
@@ -64,6 +65,10 @@ export class PurchaseOrdersFormComponent implements OnInit {
           status: results.status,
         };
         this.configureFormFields(this.purchaseOrder);
+        if (this.purchaseOrder.status === PurchaseOrderStatus.COMPLETED) {
+          this.formFields.disable();
+          this.allowsUpdate = false;
+        }
       });
     }
   }
@@ -188,7 +193,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
 
   searchSuppliers(event: any) {
     this.supplierService.loadSuppliers(event.query).subscribe((results) => {
-      this.supplierSugestion = results;
+      this.supplierSuggestion = results;
     });
   }
 
