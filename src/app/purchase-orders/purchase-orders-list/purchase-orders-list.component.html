@@ -94,7 +94,7 @@
           type="button"
           class="p-button-success"
           [icon]="purchaseOrder.complete ? 'fal fa-sync fa-spin' : 'fal fa-check'"
-          [pTooltip]="'Pedido de compra completo'"
+          pTooltip="Alterar para recebido"
           (click)="completedPurchaseOrder(purchaseOrder)"
           [disabled]="purchaseOrder.status === 'COMPLETED'"
           tooltipPosition="top"
@@ -105,7 +105,7 @@
           class="p-button-secondary"
           [icon]="purchaseOrder.inProgress ? 'fal fa-sync fa-spin' : 'fal fa-sync'"
           (click)="reopenPurchaseOrder(purchaseOrder, 'IN_PROCESS')"
-          [pTooltip]="'Altera o status da ordem de compra para em processo'"
+          pTooltip="Alterar para em andamento"
           [disabled]="purchaseOrder.status === 'IN_PROCESS'"
           tooltipPosition="top"
         ></button>
@@ -113,7 +113,7 @@
           pButton
           type="button"
           class="p-button-danger"
-          pTooltip="Reabrir pedido de compra."
+          pTooltip="Alterar para cancelado"
           tooltipPosition="top"
           [icon]="purchaseOrder.reopening ? 'fal fa-sync fa-spin' : 'fal fa-times'"
           (click)="reopenPurchaseOrder(purchaseOrder, 'CANCELLED')"
