@@ -130,7 +130,7 @@
     </div>
     <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
       <div class="p-fluid p-grid">
-        <div class="p-col-8">
+        <div class="p-col-7">
           <label class="input-label">Produto <i class="fal fa-asterisk"></i></label>
         </div>
         <div class="p-col-1">
@@ -142,10 +142,13 @@
         <div class="p-col-1">
           <label class="input-label">Estoque</label>
         </div>
+        <div class="p-col-1">
+          <label class="input-label">IPI</label>
+        </div>
       </div>
       <div formArrayName="items" *ngFor="let item of items.controls; index as i">
         <div [formGroupName]="i" class="p-fluid p-formgrid p-grid">
-          <div class="p-field p-col-8">
+          <div class="p-field p-col-7">
             <p-autoComplete
               formControlName="productVariation"
               [suggestions]="productVariationsSugestion"
@@ -213,6 +216,17 @@
               ></i>
               {{ getItemsInStockWithPurchaseOrder(item) || 0 }}
             </div>
+          </div>
+          <div class="p-field p-col-1">
+            <p-inputNumber
+              formControlName="ipi"
+              mode="decimal"
+              [minFractionDigits]="0"
+              [maxFractionDigits]="6"
+              placeholder="ex. 10,00"
+              [min]="0"
+            ></p-inputNumber>
+            <small [hidden]="!isItemFieldInvalid('ipi', i)" id="description-help" class="p-invalid">O IPI</small>
           </div>
           <div class="p-field p-col-1">
             <button

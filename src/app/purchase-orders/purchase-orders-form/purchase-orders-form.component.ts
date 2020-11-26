@@ -115,6 +115,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
         purchaseOrderItem?.productVariation ? purchaseOrderItem.amount : 0,
         [Validators.required, Validators.min(1)],
       ],
+      ipi: [purchaseOrderItem?.productVariation ? purchaseOrderItem.ipi : 0, [Validators.required, Validators.min(0)]],
     });
   }
 
@@ -146,6 +147,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
           productVariation: item.productVariation,
           amount: item.amount,
           price: item.price,
+          ipi: item.ipi,
         };
       });
       let purchaseOrder: PurchaseOrder = {
@@ -160,10 +162,6 @@ export class PurchaseOrdersFormComponent implements OnInit {
       };
       if (this.id !== 'new') {
         purchaseOrder = { ...purchaseOrder, id: Number.parseInt(this.id) };
-      }
-      if (status === PurchaseOrderStatus.COMPLETED) {
-        const completionDate = this.formatDate(values.completionDate);
-        purchaseOrder = { ...purchaseOrder, completionDate: completionDate };
       }
 
       this.purcahseOrderService.save(purchaseOrder).subscribe(() => {

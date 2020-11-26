@@ -5,4 +5,5 @@ export interface PurchaseOrderItem {
   discount?: number;
   amount?: number;
   price?: number;
+  ipi?: number;
 }

@@ -6,6 +6,7 @@ import { PurchaseOrder } from '../purchase-order.entity';
 import { PurchaseOrdersService } from '../purchase-orders.service';
 import { ConfirmationService } from 'primeng/api';
 import { PurchaseOrderStatus } from '../purchase-orders.enum';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-purchase-orders-list',
@@ -49,6 +50,7 @@ export class PurchaseOrdersListComponent implements OnInit {
 
   completedPurchaseOrder(purchaseOrder: PurchaseOrder) {
     purchaseOrder.complete = true;
+    purchaseOrder.completionDate = format(new Date(), 'yyyy-MM-dd');
     this.confirmationService.confirm({
       message:
         'Ao alterar o status da ordem de compra o estoque sera incrementado com todos os produtos do peido' +
@@ -72,6 +74,7 @@ export class PurchaseOrdersListComponent implements OnInit {
   }
 
   reopenPurchaseOrder(purchaseOrder: PurchaseOrder, status: string) {
+    purchaseOrder.completionDate = null;
     const purchaseOrderUpdatedStatus = { ...purchaseOrder };
     if (status === PurchaseOrderStatus.CANCELLED) {
       purchaseOrder.reopening = true;
