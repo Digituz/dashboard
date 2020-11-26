@@ -60,8 +60,10 @@ export class PurchaseOrdersListComponent implements OnInit {
       acceptLabel: 'Alterar',
       rejectLabel: 'Cancelar',
       accept: () => {
-        const purchaseOrderUpdatedStatus = { ...purchaseOrder };
-        purchaseOrderUpdatedStatus.status = PurchaseOrderStatus.COMPLETED;
+        const purchaseOrderUpdatedStatus = {
+          referenceCode: purchaseOrder.referenceCode,
+          status: PurchaseOrderStatus.COMPLETED,
+        };
         this.purchaseOrdersService.updateStatus(purchaseOrderUpdatedStatus).subscribe(() => {
           delete purchaseOrder.complete;
           purchaseOrder.status = purchaseOrderUpdatedStatus.status;
@@ -75,14 +77,10 @@ export class PurchaseOrdersListComponent implements OnInit {
 
   reopenPurchaseOrder(purchaseOrder: PurchaseOrder, status: string) {
     purchaseOrder.completionDate = null;
-    const purchaseOrderUpdatedStatus = { ...purchaseOrder };
-    if (status === PurchaseOrderStatus.CANCELLED) {
-      purchaseOrder.reopening = true;
-      purchaseOrderUpdatedStatus.status = PurchaseOrderStatus.CANCELLED;
-    } else {
-      purchaseOrder.inProgress = true;
-      purchaseOrderUpdatedStatus.status = PurchaseOrderStatus.IN_PROCESS;
-    }
+    const purchaseOrderUpdatedStatus = {
+      referenceCode: purchaseOrder.referenceCode,
+      status: status === PurchaseOrderStatus.CANCELLED ? PurchaseOrderStatus.CANCELLED : PurchaseOrderStatus.IN_PROCESS,
+    };
     this.confirmationService.confirm({
       message:
         'Ao alterar o status da compra todos as movimentações de estoque desta compra serão apagadas' +
