@@ -51,9 +51,9 @@ export class SupplierService {
   }
 
   loadSuppliers(query: string): Observable<Supplier[]> {
-    return this.httpClient.get<Supplier[]>(`${this.SUPPLIERS_ENDPOINT}/findSuppliers?query=${query}`).pipe(
+    return this.httpClient.get<Pagination<Supplier>>(`${this.SUPPLIERS_ENDPOINT}/?query=${query}&page=1&limit=10`).pipe(
       map((suppliers) => {
-        return suppliers.map((supplier) => ({
+        return suppliers.items.map((supplier) => ({
           ...supplier,
           completeDescription: `${supplier.name}`,
         }));
