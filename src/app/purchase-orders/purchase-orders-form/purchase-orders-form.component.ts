@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductVariationDetailsDTO } from '@app/products/product-variation-details.dto';
 import { ProductsService } from '@app/products/products.service';
@@ -80,7 +80,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
     this.formFields = this.fb.group({
       supplier: [purchaseOrder.supplier || '', [Validators.required]],
       referenceCode: [purchaseOrder.referenceCode || '', [Validators.required]],
-      creationDate: [purchaseOrder.creationDate || format(new Date(), 'dd/MM/yyyy'), [Validators.required]],
+      creationDate: [purchaseOrder.creationDate || format(new Date(), 'dd/MM/yyyy')],
       completionDate: [purchaseOrder.completionDate || null],
       total: [purchaseOrder.total || 0.0, [Validators.required]],
       discount: [purchaseOrder.discount || 0.0],
@@ -107,15 +107,11 @@ export class PurchaseOrdersFormComponent implements OnInit {
     }
     return this.fb.group({
       productVariation: [purchaseOrderItem || null, [Validators.required]],
-      price: [
-        purchaseOrderItem?.productVariation ? purchaseOrderItem.price : 0,
-        [Validators.required, Validators.min(1)],
-      ],
+      price: [purchaseOrderItem?.price || 0, [Validators.required, Validators.min(1)]],
       amount: [
         purchaseOrderItem?.productVariation ? purchaseOrderItem.amount : 0,
         [Validators.required, Validators.min(1)],
       ],
-      ipi: [purchaseOrderItem?.productVariation ? purchaseOrderItem.ipi : 0, [Validators.required, Validators.min(0)]],
     });
   }
 
@@ -141,20 +137,17 @@ export class PurchaseOrdersFormComponent implements OnInit {
       const discount = values.discount;
       const status = values.status;
       const shippingPrice = values.shippingPrice;
-      const total = values.total;
       const items = values.items.map((item: any) => {
         return {
-          productVariation: item.productVariation,
+          productVariation: { sku: item.productVariation.sku, id: item.productVariation.id },
           amount: item.amount,
           price: item.price,
-          ipi: item.ipi,
         };
       });
       let purchaseOrder: PurchaseOrder = {
         supplier,
         referenceCode,
         creationDate,
-        total,
         discount,
         shippingPrice,
         items,
@@ -163,7 +156,6 @@ export class PurchaseOrdersFormComponent implements OnInit {
       if (this.id !== 'new') {
         purchaseOrder = { ...purchaseOrder, id: Number.parseInt(this.id) };
       }
-
       this.purcahseOrderService.save(purchaseOrder).subscribe(() => {
         this.router.navigate(['/purchase-orders']);
       });
@@ -176,9 +168,10 @@ export class PurchaseOrdersFormComponent implements OnInit {
     for (let index = 0; index < items.length; index++) {
       const formGroup = items.at(index) as FormGroup;
       const itemValue = formGroup.get('price').value || 0;
-      const itemDiscount = this.formFields.get('discount').value || 0;
+      const discount = this.formFields.get('discount').value || 0;
+      const shippingPrice = this.formFields.get('shippingPrice').value || 0;
       const itemAmount = formGroup.get('amount').value;
-      itemsTotal += (itemValue - itemDiscount) * itemAmount;
+      itemsTotal += itemValue * itemAmount - discount + shippingPrice;
       this.formFields.get('total').setValue(itemsTotal);
     }
   }
@@ -195,10 +188,10 @@ export class PurchaseOrdersFormComponent implements OnInit {
     });
   }
 
-  selectProductVariation(value: ProductVariationDetailsDTO, index: number) {
+  selectProductVariation(index: number) {
     const items = this.formFields.get('items') as FormArray;
     const formGroup = items.at(index) as FormGroup;
-    formGroup.patchValue({ price: value.sellingPrice });
+    formGroup.patchValue({ price: 0 });
     formGroup.patchValue({ discount: 0 });
     formGroup.patchValue({ amount: 1 });
     this.updatePrice();
@@ -208,6 +201,12 @@ export class PurchaseOrdersFormComponent implements OnInit {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
       control.markAsTouched({ onlySelf: true });
+    });
+
+    (<FormArray>this.formFields.get('items')).controls.forEach((group: FormGroup) => {
+      (<any>Object).values(group.controls).forEach((control: FormControl) => {
+        control.markAsTouched({ onlySelf: true });
+      });
     });
   }
 
@@ -235,6 +234,9 @@ export class PurchaseOrdersFormComponent implements OnInit {
   getItemsInStockWithoutPurchaseOrder(item: FormGroup) {
     if (!item.value.productVariation || !item.value.productVariation.sku) return null;
     const { currentPosition } = item.value.productVariation;
+    if (this.purchaseOrder.status === PurchaseOrderStatus.COMPLETED) {
+      return currentPosition - item.value.amount;
+    }
     return currentPosition;
   }
 

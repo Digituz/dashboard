@@ -57,8 +57,8 @@ export class PurchaseOrdersListComponent implements OnInit {
         '<br><br>Tem certeza que deseja realizar essa alteração?',
       header: 'Alterar status da ordem de compra?',
       rejectButtonStyleClass: 'p-button-danger',
-      acceptLabel: 'Alterar',
-      rejectLabel: 'Cancelar',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
       accept: () => {
         const purchaseOrderUpdatedStatus = {
           referenceCode: purchaseOrder.referenceCode,
@@ -81,25 +81,34 @@ export class PurchaseOrdersListComponent implements OnInit {
       referenceCode: purchaseOrder.referenceCode,
       status: status === PurchaseOrderStatus.CANCELLED ? PurchaseOrderStatus.CANCELLED : PurchaseOrderStatus.IN_PROCESS,
     };
-    this.confirmationService.confirm({
-      message:
-        'Ao alterar o status da compra todos as movimentações de estoque desta compra serão apagadas' +
-        '<br><br>Tem certeza que deseja realizar essa alteração?',
-      header: 'Alterar status da ordem de compra?',
-      rejectButtonStyleClass: 'p-button-danger',
-      acceptLabel: 'Alterar',
-      rejectLabel: 'Cancelar',
-      accept: () => {
-        this.purchaseOrdersService.updateStatus(purchaseOrderUpdatedStatus).subscribe(() => {
+    if (
+      purchaseOrder.status === PurchaseOrderStatus.IN_PROCESS ||
+      purchaseOrder.status === PurchaseOrderStatus.CANCELLED
+    ) {
+      this.purchaseOrdersService.updateStatus(purchaseOrderUpdatedStatus).subscribe(() => {
+        purchaseOrder.status = purchaseOrderUpdatedStatus.status;
+      });
+    } else {
+      this.confirmationService.confirm({
+        message:
+          'Ao alterar o status da compra todos as movimentações de estoque desta compra serão apagadas' +
+          '<br><br>Tem certeza que deseja realizar essa alteração?',
+        header: 'Alterar status da ordem de compra?',
+        rejectButtonStyleClass: 'p-button-danger',
+        acceptLabel: 'Sim',
+        rejectLabel: 'Não',
+        accept: () => {
+          this.purchaseOrdersService.updateStatus(purchaseOrderUpdatedStatus).subscribe(() => {
+            delete purchaseOrder.reopening;
+            delete purchaseOrder.inProgress;
+            purchaseOrder.status = purchaseOrderUpdatedStatus.status;
+          });
+        },
+        reject: () => {
           delete purchaseOrder.reopening;
           delete purchaseOrder.inProgress;
-          purchaseOrder.status = purchaseOrderUpdatedStatus.status;
-        });
-      },
-      reject: () => {
-        delete purchaseOrder.reopening;
-        delete purchaseOrder.inProgress;
-      },
-    });
+        },
+      });
+    }
   }
 }
