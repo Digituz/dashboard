@@ -8,6 +8,7 @@ import { single } from 'rxjs/operators';
 export class SignInService {
   private static SIGN_IN_ENDPOINT = '/sign-in';
   private static tokenStorage = 'digituz-at-local';
+  private static tokenDate = 'token-creation-date';
   private static tokenInfoStorage = 'digituz-at-info-local';
   private token: string;
   private tokenInfo: { exp?: number };
@@ -24,6 +25,7 @@ export class SignInService {
         this.token = access_token;
         this.tokenInfo = decode(this.token);
         localStorage.setItem(SignInService.tokenStorage, this.token);
+        localStorage.setItem(SignInService.tokenDate, `${new Date()}`);
         localStorage.setItem(SignInService.tokenInfoStorage, JSON.stringify(this.tokenInfo));
         return true;
       })
@@ -32,6 +34,7 @@ export class SignInService {
 
   signOut() {
     localStorage.removeItem(SignInService.tokenStorage);
+    localStorage.removeItem(SignInService.tokenDate);
     localStorage.removeItem(SignInService.tokenInfoStorage);
     this.token = null;
   }
@@ -44,5 +47,9 @@ export class SignInService {
 
   getToken() {
     return this.token;
+  }
+
+  refreshToken(): Observable<any> {
+    return this.httpClient.post<any>(`/refresh-token`, { token: this.token });
   }
 }

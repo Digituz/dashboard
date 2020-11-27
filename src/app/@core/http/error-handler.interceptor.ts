@@ -18,13 +18,15 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   constructor(private messagesService: MessagesService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe(catchError((error) => this.errorHandler(error)));
+    const isValidatingToken = request.url === '/api/v1/refresh-token';
+    return next.handle(request).pipe(catchError((error) => this.errorHandler(error, isValidatingToken)));
   }
 
-  private errorHandler(error: any): Observable<HttpEvent<any>> {
+  private errorHandler(error: any, isValidatingToken: boolean): Observable<HttpEvent<any>> {
     if (error.status !== 401) {
       this.messagesService.showError('Um erro inesperado aconteceu.');
     } else {
+      if (isValidatingToken) return;
       this.messagesService.showError('Acesso não permitido.');
     }
     throw error;
