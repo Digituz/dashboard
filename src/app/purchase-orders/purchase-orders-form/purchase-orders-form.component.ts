@@ -22,8 +22,6 @@ export class PurchaseOrdersFormComponent implements OnInit {
   formFields: FormGroup;
   productVariationsSugestion: ProductVariationDetailsDTO[] = [];
   supplierSuggestion: Supplier[] = [];
-  originalItemsAndAmount: { sku: string; amount: number }[];
-  purchaseOrderItems = new FormArray([]);
   loading = true;
   id: any;
   allowsUpdate = true;
@@ -40,29 +38,22 @@ export class PurchaseOrdersFormComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductsService,
     private supplierService: SupplierService,
-    private purcahseOrderService: PurchaseOrdersService
+    private purchaseOrderService: PurchaseOrdersService
   ) {}
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params.referenceCode;
+    this.id = this.route.snapshot.params.id;
 
     if (this.id === 'new') {
       this.id = null;
       this.purchaseOrder = {};
       this.configureFormFields(this.purchaseOrder);
     } else {
-      this.purcahseOrderService.loadPurchaseOrder(this.id).subscribe((results) => {
+      this.purchaseOrderService.loadPurchaseOrder(this.id).subscribe((results) => {
         this.purchaseOrder = {
-          id: this.id,
+          ...results,
           creationDate: format(new Date(results.creationDate), 'dd/MM/yyyy'),
           completionDate: results.completionDate ? format(new Date(results.completionDate), 'dd/MM/yyyy') : null,
-          discount: results.discount,
-          referenceCode: results.referenceCode,
-          total: results.total,
-          shippingPrice: results.shippingPrice,
-          supplier: results.supplier,
-          items: results.items,
-          status: results.status,
         };
         this.configureFormFields(this.purchaseOrder);
         if (this.purchaseOrder.status === PurchaseOrderStatus.COMPLETED) {
@@ -92,34 +83,23 @@ export class PurchaseOrdersFormComponent implements OnInit {
   }
 
   addItem() {
-    const items = this.formFields.controls.items as FormArray;
-    items.push(this.createItem());
+    this.items.push(this.createItem());
   }
 
   removeItem(index: number) {
-    const items = this.formFields.controls.items as FormArray;
-    items.removeAt(index);
+    this.items.removeAt(index);
   }
 
   createItem(purchaseOrderItem?: PurchaseOrderItem): FormGroup {
-    if (!purchaseOrderItem) {
-      purchaseOrderItem = null;
-    }
     return this.fb.group({
       productVariation: [purchaseOrderItem || null, [Validators.required]],
-      price: [purchaseOrderItem?.price || 0, [Validators.required, Validators.min(1)]],
-      amount: [
-        purchaseOrderItem?.productVariation ? purchaseOrderItem.amount : 0,
-        [Validators.required, Validators.min(1)],
-      ],
+      price: [purchaseOrderItem?.price || 0, [Validators.required, Validators.min(0.01)]],
+      amount: [purchaseOrderItem?.amount || 0, [Validators.required, Validators.min(1)]],
     });
   }
 
   private createItemsPurchaseOrder(purchaseOrder: PurchaseOrder): FormArray {
-    return this.fb.array(
-      purchaseOrder.items.map((item) => this.createItem(item)),
-      [Validators.required, Validators.minLength(1)]
-    );
+    return this.fb.array(purchaseOrder.items.map((item) => this.createItem(item)));
   }
 
   get items(): FormArray {
@@ -128,52 +108,47 @@ export class PurchaseOrdersFormComponent implements OnInit {
 
   submit() {
     if (!this.formFields.valid) {
-      this.markAllFieldsAsTouched(this.formFields);
-    } else {
-      const values = this.formFields.value;
-      const supplier = values.supplier;
-      const referenceCode = values.referenceCode;
-      const creationDate = this.formatDate(values.creationDate);
-      const discount = values.discount;
-      const status = values.status;
-      const shippingPrice = values.shippingPrice;
-      const items = values.items.map((item: any) => {
-        return {
-          productVariation: { sku: item.productVariation.sku, id: item.productVariation.id },
-          amount: item.amount,
-          price: item.price,
-        };
-      });
-      let purchaseOrder: PurchaseOrder = {
-        supplier,
-        referenceCode,
-        creationDate,
-        discount,
-        shippingPrice,
-        items,
-        status,
-      };
-      if (this.id !== 'new') {
-        purchaseOrder = { ...purchaseOrder, id: Number.parseInt(this.id) };
-      }
-      this.purcahseOrderService.save(purchaseOrder).subscribe(() => {
-        this.router.navigate(['/purchase-orders']);
-      });
+      return this.markAllFieldsAsTouched(this.formFields);
     }
+    const values = this.formFields.value;
+    const supplier = values.supplier;
+    const referenceCode = values.referenceCode;
+    const creationDate = this.formatDate(values.creationDate);
+    const discount = values.discount;
+    const status = values.status;
+    const shippingPrice = values.shippingPrice;
+    const items = values.items.map((item: any) => ({
+      productVariation: { sku: item.productVariation.sku, id: item.productVariation.id },
+      amount: item.amount,
+      price: item.price,
+    }));
+    const purchaseOrder: PurchaseOrder = {
+      id: this.id !== 'new' ? parseInt(this.id) : undefined,
+      supplier,
+      referenceCode,
+      discount,
+      shippingPrice,
+      items,
+      status,
+    };
+    this.purchaseOrderService.save(purchaseOrder).subscribe(() => {
+      this.router.navigate(['/purchase-orders']);
+    });
   }
 
   updatePrice() {
-    const items = this.formFields.get('items') as FormArray;
-    let itemsTotal = 0;
-    for (let index = 0; index < items.length; index++) {
-      const formGroup = items.at(index) as FormGroup;
-      const itemValue = formGroup.get('price').value || 0;
-      const discount = this.formFields.get('discount').value || 0;
-      const shippingPrice = this.formFields.get('shippingPrice').value || 0;
-      const itemAmount = formGroup.get('amount').value;
-      itemsTotal += itemValue * itemAmount - discount + shippingPrice;
-      this.formFields.get('total').setValue(itemsTotal);
-    }
+    // order discount and shipping price
+    const discount = this.formFields.get('discount').value || 0;
+    const shippingPrice = this.formFields.get('shippingPrice').value || 0;
+
+    // items' price total
+    const { controls } = this.formFields.get('items') as FormArray;
+    const total = controls
+      .map(({ value: purchaseOrderItem }) => purchaseOrderItem.price * purchaseOrderItem.amount)
+      .reduce((previousAmount, itemAmount) => previousAmount + itemAmount, 0);
+
+    // order's total
+    this.formFields.get('total').setValue(total - discount + shippingPrice);
   }
 
   searchProductVariations(event: any) {
@@ -203,11 +178,8 @@ export class PurchaseOrdersFormComponent implements OnInit {
       control.markAsTouched({ onlySelf: true });
     });
 
-    (<FormArray>this.formFields.get('items')).controls.forEach((group: FormGroup) => {
-      (<any>Object).values(group.controls).forEach((control: FormControl) => {
-        control.markAsTouched({ onlySelf: true });
-      });
-    });
+    const items = formGroup.controls.items as FormArray;
+    items?.controls.forEach((group: FormGroup) => this.markAllFieldsAsTouched(group));
   }
 
   isFieldInvalid(field: string) {
@@ -220,19 +192,13 @@ export class PurchaseOrdersFormComponent implements OnInit {
   }
 
   formatDate(date: string) {
-    if (!date) {
-      return null;
-    }
+    if (!date) return;
     const dateArray = date.split('/').reverse();
     return `${dateArray[0]}-${dateArray[1]}-${dateArray[2]}`;
   }
 
-  showItemsInStockInfo(item: FormGroup) {
-    return !!item.value.productVariation && item.value.productVariation.sku;
-  }
-
   getItemsInStockWithoutPurchaseOrder(item: FormGroup) {
-    if (!item.value.productVariation || !item.value.productVariation.sku) return null;
+    if (!item.value.productVariation?.sku) return null;
     const { currentPosition } = item.value.productVariation;
     if (this.purchaseOrder.status === PurchaseOrderStatus.COMPLETED) {
       return currentPosition - item.value.amount;
@@ -241,7 +207,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
   }
 
   getItemsInStockWithPurchaseOrder(item: FormGroup) {
-    if (!item.value.productVariation || !item.value.productVariation.sku) return null;
+    if (!item.value.productVariation?.sku) return null;
     const currentPosition = this.getItemsInStockWithoutPurchaseOrder(item);
     return currentPosition + item.value.amount;
   }

@@ -53,9 +53,9 @@ export class PurchaseOrdersListComponent implements OnInit {
     purchaseOrder.completionDate = format(new Date(), 'yyyy-MM-dd');
     this.confirmationService.confirm({
       message:
-        'Ao alterar o status da ordem de compra o estoque sera incrementado com todos os produtos do peido' +
-        '<br><br>Tem certeza que deseja realizar essa alteração?',
-      header: 'Alterar status da ordem de compra?',
+        '<p>Ao marcar um pedido como recebido, novas movimentações serão criadas para incrementar o estoque dos itens da mesma.</p>' +
+        '<p>Tem certeza que deseja realizar essa alteração?</p>',
+      header: 'Marcar pedido de compra como recebido?',
       rejectButtonStyleClass: 'p-button-danger',
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
@@ -79,7 +79,7 @@ export class PurchaseOrdersListComponent implements OnInit {
     purchaseOrder.completionDate = null;
     const purchaseOrderUpdatedStatus = {
       referenceCode: purchaseOrder.referenceCode,
-      status: status === PurchaseOrderStatus.CANCELLED ? PurchaseOrderStatus.CANCELLED : PurchaseOrderStatus.IN_PROCESS,
+      status: PurchaseOrderStatus[status],
     };
     if (
       purchaseOrder.status === PurchaseOrderStatus.IN_PROCESS ||
@@ -91,8 +91,8 @@ export class PurchaseOrdersListComponent implements OnInit {
     } else {
       this.confirmationService.confirm({
         message:
-          'Ao alterar o status da compra todos as movimentações de estoque desta compra serão apagadas' +
-          '<br><br>Tem certeza que deseja realizar essa alteração?',
+          '<p>Ao alterar o status da compra, todas as movimentações de estoque desta compra serão apagadas.</p>' +
+          '<p>Tem certeza que deseja realizar essa alteração?</p>',
         header: 'Alterar status da ordem de compra?',
         rejectButtonStyleClass: 'p-button-danger',
         acceptLabel: 'Sim',

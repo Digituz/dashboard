@@ -166,9 +166,9 @@
                 </div>
               </ng-template>
             </p-autoComplete>
-            <small [hidden]="!isItemFieldInvalid('productVariation', i)" id="description-help" class="p-invalid"
-              >Insira o Produto</small
-            >
+            <small [hidden]="!isItemFieldInvalid('productVariation', i)" id="description-help" class="p-invalid">
+              Selecione um produto
+            </small>
           </div>
           <div class="p-field p-col-1">
             <p-inputNumber
@@ -184,9 +184,9 @@
               [min]="0"
               (onBlur)="updatePrice()"
             ></p-inputNumber>
-            <small [hidden]="!isItemFieldInvalid('price', i)" id="description-help" class="p-invalid"
-              >O preço tem que ser maior que 0</small
-            >
+            <small [hidden]="!isItemFieldInvalid('price', i)" id="description-help" class="p-invalid">
+              Mínimo: 0,01
+            </small>
           </div>
           <div class="p-field p-col-1">
             <p-inputNumber
@@ -198,9 +198,7 @@
               [min]="0"
               (onBlur)="updatePrice()"
             ></p-inputNumber>
-            <small [hidden]="!isItemFieldInvalid('amount', i)" id="description-help" class="p-invalid"
-              >A quantidade tem que ser no mínimo 1</small
-            >
+            <small [hidden]="!isItemFieldInvalid('amount', i)" id="description-help" class="p-invalid">Mínimo: 1</small>
           </div>
           <div class="p-field p-col-1">
             <div

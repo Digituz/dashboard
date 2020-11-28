@@ -26,7 +26,7 @@ const routes: Routes = [
           },
         },
         {
-          path: ':referenceCode',
+          path: ':id',
           component: PurchaseOrdersFormComponent,
           data: {
             title: 'Nova Compra',
