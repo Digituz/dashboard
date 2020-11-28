@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SignInService } from './sign-in.service';
 import { Router } from '@angular/router';
-import { subDays } from 'date-fns';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sign-in',
@@ -13,27 +13,37 @@ export class SignInComponent implements OnInit {
   formFields: FormGroup;
   loading = false;
 
-  constructor(private fb: FormBuilder, private signInService: SignInService, private router: Router) {
-    if (localStorage.getItem('digituz-at-local')) {
-      this.loading = true;
-      if (new Date(localStorage.getItem('token-creation-date')) > subDays(new Date(), 7)) {
-        this.signInService.refreshToken().subscribe(() => {
-          return this.router.navigateByUrl('home');
-        });
-      }
-    }
-    this.loading = false;
-    this.formFields = this.fb.group({
-      username: [''],
-      password: [''],
-    });
-  }
+  constructor(private fb: FormBuilder, private signInService: SignInService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!localStorage.getItem('digituz-at-local')) return this.showSignInForm();
+    if (!this.signInService.isSignedIn()) return this.showSignInForm();
+    this.loading = true;
+    this.signInService
+      .refreshToken()
+      .pipe(
+        catchError((err) => {
+          this.showSignInForm();
+          return err;
+        })
+      )
+      .subscribe(() => {
+        return this.router.navigateByUrl('home');
+      });
+  }
 
   signIn(): void {
     this.signInService.signIn(this.formFields.value).subscribe(() => {
       return this.router.navigateByUrl('home');
+    });
+  }
+
+  private showSignInForm() {
+    this.signInService.signOut();
+    this.loading = false;
+    this.formFields = this.fb.group({
+      username: [''],
+      password: [''],
     });
   }
 }

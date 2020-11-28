@@ -25,8 +25,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   private errorHandler(error: any, isValidatingToken: boolean): Observable<HttpEvent<any>> {
     if (error.status !== 401) {
       this.messagesService.showError('Um erro inesperado aconteceu.');
-    } else {
-      if (isValidatingToken) return;
+    } else if (!isValidatingToken) {
       this.messagesService.showError('Acesso não permitido.');
     }
     throw error;
