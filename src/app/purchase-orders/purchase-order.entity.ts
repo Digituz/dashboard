@@ -15,7 +15,5 @@ export interface PurchaseOrder {
   status?: PurchaseOrderStatus;
 
   //ui helpers
-  reopening?: boolean;
-  inProgress?: boolean;
-  complete?: boolean;
+  changingStatus?: boolean;
 }

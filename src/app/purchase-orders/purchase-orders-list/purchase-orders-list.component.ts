@@ -48,67 +48,46 @@ export class PurchaseOrdersListComponent implements OnInit {
     return localStorage.removeItem('purchase-order-list');
   }
 
-  completedPurchaseOrder(purchaseOrder: PurchaseOrder) {
-    purchaseOrder.complete = true;
-    purchaseOrder.completionDate = format(new Date(), 'yyyy-MM-dd');
+  updateStatus(order: PurchaseOrder, status: PurchaseOrderStatus) {
+    order.changingStatus = true;
+    if (status === PurchaseOrderStatus.COMPLETED) {
+      const header = 'Marcar pedido de compra como recebido?';
+      const message =
+        '<p>Ao marcar um pedido como recebido, novas movimentações serão criadas para incrementar o estoque dos itens vinculados ao pedido.</p>' +
+        '<p>Tem certeza que deseja realizar essa alteração?</p>';
+      return this.askConfirmation(order, status, header, message);
+    } else if (order.status === PurchaseOrderStatus.COMPLETED) {
+      const header = 'Alterar status da ordem de compra?';
+      const message =
+        '<p>Ao alterar o status da compra, todas as movimentações de estoque desta compra serão apagadas.</p>' +
+        '<p>Tem certeza que deseja realizar essa alteração?</p>';
+      return this.askConfirmation(order, status, header, message);
+    }
+    return this.issueUpdateStatusRequest(order, status);
+  }
+
+  private askConfirmation(purchaseOrder: PurchaseOrder, status: PurchaseOrderStatus, header: string, message: string) {
     this.confirmationService.confirm({
-      message:
-        '<p>Ao marcar um pedido como recebido, novas movimentações serão criadas para incrementar o estoque dos itens da mesma.</p>' +
-        '<p>Tem certeza que deseja realizar essa alteração?</p>',
-      header: 'Marcar pedido de compra como recebido?',
+      message,
+      header,
       rejectButtonStyleClass: 'p-button-danger',
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
-      accept: () => {
-        const purchaseOrderUpdatedStatus = {
-          referenceCode: purchaseOrder.referenceCode,
-          status: PurchaseOrderStatus.COMPLETED,
-        };
-        this.purchaseOrdersService.updateStatus(purchaseOrderUpdatedStatus).subscribe(() => {
-          delete purchaseOrder.complete;
-          purchaseOrder.status = purchaseOrderUpdatedStatus.status;
-        });
-      },
-      reject: () => {
-        delete purchaseOrder.complete;
-      },
+      accept: () => this.issueUpdateStatusRequest(purchaseOrder, status),
+      reject: () => delete purchaseOrder.changingStatus,
     });
   }
 
-  reopenPurchaseOrder(purchaseOrder: PurchaseOrder, status: string) {
-    purchaseOrder.completionDate = null;
-    const purchaseOrderUpdatedStatus = {
-      referenceCode: purchaseOrder.referenceCode,
-      status: PurchaseOrderStatus[status],
+  private issueUpdateStatusRequest(order: PurchaseOrder, status: PurchaseOrderStatus) {
+    const updateStatusDTO = {
+      referenceCode: order.referenceCode,
+      status,
     };
-    if (
-      purchaseOrder.status === PurchaseOrderStatus.IN_PROCESS ||
-      purchaseOrder.status === PurchaseOrderStatus.CANCELLED
-    ) {
-      this.purchaseOrdersService.updateStatus(purchaseOrderUpdatedStatus).subscribe(() => {
-        purchaseOrder.status = purchaseOrderUpdatedStatus.status;
-      });
-    } else {
-      this.confirmationService.confirm({
-        message:
-          '<p>Ao alterar o status da compra, todas as movimentações de estoque desta compra serão apagadas.</p>' +
-          '<p>Tem certeza que deseja realizar essa alteração?</p>',
-        header: 'Alterar status da ordem de compra?',
-        rejectButtonStyleClass: 'p-button-danger',
-        acceptLabel: 'Sim',
-        rejectLabel: 'Não',
-        accept: () => {
-          this.purchaseOrdersService.updateStatus(purchaseOrderUpdatedStatus).subscribe(() => {
-            delete purchaseOrder.reopening;
-            delete purchaseOrder.inProgress;
-            purchaseOrder.status = purchaseOrderUpdatedStatus.status;
-          });
-        },
-        reject: () => {
-          delete purchaseOrder.reopening;
-          delete purchaseOrder.inProgress;
-        },
-      });
-    }
+    const updateStatusHandler = {
+      next: () => (order.status = status),
+      error: () => delete order.changingStatus,
+      complete: () => delete order.changingStatus,
+    };
+    this.purchaseOrdersService.updateStatus(updateStatusDTO).subscribe(updateStatusHandler);
   }
 }

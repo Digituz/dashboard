@@ -44,7 +44,7 @@ export class PurchaseOrdersService {
     return this.httpClient.get<PurchaseOrder>(`${this.PURCHASE_ORDER_ENDPOINT}/${referenceCode}`);
   }
 
-  updateStatus(updateDTO: any): Observable<PurchaseOrder> {
-    return this.httpClient.put<PurchaseOrder>(`${this.PURCHASE_ORDER_ENDPOINT}`, updateDTO);
+  updateStatus(updateStatusDTO: any): Observable<PurchaseOrder> {
+    return this.httpClient.put<PurchaseOrder>(`${this.PURCHASE_ORDER_ENDPOINT}`, updateStatusDTO);
   }
 }

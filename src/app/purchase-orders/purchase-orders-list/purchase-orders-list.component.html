@@ -93,20 +93,20 @@
           pButton
           type="button"
           class="p-button-success"
-          [icon]="purchaseOrder.complete ? 'fal fa-sync fa-spin' : 'fal fa-check'"
+          [icon]="purchaseOrder.changingStatus ? 'fal fa-sync fa-spin' : 'fal fa-check'"
           pTooltip="Alterar para recebido"
-          (click)="completedPurchaseOrder(purchaseOrder)"
-          [disabled]="purchaseOrder.status === 'COMPLETED'"
+          (click)="updateStatus(purchaseOrder, 'COMPLETED')"
+          [disabled]="purchaseOrder.changingStatus || purchaseOrder.status === 'COMPLETED'"
           tooltipPosition="top"
         ></button>
         <button
           pButton
           type="button"
           class="p-button-secondary"
-          [icon]="purchaseOrder.inProgress ? 'fal fa-sync fa-spin' : 'fal fa-sync'"
-          (click)="reopenPurchaseOrder(purchaseOrder, 'IN_PROCESS')"
+          [icon]="purchaseOrder.changingStatus ? 'fal fa-sync fa-spin' : 'fal fa-sync'"
+          (click)="updateStatus(purchaseOrder, 'IN_PROCESS')"
           pTooltip="Alterar para em andamento"
-          [disabled]="purchaseOrder.status === 'IN_PROCESS'"
+          [disabled]="purchaseOrder.changingStatus || purchaseOrder.status === 'IN_PROCESS'"
           tooltipPosition="top"
         ></button>
         <button
@@ -115,9 +115,9 @@
           class="p-button-danger"
           pTooltip="Alterar para cancelado"
           tooltipPosition="top"
-          [icon]="purchaseOrder.reopening ? 'fal fa-sync fa-spin' : 'fal fa-times'"
-          (click)="reopenPurchaseOrder(purchaseOrder, 'CANCELLED')"
-          [disabled]="purchaseOrder.status === 'CANCELLED'"
+          [icon]="purchaseOrder.changingStatus ? 'fal fa-sync fa-spin' : 'fal fa-times'"
+          (click)="updateStatus(purchaseOrder, 'CANCELLED')"
+          [disabled]="purchaseOrder.changingStatus || purchaseOrder.status === 'CANCELLED'"
         ></button>
       </td>
     </tr>
