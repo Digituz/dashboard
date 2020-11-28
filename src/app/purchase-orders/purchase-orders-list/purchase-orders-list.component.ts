@@ -6,7 +6,6 @@ import { PurchaseOrder } from '../purchase-order.entity';
 import { PurchaseOrdersService } from '../purchase-orders.service';
 import { ConfirmationService } from 'primeng/api';
 import { PurchaseOrderStatus } from '../purchase-orders.enum';
-import { format } from 'date-fns';
 
 @Component({
   selector: 'app-purchase-orders-list',
@@ -19,6 +18,7 @@ export class PurchaseOrdersListComponent implements OnInit {
   queryParams: QueryParam[] = [];
   loading: boolean = true;
   query: string;
+  orderStatus = PurchaseOrderStatus;
 
   constructor(private purchaseOrdersService: PurchaseOrdersService, private confirmationService: ConfirmationService) {}
 

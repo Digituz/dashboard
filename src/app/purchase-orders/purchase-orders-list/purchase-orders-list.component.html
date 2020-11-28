@@ -95,7 +95,7 @@
           class="p-button-success"
           [icon]="purchaseOrder.changingStatus ? 'fal fa-sync fa-spin' : 'fal fa-check'"
           pTooltip="Alterar para recebido"
-          (click)="updateStatus(purchaseOrder, 'COMPLETED')"
+          (click)="updateStatus(purchaseOrder, orderStatus.COMPLETED)"
           [disabled]="purchaseOrder.changingStatus || purchaseOrder.status === 'COMPLETED'"
           tooltipPosition="top"
         ></button>
@@ -104,7 +104,7 @@
           type="button"
           class="p-button-secondary"
           [icon]="purchaseOrder.changingStatus ? 'fal fa-sync fa-spin' : 'fal fa-sync'"
-          (click)="updateStatus(purchaseOrder, 'IN_PROCESS')"
+          (click)="updateStatus(purchaseOrder, orderStatus.IN_PROCESS)"
           pTooltip="Alterar para em andamento"
           [disabled]="purchaseOrder.changingStatus || purchaseOrder.status === 'IN_PROCESS'"
           tooltipPosition="top"
@@ -116,7 +116,7 @@
           pTooltip="Alterar para cancelado"
           tooltipPosition="top"
           [icon]="purchaseOrder.changingStatus ? 'fal fa-sync fa-spin' : 'fal fa-times'"
-          (click)="updateStatus(purchaseOrder, 'CANCELLED')"
+          (click)="updateStatus(purchaseOrder, orderStatus.CANCELLED)"
           [disabled]="purchaseOrder.changingStatus || purchaseOrder.status === 'CANCELLED'"
         ></button>
       </td>
