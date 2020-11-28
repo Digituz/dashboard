@@ -1,4 +1,4 @@
-<div class="sign-container">
+<div class="sign-container" *ngIf="!loading">
   <div class="p-grid p-nogutter p-align-center">
     <div class="p-col-12 p-md-6 p-md-offset-3 p-xl-4 p-xl-offset-4 p-col-align-center">
       <div class="sign-in-form">
@@ -36,5 +36,12 @@
         </form>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="load" scrolling="no">
+  <div class="dgz-table dgz-table-info digituz-loading-set" *ngIf="loading">
+    <i class="fal fa-spinner"></i>
+    <p>Carregando a aplicação.</p>
   </div>
 </div>

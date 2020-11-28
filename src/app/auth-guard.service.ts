@@ -6,7 +6,7 @@ import { SignInService } from './sign-in/sign-in.service';
 export class AuthGuardService implements CanActivate {
   constructor(private signInService: SignInService, public router: Router) {}
   canActivate() {
-    if (!this.signInService.isSignedId()) {
+    if (!this.signInService.isSignedIn()) {
       return this.router.parseUrl('/');
     }
     return true;
