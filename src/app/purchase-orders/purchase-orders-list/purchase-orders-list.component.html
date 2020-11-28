@@ -1,0 +1,126 @@
+<div class="search-container">
+  <form (ngSubmit)="querySupplier()">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="query">Pesquisa</label>
+        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <button pButton type="submit" label="Pesquisar"></button>
+        <button
+          pButton
+          type="submit"
+          class="p-button-secondary"
+          (click)="resetFilter()"
+          label="Limpar Filtros"
+        ></button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="feature-header">
+  <p>
+    <label>Controle suas compras de forma simplificada.</label>
+  </p>
+  <div class="actions">
+    <button title="Novo Pedido" routerLink="/purchase-orders/new" pButton type="button" label="Novo Pedido"></button>
+  </div>
+</div>
+<dgz-table
+  #purchaseOrderTable
+  [dataProvider]="this"
+  name="purchase-order-list"
+  [queryParams]="queryParams"
+  (updateQueryParams)="updateQueryParams($event)"
+>
+  <thead>
+    <tr>
+      <th dgz-sortable="referenceCode">Ref.</th>
+      <th dgz-sortable="creationDate">Data de criação</th>
+      <th dgz-sortable="supplier">Fornecedor</th>
+      <th dgz-sortable="total">Total</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let purchaseOrder of purchaseOrderTable.currentData">
+      <td class="centered">{{ purchaseOrder.referenceCode }}</td>
+      <td class="centered">{{ purchaseOrder.creationDate | date }}</td>
+      <td class="">{{ purchaseOrder.supplier.name }}</td>
+      <td class="centered">{{ purchaseOrder.total | reais }}</td>
+      <td class="centered">
+        <div
+          class="badge"
+          [ngClass]="
+            (purchaseOrder.status === 'COMPLETED' && 'success') || (purchaseOrder.status === 'CANCELLED' && 'failure')
+          "
+        >
+          <i
+            class="fal fa-check"
+            *ngIf="purchaseOrder.status === 'COMPLETED'"
+            pTooltip="Pedido recebido"
+            tooltipPosition="top"
+          ></i>
+          <i
+            class="fal fa-times"
+            *ngIf="purchaseOrder.status === 'CANCELLED'"
+            pTooltip="Pedido cancelado"
+            tooltipPosition="top"
+          ></i>
+          <i
+            class="fal fa-sync"
+            *ngIf="purchaseOrder.status === 'IN_PROCESS'"
+            pTooltip="Pedido em andamento"
+            tooltipPosition="top"
+          ></i>
+        </div>
+      </td>
+      <td class="actions">
+        <button
+          title="Pedido de Compra"
+          [routerLink]="'/purchase-orders/' + purchaseOrder.id"
+          pButton
+          type="button"
+          class="p-button-secondary"
+          [icon]="purchaseOrder.status === 'COMPLETED' ? 'fal fa-search' : 'fal fa-edit'"
+          [pTooltip]="purchaseOrder.status === 'COMPLETED' ? 'Visualizar compra.' : 'Editar detalhes.'"
+          tooltipPosition="top"
+        ></button>
+        <button
+          pButton
+          type="button"
+          class="p-button-success"
+          [icon]="purchaseOrder.complete ? 'fal fa-sync fa-spin' : 'fal fa-check'"
+          pTooltip="Alterar para recebido"
+          (click)="completedPurchaseOrder(purchaseOrder)"
+          [disabled]="purchaseOrder.status === 'COMPLETED'"
+          tooltipPosition="top"
+        ></button>
+        <button
+          pButton
+          type="button"
+          class="p-button-secondary"
+          [icon]="purchaseOrder.inProgress ? 'fal fa-sync fa-spin' : 'fal fa-sync'"
+          (click)="reopenPurchaseOrder(purchaseOrder, 'IN_PROCESS')"
+          pTooltip="Alterar para em andamento"
+          [disabled]="purchaseOrder.status === 'IN_PROCESS'"
+          tooltipPosition="top"
+        ></button>
+        <button
+          pButton
+          type="button"
+          class="p-button-danger"
+          pTooltip="Alterar para cancelado"
+          tooltipPosition="top"
+          [icon]="purchaseOrder.reopening ? 'fal fa-sync fa-spin' : 'fal fa-times'"
+          (click)="reopenPurchaseOrder(purchaseOrder, 'CANCELLED')"
+          [disabled]="purchaseOrder.status === 'CANCELLED'"
+        ></button>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>
+<p-confirmDialog></p-confirmDialog>

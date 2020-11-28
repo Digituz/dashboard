@@ -83,6 +83,15 @@
       </td>
       <td class="actions">
         <button
+          pButton
+          type="button"
+          icon="fal fa-copy"
+          class="p-button-secondary"
+          pTooltip="Duplicar produto."
+          tooltipPosition="top"
+          (click)="duplicateProduct(product)"
+        ></button>
+        <button
           [title]="'Início'"
           [routerLink]="'/products/' + product.sku"
           pButton

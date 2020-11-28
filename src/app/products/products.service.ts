@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class ProductsService implements IDataProvider<Product> {
   private PRODUCTS_ENDPOINT = '/products';
+  private copiedProduct: any = undefined;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -76,5 +77,15 @@ export class ProductsService implements IDataProvider<Product> {
     return this.httpClient.get<boolean>(
       `${this.PRODUCTS_ENDPOINT}/is-sku-available?sku=${sku}&is-product-variation=${isProductVariation}`
     );
+  }
+
+  setCopiedProduct(copiedProduct: any) {
+    this.copiedProduct = copiedProduct;
+  }
+
+  getCopiedProduct() {
+    const copied = this.copiedProduct;
+    this.copiedProduct = undefined;
+    return copied;
   }
 }

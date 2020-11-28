@@ -4,6 +4,7 @@ import { ProductsService } from '../products.service';
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import { IDataProvider, Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface IsActiveOption {
   label: string;
@@ -38,7 +39,7 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
   isActive: IsActiveOption = this.isActiveOptions[1];
   queryParams: QueryParam[] = [{ key: 'isActive', value: this.isActive.value }];
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService, private router: Router) {}
 
   loadData(
     pageNumber: number,
@@ -73,6 +74,20 @@ export class ProductsListComponent implements OnInit, IDataProvider<Product> {
     if (selectedActiveOption !== undefined) {
       this.isActive = this.isActiveOptions.find((o) => o.value === selectedActiveOption);
     }
+  }
+
+  duplicateProduct(product: any) {
+    const newProduct = {
+      ...product,
+      id: undefined,
+      sku: undefined,
+      productVariations: product.productVariations.map((pv: any) => ({
+        ...pv,
+        sku: undefined,
+      })),
+    };
+    this.productsService.setCopiedProduct(newProduct);
+    this.router.navigate(['/products/new']);
   }
 
   resetFilter() {
