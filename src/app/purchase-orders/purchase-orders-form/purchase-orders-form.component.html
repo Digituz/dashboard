@@ -1,0 +1,234 @@
+<div class="feature-header">
+  <p>
+    <label>Informe os dados pedido de compra através do formulário abaixo.</label>
+  </p>
+  <div class="actions">
+    <app-button-back fallbackURL="/purchase-orders"></app-button-back>
+    <button (click)="submit()" pButton type="button" label="Salvar" [disabled]="!allowsUpdate"></button>
+  </div>
+</div>
+<p-card>
+  <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <label for="supplier">Fornecedor <i class="fal fa-asterisk"></i></label>
+        <p-autoComplete
+          formControlName="supplier"
+          [suggestions]="supplierSuggestion"
+          (completeMethod)="searchSuppliers($event)"
+          [multiple]="false"
+          [forceSelection]="true"
+          field="name"
+          placeholder="Selecione o fornecedor"
+        ></p-autoComplete>
+        <small [hidden]="!isFieldInvalid('supplier')" id="description-help" class="p-invalid"
+          >Selecione o fornecedor do pedido</small
+        >
+      </div>
+      <div class="p-field p-col-3">
+        <label for="referenceCode">Código de Referência <i class="fal fa-asterisk"></i></label>
+        <input
+          id="referenceCode"
+          name="referenceCode"
+          type="text"
+          formControlName="referenceCode"
+          pInputText
+          placeholder="Ex. 41546514"
+        />
+        <small [hidden]="!isFieldInvalid('referenceCode')" id="description-help" class="p-invalid"
+          >Insira um código de referência para o pedido</small
+        >
+      </div>
+      <div class="p-field p-col-3">
+        <label for="referenceCode">Status <i class="fal fa-asterisk"></i></label>
+        <p-dropdown
+          id="status"
+          name="status"
+          [options]="purchaseOrderStatus"
+          formControlName="status"
+          placeholder="Selecione o status da ordem de compra"
+          [disabled]="true"
+          [showClear]="false"
+        ></p-dropdown>
+        <small [hidden]="!isFieldInvalid('status')" id="description-help" class="p-invalid"
+          >Selecione um status para o pedido</small
+        >
+      </div>
+      <div class="p-field p-col-3">
+        <label for="creationDate">Data de Criação</label>
+        <p-inputMask
+          mask="99/99/9999"
+          [disabled]="true"
+          placeholder="ex. 01/06/2020"
+          formControlName="creationDate"
+        ></p-inputMask>
+      </div>
+      <div class="p-field p-col-3">
+        <label for="completionDate">Data de Conclusão</label>
+        <p-inputMask
+          [disabled]="true"
+          mask="99/99/9999"
+          formControlName="completionDate"
+          pTooltip="Esse campo será automaticamente definido quando o pedido for aprovado."
+          tooltipPosition="top"
+        ></p-inputMask>
+      </div>
+      <div class="p-field p-col-2">
+        <label class="input-label" for="total">Total (R$)</label>
+        <p-inputNumber
+          id="total"
+          name="total"
+          formControlName="total"
+          currency="BRL"
+          mode="currency"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          [disabled]="true"
+          placeholder="ex. R$ 10,00"
+          pTooltip="Esse campo é automaticamente calculado com base nas demais informações."
+          tooltipPosition="top"
+        ></p-inputNumber>
+      </div>
+      <div class="p-field p-col-2">
+        <label class="input-label" for="discount">Desconto (R$)</label>
+        <p-inputNumber
+          id="discount"
+          name="discount"
+          formControlName="discount"
+          (onBlur)="updatePrice()"
+          currency="BRL"
+          mode="currency"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          [min]="0"
+          placeholder="ex. R$ 10,00"
+        ></p-inputNumber>
+      </div>
+      <div class="p-field p-col-2">
+        <label class="input-label" for="shippingPrice">Frete (R$)</label>
+        <p-inputNumber
+          id="shippingPrice"
+          name="shippingPrice"
+          formControlName="shippingPrice"
+          currency="BRL"
+          mode="currency"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          (onBlur)="updatePrice()"
+          [min]="0"
+          placeholder="ex. R$ 10,00"
+        ></p-inputNumber>
+      </div>
+    </div>
+  </form>
+</p-card>
+
+<div style="margin-top: 20px;">
+  <p-card>
+    <div class="product-variation-description">
+      <p>Seleciona os produtos a serem comprados</p>
+      <button pButton (click)="addItem()" label="Adicionar Item" [disabled]="!allowsUpdate"></button>
+    </div>
+    <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
+      <div class="p-fluid p-grid">
+        <div class="p-col-8">
+          <label class="input-label">Produto <i class="fal fa-asterisk"></i></label>
+        </div>
+        <div class="p-col-1">
+          <label class="input-label">Preço <i class="fal fa-asterisk"></i></label>
+        </div>
+        <div class="p-col-1">
+          <label class="input-label">Quant. <i class="fal fa-asterisk"></i></label>
+        </div>
+        <div class="p-col-1">
+          <label class="input-label">Estoque</label>
+        </div>
+      </div>
+      <div formArrayName="items" *ngFor="let item of items.controls; index as i">
+        <div [formGroupName]="i" class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col-8">
+            <p-autoComplete
+              formControlName="productVariation"
+              [suggestions]="productVariationsSugestion"
+              (completeMethod)="searchProductVariations($event)"
+              (onSelect)="selectProductVariation(i)"
+              [multiple]="false"
+              [forceSelection]="true"
+              field="completeDescription"
+              placeholder="Selecione um produto"
+            >
+              <ng-template let-productVariation pTemplate="item">
+                <div>
+                  {{ productVariation.sku }} - {{ productVariation.title }} ({{ productVariation.description }})
+                </div>
+              </ng-template>
+            </p-autoComplete>
+            <small [hidden]="!isItemFieldInvalid('productVariation', i)" id="description-help" class="p-invalid">
+              Selecione um produto
+            </small>
+          </div>
+          <div class="p-field p-col-1">
+            <p-inputNumber
+              id="price"
+              name="price"
+              formControlName="price"
+              currency="BRL"
+              mode="currency"
+              locale="pt-BR"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              placeholder="ex. R$ 10,00"
+              [min]="0"
+              (onBlur)="updatePrice()"
+            ></p-inputNumber>
+            <small [hidden]="!isItemFieldInvalid('price', i)" id="description-help" class="p-invalid">
+              Mínimo: 0,01
+            </small>
+          </div>
+          <div class="p-field p-col-1">
+            <p-inputNumber
+              formControlName="amount"
+              mode="decimal"
+              [minFractionDigits]="0"
+              [maxFractionDigits]="0"
+              placeholder="ex. 5"
+              [min]="0"
+              (onBlur)="updatePrice()"
+            ></p-inputNumber>
+            <small [hidden]="!isItemFieldInvalid('amount', i)" id="description-help" class="p-invalid">Mínimo: 1</small>
+          </div>
+          <div class="p-field p-col-1">
+            <div
+              class="badge"
+              [ngClass]="getItemsInStockWithPurchaseOrder(item) < 0 ? 'danger' : ''"
+              escape="true"
+              pTooltip="Sem pedido → Com pedido"
+              tooltipPosition="top"
+            >
+              {{ getItemsInStockWithoutPurchaseOrder(item) || 0 }}
+              <i
+                class="fal fa-arrow-right"
+                style="display: inline; font-size: 8px; bottom: 1px; position: relative; margin: 0 2px;"
+              ></i>
+              {{ getItemsInStockWithPurchaseOrder(item) || 0 }}
+            </div>
+          </div>
+          <div class="p-field p-col-1">
+            <button
+              (click)="removeItem(i)"
+              pButton
+              icon="fal fa-trash"
+              class="p-button-danger"
+              style="width: 100%;"
+              pTooltip="Remover item"
+              [disabled]="!allowsUpdate"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>

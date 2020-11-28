@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Pagination } from '@app/util/pagination';
 
 import { QueryParam } from '../util/pagination';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -47,5 +48,16 @@ export class SupplierService {
       return this.httpClient.put<void>(`${this.SUPPLIERS_ENDPOINT}/${supplier.id}`, supplier);
     }
     return this.httpClient.post<void>(this.SUPPLIERS_ENDPOINT, supplier);
+  }
+
+  loadSuppliers(query: string): Observable<Supplier[]> {
+    return this.httpClient.get<Pagination<Supplier>>(`${this.SUPPLIERS_ENDPOINT}/?query=${query}&page=1&limit=10`).pipe(
+      map((suppliers) => {
+        return suppliers.items.map((supplier) => ({
+          ...supplier,
+          completeDescription: `${supplier.name}`,
+        }));
+      })
+    );
   }
 }
