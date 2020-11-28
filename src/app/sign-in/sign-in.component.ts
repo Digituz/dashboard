@@ -16,7 +16,6 @@ export class SignInComponent implements OnInit {
   constructor(private fb: FormBuilder, private signInService: SignInService, private router: Router) {}
 
   ngOnInit(): void {
-    if (!localStorage.getItem('digituz-at-local')) return this.showSignInForm();
     if (!this.signInService.isSignedIn()) return this.showSignInForm();
     this.loading = true;
     this.signInService
