@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit {
           ticks: {
             display: false,
             beginAtZero: true,
+            suggestedMax: 1000,
           },
         },
       ],
@@ -76,6 +77,9 @@ export class HomeComponent implements OnInit {
       this.thirtyDaysData = response.thirtyDaysData;
       this.thirtyDaysTotal = response.thirtyDaysTotal;
       this.thirtyDaysAvg = response.thirtyDaysAvg;
+
+      const maxValue = Math.max(...this.thirtyDaysData.datasets[0].data.map((value: string) => parseFloat(value)));
+      this.chartOptions.scales.yAxes[0].ticks.suggestedMax = maxValue + 100;
     });
   }
 
