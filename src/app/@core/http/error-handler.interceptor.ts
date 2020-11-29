@@ -6,8 +6,6 @@ import { catchError } from 'rxjs/operators';
 import { Logger } from '../logger.service';
 import { MessagesService } from '../../messages/messages.service';
 
-const log = new Logger('ErrorHandlerInterceptor');
-
 /**
  * Adds a default error handler to all requests.
  */
@@ -18,7 +16,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   constructor(private messagesService: MessagesService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const isValidatingToken = request.url === '/api/v1/refresh-token';
+    const isValidatingToken = request.url.indexOf('/v1/refresh-token') >= 0;
     return next.handle(request).pipe(catchError((error) => this.errorHandler(error, isValidatingToken)));
   }
 
