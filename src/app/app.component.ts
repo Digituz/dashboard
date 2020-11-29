@@ -10,6 +10,7 @@ import { Logger, untilDestroyed } from '@core';
 import { I18nService } from '@app/i18n';
 import { SwUpdate } from '@angular/service-worker';
 import { MessagesService } from './messages/messages.service';
+import { SignInService } from './sign-in/sign-in.service';
 
 const log = new Logger('App');
 
@@ -19,6 +20,8 @@ const log = new Logger('App');
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  loading = false;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -26,7 +29,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private i18nService: I18nService,
     private swUpdate: SwUpdate,
-    private messagesService: MessagesService
+    private messagesService: MessagesService,
+    private signInService: SignInService
   ) {}
 
   ngOnInit() {
@@ -34,6 +38,18 @@ export class AppComponent implements OnInit, OnDestroy {
     if (environment.production) {
       Logger.enableProductionMode();
     }
+
+    this.loading = this.signInService.isSignedIn();
+    this.signInService.refreshToken().subscribe({
+      next: () => {
+        this.loading = false;
+      },
+      error: () => {
+        this.signInService.signOut();
+        this.loading = false;
+        return this.router.navigateByUrl('/');
+      },
+    });
 
     this.swUpdate.available.subscribe(() => {
       this.messagesService.showUpdate();

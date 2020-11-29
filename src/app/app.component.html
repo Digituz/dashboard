@@ -1,2 +1,8 @@
-<router-outlet></router-outlet>
+<router-outlet *ngIf="!loading"></router-outlet>
 <app-messages></app-messages>
+<div class="splash-screen" scrolling="no" *ngIf="loading">
+  <div class="dgz-table dgz-table-info digituz-loading-set">
+    <i class="fal fa-spinner"></i>
+    <p>Carregando a aplicação.</p>
+  </div>
+</div>

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import decode from 'jwt-decode';
-import { single } from 'rxjs/operators';
+import { catchError, single } from 'rxjs/operators';
 import { addMinutes } from 'date-fns';
 
 @Injectable()
@@ -19,6 +19,9 @@ export class SignInService {
       this.tokenInfo = decode(this.token);
       this.tokenExpirationDate = new Date(this.tokenInfo.exp * 1000);
     }
+    this.handleNewToken = this.handleNewToken.bind(this);
+    this.refreshToken = this.refreshToken.bind(this);
+    this.signOut = this.signOut.bind(this);
   }
 
   signIn(credentials: { username: string; password: string }): Observable<any> {
@@ -58,6 +61,12 @@ export class SignInService {
     this.tokenInfo = decode(this.token);
     this.tokenExpirationDate = new Date(this.tokenInfo.exp * 1000);
     localStorage.setItem(SignInService.tokenStorage, this.token);
+
+    // if the app stays open, it will refresh the token every three hours
+    const threeHours = 3 * 60 * 60 * 1000;
+    setTimeout(() => {
+      this.refreshToken().subscribe();
+    }, threeHours);
     return true;
   }
 }
