@@ -16,17 +16,70 @@ export class HomeComponent implements OnInit {
   @ViewChild('salesOrderTable') resultsTable: DgzTableComponent<SalesOrderDTO>;
   queryParams: QueryParam[] = [];
   query: string;
-  data: any;
+  threeDaysData: any;
+  threeDaysTotal = 0;
+  sevenDaysData: any;
+  sevenDaysTotal = 0;
+  thirtyDaysData: any;
+  thirtyDaysTotal = 0;
   isLoading = false;
   days: any;
+  chartOptions = {
+    legend: {
+      display: false,
+    },
+    tooltips: {
+      callbacks: {
+        label: (tooltipItem: any) => {
+          const total = Math.round(tooltipItem.yLabel * 100) / 100;
+          const reais = total.toString().replace('.', ',');
+          return `R$ ${reais}`;
+        },
+      },
+    },
+    scales: {
+      xAxes: [
+        {
+          ticks: {
+            display: false,
+          },
+        },
+      ],
+      yAxes: [
+        {
+          ticks: {
+            display: false,
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  };
 
   constructor(private homeService: HomeService, private breadcrumbsService: BreadcrumbsService) {}
 
   ngOnInit() {
     this.isLoading = false;
     this.breadcrumbsService.refreshBreadcrumbs('Painel de Controle', []);
-    this.homeService.loadChartData().subscribe((response) => {
-      this.data = response;
+    this.homeService.loadChartData().subscribe((response: any) => {
+      const { threeDaysData, sevenDaysData, thirtyDaysData } = response;
+      this.threeDaysData = threeDaysData;
+      this.threeDaysTotal = threeDaysData.datasets[0].data.reduce(
+        (total: number, current: string) => parseFloat(current) + total,
+        0
+      );
+
+      this.sevenDaysData = sevenDaysData;
+      this.sevenDaysTotal = sevenDaysData.datasets[0].data.reduce(
+        (total: number, current: string) => parseFloat(current) + total,
+        0
+      );
+
+      this.thirtyDaysData = thirtyDaysData;
+      this.thirtyDaysTotal = thirtyDaysData.datasets[0].data.reduce(
+        (total: number, current: string) => parseFloat(current) + total,
+        0
+      );
     });
   }
 

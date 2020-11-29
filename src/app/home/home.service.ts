@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class HomeService {
   private SALES_ORDERS_ENDPOINT = '/sales-order';
-  private LAST_7_DAYS_CHART_ENDPOINT = '/chart/sales-for-last-7-days';
+  private HOME_CHART_ENDPOINT = '/chart/home';
   constructor(private httpClient: HttpClient) {}
 
   loadData(
@@ -31,6 +31,6 @@ export class HomeService {
   }
 
   loadChartData() {
-    return this.httpClient.get(`${this.LAST_7_DAYS_CHART_ENDPOINT}`);
+    return this.httpClient.get(`${this.HOME_CHART_ENDPOINT}`);
   }
 }

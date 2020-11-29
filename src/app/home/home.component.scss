@@ -24,3 +24,26 @@ div.sale-order-details {
     margin-right: 5px;
   }
 }
+
+div.sales-summary {
+  > div {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: $border-radius;
+
+    > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-weight: normal;
+    }
+
+    h2.period-sum {
+      text-align: right;
+    }
+  }
+}
