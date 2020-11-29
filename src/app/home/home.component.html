@@ -28,23 +28,25 @@
               </div>
             </td>
             <td>
-              <div style="overflow: hidden; white-space: nowrap;">{{ salesOrder.customer.name }}</div>
+              <div class="sale-order-details">
+                <p>{{ salesOrder.customer.name }}</p>
+                <p>
+                  <small>
+                    {{ salesOrder.shipmentDetails.shippingCity }}/{{ salesOrder.shipmentDetails.shippingState }}
+                  </small>
+                  <small>
+                    {{ getShippingType(salesOrder.shipmentDetails.shippingType) }}
+                  </small>
+                  <small><i class="fal fa-cubes"></i> {{ salesOrder.items.length }}</small>
+                </p>
+              </div>
             </td>
             <td class="actions">
-              <i
-                class="fal fa-piggy-bank"
-                [pTooltip]="salesOrder.paymentDetails.total | reais"
-                tooltipPosition="top"
-              ></i>
-              <i class="fal fa-truck" [pTooltip]="salesOrder.shipmentDetails.shippingType" tooltipPosition="top"></i>
-              <i
-                class="fal fa-map-marked-alt"
-                [pTooltip]="salesOrder.shipmentDetails.shippingCity + '/' + salesOrder.shipmentDetails.shippingState"
-                tooltipPosition="top"
-              ></i>
+              {{ salesOrder.paymentDetails.total | reais }}
               <button
                 pButton
                 class="p-button-secondary"
+                style="margin-left: 10px;"
                 [icon]="'fal fa-search'"
                 [routerLink]="'/sales-orders/' + salesOrder.referenceCode"
               ></button>

@@ -5,6 +5,7 @@ import { SalesOrderDTO } from '@app/sales-orders/sales-order.dto';
 import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 import { HomeService } from './home.service';
+import { ShippingType } from '@app/sales-orders/shipping-type.enum';
 
 @Component({
   selector: 'app-home',
@@ -43,5 +44,17 @@ export class HomeComponent implements OnInit {
   querySalesOrders() {
     this.queryParams = [{ key: 'query', value: this.query }];
     this.resultsTable.reload(this.queryParams);
+  }
+
+  getShippingType(shippingType: ShippingType) {
+    switch (shippingType) {
+      case ShippingType.PAC:
+      case ShippingType.SEDEX:
+        return shippingType;
+      case ShippingType.SAME_DAY:
+        return 'EXPRESS';
+      default:
+        return '???';
+    }
   }
 }
