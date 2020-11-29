@@ -3,7 +3,10 @@
     <div>
       <div>
         <h2>3 dias</h2>
-        <h2 class="period-sum">{{ threeDaysTotal | reais }}</h2>
+        <h2 class="period-sum">
+          <small pTooltip="Ticket Médio" tooltipPosition="top">{{ threeDaysAvg | reais }}</small>
+          {{ threeDaysTotal | reais }}
+        </h2>
       </div>
       <p-chart height="100" type="line" [data]="threeDaysData" [options]="chartOptions"></p-chart>
     </div>
@@ -12,7 +15,10 @@
     <div>
       <div>
         <h2>7 Dias</h2>
-        <h2 class="period-sum">{{ sevenDaysTotal | reais }}</h2>
+        <h2 class="period-sum">
+          <small pTooltip="Ticket Médio" tooltipPosition="top">{{ sevenDaysAvg | reais }}</small>
+          {{ sevenDaysTotal | reais }}
+        </h2>
       </div>
       <p-chart height="100" type="line" [data]="sevenDaysData" [options]="chartOptions"></p-chart>
     </div>
@@ -21,7 +27,10 @@
     <div>
       <div>
         <h2>30 Dias</h2>
-        <h2 class="period-sum">{{ thirtyDaysTotal | reais }}</h2>
+        <h2 class="period-sum">
+          <small pTooltip="Ticket Médio" tooltipPosition="top">{{ thirtyDaysAvg | reais }}</small>
+          {{ thirtyDaysTotal | reais }}
+        </h2>
       </div>
       <p-chart height="100" type="line" [data]="thirtyDaysData" [options]="chartOptions"></p-chart>
     </div>

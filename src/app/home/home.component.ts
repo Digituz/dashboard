@@ -18,10 +18,13 @@ export class HomeComponent implements OnInit {
   query: string;
   threeDaysData: any;
   threeDaysTotal = 0;
+  threeDaysAvg = 0;
   sevenDaysData: any;
   sevenDaysTotal = 0;
+  sevenDaysAvg = 0;
   thirtyDaysData: any;
   thirtyDaysTotal = 0;
+  thirtyDaysAvg = 0;
   isLoading = false;
   days: any;
   chartOptions = {
@@ -62,24 +65,17 @@ export class HomeComponent implements OnInit {
     this.isLoading = false;
     this.breadcrumbsService.refreshBreadcrumbs('Painel de Controle', []);
     this.homeService.loadChartData().subscribe((response: any) => {
-      const { threeDaysData, sevenDaysData, thirtyDaysData } = response;
-      this.threeDaysData = threeDaysData;
-      this.threeDaysTotal = threeDaysData.datasets[0].data.reduce(
-        (total: number, current: string) => parseFloat(current) + total,
-        0
-      );
+      this.threeDaysData = response.threeDaysData;
+      this.threeDaysTotal = response.threeDaysTotal;
+      this.threeDaysAvg = response.threeDaysAvg;
 
-      this.sevenDaysData = sevenDaysData;
-      this.sevenDaysTotal = sevenDaysData.datasets[0].data.reduce(
-        (total: number, current: string) => parseFloat(current) + total,
-        0
-      );
+      this.sevenDaysData = response.sevenDaysData;
+      this.sevenDaysTotal = response.sevenDaysTotal;
+      this.sevenDaysAvg = response.sevenDaysAvg;
 
-      this.thirtyDaysData = thirtyDaysData;
-      this.thirtyDaysTotal = thirtyDaysData.datasets[0].data.reduce(
-        (total: number, current: string) => parseFloat(current) + total,
-        0
-      );
+      this.thirtyDaysData = response.thirtyDaysData;
+      this.thirtyDaysTotal = response.thirtyDaysTotal;
+      this.thirtyDaysAvg = response.thirtyDaysAvg;
     });
   }
 

@@ -40,6 +40,16 @@ div.sales-summary {
     h2 {
       margin-top: 0;
       font-weight: normal;
+
+      small {
+        font-size: 10px;
+        float: left;
+        padding: 3px 5px;
+        margin-right: 10px;
+        background-color: #ddd;
+        border-radius: 5px;
+        margin-top: 3px;
+      }
     }
 
     h2.period-sum {
