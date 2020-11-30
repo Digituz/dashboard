@@ -46,9 +46,11 @@ export class ProductsService implements IDataProvider<Product> {
     return this.httpClient.get<Pagination<Product>>(`${this.PRODUCTS_ENDPOINT}?page=1&limit=10&query=${query}`);
   }
 
-  public findProductVariations(query: string): Observable<ProductVariationDetailsDTO[]> {
+  public findProductVariations(query: string, skipCompositeProducts = false): Observable<ProductVariationDetailsDTO[]> {
     return this.httpClient
-      .get<ProductVariationDetailsDTO[]>(`${this.PRODUCTS_ENDPOINT}/variations?query=${query}`)
+      .get<ProductVariationDetailsDTO[]>(
+        `${this.PRODUCTS_ENDPOINT}/variations?query=${query}&skip-composite-products=${skipCompositeProducts}`
+      )
       .pipe(
         map((variations) => {
           return variations.map((variation) => ({
