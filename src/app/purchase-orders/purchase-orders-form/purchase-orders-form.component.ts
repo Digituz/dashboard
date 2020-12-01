@@ -152,7 +152,7 @@ export class PurchaseOrdersFormComponent implements OnInit {
   }
 
   searchProductVariations(event: any) {
-    this.productService.findProductVariations(event.query).subscribe((results) => {
+    this.productService.findProductVariations(event.query, true).subscribe((results) => {
       this.productVariationsSugestion = results;
     });
   }
