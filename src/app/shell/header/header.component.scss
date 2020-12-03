@@ -30,8 +30,23 @@
     color: #666;
 
     .sign-out {
+      display: flex;
+      align-items: center;
       cursor: pointer;
       color: #000;
+    }
+
+    .user-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      margin-right: 15px;
+      cursor: pointer;
+      img {
+        border-radius: 25px;
+        margin-right: 10px;
+      }
     }
   }
 
