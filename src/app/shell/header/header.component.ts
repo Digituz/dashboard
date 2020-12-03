@@ -28,8 +28,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  async routeUserArea() {
-    this.router.navigate(['/users']);
+  async userArea() {
+    this.router.navigateByUrl('/users');
   }
 
   get username(): string | null {

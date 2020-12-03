@@ -14,7 +14,6 @@ const routes: Routes = [
         title: extract('Usuário'),
         breadcrumb: 'Usuário',
       },
-      children: [],
     },
   ]),
 ];
