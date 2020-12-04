@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignInService } from '@app/sign-in/sign-in.service';
-import { UsersService } from '@app/users/users.service';
-import decode from 'jwt-decode';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -11,13 +10,16 @@ import decode from 'jwt-decode';
 })
 export class HeaderComponent implements OnInit {
   menuHidden = true;
-  user: { name: string; image: string };
-  constructor(private router: Router, private signInService: SignInService, private usersService: UsersService) {
-    const { name, image }: any = decode(this.signInService.getToken());
-    this.user = { name, image };
-  }
+  user: { name?: string; image?: string };
+  tokenSubscription: Subscription;
 
-  ngOnInit() {}
+  constructor(private router: Router, private signInService: SignInService) {}
+
+  ngOnInit() {
+    this.tokenSubscription = this.signInService.userChange.subscribe((user) => {
+      this.user = user;
+    });
+  }
 
   toggleMenu() {
     this.menuHidden = !this.menuHidden;

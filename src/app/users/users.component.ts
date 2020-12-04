@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from './users.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from './user.entity';
+import { SignInService } from '@app/sign-in/sign-in.service';
 
 @Component({
   selector: 'app-users',
@@ -13,7 +14,9 @@ export class UsersComponent implements OnInit {
   loading: boolean = true;
   isDisable: boolean = true;
   user: User;
-  constructor(private usersService: UsersService, private fb: FormBuilder) {
+  newToken: string;
+
+  constructor(private usersService: UsersService, private fb: FormBuilder, private signInService: SignInService) {
     this.usersService.getUserInfo().subscribe((result: any) => {
       this.user = result;
       this.configureFormFields(this.user);
@@ -29,16 +32,13 @@ export class UsersComponent implements OnInit {
       password: ['****************'],
       confirmPassword: [null],
     });
-    this.formFields.controls.name.disable();
-    this.formFields.controls.password.disable();
-    this.formFields.controls.confirmPassword.disable();
+
+    this.formFields.disable();
     this.loading = false;
   }
 
   enableFields() {
-    this.formFields.controls.name.enable();
-    this.formFields.controls.password.enable();
-    this.formFields.controls.confirmPassword.enable();
+    this.formFields.enable();
     this.formFields.get('password').setValue(null);
     this.isDisable = false;
   }
@@ -55,10 +55,12 @@ export class UsersComponent implements OnInit {
       if (password !== confirmPassWOrd) {
         this.formFields.controls['password'].setErrors({ incorrect: true });
         this.formFields.controls['confirmPassword'].setErrors({ incorrect: true });
-        return;
+      } else {
+        const user = { name, email, password };
+        this.usersService.updateUser(user).subscribe((results) => {
+          this.signInService.refreshToken().subscribe();
+        });
       }
-      const user = { name, email, password };
-      this.usersService.updateUser(user).subscribe();
     }
   }
 

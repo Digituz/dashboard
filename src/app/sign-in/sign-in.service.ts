@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { from, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import decode from 'jwt-decode';
-import { catchError, single } from 'rxjs/operators';
+import { single } from 'rxjs/operators';
 import { addMinutes } from 'date-fns';
+import { UsersService } from '@app/users/users.service';
+import { User } from '@app/users/user.entity';
 
 @Injectable()
 export class SignInService {
   private static SIGN_IN_ENDPOINT = '/sign-in';
   private static tokenStorage = 'digituz-at-local';
   private token: string;
-  private tokenInfo: { exp?: number };
+  private tokenInfo: { sub?: string; name?: string; image?: string; exp?: number };
   private tokenExpirationDate: Date;
+  userChange: Subject<User> = new BehaviorSubject<User>({});
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private userService: UsersService) {
     this.token = localStorage.getItem(SignInService.tokenStorage);
     if (this.token) {
       this.tokenInfo = decode(this.token);
@@ -61,6 +64,7 @@ export class SignInService {
     this.tokenInfo = decode(this.token);
     this.tokenExpirationDate = new Date(this.tokenInfo.exp * 1000);
     localStorage.setItem(SignInService.tokenStorage, this.token);
+    this.userChange.next({ name: this.tokenInfo.name, email: this.tokenInfo.sub, image: this.tokenInfo.image });
 
     // if the app stays open, it will refresh the token every three hours
     const threeHours = 3 * 60 * 60 * 1000;
