@@ -3,27 +3,30 @@ import { UsersService } from './users.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from './user.entity';
 import { SignInService } from '@app/sign-in/sign-in.service';
+import { MessagesService } from '@app/messages/messages.service';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent {
   formFields: FormGroup;
   loading: boolean = true;
   isDisable: boolean = true;
   user: User;
-  newToken: string;
 
-  constructor(private usersService: UsersService, private fb: FormBuilder, private signInService: SignInService) {
+  constructor(
+    private usersService: UsersService,
+    private fb: FormBuilder,
+    private signInService: SignInService,
+    private messagesService: MessagesService
+  ) {
     this.usersService.getUserInfo().subscribe((result: any) => {
       this.user = result;
       this.configureFormFields(this.user);
     });
   }
-
-  ngOnInit(): void {}
 
   configureFormFields(user: User) {
     this.formFields = this.fb.group({
@@ -40,6 +43,7 @@ export class UsersComponent implements OnInit {
   enableFields() {
     this.formFields.enable();
     this.formFields.get('password').setValue(null);
+    this.formFields.get('email').disable();
     this.isDisable = false;
   }
 
@@ -47,18 +51,16 @@ export class UsersComponent implements OnInit {
     if (!this.formFields.valid) {
       this.markAllFieldsAsTouched(this.formFields);
     } else {
-      const values = this.formFields.value;
-      const password = values.password;
-      const confirmPassWOrd = values.confirmPassword;
-      const email = values.email;
-      const name = values.name;
-      if (password !== confirmPassWOrd) {
+      const { password, confirmPassword, email, name } = this.formFields.value;
+      if (password !== confirmPassword) {
         this.formFields.controls['password'].setErrors({ incorrect: true });
         this.formFields.controls['confirmPassword'].setErrors({ incorrect: true });
       } else {
         const user = { name, email, password };
-        this.usersService.updateUser(user).subscribe((results) => {
-          this.signInService.refreshToken().subscribe();
+        this.usersService.updateUser(user).subscribe(() => {
+          this.signInService.refreshToken().subscribe(() => {
+            this.messagesService.showInfo('Perfil atualizado com sucesso.');
+          });
         });
       }
     }

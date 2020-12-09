@@ -1,6 +1,6 @@
 <p-toast>
   <ng-template let-message pTemplate="message">
-    <div class="p-d-flex p-jc-center">
+    <div class="p-d-flex p-jc-center" *ngIf="!!message.summary">
       <i class="pi pi-exclamation-triangle" style="font-size: 3rem;"></i>
       <h4>{{ message.summary }}</h4>
     </div>
