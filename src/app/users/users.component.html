@@ -20,7 +20,14 @@
         <div class="p-fluid p-formgrid p-grid">
           <div class="p-field p-col-6">
             <label for="name">Nome:</label>
-            <input id="name" name="name" type="text" formControlName="name" pInputText placeholder="Ex. Adrina Costa" />
+            <input
+              id="name"
+              name="name"
+              type="text"
+              formControlName="name"
+              pInputText
+              placeholder="Ex. Adriana na Costa"
+            />
             <small [hidden]="!isFieldInvalid('name')" id="name-help" class="p-invalid">Insira seu nome</small>
           </div>
           <div class="p-field p-col-6">
