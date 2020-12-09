@@ -4,6 +4,10 @@
   </div>
   <div class="top-bar">
     <div class="sign-out" (click)="signOut()">Sair</div>
+    <div class="user-area" (click)="userArea()">
+      <img [src]="user?.image" />
+      <p>{{ user?.name }}</p>
+    </div>
   </div>
   <div class="menu">
     <ul>

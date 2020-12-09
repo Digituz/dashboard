@@ -1,0 +1,76 @@
+<div class="p-grid">
+  <div class="p-col-12" style="background-color: #fff;">
+    <div class="feature-header">
+      <p>
+        <label>Atualize seus dados no formulário abaixo.</label>
+      </p>
+      <div class="actions buttons-area">
+        <app-button-back fallbackURL="/suppliers"></app-button-back>
+
+        <div class="space" *ngIf="isDisable">
+          <button pButton label="Editar" (click)="enableFields()"></button>
+        </div>
+        <div class="space" *ngIf="!isDisable">
+          <button pButton (click)="submit()" label="Salvar"></button>
+        </div>
+      </div>
+    </div>
+    <div class="formBody">
+      <form [formGroup]="formFields" (ngSubmit)="submit()" *ngIf="!loading">
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col-6">
+            <label for="name">Nome:</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              formControlName="name"
+              pInputText
+              placeholder="Ex. Adriana na Costa"
+            />
+            <small [hidden]="!isFieldInvalid('name')" id="name-help" class="p-invalid">Insira seu nome</small>
+          </div>
+          <div class="p-field p-col-6">
+            <label for="email">Email:</label>
+            <input
+              id="email"
+              name="email"
+              type="text"
+              formControlName="email"
+              pInputText
+              placeholder="luiz@gmail.com"
+              disabled="true"
+            />
+          </div>
+          <div class="p-field p-col-12">
+            <label for="password">Senha:</label>
+
+            <input
+              id="password"
+              name="password"
+              type="password"
+              formControlName="password"
+              pInputText
+              placeholder="Se deseja alterar sua senha"
+            />
+            <small [hidden]="!isFieldInvalid('password')" class="p-invalid">As senhas vem ser iguais</small>
+          </div>
+          <div class="p-field p-col-12" *ngIf="!isDisable">
+            <label for="password">Confirmar Senha:</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              formControlName="confirmPassword"
+              placeholder="Digite Novamente sua Nova Senha"
+              pInputText
+            />
+            <small [hidden]="!isFieldInvalid('confirmPassword')" id="name-help" class="p-invalid"
+              >As senhas vem ser iguais</small
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
