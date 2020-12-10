@@ -50,6 +50,10 @@ const routes: Routes = [
         path: 'users',
         loadChildren: () => import('./users/users.module').then((m) => m.UsersModule),
       },
+      {
+        path: 'mercado-livre',
+        loadChildren: () => import('./mercado-livre/mercado-livre.module').then((m) => m.MercadoLivreModule),
+      },
     ],
   },
 ];
