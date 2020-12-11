@@ -1,1 +1,61 @@
-<p>Lista de produtos do mercado livre</p>
+<div class="search-container">
+  <form (ngSubmit)="queryCustomers()">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="query">Pesquisa</label>
+        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <button pButton type="submit" label="Pesquisar"></button>
+        <button
+          pButton
+          type="submit"
+          class="p-button-secondary"
+          (click)="resetFilter()"
+          label="Limpar Filtros"
+        ></button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="feature-header">
+  <p>
+    <label>Controle seus produtos no mercado livre de forma simplificada.</label>
+  </p>
+  <div class="actions">
+    <button
+      title="Cadastrar Produto no mercado livre"
+      routerLink="/mercado-livre/list/new"
+      pButton
+      type="button"
+      label="Cadastrar Produto"
+    ></button>
+  </div>
+</div>
+<dgz-table
+  #MLProductsTable
+  [dataProvider]="this"
+  [queryParams]="queryParams"
+  (updateQueryParams)="updateQueryParams($event)"
+  name="mercado-livre-list"
+>
+  <thead>
+    <tr>
+      <th>Img</th>
+      <th>Titulo</th>
+      <th>SKU</th>
+      <th>Preço Maxio</th>
+      <th>Categoria</th>
+      <th>Vinculado</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of MLProductsTable.currentData">
+      <td>{{ product.title }}</td>
+      <td class="centered">{{ product.sku }}</td>
+    </tr>
+  </tbody>
+</dgz-table>
