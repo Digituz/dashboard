@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Pagination, QueryParam } from '@app/util/pagination';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,5 +20,32 @@ export class MercadoLivreService {
 
   getToken() {
     return this.httpClient.get(`${this.MERCADO_LIVRE_END_POINT}/token`);
+  }
+
+  loadData(
+    pageNumber: number,
+    pageSize: number,
+    sortedBy?: string,
+    sortDirectionAscending?: boolean,
+    queryParams?: QueryParam[]
+  ): Observable<Pagination<any>> {
+    let query = `${this.MERCADO_LIVRE_END_POINT}/paginate?page=${pageNumber}&limit=${pageSize}`;
+
+    if (sortedBy) {
+      query += `&sortedBy=${sortedBy}`;
+    }
+    if (sortDirectionAscending !== undefined) {
+      query += `&sortDirectionAscending=${sortDirectionAscending}`;
+    }
+
+    queryParams
+      .filter((queryParam) => {
+        return queryParam !== null && queryParam.value !== null && queryParam.value !== undefined;
+      })
+      .forEach((queryParam) => {
+        query += `&${queryParam.key}=${queryParam.value}`;
+      });
+
+    return this.httpClient.get<Pagination<any>>(query);
   }
 }

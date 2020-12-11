@@ -1,5 +1,5 @@
 <div class="search-container">
-  <form (ngSubmit)="queryCustomers()">
+  <form (ngSubmit)="queryProducts()">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-12">
         <label for="query">Pesquisa</label>
@@ -35,17 +35,17 @@
   </div>
 </div>
 <dgz-table
-  #MLProductsTable
-  [dataProvider]="this"
   [queryParams]="queryParams"
   (updateQueryParams)="updateQueryParams($event)"
+  #MLProductsTable
+  [dataProvider]="this"
   name="mercado-livre-list"
 >
   <thead>
     <tr>
-      <th>Img</th>
-      <th>Titulo</th>
+      <th></th>
       <th>SKU</th>
+      <th>Titulo</th>
       <th>Preço Maxio</th>
       <th>Categoria</th>
       <th>Vinculado</th>
@@ -53,9 +53,38 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of MLProductsTable.currentData">
-      <td>{{ product.title }}</td>
-      <td class="centered">{{ product.sku }}</td>
+    <tr *ngFor="let mbProduct of MLProductsTable.currentData">
+      <td class="thumbnail centered">
+        <div>
+          <i *ngIf="!mbProduct.product.thumbnail" class="fal fa-images"></i>
+          <div class="square" *ngIf="mbProduct.product.thumbnail">
+            <img [src]="mbProduct.product.thumbnail" [alt]="mbProduct.product.title" />
+          </div>
+        </div>
+      </td>
+      <td class="centered">{{ mbProduct.product.sku }}</td>
+      <td>{{ mbProduct.product.title }}</td>
+      <td class="centered">{{ mbProduct.product.sellingPrice }}</td>
+      <td class="centered">{{ mbProduct.category }}</td>
+      <td class="centered">
+        <div
+          class="badge"
+          [ngClass]="{ sucess: mbProduct.product.isMBProduct } || { failure: mbProduct.product.isMBProduct }"
+        >
+          <i
+            class="fal fa-check"
+            *ngIf="mbProduct.product.isMBProduct === true"
+            pTooltip="Produto sincronizado"
+            tooltipPosition="top"
+          ></i>
+          <i
+            class="fal fa-times"
+            *ngIf="mbProduct.product.isMBProduct === 'false'"
+            pTooltip="Pagamento não sincronizado"
+            tooltipPosition="top"
+          ></i>
+        </div>
+      </td>
     </tr>
   </tbody>
 </dgz-table>

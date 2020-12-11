@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { extract } from '@app/i18n';
 import { Shell } from '@app/shell/shell.service';
 import { MercadoLivreComponent } from './mercado-livre.component';
-import { MlProductListComponent } from './ml-product-list/ml-product-list.component';
+import { MLProductListComponent } from './ml-product-list/ml-product-list.component';
 
 const routes: Routes = [
   Shell.childRoutes([
@@ -17,7 +17,7 @@ const routes: Routes = [
       children: [
         {
           path: 'list',
-          component: MlProductListComponent,
+          component: MLProductListComponent,
           data: {
             title: extract('Produtos Mercado Livre'),
           },
