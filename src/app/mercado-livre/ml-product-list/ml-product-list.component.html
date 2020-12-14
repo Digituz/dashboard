@@ -53,37 +53,37 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let mbProduct of MLProductsTable.currentData">
+    <tr *ngFor="let mlProduct of MLProductsTable.currentData">
       <td class="thumbnail centered">
         <div>
-          <i *ngIf="!mbProduct.product.thumbnail" class="fal fa-images"></i>
-          <div class="square" *ngIf="mbProduct.product.thumbnail">
-            <img [src]="mbProduct.product.thumbnail" [alt]="mbProduct.product.title" />
+          <i *ngIf="!mlProduct.thumbnail" class="fal fa-images"></i>
+          <div class="square" *ngIf="mlProduct.thumbnail">
+            <img [src]="mlProduct.thumbnail" [alt]="mlProduct.title" width="50px" height="50px" />
           </div>
         </div>
       </td>
-      <td class="centered">{{ mbProduct.product.sku }}</td>
-      <td>{{ mbProduct.product.title }}</td>
-      <td class="centered">{{ mbProduct.product.sellingPrice }}</td>
-      <td class="centered">{{ mbProduct.category }}</td>
+      <td class="centered">{{ mlProduct.sku }}</td>
+      <td>{{ mlProduct.title }}</td>
+      <td class="centered">{{ mlProduct.sellingPrice }}</td>
+      <td class="centered">{{ mlProduct.category }}</td>
       <td class="centered">
-        <div
-          class="badge"
-          [ngClass]="{ sucess: mbProduct.product.isMBProduct } || { failure: mbProduct.product.isMBProduct }"
-        >
+        <div class="badge" [ngClass]="mlProduct.MLProduct != null ? 'success' : 'failure'">
           <i
             class="fal fa-check"
-            *ngIf="mbProduct.product.isMBProduct === true"
+            *ngIf="mlProduct.MLProduct !== null"
             pTooltip="Produto sincronizado"
             tooltipPosition="top"
           ></i>
           <i
             class="fal fa-times"
-            *ngIf="mbProduct.product.isMBProduct === 'false'"
+            *ngIf="mlProduct.MLProduct == null"
             pTooltip="Pagamento não sincronizado"
             tooltipPosition="top"
           ></i>
         </div>
+      </td>
+      <td class="actions">
+        <button pButton type="button" label="Detalhes"></button>
       </td>
     </tr>
   </tbody>

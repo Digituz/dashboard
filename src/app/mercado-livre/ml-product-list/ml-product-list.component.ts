@@ -25,7 +25,7 @@ export class MLProductListComponent implements OnInit {
     sortDirectionAscending?: boolean,
     queryParams?: QueryParam[]
   ): Observable<Pagination<Product>> {
-    return this.mercadoLivreService.loadData(pageNumber, 5, sortedBy, sortDirectionAscending, queryParams);
+    return this.mercadoLivreService.loadData(pageNumber, pageSize, sortedBy, sortDirectionAscending, queryParams);
   }
 
   queryProducts() {
