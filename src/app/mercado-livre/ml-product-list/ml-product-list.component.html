@@ -25,11 +25,20 @@
     <label>Controle seus produtos no mercado livre de forma simplificada.</label>
   </p>
   <div class="actions">
+    <p-autoComplete
+      [(ngModel)]="category"
+      [suggestions]="categories"
+      (completeMethod)="search($event)"
+      [multiple]="false"
+      field="category_name"
+      placeholder="Selecione a categoria do produto no mercado livre"
+      [forceSelection]="true"
+    ></p-autoComplete>
     <button
       title="Cadastrar Produto no mercado livre"
-      routerLink="/mercado-livre/list/new"
       pButton
       type="button"
+      (click)="saveProducts()"
       label="Cadastrar Produto"
     ></button>
   </div>
@@ -44,46 +53,57 @@
   <thead>
     <tr>
       <th></th>
+      <th></th>
       <th>SKU</th>
-      <th>Titulo</th>
-      <th>Preço Maxio</th>
+      <th>Título</th>
+      <th>Preço Máximo</th>
       <th>Categoria</th>
       <th>Vinculado</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let mlProduct of MLProductsTable.currentData">
+    <tr *ngFor="let product of MLProductsTable.currentData">
+      <td class="actions">
+        <p-toggleButton [(ngModel)]="product.isChecked"></p-toggleButton>
+      </td>
       <td class="thumbnail centered">
         <div>
-          <i *ngIf="!mlProduct.thumbnail" class="fal fa-images"></i>
-          <div class="square" *ngIf="mlProduct.thumbnail">
-            <img [src]="mlProduct.thumbnail" [alt]="mlProduct.title" width="50px" height="50px" />
+          <i *ngIf="!product.thumbnail" class="fal fa-images"></i>
+          <div class="square" *ngIf="product.thumbnail">
+            <img [src]="product.thumbnail" [alt]="product.title" width="50px" height="50px" />
           </div>
         </div>
       </td>
-      <td class="centered">{{ mlProduct.sku }}</td>
-      <td>{{ mlProduct.title }}</td>
-      <td class="centered">{{ mlProduct.sellingPrice }}</td>
-      <td class="centered">{{ mlProduct.category }}</td>
+      <td class="centered">{{ product.sku }}</td>
+      <td>{{ product.title }}</td>
+      <td class="centered">{{ product.sellingPrice | reais }}</td>
       <td class="centered">
-        <div class="badge" [ngClass]="mlProduct.MLProduct != null ? 'success' : 'failure'">
+        <div *ngIf="product.MLProduct">
+          {{ product.MLProduct?.category }}
+        </div>
+        <div *ngIf="!product.MLProduct">
+          <p>Sem Categoria</p>
+        </div>
+      </td>
+      <td class="centered">
+        <div class="badge" [ngClass]="product.MLProduct ? 'success' : 'failure'">
           <i
             class="fal fa-check"
-            *ngIf="mlProduct.MLProduct !== null"
+            *ngIf="product.MLProduct !== null"
             pTooltip="Produto sincronizado"
             tooltipPosition="top"
           ></i>
           <i
             class="fal fa-times"
-            *ngIf="mlProduct.MLProduct == null"
+            *ngIf="product.MLProduct == null"
             pTooltip="Pagamento não sincronizado"
             tooltipPosition="top"
           ></i>
         </div>
       </td>
       <td class="actions">
-        <button pButton type="button" label="Detalhes"></button>
+        <button pButton type="button" label="Detalhes" [routerLink]="'/mercado-livre/form/' + product.sku"></button>
       </td>
     </tr>
   </tbody>

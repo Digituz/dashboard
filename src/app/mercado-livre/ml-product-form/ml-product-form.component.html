@@ -1,0 +1,108 @@
+<div class="feature-header">
+  <p>
+    <label>Informações base do Produto.</label>
+  </p>
+  <div class="actions">
+    <app-button-back fallbackURL="/products"></app-button-back>
+    <button (click)="submitMLProduct()" pButton type="button" label="Salvar"></button>
+  </div>
+</div>
+<p-card>
+  <form [formGroup]="formFields" (ngSubmit)="submitMLProduct()" *ngIf="!loading">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <label for="sku">SKU </label>
+        <input
+          id="sku"
+          name="sku"
+          type="text"
+          formControlName="sku"
+          pInputText
+          placeholder="SKU do seu produto"
+          pTooltip="Depois de salvo, o SKU não pode ser alterado."
+          tooltipPosition="top"
+        />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="title">Título </label>
+        <input
+          id="title"
+          name="title"
+          type="text"
+          formControlName="title"
+          pInputText
+          placeholder="Título do seu produto"
+        />
+      </div>
+      <div class="p-field p-col">
+        <label for="sellingPrice">Preço mínimo</label>
+        <p-inputNumber
+          id="sellingPrice"
+          name="sellingPrice"
+          formControlName="sellingPrice"
+          currency="BRL"
+          mode="currency"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+          placeholder="ex. R$ 10,00"
+          tooltipPosition="top"
+          pTooltip="Defina o preço do produto através das variações."
+        ></p-inputNumber>
+      </div>
+      <div class="p-field p-col-12">
+        <label for="description">Descrição Curta </label>
+        <input
+          id="description"
+          name="description"
+          type="text"
+          formControlName="description"
+          pInputText
+          placeholder="Descrição curta do produto"
+        />
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <label for="category">Categoria </label>
+        <p-autoComplete
+          formControlName="category"
+          [suggestions]="categories"
+          (completeMethod)="search($event)"
+          [multiple]="false"
+          field="category_name"
+          placeholder="Selecione a categoria do produto no mercado livre"
+          [forceSelection]="true"
+        >
+        </p-autoComplete>
+      </div>
+    </div>
+  </form>
+</p-card>
+
+<div style="margin-top: 10px;">
+  <div class="feature-header">
+    <p>
+      <label>Atualize os dados do seu produto no formulário abaixo.</label>
+    </p>
+  </div>
+  <p-card>
+    <form [formGroup]="formFields" (ngSubmit)="submitMLProduct()" *ngIf="!loading">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-6">
+          <label for="category">Categoria</label>
+          <p-autoComplete
+            formControlName="category"
+            [suggestions]="categories"
+            (completeMethod)="search($event)"
+            [multiple]="false"
+            field="category_name"
+            placeholder="Selecione a categoria do produto no mercado livre"
+            [forceSelection]="true"
+          >
+          </p-autoComplete>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>

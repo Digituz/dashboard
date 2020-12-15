@@ -2,6 +2,7 @@ import { ProductVariation } from './product-variation.entity';
 import { ProductImage } from './product-image.entity';
 import { ProductCategory } from './product-category.enum';
 import { ProductComposition } from './product-composition.entity';
+import MLProduct from '@app/mercado-livre/mercado-livre.entity';
 
 export default class Product {
   id?: number;
@@ -23,4 +24,6 @@ export default class Product {
   imagesSize?: number = 0;
   productImages?: ProductImage[];
   category?: ProductCategory;
+  MLProduct?: MLProduct;
+  isChecked?: boolean = false;
 }

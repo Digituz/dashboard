@@ -48,4 +48,16 @@ export class MercadoLivreService {
 
     return this.httpClient.get<Pagination<any>>(query);
   }
+
+  loadProduct(sku: string) {
+    return this.httpClient.get(`${this.MERCADO_LIVRE_END_POINT}/product?sku=${sku}`);
+  }
+
+  findCategories(query: string) {
+    return this.httpClient.get(`${this.MERCADO_LIVRE_END_POINT}/category?query=${query}`);
+  }
+
+  save(mlProduct: any) {
+    return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}/save`, mlProduct);
+  }
 }
