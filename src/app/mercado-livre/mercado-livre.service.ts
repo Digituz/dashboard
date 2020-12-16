@@ -60,4 +60,8 @@ export class MercadoLivreService {
   save(mlProduct: any) {
     return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}/save`, mlProduct);
   }
+
+  saveAll() {
+    return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}`, null);
+  }
 }

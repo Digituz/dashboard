@@ -54,5 +54,7 @@ export class MLProductListComponent implements OnInit {
     });
   }
 
-  saveProducts() {}
+  saveProducts() {
+    this.mercadoLivreService.saveAll().subscribe();
+  }
 }
