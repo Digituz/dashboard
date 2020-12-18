@@ -62,21 +62,6 @@
         />
       </div>
     </div>
-    <div class="p-fluid p-formgrid p-grid">
-      <div class="p-field p-col-6">
-        <label for="category">Categoria </label>
-        <p-autoComplete
-          formControlName="category"
-          [suggestions]="categories"
-          (completeMethod)="search($event)"
-          [multiple]="false"
-          field="category_name"
-          placeholder="Selecione a categoria do produto no mercado livre"
-          [forceSelection]="true"
-        >
-        </p-autoComplete>
-      </div>
-    </div>
   </form>
 </p-card>
 

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Product from '@app/products/product.entity';
 import MLProduct from '../mercado-livre.entity';
 import { MercadoLivreService } from '../mercado-livre.service';
 
-interface MLCategorie {
+interface MLCategory {
   id: string;
   name: string;
 }
@@ -21,11 +21,12 @@ export class MLProductFormComponent implements OnInit {
   formFields: FormGroup;
   product: Product;
   productDetails: string;
-  categories: MLCategorie[] = [];
+  categories: MLCategory[] = [];
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private mercadoLivreService: MercadoLivreService
   ) {}
 
@@ -48,8 +49,9 @@ export class MLProductFormComponent implements OnInit {
       width: [{ value: product.width, disabled: true }],
       length: [{ value: product.length, disabled: true }],
       weight: [{ value: product.weight, disabled: true }],
-      category: [product.MLProduct?.categoryName || ''],
+      category: [product.MLProduct?.categoryName || null],
     });
+    console.log(this.formFields.value);
     this.loading = false;
   }
 
@@ -57,16 +59,15 @@ export class MLProductFormComponent implements OnInit {
     const formValue = this.formFields.value;
     const id = formValue.category.category_id;
     const name = formValue.category.category_name;
-    const mlCategory: MLCategorie = {
-      id,
-      name,
-    };
 
     const mlProduct = {
-      sku: this.product.sku,
-      mlCategory,
+      id: this.product.MLProduct.id,
+      product: { id: this.product.id },
+      categoryId: id,
+      categoryName: name,
     };
-    this.mercadoLivreService.save(mlProduct);
+    this.mercadoLivreService.save(mlProduct).subscribe();
+    this.router.navigate(['/mercado-livre/list']);
   }
 
   search(event: any) {

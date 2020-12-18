@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import Product from '@app/products/product.entity';
 import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
+import MLCategory from './ml-category.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -61,7 +63,9 @@ export class MercadoLivreService {
     return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}/save`, mlProduct);
   }
 
-  saveAll() {
-    return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}`, null);
+  saveAll(products: Product[], category: MLCategory) {
+    console.log(products, category);
+    const mlProducts = { products, category };
+    return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}`, mlProducts);
   }
 }

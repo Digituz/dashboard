@@ -24,8 +24,9 @@
   <p>
     <label>Controle seus produtos no mercado livre de forma simplificada.</label>
   </p>
-  <div class="actions">
+  <div class="actionHeader">
     <p-autoComplete
+      class="maxWidth"
       [(ngModel)]="category"
       [suggestions]="categories"
       (completeMethod)="search($event)"
@@ -35,11 +36,12 @@
       [forceSelection]="true"
     ></p-autoComplete>
     <button
-      title="Cadastrar Produto no mercado livre"
+      [disabled]="!category"
+      title="Cadastrar Categoria"
       pButton
       type="button"
       (click)="saveProducts()"
-      label="Cadastrar Produto"
+      label=" Categoria"
     ></button>
   </div>
 </div>
@@ -52,8 +54,8 @@
 >
   <thead>
     <tr>
-      <th></th>
-      <th></th>
+      <th>Selecionar</th>
+      <th>Imagens</th>
       <th>SKU</th>
       <th>Título</th>
       <th>Preço Máximo</th>
@@ -80,23 +82,23 @@
       <td class="centered">{{ product.sellingPrice | reais }}</td>
       <td class="centered">
         <div *ngIf="product.MLProduct">
-          {{ product.MLProduct?.category }}
+          {{ product.MLProduct?.categoryName }}
         </div>
         <div *ngIf="!product.MLProduct">
           <p>Sem Categoria</p>
         </div>
       </td>
       <td class="centered">
-        <div class="badge" [ngClass]="product.MLProduct ? 'success' : 'failure'">
+        <div class="badge" [ngClass]="product.MLProduct?.mercadoLivreId ? 'success' : 'failure'">
           <i
             class="fal fa-check"
-            *ngIf="product.MLProduct !== null"
+            *ngIf="product.MLProduct?.mercadoLivreId !== null"
             pTooltip="Produto sincronizado"
             tooltipPosition="top"
           ></i>
           <i
             class="fal fa-times"
-            *ngIf="product.MLProduct == null"
+            *ngIf="product.MLProduct?.mercadoLivreId == null"
             pTooltip="Pagamento não sincronizado"
             tooltipPosition="top"
           ></i>

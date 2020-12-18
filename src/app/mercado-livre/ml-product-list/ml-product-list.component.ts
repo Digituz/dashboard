@@ -4,10 +4,7 @@ import Product from '@app/products/product.entity';
 import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 import { MercadoLivreService } from '../mercado-livre.service';
-interface MLCategorie {
-  id: string;
-  name: string;
-}
+import MLCategory from '../ml-category.entity';
 
 @Component({
   selector: 'app-ml-product-list',
@@ -18,8 +15,8 @@ export class MLProductListComponent implements OnInit {
   @ViewChild('MLProductsTable') resultsTable: DgzTableComponent<any>;
   queryParams: QueryParam[] = [];
   query: string;
-  categories: MLCategorie[] = [];
-  category: MLCategorie;
+  categories: MLCategory[] = [];
+  category: MLCategory;
   constructor(private mercadoLivreService: MercadoLivreService) {}
 
   ngOnInit(): void {}
@@ -55,6 +52,13 @@ export class MLProductListComponent implements OnInit {
   }
 
   saveProducts() {
-    this.mercadoLivreService.saveAll().subscribe();
+    const products = this.resultsTable.currentData;
+    const filterProducts = products
+      .filter((product) => product.isChecked === true)
+      .map((product) => {
+        return { id: product.id, mlId: product.MLProduct.id };
+      });
+    const category: MLCategory = { id: this.category.category_id, name: this.category.category_name };
+    this.mercadoLivreService.saveAll(filterProducts, category).subscribe();
   }
 }

@@ -21,6 +21,15 @@ div.badge {
   }
 }
 
-td.toogle {
+.actionHeader {
   display: flex;
+  flex-direction: row;
+  button {
+    width: 150px;
+    margin-left: 5px;
+  }
+}
+
+.toogler {
+  height: 120px;
 }
