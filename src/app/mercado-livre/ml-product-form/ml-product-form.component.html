@@ -87,6 +87,14 @@
           >
           </p-autoComplete>
         </div>
+        <div class="p-field p-col-6">
+          <label for="adType">Tipo de Anuncio</label>
+          <p-dropdown
+            placeholder="selecione o tipo de anuncio"
+            [options]="adTypes"
+            formControlName="adType"
+          ></p-dropdown>
+        </div>
       </div>
     </form>
   </p-card>

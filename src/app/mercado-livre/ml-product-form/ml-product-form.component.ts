@@ -22,6 +22,36 @@ export class MLProductFormComponent implements OnInit {
   product: Product;
   productDetails: string;
   categories: MLCategory[] = [];
+  adTypes = [
+    {
+      label: 'Premium',
+      value: 'gold_pro',
+    },
+    {
+      label: 'Diamante',
+      value: 'gold_premium',
+    },
+    {
+      label: 'Clássico',
+      value: 'gold_special',
+    },
+    {
+      label: 'Ouro',
+      value: 'gold',
+    },
+    {
+      label: 'Prata',
+      value: 'silver',
+    },
+    {
+      label: 'Bronze',
+      value: 'bronze',
+    },
+    {
+      label: 'Grátis',
+      value: 'free',
+    },
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -50,8 +80,8 @@ export class MLProductFormComponent implements OnInit {
       length: [{ value: product.length, disabled: true }],
       weight: [{ value: product.weight, disabled: true }],
       category: [product.MLProduct?.categoryName || null],
+      adType: [product.MLProduct?.adType || null],
     });
-    console.log(this.formFields.value);
     this.loading = false;
   }
 
@@ -59,12 +89,14 @@ export class MLProductFormComponent implements OnInit {
     const formValue = this.formFields.value;
     const id = formValue.category.category_id;
     const name = formValue.category.category_name;
+    const adType = formValue.adType;
 
     const mlProduct = {
-      id: this.product.MLProduct.id,
+      id: this.product.MLProduct?.id,
       product: { id: this.product.id },
       categoryId: id,
       categoryName: name,
+      adType,
     };
     this.mercadoLivreService.save(mlProduct).subscribe();
     this.router.navigate(['/mercado-livre/list']);
