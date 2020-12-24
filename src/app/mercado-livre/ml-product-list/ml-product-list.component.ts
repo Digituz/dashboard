@@ -3,9 +3,14 @@ import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import Product from '@app/products/product.entity';
 import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
+import { MenuItem } from 'primeng/api';
 import { MercadoLivreService } from '../mercado-livre.service';
 import MLCategory from '../ml-category.entity';
 
+interface statusOption {
+  label: string;
+  value: boolean;
+}
 @Component({
   selector: 'app-ml-product-list',
   templateUrl: './ml-product-list.component.html',
@@ -17,9 +22,25 @@ export class MLProductListComponent implements OnInit {
   query: string;
   categories: MLCategory[] = [];
   category: MLCategory;
+  statusOptions: statusOption[] = [
+    { label: 'Todos', value: null },
+    { label: 'Sincronizado', value: true },
+    { label: 'Falha', value: false },
+  ];
+  items: MenuItem[];
+  activeItem: MenuItem;
+
+  status: statusOption;
+
   constructor(private mercadoLivreService: MercadoLivreService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.items = [
+      { label: 'Lista', icon: 'pi pi-fw pi-home', routerLink: '/mercado-livre/list' },
+      { label: 'Erros', icon: 'pi pi-fw pi-calendar', routerLink: '/mercado-livre/error-list' },
+    ];
+    this.activeItem = this.items[0];
+  }
 
   loadData(
     pageNumber: number,
@@ -32,7 +53,10 @@ export class MLProductListComponent implements OnInit {
   }
 
   queryProducts() {
-    this.queryParams = [{ key: 'query', value: this.query }];
+    this.queryParams = [
+      { key: 'query', value: this.query },
+      { key: 'status', value: this.status.value },
+    ];
     this.resultsTable.reload(this.queryParams);
   }
 

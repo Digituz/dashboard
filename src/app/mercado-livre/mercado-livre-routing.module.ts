@@ -6,6 +6,7 @@ import { Shell } from '@app/shell/shell.service';
 import { MercadoLivreComponent } from './mercado-livre.component';
 import { MLProductListComponent } from './ml-product-list/ml-product-list.component';
 import { MLProductFormComponent } from './ml-product-form/ml-product-form.component';
+import { MlErrosListComponent } from './ml-erros-list/ml-erros-list.component';
 
 const routes: Routes = [
   Shell.childRoutes([
@@ -28,6 +29,13 @@ const routes: Routes = [
           component: MLProductFormComponent,
           data: {
             title: extract('Formulário de Produtos mercado Livre'),
+          },
+        },
+        {
+          path: 'error-list',
+          component: MlErrosListComponent,
+          data: {
+            title: extract('Lista de Erros'),
           },
         },
       ],

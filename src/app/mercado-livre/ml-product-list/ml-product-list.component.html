@@ -1,9 +1,14 @@
 <div class="search-container">
+  <div class="space"><p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu></div>
   <form (ngSubmit)="queryProducts()">
     <div class="p-fluid p-formgrid p-grid">
-      <div class="p-field p-col-12">
+      <div class="p-field p-col-8">
         <label for="query">Pesquisa</label>
         <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+      <div class="p-field p-col-4">
+        <label for="isActive">status</label>
+        <p-dropdown name="status" [options]="statusOptions" [(ngModel)]="status" optionLabel="label"></p-dropdown>
       </div>
     </div>
     <div class="p-fluid p-formgrid p-grid">
@@ -66,7 +71,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let product of MLProductsTable.currentData">
-      <td class="actions">
+      <td class="centered">
         <p-toggleButton [(ngModel)]="product.isChecked"></p-toggleButton>
       </td>
       <td class="thumbnail centered">
@@ -89,17 +94,23 @@
         </div>
       </td>
       <td class="centered">
-        <div class="badge" [ngClass]="product.MLProduct?.mercadoLivreId ? 'success' : 'failure'">
+        <div class="badge" [ngClass]="product.MLProduct?.isSynchronized ? 'success' : 'failure'">
           <i
             class="fal fa-check"
-            *ngIf="product.MLProduct?.mercadoLivreId !== null"
+            *ngIf="product.MLProduct?.isSynchronized === true"
             pTooltip="Produto sincronizado"
             tooltipPosition="top"
           ></i>
           <i
             class="fal fa-times"
-            *ngIf="product.MLProduct?.mercadoLivreId == null"
-            pTooltip="Pagamento não sincronizado"
+            *ngIf="product.MLProduct?.isSynchronized == false"
+            pTooltip="Produto não sincronizado"
+            tooltipPosition="top"
+          ></i>
+          <i
+            class="fal fa-sync"
+            *ngIf="product.MLProduct?.isSynchronized == null"
+            pTooltip="Produto não sincronizado"
             tooltipPosition="top"
           ></i>
         </div>
