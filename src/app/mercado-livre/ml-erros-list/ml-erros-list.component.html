@@ -1,3 +1,26 @@
-<div class="search-container">
-  <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
-</div>
+<p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
+<dgz-table #MLErrosTable [dataProvider]="this" name="mercado-livre-error-list">
+  <thead>
+    <tr>
+      <th></th>
+      <th>SKU</th>
+      <th>Titulo</th>
+      <th>Erro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let erros of MLErrosTable.currentData">
+      <td class="thumbnail centered">
+        <div>
+          <i *ngIf="!erros.product.thumbnail" class="fal fa-images"></i>
+          <div class="square" *ngIf="erros.product.thumbnail">
+            <img [src]="erros.product.thumbnail" [alt]="erros.product.title" width="50px" height="50px" />
+          </div>
+        </div>
+      </td>
+      <td class="centered">{{ erros.product.sku }}</td>
+      <td class="centered">{{ erros.product.title }}</td>
+      <td>{{ erros.error }}</td>
+    </tr>
+  </tbody>
+</dgz-table>

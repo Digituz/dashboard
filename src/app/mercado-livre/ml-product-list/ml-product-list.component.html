@@ -1,5 +1,5 @@
+<div><p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu></div>
 <div class="search-container">
-  <div class="space"><p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu></div>
   <form (ngSubmit)="queryProducts()">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-8">
@@ -72,7 +72,9 @@
   <tbody>
     <tr *ngFor="let product of MLProductsTable.currentData">
       <td class="centered">
-        <p-toggleButton [(ngModel)]="product.isChecked"></p-toggleButton>
+        <div class="space">
+          <p-toggleButton [(ngModel)]="product.isChecked" onIcon="fal fa-check" offIcon="fal fa-times"></p-toggleButton>
+        </div>
       </td>
       <td class="thumbnail centered">
         <div>

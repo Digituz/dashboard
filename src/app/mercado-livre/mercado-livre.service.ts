@@ -59,12 +59,23 @@ export class MercadoLivreService {
     return this.httpClient.get(`${this.MERCADO_LIVRE_END_POINT}/category?query=${query}`);
   }
 
+  loadErrors(
+    pageNumber: number,
+    pageSize: number,
+    sortedBy?: string,
+    sortDirectionAscending?: boolean,
+    queryParams?: QueryParam[]
+  ): Observable<Pagination<any>> {
+    let query = `${this.MERCADO_LIVRE_END_POINT}/errors?page=${pageNumber}&limit=${pageSize}`;
+
+    return this.httpClient.get<Pagination<any>>(query);
+  }
+
   save(mlProduct: any) {
     return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}/save`, mlProduct);
   }
 
   saveAll(products: Product[], category: MLCategory) {
-    console.log(products, category);
     const mlProducts = { products, category };
     return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}`, mlProducts);
   }

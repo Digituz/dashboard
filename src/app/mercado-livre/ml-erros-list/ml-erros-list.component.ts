@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
+import Product from '@app/products/product.entity';
+import { Pagination, QueryParam } from '@app/util/pagination';
 import { MenuItem } from 'primeng/api';
+import { Observable } from 'rxjs';
+import { MercadoLivreService } from '../mercado-livre.service';
 
 @Component({
   selector: 'app-ml-erros-list',
@@ -7,9 +12,10 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./ml-erros-list.component.scss'],
 })
 export class MlErrosListComponent implements OnInit {
+  @ViewChild('MLErrosTable') resultsTable: DgzTableComponent<any>;
   items: MenuItem[];
   activeItem: MenuItem;
-  constructor() {}
+  constructor(private mercadoLivreService: MercadoLivreService) {}
 
   ngOnInit(): void {
     this.items = [
@@ -17,5 +23,15 @@ export class MlErrosListComponent implements OnInit {
       { label: 'Erros', icon: 'pi pi-fw pi-calendar', routerLink: '/mercado-livre/error-list' },
     ];
     this.activeItem = this.items[1];
+  }
+
+  loadData(
+    pageNumber: number,
+    pageSize: number,
+    sortedBy?: string,
+    sortDirectionAscending?: boolean,
+    queryParams?: QueryParam[]
+  ): Observable<Pagination<Product>> {
+    return this.mercadoLivreService.loadErrors(pageNumber, pageSize, sortedBy, sortDirectionAscending, queryParams);
   }
 }

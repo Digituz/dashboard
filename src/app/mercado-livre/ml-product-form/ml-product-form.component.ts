@@ -52,6 +52,7 @@ export class MLProductFormComponent implements OnInit {
       value: 'free',
     },
   ];
+  value: string;
 
   constructor(
     private fb: FormBuilder,
@@ -69,6 +70,10 @@ export class MLProductFormComponent implements OnInit {
   }
 
   private configureFormFields(product: Product) {
+    const category = {
+      category_id: product.MLProduct.categoryId,
+      category_name: product.MLProduct.categoryName,
+    };
     this.formFields = this.fb.group({
       sku: [{ value: product.sku, disabled: true }],
       ncm: [{ value: product.ncm, disabled: true }],
@@ -79,7 +84,7 @@ export class MLProductFormComponent implements OnInit {
       width: [{ value: product.width, disabled: true }],
       length: [{ value: product.length, disabled: true }],
       weight: [{ value: product.weight, disabled: true }],
-      category: [product.MLProduct?.categoryName || null],
+      category: [category || null],
       adType: [product.MLProduct?.adType || null],
     });
     this.loading = false;
@@ -97,6 +102,7 @@ export class MLProductFormComponent implements OnInit {
       categoryId: id,
       categoryName: name,
       adType,
+      isSynchronized: this.product.MLProduct.isSynchronized,
     };
     this.mercadoLivreService.save(mlProduct).subscribe();
     this.router.navigate(['/mercado-livre/list']);
