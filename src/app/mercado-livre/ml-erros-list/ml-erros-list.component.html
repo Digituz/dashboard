@@ -1,4 +1,13 @@
 <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
+
+<div class="feature-header table">
+  <p class="description">
+    <label>Erros ao gerar um produto.</label>
+  </p>
+  <div class="actions">
+    <button title="Limpar Erros" pButton type="button" (click)="cleanUpErrors()" label=" Limpar Erros"></button>
+  </div>
+</div>
 <dgz-table #MLErrosTable [dataProvider]="this" name="mercado-livre-error-list">
   <thead>
     <tr>

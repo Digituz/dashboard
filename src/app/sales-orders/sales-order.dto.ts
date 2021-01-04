@@ -29,6 +29,7 @@ export class SalesOrderDTO {
   cancellationDate?: Date;
   total?: number;
   blingStatus?: SaleOrderBlingStatus | string;
+  mlOrderId?: string;
 
   // ui helpers
   duplicatingSalesOrder?: boolean;

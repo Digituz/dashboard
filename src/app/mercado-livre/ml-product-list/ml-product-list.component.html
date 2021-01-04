@@ -73,7 +73,11 @@
     <tr *ngFor="let product of MLProductsTable.currentData">
       <td class="centered">
         <div class="space">
-          <p-toggleButton [(ngModel)]="product.isChecked" onIcon="fal fa-check" offIcon="fal fa-times"></p-toggleButton>
+          <p-toggleButton
+            [(ngModel)]="product.isChecked"
+            onIcon="fal fa-check-square"
+            offIcon="fal fa-square"
+          ></p-toggleButton>
         </div>
       </td>
       <td class="thumbnail centered">
@@ -96,15 +100,20 @@
         </div>
       </td>
       <td class="centered">
-        <div class="badge" [ngClass]="product.MLProduct?.isSynchronized ? 'success' : 'failure'">
+        <div
+          class="badge"
+          [ngClass]="
+            product.MLProduct?.isSynchronized == null ? '' : product.MLProduct?.isSynchronized ? 'success' : 'failure'
+          "
+        >
           <i
-            class="fal fa-check"
+            class="fal fa-check success"
             *ngIf="product.MLProduct?.isSynchronized === true"
             pTooltip="Produto sincronizado"
             tooltipPosition="top"
           ></i>
           <i
-            class="fal fa-times"
+            class="fal fa-times failure"
             *ngIf="product.MLProduct?.isSynchronized == false"
             pTooltip="Produto não sincronizado"
             tooltipPosition="top"

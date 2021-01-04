@@ -79,4 +79,8 @@ export class MercadoLivreService {
     const mlProducts = { products, category };
     return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}`, mlProducts);
   }
+
+  cleanUpErrors() {
+    return this.httpClient.delete(`${this.MERCADO_LIVRE_END_POINT}/delete-erros`);
+  }
 }

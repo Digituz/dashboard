@@ -114,7 +114,17 @@
           ></i>
         </div>
       </td>
+
       <td class="actions">
+        <button
+          *ngIf="!!salesOrder.mlOrderId"
+          pButton
+          type="button"
+          class="p-button-secondary"
+          label="ML"
+          [pTooltip]="'Venda vinda do Mercado Livre'"
+          tooltipPosition="top"
+        ></button>
         <button
           [title]="'Venda'"
           [routerLink]="'/sales-orders/' + salesOrder.referenceCode"
