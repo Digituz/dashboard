@@ -80,7 +80,7 @@ export class MLProductListComponent implements OnInit {
     const filterProducts = products
       .filter((product) => product.isChecked === true)
       .map((product) => {
-        return { id: product.id, mlId: product.MLProduct.id };
+        return { id: product.id, mlId: product.MLProduct?.id };
       });
     const category: MLCategory = { id: this.category.category_id, name: this.category.category_name };
     this.mercadoLivreService.saveAll(filterProducts, category).subscribe();

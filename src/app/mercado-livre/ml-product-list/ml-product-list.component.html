@@ -92,10 +92,10 @@
       <td>{{ product.title }}</td>
       <td class="centered">{{ product.sellingPrice | reais }}</td>
       <td class="centered">
-        <div *ngIf="product.MLProduct">
-          {{ product.MLProduct?.categoryName }}
+        <div *ngIf="product.adProduct[0]">
+          {{ product.adProduct[0]?.categoryName }}
         </div>
-        <div *ngIf="!product.MLProduct">
+        <div *ngIf="!product.adProduct[0]">
           <p>Sem Categoria</p>
         </div>
       </td>
@@ -103,24 +103,28 @@
         <div
           class="badge"
           [ngClass]="
-            product.MLProduct?.isSynchronized == null ? '' : product.MLProduct?.isSynchronized ? 'success' : 'failure'
+            product.adProduct[0]?.isSynchronized == null
+              ? ''
+              : product.adProduct[0]?.isSynchronized
+              ? 'success'
+              : 'failure'
           "
         >
           <i
             class="fal fa-check success"
-            *ngIf="product.MLProduct?.isSynchronized === true"
+            *ngIf="product.adProduct[0]?.isSynchronized === true"
             pTooltip="Produto sincronizado"
             tooltipPosition="top"
           ></i>
           <i
             class="fal fa-times failure"
-            *ngIf="product.MLProduct?.isSynchronized == false"
+            *ngIf="product.adProduct[0]?.isSynchronized == false"
             pTooltip="Produto não sincronizado"
             tooltipPosition="top"
           ></i>
           <i
             class="fal fa-sync"
-            *ngIf="product.MLProduct?.isSynchronized == null"
+            *ngIf="product.adProduct[0]?.isSynchronized == null"
             pTooltip="Produto não sincronizado"
             tooltipPosition="top"
           ></i>

@@ -70,9 +70,10 @@ export class MLProductFormComponent implements OnInit {
   }
 
   private configureFormFields(product: Product) {
+    product.adProduct = product.adProduct.filter((adProduct) => adProduct.isActive === true);
     const category = {
-      category_id: product.MLProduct.categoryId,
-      category_name: product.MLProduct.categoryName,
+      category_id: product.adProduct[0]?.categoryId,
+      category_name: product.adProduct[0]?.categoryName,
     };
     this.formFields = this.fb.group({
       sku: [{ value: product.sku, disabled: true }],
@@ -85,7 +86,7 @@ export class MLProductFormComponent implements OnInit {
       length: [{ value: product.length, disabled: true }],
       weight: [{ value: product.weight, disabled: true }],
       category: [category || null],
-      adType: [product.MLProduct?.adType || null],
+      adType: [product.adProduct[0]?.adType || null],
     });
     this.loading = false;
   }
@@ -97,13 +98,14 @@ export class MLProductFormComponent implements OnInit {
     const adType = formValue.adType;
 
     const mlProduct = {
-      id: this.product.MLProduct?.id,
+      id: this.product.adProduct ? this.product.adProduct[0].id : null,
       product: { id: this.product.id },
       categoryId: id,
       categoryName: name,
       adType,
-      isSynchronized: this.product.MLProduct.isSynchronized,
+      isSynchronized: this.product.adProduct[0]?.isSynchronized,
     };
+    console.log(mlProduct);
     this.mercadoLivreService.save(mlProduct).subscribe();
     this.router.navigate(['/mercado-livre/list']);
   }
