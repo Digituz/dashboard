@@ -98,7 +98,7 @@ export class MLProductFormComponent implements OnInit {
     const adType = formValue.adType;
 
     const mlProduct = {
-      id: this.product.adProduct ? this.product.adProduct[0].id : null,
+      id: this.product.adProduct ? this.product.adProduct[0]?.id : null,
       product: { id: this.product.id },
       categoryId: id,
       categoryName: name,
