@@ -30,7 +30,7 @@ export class SalesOrderDTO {
   total?: number;
   blingStatus?: SaleOrderBlingStatus | string;
   mlOrderId?: string;
-
+  mlShippingId?: string;
   // ui helpers
   duplicatingSalesOrder?: boolean;
   syncingWithBling?: boolean;

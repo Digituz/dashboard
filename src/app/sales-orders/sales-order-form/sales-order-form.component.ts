@@ -14,6 +14,7 @@ import { ProductVariationDetailsDTO } from '@app/products/product-variation-deta
 import { ShippingType } from '../shipping-type.enum';
 import { customerValidator, productItemValidator } from './sales-order-form.validators';
 import { SaleOrderItemDTO } from '../sale-order-item.dto';
+import { createAndDownloadBlobFile } from '@app/util/util';
 
 @Component({
   selector: 'app-sales-order-form',
@@ -91,7 +92,6 @@ export class SalesOrderFormComponent implements OnInit {
         }));
 
         this.configureFormFields(salesOrder);
-
         if (!!salesOrder.blingStatus) {
           this.formFields.disable();
         }
@@ -261,5 +261,14 @@ export class SalesOrderFormComponent implements OnInit {
     if (!item.value.productVariation || !item.value.productVariation.sku) return null;
     const currentPosition = this.getItemsInStockWithoutSalesOrder(item);
     return currentPosition - item.value.amount;
+  }
+
+  getShippingLabel() {
+    this.salesOrdersService.getShippingLabel(this.salesOrder.mlShippingId).subscribe((res) => {
+      console.log(res);
+      const options = { type: 'application/pdf' };
+      const filename = 'Etiqueta.pdf';
+      createAndDownloadBlobFile(res, options, filename);
+    });
   }
 }

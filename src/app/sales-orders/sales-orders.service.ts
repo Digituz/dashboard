@@ -10,6 +10,7 @@ import { SalesOrderCustomerReport } from './sales-orders-report/sales-order-cust
 })
 export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
   private SALES_ORDERS_ENDPOINT = '/sales-order';
+  private MERCADO_LIVRE_END_POINT = '/mercado-livre';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -67,5 +68,11 @@ export class SalesOrdersService implements IDataProvider<SalesOrderDTO> {
   download(groupBy: string, startDate: string, endDate: string): Observable<any> {
     const path = `${this.SALES_ORDERS_ENDPOINT}/report?groupBy=${groupBy}&startDate=${startDate}&endDate=${endDate}&xlsx=true`;
     return this.httpClient.get(path, { responseType: 'blob' });
+  }
+
+  getShippingLabel(shippingLabelId: string) {
+    return this.httpClient.get(`${this.MERCADO_LIVRE_END_POINT}/shipping-label?id=${shippingLabelId}`, {
+      responseType: 'blob',
+    });
   }
 }

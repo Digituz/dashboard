@@ -228,6 +228,12 @@
   <p-card>
     <div class="product-variation-description">
       <p>Informe os detalhes sobre a entrega.</p>
+      <button
+        pButton
+        label="Gerar Etiqueta de Envio"
+        (click)="getShippingLabel()"
+        [disabled]="!salesOrder.mlShippingId"
+      ></button>
     </div>
     <form [formGroup]="formFields" (ngSubmit)="submitSalesOrder()" *ngIf="!loading">
       <div class="p-fluid p-formgrid p-grid">
