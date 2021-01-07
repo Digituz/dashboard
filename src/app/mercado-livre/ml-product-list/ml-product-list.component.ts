@@ -55,7 +55,7 @@ export class MLProductListComponent implements OnInit {
   queryProducts() {
     this.queryParams = [
       { key: 'query', value: this.query },
-      { key: 'status', value: this.status.value },
+      { key: 'status', value: this.status?.value },
     ];
     this.resultsTable.reload(this.queryParams);
   }
