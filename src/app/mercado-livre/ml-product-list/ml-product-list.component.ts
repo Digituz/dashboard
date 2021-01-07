@@ -83,6 +83,8 @@ export class MLProductListComponent implements OnInit {
         return { id: product.id, mlId: product.MLProduct?.id };
       });
     const category: MLCategory = { id: this.category.category_id, name: this.category.category_name };
-    this.mercadoLivreService.saveAll(filterProducts, category).subscribe();
+    this.mercadoLivreService.saveAll(filterProducts, category).subscribe((result) => {
+      this.resultsTable.reload(this.queryParams);
+    });
   }
 }
