@@ -30,16 +30,18 @@
     <label>Controle seus produtos no mercado livre de forma simplificada.</label>
   </p>
   <div class="actionHeader">
-    <p-autoComplete
-      class="maxWidth"
-      [(ngModel)]="category"
-      [suggestions]="categories"
-      (completeMethod)="search($event)"
-      [multiple]="false"
-      field="category_name"
-      placeholder="Selecione a categoria do produto no mercado livre"
-      [forceSelection]="true"
-    ></p-autoComplete>
+    <div class="searchClass">
+      <p-autoComplete
+        class="maxWidth"
+        [(ngModel)]="category"
+        [suggestions]="categories"
+        (completeMethod)="search($event)"
+        [multiple]="false"
+        field="category_name"
+        placeholder="Selecione a categoria do produto no mercado livre"
+        [forceSelection]="true"
+      ></p-autoComplete>
+    </div>
     <button
       [disabled]="!category"
       title="Cadastrar Categoria"

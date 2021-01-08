@@ -115,7 +115,11 @@ export class ProductFormComponent implements OnInit {
         return this.messagesService.showError('Uma variação não tem SKU definido.');
       }
       const product = this.formFields.value;
-      product.productDetails = this.productDetails;
+      product.productDetails = this.productDetails.replace(
+        /([\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
+        ''
+      );
+      product.productDetails;
       product.productVariations = this.variations;
       product.productImages = this.images;
       product.productComposition = this.product.productComposition?.map((item) => item.productVariation.sku);

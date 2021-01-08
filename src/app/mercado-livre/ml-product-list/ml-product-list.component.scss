@@ -24,6 +24,8 @@ div.badge {
 .actionHeader {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
+
   button {
     width: 150px;
     margin-left: 5px;
