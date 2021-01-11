@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import Product from '@app/products/product.entity';
 import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
+import adProduct from './mercado-livre.entity';
 import MLCategory from './ml-category.entity';
 
 @Injectable({
@@ -71,13 +72,13 @@ export class MercadoLivreService {
     return this.httpClient.get<Pagination<any>>(query);
   }
 
-  save(mlProduct: any) {
-    return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}/save`, mlProduct);
+  save(adProduct: adProduct) {
+    return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}/save`, adProduct);
   }
 
   saveAll(products: Product[], category: MLCategory) {
-    const mlProducts = { products, category };
-    return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}`, mlProducts);
+    const adProducts = { products, category };
+    return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}`, adProducts);
   }
 
   cleanUpErrors() {

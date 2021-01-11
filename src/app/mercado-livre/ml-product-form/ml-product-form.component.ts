@@ -2,13 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Product from '@app/products/product.entity';
-import MLProduct from '../mercado-livre.entity';
+import adProduct from '../mercado-livre.entity';
 import { MercadoLivreService } from '../mercado-livre.service';
-
-interface MLCategory {
-  id: string;
-  name: string;
-}
+import MLCategory from '../ml-category.entity';
 
 @Component({
   selector: 'app-ml-product-form',
@@ -17,7 +13,7 @@ interface MLCategory {
 })
 export class MLProductFormComponent implements OnInit {
   loading: boolean = true;
-  MLProduct: MLProduct;
+  adProduct: adProduct;
   formFields: FormGroup;
   product: Product;
   productDetails: string;
@@ -97,7 +93,7 @@ export class MLProductFormComponent implements OnInit {
     const name = formValue.category.category_name;
     const adType = formValue.adType;
 
-    const mlProduct = {
+    const adProduct = {
       id: this.product.adProduct ? this.product.adProduct[0]?.id : null,
       product: { id: this.product.id },
       categoryId: id,
@@ -105,8 +101,7 @@ export class MLProductFormComponent implements OnInit {
       adType,
       isSynchronized: this.product.adProduct[0]?.isSynchronized,
     };
-    console.log(mlProduct);
-    this.mercadoLivreService.save(mlProduct).subscribe();
+    this.mercadoLivreService.save(adProduct).subscribe();
     this.router.navigate(['/mercado-livre/list']);
   }
 
