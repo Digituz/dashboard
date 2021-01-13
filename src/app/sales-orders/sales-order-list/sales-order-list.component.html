@@ -116,15 +116,13 @@
       </td>
 
       <td class="actions">
-        <button
-          *ngIf="!!salesOrder.mlOrderId"
-          pButton
-          type="button"
-          class="p-button-secondary"
-          label="ML"
+        <img
           [pTooltip]="'Venda vinda do Mercado Livre'"
-          tooltipPosition="top"
-        ></button>
+          src="../../../assets/mercado-livre-logo.png"
+          alt="Girl in a jacket"
+          width="30"
+          height="30"
+        />
         <button
           [title]="'Venda'"
           [routerLink]="'/sales-orders/' + salesOrder.referenceCode"

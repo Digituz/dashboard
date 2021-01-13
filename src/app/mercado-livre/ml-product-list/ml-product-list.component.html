@@ -30,26 +30,7 @@
     <label>Controle seus produtos no mercado livre de forma simplificada.</label>
   </p>
   <div class="actionHeader">
-    <div class="searchClass">
-      <p-autoComplete
-        class="maxWidth"
-        [(ngModel)]="category"
-        [suggestions]="categories"
-        (completeMethod)="search($event)"
-        [multiple]="false"
-        field="category_name"
-        placeholder="Selecione a categoria do produto no mercado livre"
-        [forceSelection]="true"
-      ></p-autoComplete>
-    </div>
-    <button
-      [disabled]="!category"
-      title="Cadastrar Categoria"
-      pButton
-      type="button"
-      (click)="saveProducts()"
-      label=" Salvar"
-    ></button>
+    <button title="Cadastrar Categoria" pButton type="button" (click)="openDialog()" label=" Salvar"></button>
   </div>
 </div>
 <dgz-table
@@ -98,7 +79,7 @@
           {{ product.adProduct[0]?.categoryName }}
         </div>
         <div *ngIf="!product.adProduct[0]">
-          <p>Sem Categoria</p>
+          <p>-</p>
         </div>
       </td>
       <td class="centered">
@@ -138,3 +119,56 @@
     </tr>
   </tbody>
 </dgz-table>
+<p-dialog
+  header="Criação de Anuncio no Mercado Livre"
+  [(visible)]="isModalVisible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [resizable]="false"
+  [draggable]="false"
+  [contentStyle]="{ overflow: 'visible' }"
+>
+  <form nz-form [formGroup]="formFields" (ngSubmit)="createAd()" *ngIf="isModalVisible">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="category">Categoria</label>
+        <p-autoComplete
+          class="maxWidth"
+          formControlName="category"
+          [suggestions]="categories"
+          (completeMethod)="search($event)"
+          [multiple]="false"
+          field="category_name"
+          placeholder="Selecione a categoria do produto no mercado livre"
+          [forceSelection]="true"
+        ></p-autoComplete>
+        <small [hidden]="!isFieldInvalid('category')" id="description-help" class="p-invalid"
+          >Escolha a categoria</small
+        >
+      </div>
+      <div class="p-field p-col-12"></div>
+      <div class="p-field p-col-6">
+        <label for="adType">Tipo de Anuncio</label>
+        <p-dropdown placeholder="selecione o tipo de anuncio" [options]="adTypes" formControlName="adType"></p-dropdown>
+        <small [hidden]="!isFieldInvalid('adType')" id="description-help" class="p-invalid"
+          >Escolha o tipo de Anuncio do produto</small
+        >
+      </div>
+      <div class="p-field p-col-6">
+        <label for="variationSellingPrice">Valor Adicional</label>
+        <p-inputNumber
+          mode="currency"
+          currency="BRL"
+          formControlName="additionalPrice"
+          [min]="0"
+          [max]="100"
+          placeholder="Ex. R$10,00"
+        ></p-inputNumber>
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <button pButton type="button" class="p-button-secondary" (click)="handleCancel()" label="Cancelar"></button>
+    <button pButton type="button" (click)="createAd()" label="Salvar"></button>
+  </p-footer>
+</p-dialog>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Product from '@app/products/product.entity';
 import adProduct from '../mercado-livre.entity';
@@ -81,33 +81,50 @@ export class MLProductFormComponent implements OnInit {
       width: [{ value: product.width, disabled: true }],
       length: [{ value: product.length, disabled: true }],
       weight: [{ value: product.weight, disabled: true }],
-      category: [category || null],
-      adType: [product.adProduct[0]?.adType || null],
+      category: [category || null, Validators.required],
+      adType: [product.adProduct[0]?.adType || null, Validators.required],
     });
     this.loading = false;
   }
 
   submitMLProduct() {
     const formValue = this.formFields.value;
-    const id = formValue.category.category_id;
-    const name = formValue.category.category_name;
-    const adType = formValue.adType;
-
-    const adProduct = {
-      id: this.product.adProduct ? this.product.adProduct[0]?.id : null,
-      product: { id: this.product.id },
-      categoryId: id,
-      categoryName: name,
-      adType,
-      isSynchronized: this.product.adProduct[0]?.isSynchronized,
-    };
-    this.mercadoLivreService.save(adProduct).subscribe();
-    this.router.navigate(['/mercado-livre/list']);
+    if (!formValue.category.category_name) {
+      this.formFields.get('category').setValue(null);
+    }
+    if (!this.formFields.valid) {
+      this.markAllFieldsAsTouched(this.formFields);
+    } else {
+      const id = formValue.category.category_id;
+      const name = formValue.category.category_name;
+      const adType = formValue.adType;
+      const adProduct = {
+        id: this.product.adProduct ? this.product.adProduct[0]?.id : null,
+        product: { id: this.product.id },
+        categoryId: id,
+        categoryName: name,
+        adType,
+        isSynchronized: this.product.adProduct[0]?.isSynchronized,
+      };
+      this.mercadoLivreService.save(adProduct).subscribe();
+      this.router.navigate(['/mercado-livre/list']);
+    }
   }
 
   search(event: any) {
     this.mercadoLivreService.findCategories(event.query).subscribe((categories: any) => {
       this.categories = categories;
     });
+  }
+
+  markAllFieldsAsTouched(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((field) => {
+      const control = formGroup.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+  }
+
+  isFieldInvalid(field: string) {
+    return !this.formFields.get(field).valid && this.formFields.get(field).touched;
   }
 }

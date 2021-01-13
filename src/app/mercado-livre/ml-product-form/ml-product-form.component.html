@@ -86,6 +86,9 @@
             [forceSelection]="true"
           >
           </p-autoComplete>
+          <small [hidden]="!isFieldInvalid('category')" id="description-help" class="p-invalid"
+            >Insira a categoria do produto</small
+          >
         </div>
         <div class="p-field p-col-6">
           <label for="adType">Tipo de Anuncio</label>
@@ -94,6 +97,9 @@
             [options]="adTypes"
             formControlName="adType"
           ></p-dropdown>
+          <small [hidden]="!isFieldInvalid('adType')" id="description-help" class="p-invalid"
+            >Escolha o tipo de Anuncio do produto</small
+          >
         </div>
       </div>
     </form>
