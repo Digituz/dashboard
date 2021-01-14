@@ -122,7 +122,6 @@ export class MLProductListComponent implements OnInit {
   }
 
   createAd() {
-    console.log(this.formFields.value);
     if (!this.formFields.valid) {
       this.markAllFieldsAsTouched(this.formFields);
     } else {
@@ -131,7 +130,6 @@ export class MLProductListComponent implements OnInit {
       const adType = formValues.adType;
       const additionalPrice = formValues.additionalPrice;
 
-      console.log(categoryForm, adType, additionalPrice);
       const products = this.resultsTable.currentData;
       const category: MLCategory = { id: categoryForm.category_id, name: categoryForm.category_name };
       const filterProducts = products
@@ -139,8 +137,9 @@ export class MLProductListComponent implements OnInit {
         .map((product) => {
           return { id: product.id, mlId: product.adProduct.mlId };
         });
-      this.mercadoLivreService.saveAll(filterProducts, category, additionalPrice).subscribe((result) => {
+      this.mercadoLivreService.saveAll(filterProducts, category, adType, additionalPrice).subscribe((result) => {
         this.resultsTable.reload(this.queryParams);
+        this.isModalVisible = false;
       });
     }
   }

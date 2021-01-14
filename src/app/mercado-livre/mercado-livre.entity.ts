@@ -5,5 +5,6 @@ export default class adProduct {
   id?: number;
   adType?: string;
   isActive?: boolean;
+  additionalPrice?: number;
   isSynchronized?: boolean;
 }

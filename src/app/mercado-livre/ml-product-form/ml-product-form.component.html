@@ -101,6 +101,17 @@
             >Escolha o tipo de Anuncio do produto</small
           >
         </div>
+        <div class="p-field p-col-6">
+          <label for="additionalPrice">Valor adicional no anuncio</label>
+          <p-inputNumber
+            mode="currency"
+            currency="BRL"
+            formControlName="additionalPrice"
+            [min]="0"
+            [max]="100"
+            placeholder="Ex. R$10,00"
+          ></p-inputNumber>
+        </div>
       </div>
     </form>
   </p-card>

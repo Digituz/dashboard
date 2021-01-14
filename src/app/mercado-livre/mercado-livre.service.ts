@@ -76,8 +76,8 @@ export class MercadoLivreService {
     return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}/save`, adProduct);
   }
 
-  saveAll(products: Product[], category: MLCategory, additionalPrice: number) {
-    const adProducts = { products, category, additionalPrice };
+  saveAll(products: Product[], category: MLCategory, adType: string, additionalPrice: number) {
+    const adProducts = { products, category, adType, additionalPrice };
     return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}`, adProducts);
   }
 

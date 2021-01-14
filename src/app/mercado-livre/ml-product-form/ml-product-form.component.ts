@@ -83,6 +83,7 @@ export class MLProductFormComponent implements OnInit {
       weight: [{ value: product.weight, disabled: true }],
       category: [category || null, Validators.required],
       adType: [product.adProduct[0]?.adType || null, Validators.required],
+      additionalPrice: [product.adProduct[0]?.additionalPrice || null],
     });
     this.loading = false;
   }
@@ -98,12 +99,14 @@ export class MLProductFormComponent implements OnInit {
       const id = formValue.category.category_id;
       const name = formValue.category.category_name;
       const adType = formValue.adType;
+      const additionalPrice = formValue.additionalPrice;
       const adProduct = {
         id: this.product.adProduct ? this.product.adProduct[0]?.id : null,
         product: { id: this.product.id },
         categoryId: id,
         categoryName: name,
         adType,
+        additionalPrice,
         isSynchronized: this.product.adProduct[0]?.isSynchronized,
       };
       this.mercadoLivreService.save(adProduct).subscribe();
