@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Product from '@app/products/product.entity';
-import adProduct from '../mercado-livre.entity';
+import MLAd from '../ml-ad.entity';
 import { MercadoLivreService } from '../mercado-livre.service';
 import MLCategory from '../ml-category.entity';
 
@@ -13,7 +13,7 @@ import MLCategory from '../ml-category.entity';
 })
 export class MLProductFormComponent implements OnInit {
   loading: boolean = true;
-  adProduct: adProduct;
+  mlAd: MLAd;
   formFields: FormGroup;
   product: Product;
   productDetails: string;
@@ -66,10 +66,10 @@ export class MLProductFormComponent implements OnInit {
   }
 
   private configureFormFields(product: Product) {
-    product.adProduct = product.adProduct.filter((adProduct) => adProduct.isActive === true);
+    product.mlAd = product.mlAd.filter((ad) => ad.isActive === true);
     const category = {
-      category_id: product.adProduct[0]?.categoryId,
-      category_name: product.adProduct[0]?.categoryName,
+      category_id: product.mlAd[0]?.categoryId,
+      category_name: product.mlAd[0]?.categoryName,
     };
     this.formFields = this.fb.group({
       sku: [{ value: product.sku, disabled: true }],
@@ -82,8 +82,8 @@ export class MLProductFormComponent implements OnInit {
       length: [{ value: product.length, disabled: true }],
       weight: [{ value: product.weight, disabled: true }],
       category: [category || null, Validators.required],
-      adType: [product.adProduct[0]?.adType || null, Validators.required],
-      additionalPrice: [product.adProduct[0]?.additionalPrice || null],
+      adType: [product.mlAd[0]?.adType || null, Validators.required],
+      additionalPrice: [product.mlAd[0]?.additionalPrice || null],
     });
     this.loading = false;
   }
@@ -100,16 +100,16 @@ export class MLProductFormComponent implements OnInit {
       const name = formValue.category.category_name;
       const adType = formValue.adType;
       const additionalPrice = formValue.additionalPrice;
-      const adProduct = {
-        id: this.product.adProduct ? this.product.adProduct[0]?.id : null,
+      const mlAd = {
+        id: this.product.mlAd ? this.product.mlAd[0]?.id : null,
         product: { id: this.product.id },
         categoryId: id,
         categoryName: name,
         adType,
         additionalPrice,
-        isSynchronized: this.product.adProduct[0]?.isSynchronized,
+        isSynchronized: this.product.mlAd[0]?.isSynchronized,
       };
-      this.mercadoLivreService.save(adProduct).subscribe();
+      this.mercadoLivreService.save(mlAd).subscribe();
       this.router.navigate(['/mercado-livre/list']);
     }
   }

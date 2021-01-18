@@ -1,4 +1,4 @@
-export default class adProduct {
+export default class MLAd {
   categoryId?: string;
   categoryName?: string;
   mlId?: string;

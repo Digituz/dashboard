@@ -16,6 +16,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { TooltipModule } from 'primeng/tooltip';
 import { TabMenuModule } from 'primeng/tabmenu';
 
 import { SharedModule } from '@app/@shared';
@@ -41,6 +42,7 @@ import { MlErrosListComponent } from './ml-erros-list/ml-erros-list.component';
     CheckboxModule,
     DialogModule,
     ToggleButtonModule,
+    TooltipModule,
     TabMenuModule,
   ],
 })

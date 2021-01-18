@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import Product from '@app/products/product.entity';
 import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
-import adProduct from './mercado-livre.entity';
+import adProduct from './ml-ad.entity';
 import MLCategory from './ml-category.entity';
 
 @Injectable({
