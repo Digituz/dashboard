@@ -49,7 +49,8 @@ export class MercadoLivreComponent implements OnInit {
     this.mercadoLivreService.getToken().subscribe((token) => {
       if (token) {
         this.haveToken = true;
-        this.router.navigateByUrl('/mercado-livre/list');
+      } else {
+        this.router.navigateByUrl('/mercado-livre');
       }
     });
   }
