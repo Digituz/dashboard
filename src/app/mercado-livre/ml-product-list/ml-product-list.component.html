@@ -116,7 +116,7 @@
   </tbody>
 </dgz-table>
 <p-dialog
-  header="Criação de Anuncio no Mercado Livre"
+  header="Criação de Anúncio no Mercado Livre"
   [(visible)]="isModalVisible"
   [dismissableMask]="true"
   [modal]="true"
@@ -144,10 +144,10 @@
       </div>
       <div class="p-field p-col-12"></div>
       <div class="p-field p-col-6">
-        <label for="adType">Tipo de Anuncio</label>
-        <p-dropdown placeholder="selecione o tipo de anuncio" [options]="adTypes" formControlName="adType"></p-dropdown>
+        <label for="adType">Tipo de Anúncio</label>
+        <p-dropdown placeholder="Selecione o tipo do anúncio" [options]="adTypes" formControlName="adType"></p-dropdown>
         <small [hidden]="!isFieldInvalid('adType')" id="description-help" class="p-invalid"
-          >Escolha o tipo de Anuncio do produto</small
+          >Escolha o tipo do anúncio no Mercado Livre</small
         >
       </div>
       <div class="p-field p-col-6">

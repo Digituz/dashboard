@@ -118,10 +118,12 @@
       <td class="actions">
         <img
           [pTooltip]="'Venda vinda do Mercado Livre'"
-          src="../../../assets/mercado-livre-logo.png"
-          alt="Girl in a jacket"
-          width="30"
-          height="30"
+          src="/assets/mercado-livre-logo.png"
+          alt="Mercado Livre"
+          width="22"
+          height="22"
+          style="margin-right: 3px;"
+          *ngIf="salesOrder.mlOrderId"
         />
         <button
           [title]="'Venda'"

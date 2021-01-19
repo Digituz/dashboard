@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       children: [
         {
-          path: 'list',
+          path: '',
           component: MLProductListComponent,
           data: {
             title: extract('Produtos Mercado Livre'),

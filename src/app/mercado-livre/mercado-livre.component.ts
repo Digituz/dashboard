@@ -50,7 +50,7 @@ export class MercadoLivreComponent implements OnInit {
       if (token) {
         this.haveToken = true;
       } else {
-        this.router.navigateByUrl('/mercado-livre');
+        this.router.navigateByUrl('/mercado-livre/');
       }
     });
   }

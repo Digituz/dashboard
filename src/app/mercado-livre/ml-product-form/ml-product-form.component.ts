@@ -110,7 +110,7 @@ export class MLProductFormComponent implements OnInit {
         isSynchronized: this.product.mlAd[0]?.isSynchronized,
       };
       this.mercadoLivreService.save(mlAd).subscribe();
-      this.router.navigate(['/mercado-livre/list']);
+      this.router.navigate(['/mercado-livre']);
     }
   }
 

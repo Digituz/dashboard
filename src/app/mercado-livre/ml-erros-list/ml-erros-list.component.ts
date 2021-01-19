@@ -19,7 +19,7 @@ export class MlErrosListComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = [
-      { label: 'Lista', icon: 'pi pi-fw pi-list', routerLink: '/mercado-livre/list' },
+      { label: 'Lista', icon: 'pi pi-fw pi-list', routerLink: '/mercado-livre' },
       { label: 'Erros', icon: 'pi pi-fw pi-exclamation-triangle', routerLink: '/mercado-livre/error-list' },
     ];
     this.activeItem = this.items[1];
