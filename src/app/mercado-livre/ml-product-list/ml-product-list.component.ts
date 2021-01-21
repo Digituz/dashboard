@@ -7,6 +7,7 @@ import { MenuItem } from 'primeng/api';
 import { MercadoLivreService } from '../mercado-livre.service';
 import MLCategory from '../ml-category.entity';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CreateMLAdsDTO } from '../create-ml-ads.dto';
 
 interface statusOption {
   label: string;
@@ -130,14 +131,21 @@ export class MLProductListComponent implements OnInit {
       const adType = formValues.adType;
       const additionalPrice = formValues.additionalPrice;
 
-      const products = this.resultsTable.currentData;
-      const category: MLCategory = { id: categoryForm.category_id, name: categoryForm.category_name };
-      const filterProducts = products
+      const productsTable = this.resultsTable.currentData;
+
+      const selectedProducts = productsTable
         .filter((product) => product.isChecked === true)
-        .map((product) => {
-          return { id: product.id, mlId: product.mlAd.mlId };
-        });
-      this.mercadoLivreService.saveAll(filterProducts, category, adType, additionalPrice).subscribe((result) => {
+        .map((product) => ({ id: product.id }));
+
+      const createMLAdsDTO: CreateMLAdsDTO = {
+        categoryId: categoryForm.category_id,
+        categoryName: categoryForm.category_name,
+        adType,
+        additionalPrice,
+        products: selectedProducts,
+      };
+
+      this.mercadoLivreService.save(createMLAdsDTO).subscribe(() => {
         this.resultsTable.reload(this.queryParams);
         this.isModalVisible = false;
       });

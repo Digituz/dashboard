@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import Product from '@app/products/product.entity';
 import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
+import { CreateMLAdsDTO } from './create-ml-ads.dto';
 import MLAd from './ml-ad.entity';
 import MLCategory from './ml-category.entity';
 
@@ -72,13 +72,8 @@ export class MercadoLivreService {
     return this.httpClient.get<Pagination<any>>(query);
   }
 
-  save(mlAd: MLAd) {
-    return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}/save`, mlAd);
-  }
-
-  saveAll(products: Product[], category: MLCategory, adType: string, additionalPrice: number) {
-    const mlAds = { products, category, adType, additionalPrice };
-    return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}`, mlAds);
+  save(createMLAdsDTO: CreateMLAdsDTO) {
+    return this.httpClient.post(`${this.MERCADO_LIVRE_END_POINT}/`, createMLAdsDTO);
   }
 
   cleanUpErrors() {

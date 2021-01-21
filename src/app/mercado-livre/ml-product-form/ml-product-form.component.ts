@@ -5,6 +5,7 @@ import Product from '@app/products/product.entity';
 import MLAd from '../ml-ad.entity';
 import { MercadoLivreService } from '../mercado-livre.service';
 import MLCategory from '../ml-category.entity';
+import { CreateMLAdsDTO } from '../create-ml-ads.dto';
 
 @Component({
   selector: 'app-ml-product-form',
@@ -100,17 +101,16 @@ export class MLProductFormComponent implements OnInit {
       const name = formValue.category.category_name;
       const adType = formValue.adType;
       const additionalPrice = formValue.additionalPrice;
-      const mlAd = {
-        id: this.product.mlAd ? this.product.mlAd[0]?.id : null,
-        product: { id: this.product.id },
+      const createMLAdsDTO: CreateMLAdsDTO = {
+        products: [{ id: this.product.id }],
         categoryId: id,
         categoryName: name,
         adType,
         additionalPrice,
-        isSynchronized: this.product.mlAd[0]?.isSynchronized,
       };
-      this.mercadoLivreService.save(mlAd).subscribe();
-      this.router.navigate(['/mercado-livre']);
+      this.mercadoLivreService.save(createMLAdsDTO).subscribe(() => {
+        this.router.navigate(['/mercado-livre']);
+      });
     }
   }
 
