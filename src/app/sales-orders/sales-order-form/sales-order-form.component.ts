@@ -87,7 +87,7 @@ export class SalesOrderFormComponent implements OnInit {
       this.salesOrdersService.loadSalesOrder(referenceCode).subscribe((salesOrder) => {
         this.salesOrder = salesOrder;
         this.salesOrderId = salesOrder.id;
-        console.log(salesOrder.shippingType);
+
         this.originalItemsAndAmount = salesOrder.items.map((item) => ({
           sku: item.sku,
           amount: item.amount,
