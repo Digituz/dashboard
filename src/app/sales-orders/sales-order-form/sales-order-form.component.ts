@@ -39,6 +39,7 @@ export class SalesOrderFormComponent implements OnInit {
     { label: 'Em Processamento', value: PaymentStatus.IN_PROCESS },
     { label: 'Aprovada', value: PaymentStatus.APPROVED },
     { label: 'Cancelada', value: PaymentStatus.CANCELLED },
+    { label: 'Mercado Livre', value: PaymentStatus.MERCADOLIVRE },
   ];
 
   installments: ComboBoxOption[] = [
@@ -60,6 +61,7 @@ export class SalesOrderFormComponent implements OnInit {
     { label: `Correios - ${ShippingType.PAC}`, value: 'PAC' },
     { label: `Correios - ${ShippingType.SEDEX}`, value: 'SEDEX' },
     { label: 'Motoboy', value: ShippingType.SAME_DAY },
+    { label: 'Mercado Livre', value: ShippingType.MERCADOLIVRE },
   ];
 
   customers: Customer[] = [];
@@ -85,7 +87,7 @@ export class SalesOrderFormComponent implements OnInit {
       this.salesOrdersService.loadSalesOrder(referenceCode).subscribe((salesOrder) => {
         this.salesOrder = salesOrder;
         this.salesOrderId = salesOrder.id;
-
+        console.log(salesOrder.shippingType);
         this.originalItemsAndAmount = salesOrder.items.map((item) => ({
           sku: item.sku,
           amount: item.amount,
