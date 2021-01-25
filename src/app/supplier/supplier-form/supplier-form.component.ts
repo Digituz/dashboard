@@ -66,4 +66,12 @@ export class SupplierFormComponent implements OnInit {
   isFieldInvalid(field: string) {
     return !this.formFields.get(field).valid && this.formFields.get(field).touched;
   }
+
+  submitTest = () => {
+    const supplierFromFields = this.formFields.value;
+    supplierFromFields.id = this.supplier.id;
+    return this.supplierService.createSupplier(supplierFromFields).subscribe(() => {
+      this.router.navigate(['/suppliers']);
+    });
+  };
 }

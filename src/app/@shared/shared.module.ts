@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { DialogModule } from 'primeng/dialog';
 
 import { LoaderComponent } from './loader/loader.component';
 import { MediumEditorComponent } from './medium-editor/medium-editor.component';
@@ -10,9 +12,10 @@ import { ReaisPipe } from './pipes/reais.pipe';
 import { ButtonBackComponent } from './button-back/button-back.component';
 import { CnpjPipe } from './pipes/cnpj.pipe';
 import { PhoneNumberPipe } from './pipes/phone-number.pipe';
+import { LoadTaskButtonComponent } from './load-task-button/load-task-button.component';
 
 @NgModule({
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule, ProgressBarModule, DialogModule],
   declarations: [
     LoaderComponent,
     MediumEditorComponent,
@@ -22,6 +25,7 @@ import { PhoneNumberPipe } from './pipes/phone-number.pipe';
     ButtonBackComponent,
     CnpjPipe,
     PhoneNumberPipe,
+    LoadTaskButtonComponent,
   ],
   exports: [
     LoaderComponent,
@@ -32,6 +36,7 @@ import { PhoneNumberPipe } from './pipes/phone-number.pipe';
     CnpjPipe,
     ButtonBackComponent,
     PhoneNumberPipe,
+    LoadTaskButtonComponent,
   ],
 })
 export class SharedModule {}

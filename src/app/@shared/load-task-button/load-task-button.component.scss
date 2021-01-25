@@ -1,0 +1,34 @@
+.size {
+  width: 300px;
+  height: 200px;
+}
+
+p-progressbar {
+  margin-top: 100px;
+}
+
+.icon {
+  background-color: #fff;
+  margin: 0;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  color: #666;
+}
+
+.failed {
+  i {
+    font-size: 50px;
+    color: #f44336;
+  }
+}
+
+.success {
+  i {
+    font-size: 50px;
+    color: #45aa50;
+  }
+}

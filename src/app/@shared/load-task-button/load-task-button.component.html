@@ -1,0 +1,37 @@
+<button
+  pButton
+  type="button"
+  [ngClass]="{
+    'p-button-primary': buttonStyle === 'primary',
+    'p-button-success': buttonStyle === 'success',
+    'p-button-secondary': buttonStyle === 'secondary',
+    'p-button-info': buttonStyle === 'info',
+    'p-button-warning': buttonStyle === 'warning',
+    'p-button-help': buttonStyle === 'help',
+    'p-button-danger': buttonStyle === 'danger'
+  }"
+  [label]="buttonLabel"
+  (click)="onClick()"
+></button>
+
+<p-dialog
+  header="Carregando"
+  [dismissableMask]="true"
+  [modal]="true"
+  [resizable]="false"
+  [draggable]="false"
+  [contentStyle]="{ overflow: 'visible' }"
+  [(visible)]="isModalVisible"
+>
+  <div *ngIf="showBarProgress" class="size">
+    <p-progressBar mode="indeterminate"></p-progressBar>
+  </div>
+  <div class="icon failed size" *ngIf="showFailedResquest">
+    <i class="far fa-times-circle"></i>
+    <p>A requisição finalizou com falha.</p>
+  </div>
+  <div class="icon success size" *ngIf="showSuccessRequest">
+    <i class="far fa-check-circle"></i>
+    <p>Requisição finalizada com sucesso.</p>
+  </div>
+</p-dialog>
