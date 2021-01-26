@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-load-task-button',
@@ -13,14 +14,14 @@ export class LoadTaskButtonComponent implements OnInit {
   @Input()
   buttonLabel: string = '';
   @Input()
-  request: Function;
+  request: any;
 
   isModalVisible: boolean = false;
   showBarProgress: boolean = true;
   showSuccessRequest: boolean = false;
   showFailedResquest: boolean = false;
 
-  constructor() {
+  constructor(private router: Router) {
     if (!this.buttonStyle) {
       this.buttonStyle = 'primary';
     }
@@ -28,10 +29,11 @@ export class LoadTaskButtonComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onClick() {
-    console.log(this.request);
-    const result = this.request();
-
+  onClick(status?: boolean) {
+    this.request.submitTest().subscribe((result: any) => {
+      console.log(result);
+      this.router.navigate(['/suppliers']);
+    });
     this.isModalVisible = true;
     setTimeout(() => {
       this.showBarProgress = false;

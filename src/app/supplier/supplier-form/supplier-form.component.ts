@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LoadTaskButtonComponent } from '@app/@shared/load-task-button/load-task-button.component';
 import { Supplier } from '../supplier.entity';
 import { SupplierService } from '../supplier.service';
 
@@ -10,6 +11,7 @@ import { SupplierService } from '../supplier.service';
   styleUrls: ['./supplier-form.component.scss'],
 })
 export class SupplierFormComponent implements OnInit {
+  @ViewChild('child') loadButton: LoadTaskButtonComponent;
   supplier: Supplier;
   formFields: FormGroup;
   loading: boolean = true;
@@ -70,8 +72,6 @@ export class SupplierFormComponent implements OnInit {
   submitTest = () => {
     const supplierFromFields = this.formFields.value;
     supplierFromFields.id = this.supplier.id;
-    return this.supplierService.createSupplier(supplierFromFields).subscribe(() => {
-      this.router.navigate(['/suppliers']);
-    });
+    return this.supplierService.createSupplier(supplierFromFields);
   };
 }

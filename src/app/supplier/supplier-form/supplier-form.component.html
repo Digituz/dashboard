@@ -4,7 +4,7 @@
   </p>
   <div class="actions">
     <app-button-back fallbackURL="/suppliers"></app-button-back>
-    <app-load-task-button [request]="submitTest" buttonStyle="primary" buttonLabel="teste"></app-load-task-button>
+    <app-load-task-button #child [request]="this" buttonStyle="primary" buttonLabel="teste"></app-load-task-button>
     <button (click)="submit()" pButton type="button" label="Salvar"></button>
   </div>
 </div>
