@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LoadTaskButtonComponent } from '@app/@shared/load-task-button/load-task-button.component';
 import { Supplier } from '../supplier.entity';
 import { SupplierService } from '../supplier.service';
 
@@ -11,7 +10,6 @@ import { SupplierService } from '../supplier.service';
   styleUrls: ['./supplier-form.component.scss'],
 })
 export class SupplierFormComponent implements OnInit {
-  @ViewChild('child') loadButton: LoadTaskButtonComponent;
   supplier: Supplier;
   formFields: FormGroup;
   loading: boolean = true;

@@ -12,7 +12,6 @@ import { ReaisPipe } from './pipes/reais.pipe';
 import { ButtonBackComponent } from './button-back/button-back.component';
 import { CnpjPipe } from './pipes/cnpj.pipe';
 import { PhoneNumberPipe } from './pipes/phone-number.pipe';
-import { LoadTaskButtonComponent } from './load-task-button/load-task-button.component';
 
 @NgModule({
   imports: [CommonModule, ButtonModule, ProgressBarModule, DialogModule],
@@ -25,7 +24,6 @@ import { LoadTaskButtonComponent } from './load-task-button/load-task-button.com
     ButtonBackComponent,
     CnpjPipe,
     PhoneNumberPipe,
-    LoadTaskButtonComponent,
   ],
   exports: [
     LoaderComponent,
@@ -36,7 +34,6 @@ import { LoadTaskButtonComponent } from './load-task-button/load-task-button.com
     CnpjPipe,
     ButtonBackComponent,
     PhoneNumberPipe,
-    LoadTaskButtonComponent,
   ],
 })
 export class SharedModule {}

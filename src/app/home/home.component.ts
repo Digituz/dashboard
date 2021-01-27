@@ -6,7 +6,6 @@ import { Pagination, QueryParam } from '@app/util/pagination';
 import { Observable } from 'rxjs';
 import { HomeService } from './home.service';
 import { ShippingType } from '@app/sales-orders/shipping-type.enum';
-import { LoadTaskButtonComponent } from '@app/@shared/load-task-button/load-task-button.component';
 
 @Component({
   selector: 'app-home',
@@ -110,9 +109,5 @@ export class HomeComponent implements OnInit {
       default:
         return '???';
     }
-  }
-
-  submit() {
-    return this.homeService.loadChartData();
   }
 }
