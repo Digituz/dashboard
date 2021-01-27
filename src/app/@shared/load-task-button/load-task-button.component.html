@@ -1,3 +1,10 @@
+<div
+  *ngIf="isModalVisible"
+  [ngClass]="{
+    success: showComplete === true,
+    failed: showComplete === false
+  }"
+></div>
 <button
   pButton
   type="button"
@@ -13,25 +20,3 @@
   [label]="buttonLabel"
   (click)="onClick()"
 ></button>
-
-<p-dialog
-  header="Carregando"
-  [dismissableMask]="true"
-  [modal]="true"
-  [resizable]="false"
-  [draggable]="false"
-  [contentStyle]="{ overflow: 'visible' }"
-  [(visible)]="isModalVisible"
->
-  <div *ngIf="showBarProgress" class="size">
-    <p-progressBar mode="indeterminate"></p-progressBar>
-  </div>
-  <div class="icon failed size" *ngIf="showFailedResquest">
-    <i class="far fa-times-circle"></i>
-    <p>A requisição finalizou com falha.</p>
-  </div>
-  <div class="icon success size" *ngIf="showSuccessRequest">
-    <i class="far fa-check-circle"></i>
-    <p>Requisição finalizada com sucesso.</p>
-  </div>
-</p-dialog>

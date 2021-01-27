@@ -111,4 +111,8 @@ export class HomeComponent implements OnInit {
         return '???';
     }
   }
+
+  submit() {
+    return this.homeService.loadChartData();
+  }
 }

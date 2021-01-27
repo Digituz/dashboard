@@ -1,34 +1,28 @@
-.size {
-  width: 300px;
-  height: 200px;
-}
-
-p-progressbar {
-  margin-top: 100px;
-}
-
-.icon {
-  background-color: #fff;
-  margin: 0;
-  padding: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: center;
-  width: 100%;
-  color: #666;
-}
-
-.failed {
-  i {
-    font-size: 50px;
-    color: #f44336;
+@keyframes completeBar {
+  from {
+    width: 0%;
   }
+  to {
+    width: 100%;
+  }
+}
+
+div {
+  width: 0px;
+  height: 5px;
+  background: #1890ff;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  animation-name: completeBar;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
 }
 
 .success {
-  i {
-    font-size: 50px;
-    color: #45aa50;
-  }
+  background-color: #45aa50;
+}
+
+.failed {
+  background-color: #f44336;
 }

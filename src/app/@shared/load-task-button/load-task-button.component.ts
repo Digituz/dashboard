@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-load-task-button',
@@ -17,7 +18,7 @@ export class LoadTaskButtonComponent implements OnInit {
   request: any;
 
   isModalVisible: boolean = false;
-  showBarProgress: boolean = true;
+  showComplete: boolean;
   showSuccessRequest: boolean = false;
   showFailedResquest: boolean = false;
 
@@ -29,19 +30,21 @@ export class LoadTaskButtonComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onClick(status?: boolean) {
-    this.request.submitTest().subscribe((result: any) => {
-      console.log(result);
-      this.router.navigate(['/suppliers']);
-    });
+  onClick() {
     this.isModalVisible = true;
-    setTimeout(() => {
-      this.showBarProgress = false;
-      this.showFailedResquest = true;
-      setTimeout(() => {
-        this.showFailedResquest = false;
-        this.showSuccessRequest = true;
-      }, 550);
-    }, 550);
+    this.request
+      .submit()
+      .pipe(delay(350))
+      .subscribe((result: any) => {
+        setTimeout(() => {
+          if (result !== null) {
+            this.showComplete = true;
+          } else {
+            this.showComplete = false;
+          }
+        }, 3000);
+      });
+
+    setTimeout(() => (this.isModalVisible = false), 6000);
   }
 }
