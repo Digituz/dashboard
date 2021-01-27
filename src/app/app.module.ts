@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { MessagesComponent } from './messages/messages.component';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { MessagesComponent } from './messages/messages.component';
     TranslateModule.forRoot(),
     ToastModule,
     ButtonModule,
+    LoadingBarHttpClientModule,
     CoreModule,
     SharedModule,
     ShellModule,
