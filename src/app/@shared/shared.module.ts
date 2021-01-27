@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { DialogModule } from 'primeng/dialog';
 
 import { LoaderComponent } from './loader/loader.component';
 import { MediumEditorComponent } from './medium-editor/medium-editor.component';
@@ -14,7 +12,7 @@ import { CnpjPipe } from './pipes/cnpj.pipe';
 import { PhoneNumberPipe } from './pipes/phone-number.pipe';
 
 @NgModule({
-  imports: [CommonModule, ButtonModule, ProgressBarModule, DialogModule],
+  imports: [CommonModule, ButtonModule],
   declarations: [
     LoaderComponent,
     MediumEditorComponent,
