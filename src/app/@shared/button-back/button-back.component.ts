@@ -16,10 +16,17 @@ export class ButtonBackComponent implements OnInit {
   ngOnInit(): void {}
 
   onClick() {
-    const valor: any = this.location.getState();
-    if (valor.navigationId <= 1) {
-      return this.router.navigateByUrl(this.fallbackURL);
+    const value: any = this.location.getState();
+    if (value.navigationId <= 1) {
+      //return this.router.navigateByUrl(this.fallbackURL);
     }
+    console.log(value);
     this.location.back();
+    this.router.navigate(['/home']);
+    setTimeout(() => {
+      this.router.navigate([this.fallbackURL]);
+      console.log(this.fallbackURL);
+    }, 3000);
+    return this.router.navigateByUrl(this.fallbackURL);
   }
 }

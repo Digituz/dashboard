@@ -79,7 +79,8 @@ export class CustomersFormComponent implements OnInit {
       }
 
       this.customersService.saveCustomer(customer).subscribe(() => {
-        this.router.navigate(['/customers']);
+        this.router.navigate(['/customers']); //não muda a tela
+        this.router.navigate(['/home']); //navega corretamente ???
       });
     }
   }
