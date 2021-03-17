@@ -18,6 +18,7 @@ interface Category {
 })
 export class IntenvoryReportComponent implements OnInit {
   @ViewChild('resultsInventoryTable') resultsInventoryTable: DgzTableComponent<any>;
+  query: string;
   categories: Category[] = [
     { label: 'Todas', value: 'ALL' },
     { label: 'Acessórios', value: ProductCategory.ACESSORIOS },
@@ -47,7 +48,7 @@ export class IntenvoryReportComponent implements OnInit {
     if (queryParams === undefined) {
       queryParams = [{ key: 'category', value: this.category }];
     }
-    return this.inventoryService.loadReport(this.category);
+    return this.inventoryService.loadReport(queryParams);
   }
 
   updateQueryParams(queryParams: QueryParam[]) {
@@ -64,7 +65,6 @@ export class IntenvoryReportComponent implements OnInit {
 
   xlsExport() {
     this.inventoryService.download(this.category).subscribe((res) => {
-      console.log(res);
       const options = { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' };
       const filename = 'Estoque.xlsx';
       createAndDownloadBlobFile(res, options, filename);
