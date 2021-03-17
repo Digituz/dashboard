@@ -7,48 +7,58 @@
   </div>
 </div>
 <p-card>
-  <form>
+  <form (ngSubmit)="submitReport()">
     <div class="p-fluid p-formgrid p-grid">
       <div class="orderForm"></div>
       <div class="orderForm">
-        <label class="marginHorizontal">Agrupar Por:</label>
-        <p-dropdown [options]="groupByOptions" name="groupBy" [(ngModel)]="groupBy"></p-dropdown>
+        <label class="marginHorizontal">Agrupar por categoria:</label>
+        <p-dropdown [options]="categories" name="category" [(ngModel)]="category"></p-dropdown>
       </div>
       <div class="orderForm">
         <button pButton type="submit" label="Agrupar"></button>
       </div>
       <div class="orderForm">
-        <button pButton class="p-button-secondary" type="button" label="Baixar Relátorio"></button>
+        <button
+          pButton
+          class="p-button-secondary"
+          type="button"
+          label="Baixar Relátorio"
+          (click)="xlsExport()"
+        ></button>
       </div>
     </div>
   </form>
 </p-card>
 
-<dgz-table #resultsTable [dataProvider]="this" name="report-inventory-table" [showPaginationArea]="false">
+<dgz-table
+  #resultsInventoryTable
+  [dataProvider]="this"
+  name="report-table"
+  [showPaginationArea]="false"
+  (updateQueryParams)="updateQueryParams($event)"
+>
   <thead>
     <tr>
-      <th>Nome</th>
-      <th>Email</th>
-      <th>Telefone</th>
+      <th>NCM</th>
+      <th>SKU</th>
+      <th>Titulo</th>
+      <th>Categoria</th>
+      <th>Tamanho</th>
+      <th>Disponivel</th>
+      <th>Separado</th>
       <th>Total</th>
-      <th>Detalhes</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td class="centered"></td>
-      <td class="centered"></td>
-      <td class="centered"></td>
-      <td class="currency"></td>
-      <td class="actions">
-        <button
-          [title]="'Detalhes do cliente'"
-          pButton
-          type="button"
-          class="p-button-secondary"
-          [icon]="'fal fa-search'"
-        ></button>
-      </td>
+    <tr *ngFor="let inventory of resultsInventoryTable.currentData">
+      <td class="centered">{{ inventory.ncm }}</td>
+      <td class="centered">{{ inventory.sku }}</td>
+      <td class="centered">{{ inventory.titulo }}</td>
+      <td class="centered">{{ inventory.categoria }}</td>
+      <td class="centered">{{ inventory.tamanho }}</td>
+      <td class="centered">{{ inventory.disponivel }}</td>
+      <td class="centered">{{ inventory.separado }}</td>
+      <td class="centered">{{ inventory.total }}</td>
     </tr>
   </tbody>
 </dgz-table>

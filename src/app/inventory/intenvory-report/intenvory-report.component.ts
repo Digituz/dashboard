@@ -1,5 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ComboBoxOption } from '@app/util/combo-box-option.interface';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
+import { Pagination, QueryParam } from '@app/util/pagination';
+import { createAndDownloadBlobFile } from '@app/util/util';
+import { Observable } from 'rxjs';
+import { ProductCategory } from '../../products/product-category.enum';
+import { InventoryMovement } from '../inventory-movement.entity';
+import { InventoryService } from '../inventory.service';
+interface Category {
+  label: string;
+  value: string;
+}
 
 @Component({
   selector: 'app-intenvory-report',
@@ -7,15 +17,57 @@ import { ComboBoxOption } from '@app/util/combo-box-option.interface';
   styleUrls: ['./intenvory-report.component.scss'],
 })
 export class IntenvoryReportComponent implements OnInit {
-  groupByOptions: ComboBoxOption[] = [
-    { label: 'Cliente', value: 'CUSTOMER' },
-    { label: 'Produto', value: 'PRODUCT' },
-    { label: 'Variação do Produto', value: 'PRODUCT_VARIATION' },
-    { label: 'Data de Aprovação', value: 'APPROVAL_DATE' },
+  @ViewChild('resultsInventoryTable') resultsInventoryTable: DgzTableComponent<any>;
+  categories: Category[] = [
+    { label: 'Todas', value: 'ALL' },
+    { label: 'Acessórios', value: ProductCategory.ACESSORIOS },
+    { label: 'Anéis', value: ProductCategory.ANEIS },
+    { label: 'Berloques', value: ProductCategory.BERLOQUES },
+    { label: 'Brincos', value: ProductCategory.BRINCOS },
+    { label: 'Camisetas', value: ProductCategory.CAMISETAS },
+    { label: 'Colares', value: ProductCategory.COLARES },
+    { label: 'Conjuntos', value: ProductCategory.CONJUNTOS },
+    { label: 'Decoração', value: ProductCategory.DECORACAO },
+    { label: 'Pulseiras', value: ProductCategory.PULSEIRAS },
   ];
-  groupBy = this.groupByOptions[0].value;
+  category = this.categories[0].value;
+  queryParams: QueryParam[] = [];
 
-  constructor() {}
+  constructor(private inventoryService: InventoryService) {}
 
   ngOnInit(): void {}
+
+  loadData(
+    pageNumber: number,
+    pageSize: number,
+    sortedBy?: string,
+    sortDirectionAscending?: boolean,
+    queryParams?: QueryParam[]
+  ): Observable<Pagination<InventoryMovement>> {
+    if (queryParams === undefined) {
+      queryParams = [{ key: 'category', value: this.category }];
+    }
+    return this.inventoryService.loadReport(this.category);
+  }
+
+  updateQueryParams(queryParams: QueryParam[]) {
+    const savedCategory = queryParams.find((q) => q.key === 'category')?.value.toString();
+    this.category = this.categories.find((o) => o.value === savedCategory).value.toString();
+  }
+
+  submitReport() {
+    this.queryParams = [{ key: 'category', value: this.category }];
+    if (this.resultsInventoryTable) {
+      this.resultsInventoryTable.reload(this.queryParams);
+    }
+  }
+
+  xlsExport() {
+    this.inventoryService.download(this.category).subscribe((res) => {
+      console.log(res);
+      const options = { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' };
+      const filename = 'Estoque.xlsx';
+      createAndDownloadBlobFile(res, options, filename);
+    });
+  }
 }

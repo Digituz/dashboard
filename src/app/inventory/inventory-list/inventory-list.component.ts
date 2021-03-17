@@ -46,14 +46,6 @@ export class InventoryListComponent implements OnInit, IDataProvider<Inventory> 
     this.query = queryParams.find((q) => q.key === 'query')?.value?.toString();
   }
 
-  xlsExport() {
-    this.inventoryService.download().subscribe((res) => {
-      const options = { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' };
-      const filename = 'Estoque.xlsx';
-      createAndDownloadBlobFile(res, options, filename);
-    });
-  }
-
   resetFilter() {
     this.query = '';
     return localStorage.removeItem('inventory-list');
