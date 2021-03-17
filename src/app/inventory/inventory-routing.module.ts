@@ -6,6 +6,7 @@ import { InventoryComponent } from '@app/inventory/inventory.component';
 import { extract } from '@app/i18n';
 import { Shell } from '@app/shell/shell.service';
 import { InventoryMovementsComponent } from './inventory-movements/inventory-movements.component';
+import { IntenvoryReportComponent } from './intenvory-report/intenvory-report.component';
 
 const routes: Routes = [
   Shell.childRoutes([
@@ -23,6 +24,14 @@ const routes: Routes = [
           data: {
             title: 'Estoque',
             breadcrumb: 'Lista',
+          },
+        },
+        {
+          path: 'report',
+          component: IntenvoryReportComponent,
+          data: {
+            title: 'Relátorio do Natal',
+            breadcrumb: 'Relatorios',
           },
         },
         {

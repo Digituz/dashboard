@@ -1,0 +1,54 @@
+<div class="feature-header">
+  <p>
+    <label>Utilize o formulário abaixo para gerar relatórios do estoque.</label>
+  </p>
+  <div class="actions">
+    <app-button-back fallbackURL="/inventory"></app-button-back>
+  </div>
+</div>
+<p-card>
+  <form>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="orderForm"></div>
+      <div class="orderForm">
+        <label class="marginHorizontal">Agrupar Por:</label>
+        <p-dropdown [options]="groupByOptions" name="groupBy" [(ngModel)]="groupBy"></p-dropdown>
+      </div>
+      <div class="orderForm">
+        <button pButton type="submit" label="Agrupar"></button>
+      </div>
+      <div class="orderForm">
+        <button pButton class="p-button-secondary" type="button" label="Baixar Relátorio"></button>
+      </div>
+    </div>
+  </form>
+</p-card>
+
+<dgz-table #resultsTable [dataProvider]="this" name="report-inventory-table" [showPaginationArea]="false">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Telefone</th>
+      <th>Total</th>
+      <th>Detalhes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="centered"></td>
+      <td class="centered"></td>
+      <td class="centered"></td>
+      <td class="currency"></td>
+      <td class="actions">
+        <button
+          [title]="'Detalhes do cliente'"
+          pButton
+          type="button"
+          class="p-button-secondary"
+          [icon]="'fal fa-search'"
+        ></button>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>

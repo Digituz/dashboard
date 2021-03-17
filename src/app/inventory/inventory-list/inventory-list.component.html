@@ -25,6 +25,14 @@
     <label>Controle o estoque dos seus produtos.</label>
   </p>
   <div class="actions">
+    <button
+      title="Gerar Relátorio de Vendas"
+      routerLink="/inventory/report"
+      pButton
+      class="p-button-secondary"
+      type="button"
+      label="Relátorios"
+    ></button>
     <button pButton class="p-button-secondary" type="button" label="Gerar Relátorio" (click)="xlsExport()"></button>
     <button pButton type="button" label="Nova Movimentação" (click)="openMovementDialog()"></button>
   </div>
