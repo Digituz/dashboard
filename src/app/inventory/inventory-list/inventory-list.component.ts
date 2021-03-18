@@ -7,11 +7,8 @@ import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import { MoveInventoryDialogComponent } from '../move-inventory-dialog/move-inventory-dialog.component';
 import { createAndDownloadBlobFile } from '../../util/util';
 import { ProductCategory } from '@app/products/product-category.enum';
+import { Category } from '@app/products/category.enum';
 
-interface Category {
-  label: string;
-  value: ProductCategory;
-}
 @Component({
   selector: 'app-inventory-list',
   templateUrl: './inventory-list.component.html',
