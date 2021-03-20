@@ -34,7 +34,8 @@ export class CouponComponent implements OnInit {
   private configureFormFields(coupon: Coupon) {
     this.formFields = this.fb.group({
       code: [coupon?.code || ''],
-      type: [coupon?.type || ''],
+      description: [coupon?.description || ''],
+      type: [coupon?.type || this.couponsTypes[0]],
       value: [coupon?.value || ''],
       active: [coupon?.active || null],
     });

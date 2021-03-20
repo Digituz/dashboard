@@ -68,20 +68,35 @@
 >
   <form nz-form [formGroup]="formFields" *ngIf="isModalVisible">
     <div class="p-fluid p-formgrid p-grid">
-      <div class="p-field p-col-5">
+      <div class="p-field p-col-6">
         <label for="code">Código</label>
         <input pInputText name="code" id="code" placeholder="Código do cupom ex: frida10%" formControlName="code" />
       </div>
-      <div class="p-field p-col-2">
+      <div class="p-field p-col-6">
+        <label for="description">Descrição</label>
+        <input
+          pInputText
+          name="description"
+          id="description"
+          placeholder="Descrição do cupom ex: 10% no total do carrinho"
+          formControlName="description"
+        />
+      </div>
+      <div class="p-field p-col-3">
         <label for="type">Tipo</label>
         <p-dropdown [options]="couponsTypes" formControlName="type"></p-dropdown>
       </div>
       <div class="p-field p-col-3">
-        <label for="variationSellingPrice">Valor</label>
+        <label for="couponValue">Valor</label>
         <p-inputNumber
           formControlName="value"
           [min]="0"
           [max]="100"
+          currency="BRL"
+          mode="currency"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
           placeholder="Valor do desconto do cupom ex: R$10,00 ou 10%"
         ></p-inputNumber>
       </div>
