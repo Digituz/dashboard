@@ -66,11 +66,17 @@
   [draggable]="false"
   [contentStyle]="{ overflow: 'visible' }"
 >
-  <form nz-form [formGroup]="formFields" *ngIf="isModalVisible">
+  <form nz-form [formGroup]="formFields" (ngSubmit)="submitCoupon()" *ngIf="isModalVisible">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-6">
         <label for="code">Código</label>
         <input pInputText name="code" id="code" placeholder="Código do cupom ex: frida10%" formControlName="code" />
+        <div *ngIf="formFields.getError('required', ['code']) && isFieldInvalid('code')">
+          <small class="p-invalid">Insira o codigo do cupom</small>
+        </div>
+        <div class="p-invalid" *ngIf="formFields.getError('existingCode', ['code']) as error">
+          <small>{{ error.message }}</small>
+        </div>
       </div>
       <div class="p-field p-col-6">
         <label for="description">Descrição</label>
@@ -81,6 +87,9 @@
           placeholder="Descrição do cupom ex: 10% no total do carrinho"
           formControlName="description"
         />
+        <small [hidden]="!isFieldInvalid('description')" id="description-help" style="color: #f44336;"
+          >Insira a descrição do cupom</small
+        >
       </div>
       <div class="p-field p-col-3">
         <label for="type">Tipo</label>
@@ -99,6 +108,12 @@
           [maxFractionDigits]="2"
           placeholder="Valor do desconto do cupom ex: R$10,00 ou 10%"
         ></p-inputNumber>
+        <div *ngIf="formFields.getError('required', ['value']) && isFieldInvalid('value')">
+          <small class="p-invalid">Insira o valor do cupom</small>
+        </div>
+        <div class="p-invalid" *ngIf="formFields.getError('min', ['value']) as error">
+          <small>O valor minimo do cupom não pode ser menor que 0.01</small>
+        </div>
       </div>
       <div class="p-field p-col-1">
         <label for="variationSellingPrice">Ativo</label>
