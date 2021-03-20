@@ -1,1 +1,98 @@
-<p>coupon works!</p>
+<div class="search-container">
+  <form>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="query">Pesquisa</label>
+        <input id="query" name="query" type="text" pInputText />
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <button pButton type="submit" label="Pesquisar"></button>
+        <button
+          pButton
+          type="submit"
+          class="p-button-secondary"
+          (click)="resetFilter()"
+          label="Limpar Filtros"
+        ></button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="feature-header">
+  <p>
+    <label>Controle seus cupons de desconto.</label>
+  </p>
+  <div class="actions">
+    <button title="Novo Cupom" pButton type="button" (click)="showDialog()" label="Novo Cupom"></button>
+  </div>
+</div>
+<dgz-table
+  #couponsTable
+  [dataProvider]="this"
+  [queryParams]="queryParams"
+  (updateQueryParams)="updateQueryParams($event)"
+  name="coupons-list"
+>
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Tipo</th>
+      <th>Valor</th>
+      <th>Ativo</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="centered"></td>
+      <td class="centered"></td>
+      <td class="centered"></td>
+      <td class="centered"></td>
+      <td class="actions">
+        <button [title]="'Editar Cupom'" pButton type="button" label="Editar"></button>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>
+
+<p-dialog
+  header="Movimentação de Estoque"
+  [(visible)]="isModalVisible"
+  [dismissableMask]="true"
+  [modal]="true"
+  [resizable]="false"
+  [draggable]="false"
+  [contentStyle]="{ overflow: 'visible' }"
+>
+  <form nz-form [formGroup]="formFields" *ngIf="isModalVisible">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-5">
+        <label for="code">Código</label>
+        <input pInputText name="code" id="code" placeholder="Código do cupom ex: frida10%" formControlName="code" />
+      </div>
+      <div class="p-field p-col-2">
+        <label for="type">Tipo</label>
+        <p-dropdown [options]="couponsTypes" formControlName="type"></p-dropdown>
+      </div>
+      <div class="p-field p-col-3">
+        <label for="variationSellingPrice">Valor</label>
+        <p-inputNumber
+          formControlName="value"
+          [min]="0"
+          [max]="100"
+          placeholder="Valor do desconto do cupom ex: R$10,00 ou 10%"
+        ></p-inputNumber>
+      </div>
+      <div class="p-field p-col-1">
+        <label for="variationSellingPrice">Ativo</label>
+        <p-inputSwitch id="active" name="active" formControlName="active"></p-inputSwitch>
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <button pButton type="button" class="p-button-secondary" (click)="handleCancel()" label="Cancelar"></button>
+    <button pButton type="button" label="Salvar"></button>
+  </p-footer>
+</p-dialog>
