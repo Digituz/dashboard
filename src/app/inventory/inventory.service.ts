@@ -63,8 +63,20 @@ export class InventoryService implements IDataProvider<Inventory> {
     });
   }
 
-  download(): Observable<any> {
-    const path = `${this.INVENTORY_ENDPOINT}/xls`;
+  loadReport(queryParams: QueryParam[]): Observable<Pagination<InventoryMovement>> {
+    let query = `${this.INVENTORY_ENDPOINT}/report?page=1&xlsx=false`;
+    if (queryParams) {
+      query += queryParams
+        .filter((queryParam) => queryParam !== null)
+        .filter((queryParam) => !!queryParam.value)
+        .map((queryParam) => `&${queryParam.key}=${queryParam.value}`)
+        .join('');
+    }
+    return this.httpClient.get<Pagination<InventoryMovement>>(query);
+  }
+
+  download(category: string): Observable<any> {
+    const path = `${this.INVENTORY_ENDPOINT}/report?category=${category}&xlsx=true`;
     return this.httpClient.get(path, { responseType: 'blob' });
   }
 }
