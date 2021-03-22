@@ -44,10 +44,7 @@ export class CouponService implements IDataProvider<Coupon> {
   }
 
   public saveCoupon(coupon: Coupon): Observable<void> {
-    if (coupon.id) {
-      return this.httpClient.put<void>(`${this.COUPON_ENDPOINT}/${coupon.id}`, coupon);
-    }
-    return this.httpClient.post<void>(this.COUPON_ENDPOINT, coupon);
+    return this.httpClient.post<void>(`${this.COUPON_ENDPOINT}/save`, coupon);
   }
 
   loadCoupon(id: string) {

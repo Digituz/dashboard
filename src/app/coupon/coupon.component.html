@@ -39,17 +39,24 @@
     <tr>
       <th>Código</th>
       <th>Tipo</th>
+      <th>Descrição</th>
       <th>Valor</th>
+      <th>Data de Expiração</th>
       <th>Ativo</th>
       <th></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody *ngFor="let coupon of couponsTable.currentData">
     <tr>
-      <td class="centered"></td>
-      <td class="centered"></td>
-      <td class="centered"></td>
-      <td class="centered"></td>
+      <td class="centered">{{ coupon.code }}</td>
+      <td class="centered">{{ coupon.type }}</td>
+      <td class="centered">{{ coupon.description }}</td>
+      <td class="centered">{{ coupon.value }}</td>
+      <td class="centered">{{ coupon.expirationDate }}</td>
+      <td class="centered">
+        <i class="fal fa-check" style="color: #67c167;" *ngIf="coupon.active"></i>
+        <i class="fal fa-times" style="color: #df6666;" *ngIf="!coupon.active"></i>
+      </td>
       <td class="actions">
         <button [title]="'Editar Cupom'" pButton type="button" label="Editar"></button>
       </td>
@@ -130,6 +137,6 @@
   </form>
   <p-footer>
     <button pButton type="button" class="p-button-secondary" (click)="handleCancel()" label="Cancelar"></button>
-    <button pButton type="button" label="Salvar"></button>
+    <button pButton type="button" label="Salvar" (click)="submitCoupon()"></button>
   </p-footer>
 </p-dialog>

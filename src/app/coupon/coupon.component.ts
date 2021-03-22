@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import { Customer } from '@app/customers/customer.entity';
 import { Pagination, QueryParam } from '@app/util/pagination';
+import { isBefore, format } from 'date-fns';
 import { Observable } from 'rxjs';
 import { Coupon } from './coupon.entity';
 import { CouponService } from './coupon.service';
@@ -38,12 +39,12 @@ export class CouponComponent implements OnInit {
 
   private configureFormFields(coupon: Coupon) {
     this.formFields = this.fb.group({
-      code: [coupon?.code || null, Validators.required /*this.customCouponValidator.existingCode()*/],
+      code: [coupon?.code || null, Validators.required /* this.customCouponValidator.existingCode() */],
       description: [coupon?.description || null, [Validators.required]],
       type: [coupon?.type || this.couponsTypes[0], [Validators.required]],
       value: [coupon?.value || null, [Validators.required, Validators.min(0.01)]],
       expirationDate: [coupon?.expirationDate || null, this.ValidateDate],
-      active: [coupon?.active || null],
+      active: [coupon?.active || true],
     });
     this.loading = false;
   }
@@ -83,9 +84,12 @@ export class CouponComponent implements OnInit {
       this.markAllFieldsAsTouched(this.formFields);
     } else {
       const coupon = { ...this.formFields.value };
-
+      coupon.value = coupon.value.toFixed(2);
+      coupon.type = coupon.type.value;
+      coupon.expirationDate = format(coupon.expirationDate, 'yyyy-MM-dd');
       this.couponService.saveCoupon(coupon).subscribe(() => {
         this.handleCancel();
+        this.resultsTable.reload(this.queryParams);
       });
     }
   }
@@ -102,8 +106,7 @@ export class CouponComponent implements OnInit {
   }
 
   ValidateDate(control: AbstractControl): { [key: string]: any } | null {
-    const date = control.value;
-    if (control.value && control.value.length != 10) {
+    if (isBefore(control.value, new Date())) {
       return { phoneNumberInvalid: true };
     }
     return null;
