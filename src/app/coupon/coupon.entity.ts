@@ -4,5 +4,6 @@ export interface Coupon {
   type: string;
   description: string;
   value: number;
+  expirationDate?: Date;
   active: boolean;
 }

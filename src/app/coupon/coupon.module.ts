@@ -13,6 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { CalendarModule } from 'primeng/calendar';
 @NgModule({
   declarations: [CouponComponent],
   imports: [
@@ -24,6 +25,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     CardModule,
     InputTextModule,
     BreadcrumbsModule,
+    CalendarModule,
     CommonModule,
     DropdownModule,
     InputNumberModule,

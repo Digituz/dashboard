@@ -95,7 +95,7 @@
         <label for="type">Tipo</label>
         <p-dropdown [options]="couponsTypes" formControlName="type"></p-dropdown>
       </div>
-      <div class="p-field p-col-3">
+      <div class="p-field p-col-4">
         <label for="couponValue">Valor</label>
         <p-inputNumber
           formControlName="value"
@@ -115,8 +115,15 @@
           <small>O valor minimo do cupom não pode ser menor que 0.01</small>
         </div>
       </div>
+      <div class="p-field p-col-4">
+        <label for="expirationDate">Data de Expiração</label>
+        <p-calendar name="startCalendarDate" formControlName="expirationDate" dateFormat="dd/mm/yy"></p-calendar>
+        <small [hidden]="!isFieldInvalid('expirationDate')" id="expiration-date-help" style="color: #f44336;"
+          >A data de expiração não pode ser anterior a data atual</small
+        >
+      </div>
       <div class="p-field p-col-1">
-        <label for="variationSellingPrice">Ativo</label>
+        <label for="active">Ativo</label>
         <p-inputSwitch id="active" name="active" formControlName="active"></p-inputSwitch>
       </div>
     </div>

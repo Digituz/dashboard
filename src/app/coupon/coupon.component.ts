@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DgzTableComponent } from '@app/@shared/dgz-table/dgz-table.component';
 import { Customer } from '@app/customers/customer.entity';
 import { Pagination, QueryParam } from '@app/util/pagination';
@@ -38,10 +38,11 @@ export class CouponComponent implements OnInit {
 
   private configureFormFields(coupon: Coupon) {
     this.formFields = this.fb.group({
-      code: [coupon?.code || null, Validators.required, this.customCouponValidator.existingCode()],
+      code: [coupon?.code || null, Validators.required /*this.customCouponValidator.existingCode()*/],
       description: [coupon?.description || null, [Validators.required]],
       type: [coupon?.type || this.couponsTypes[0], [Validators.required]],
       value: [coupon?.value || null, [Validators.required, Validators.min(0.01)]],
+      expirationDate: [coupon?.expirationDate || null, this.ValidateDate],
       active: [coupon?.active || null],
     });
     this.loading = false;
@@ -98,5 +99,13 @@ export class CouponComponent implements OnInit {
 
   isFieldInvalid(field: string) {
     return !this.formFields.get(field).valid && this.formFields.get(field).touched;
+  }
+
+  ValidateDate(control: AbstractControl): { [key: string]: any } | null {
+    const date = control.value;
+    if (control.value && control.value.length != 10) {
+      return { phoneNumberInvalid: true };
+    }
+    return null;
   }
 }
