@@ -12,7 +12,7 @@ export class CouponService implements IDataProvider<Coupon> {
 
   constructor(private httpClient: HttpClient) {}
 
-  findCustomers(query: string): Observable<Pagination<Coupon>> {
+  public findCoupons(query: string): Observable<Pagination<Coupon>> {
     return this.httpClient.get<Pagination<Coupon>>(`${this.COUPON_ENDPOINT}?page=1&limit=10&query=${query}`);
   }
 

@@ -14,6 +14,8 @@ import { ProductVariationDetailsDTO } from '@app/products/product-variation-deta
 import { ShippingType } from '../shipping-type.enum';
 import { customerValidator, productItemValidator } from './sales-order-form.validators';
 import { SaleOrderItemDTO } from '../sale-order-item.dto';
+import { Coupon } from '@app/coupon/coupon.entity';
+import { CouponService } from '@app/coupon/coupon.service';
 
 @Component({
   selector: 'app-sales-order-form',
@@ -28,7 +30,6 @@ export class SalesOrderFormComponent implements OnInit {
   loading: boolean = true;
   productVariations: ProductVariationDetailsDTO[] = [];
   total: number;
-
   paymentTypes: ComboBoxOption[] = [
     { label: 'Boleto', value: PaymentType.BANK_SLIP },
     { label: 'Cartão de Crédito', value: PaymentType.CREDIT_CARD },
@@ -62,6 +63,7 @@ export class SalesOrderFormComponent implements OnInit {
   ];
 
   customers: Customer[] = [];
+  coupons: Coupon[] = [];
 
   originalItemsAndAmount: { sku: string; amount: number }[];
 
@@ -69,6 +71,7 @@ export class SalesOrderFormComponent implements OnInit {
     private customersService: CustomersService,
     private salesOrdersService: SalesOrdersService,
     private productsService: ProductsService,
+    private couponService: CouponService,
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute
@@ -134,6 +137,7 @@ export class SalesOrderFormComponent implements OnInit {
       creationDate: [salesOrderDTO.creationDate || null],
       approvalDate: [salesOrderDTO.approvalDate || null],
       cancellationDate: [salesOrderDTO.cancellationDate || null],
+      coupon: [salesOrderDTO.coupon || null],
       total: [{ value: salesOrderDTO.total || 0, disabled: true }],
       items: itemsField,
     });
@@ -261,5 +265,12 @@ export class SalesOrderFormComponent implements OnInit {
     if (!item.value.productVariation || !item.value.productVariation.sku) return null;
     const currentPosition = this.getItemsInStockWithoutSalesOrder(item);
     return currentPosition - item.value.amount;
+  }
+
+  searchCoupon(event: any) {
+    this.couponService.findCoupons(event.query).subscribe((results) => {
+      this.coupons = results.items;
+      console.log(this.coupons);
+    });
   }
 }

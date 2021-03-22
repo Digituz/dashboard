@@ -4,6 +4,7 @@ import { PaymentType } from './payment-type.enum';
 import { PaymentStatus } from './payment-status.enum';
 import { ShippingType } from './shipping-type.enum';
 import { SaleOrderBlingStatus } from './sale-order-bling-status.enum';
+import { Coupon } from '@app/coupon/coupon.entity';
 
 export class SalesOrderDTO {
   id?: number;
@@ -29,6 +30,7 @@ export class SalesOrderDTO {
   cancellationDate?: Date;
   total?: number;
   blingStatus?: SaleOrderBlingStatus | string;
+  coupon?: Coupon;
 
   // ui helpers
   duplicatingSalesOrder?: boolean;

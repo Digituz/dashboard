@@ -24,7 +24,7 @@ export class CouponComponent implements OnInit {
   loading: boolean = false;
   query: string;
   couponsTypes: couponsTypes[] = [
-    { label: 'R$', value: 'rs' },
+    { label: 'R$', value: 'R$' },
     { label: '%', value: 'percentage' },
   ];
 
@@ -39,7 +39,7 @@ export class CouponComponent implements OnInit {
 
   private configureFormFields(coupon: Coupon) {
     this.formFields = this.fb.group({
-      code: [coupon?.code || null, Validators.required /* this.customCouponValidator.existingCode() */],
+      code: [coupon?.code || null, Validators.required, this.customCouponValidator.existingCode()],
       description: [coupon?.description || null, [Validators.required]],
       type: [coupon?.type || this.couponsTypes[0], [Validators.required]],
       value: [coupon?.value || null, [Validators.required, Validators.min(0.01)]],
@@ -107,7 +107,7 @@ export class CouponComponent implements OnInit {
 
   ValidateDate(control: AbstractControl): { [key: string]: any } | null {
     if (isBefore(control.value, new Date())) {
-      return { phoneNumberInvalid: true };
+      return { err: true };
     }
     return null;
   }
