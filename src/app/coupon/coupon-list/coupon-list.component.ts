@@ -33,6 +33,12 @@ export class CouponListComponent implements OnInit {
     this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
   }
 
+  queryCoupons() {
+    this.queryParams = [{ key: 'query', value: this.query }];
+    console.log(this.queryParams);
+    this.resultsTable.reload(this.queryParams);
+  }
+
   resetFilter() {
     this.query = '';
     return localStorage.removeItem('coupons-list');

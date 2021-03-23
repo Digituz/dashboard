@@ -1,9 +1,9 @@
 <div class="search-container">
-  <form>
+  <form (ngSubmit)="queryCoupons()">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-12">
         <label for="query">Pesquisa</label>
-        <input id="query" name="query" type="text" pInputText />
+        <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
       </div>
     </div>
     <div class="p-fluid p-formgrid p-grid">
@@ -25,8 +25,7 @@
     <label>Controle seus cupons de desconto.</label>
   </p>
   <div class="actions">
-    <button title="Novo Cliente" routerLink="/coupons/new" pButton type="button" label="Novo Cliente"></button>
-    <button title="Novo Cupom" pButton type="button" label="Novo Cupom"></button>
+    <button title="Novo Cupom" pButton type="button" routerLink="/coupons/new" label="Novo Cupom"></button>
   </div>
 </div>
 <dgz-table
@@ -59,7 +58,13 @@
         <i class="fal fa-times" style="color: #df6666;" *ngIf="!coupon.active"></i>
       </td>
       <td class="actions">
-        <button [title]="'Editar Cupom'" pButton type="button" label="Editar"></button>
+        <button
+          [title]="'Editar Cupom'"
+          pButton
+          type="button"
+          [routerLink]="'/coupons/' + coupon.id"
+          label="Editar"
+        ></button>
       </td>
     </tr>
   </tbody>

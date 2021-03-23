@@ -3,7 +3,7 @@
     <label>Atualize os dados do cupom no formulário abaixo.</label>
   </p>
   <div class="actions">
-    <app-button-back fallbackURL="/customers"></app-button-back>
+    <app-button-back fallbackURL="/coupons"></app-button-back>
 
     <button (click)="submitCoupon()" pButton type="button" label="Salvar"></button>
   </div>
@@ -60,7 +60,7 @@
       </div>
       <div class="p-field p-col-4">
         <label for="expirationDate">Data de Expiração</label>
-        <p-calendar name="expirationDate" formControlName="expirationDate" dateFormat="dd/mm/yyy"></p-calendar>
+        <p-calendar name="expirationDate" formControlName="expirationDate" dateFormat="dd/mm/yy"></p-calendar>
         <small [hidden]="!isFieldInvalid('expirationDate')" id="expiration-date-help" style="color: #f44336;"
           >A data de expiração não pode ser anterior a data atual</small
         >

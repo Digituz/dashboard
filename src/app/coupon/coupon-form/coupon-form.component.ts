@@ -43,6 +43,7 @@ export class CouponFormComponent implements OnInit {
     } else {
       this.couponService.loadCoupon(id).subscribe((coupon) => {
         this.coupon = coupon;
+        this.coupon.expirationDate = new Date(coupon.expirationDate);
         this.configureFormFields(coupon);
       });
     }
@@ -53,7 +54,7 @@ export class CouponFormComponent implements OnInit {
       code: [coupon?.code || null, Validators.required /*this.customCouponValidator.existingCode()*/],
       description: [coupon?.description || null, [Validators.required]],
       type: [coupon?.type || this.couponsTypes[0], [Validators.required]],
-      value: [coupon?.value || null, [Validators.required, Validators.min(0.01)]],
+      value: [coupon?.value || null /* [Validators.required, Validators.min(0.01)] */],
       expirationDate: [coupon?.expirationDate || null, this.ValidateDate],
       active: [coupon?.active || true],
     });
@@ -65,8 +66,8 @@ export class CouponFormComponent implements OnInit {
       this.markAllFieldsAsTouched(this.formFields);
     } else {
       const coupon = { ...this.formFields.value };
-      coupon.value = coupon.value.toFixed(2);
-      coupon.type = coupon.type.value;
+      console.log(coupon);
+      coupon.value = coupon.value?.toFixed(2);
       coupon.expirationDate = format(coupon.expirationDate, 'yyyy-MM-dd');
       this.couponService.saveCoupon(coupon).subscribe(() => {});
     }
