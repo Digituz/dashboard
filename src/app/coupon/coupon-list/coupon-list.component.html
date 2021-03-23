@@ -52,7 +52,7 @@
       <td class="centered">{{ coupon.type }}</td>
       <td class="centered">{{ coupon.description }}</td>
       <td class="centered">{{ coupon.value }}</td>
-      <td class="centered">{{ coupon.expirationDate }}</td>
+      <td class="centered">{{ coupon.expirationDate?.split('-').reverse().join('/') }}</td>
       <td class="centered">
         <i class="fal fa-check" style="color: #67c167;" *ngIf="coupon.active"></i>
         <i class="fal fa-times" style="color: #df6666;" *ngIf="!coupon.active"></i>
