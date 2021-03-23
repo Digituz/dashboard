@@ -22,7 +22,7 @@ export class CouponFormComponent implements OnInit {
   formFields: FormGroup;
   couponsTypes: couponsTypes[] = [
     { label: 'R$', value: 'R$' },
-    { label: '%', value: 'percentage' },
+    { label: '%', value: 'PERCENTAGE' },
     { label: 'EQUIPE', value: 'EQUIPE' },
     { label: 'SHIPPING', value: 'SHIPPING' },
   ];
@@ -43,7 +43,7 @@ export class CouponFormComponent implements OnInit {
     } else {
       this.couponService.loadCoupon(id).subscribe((coupon) => {
         this.coupon = coupon;
-        this.coupon.value = parseFloat(coupon.value.toString());
+        this.coupon.value = parseFloat(coupon.value?.toString());
         this.coupon.expirationDate = coupon.expirationDate ? new Date(coupon.expirationDate) : null;
         this.configureFormFields(coupon);
       });
@@ -55,7 +55,7 @@ export class CouponFormComponent implements OnInit {
       code: [coupon?.code || null, Validators.required /*this.customCouponValidator.existingCode()*/],
       description: [coupon?.description || null, [Validators.required]],
       type: [coupon?.type || this.couponsTypes[0], [Validators.required]],
-      value: [coupon?.value || null /* [Validators.required, Validators.min(0.01)] */],
+      value: [coupon?.value || null],
       expirationDate: [coupon?.expirationDate || null, this.ValidateDate],
       active: [coupon?.active || true],
     });
@@ -70,6 +70,7 @@ export class CouponFormComponent implements OnInit {
       if (this.coupon?.id) {
         coupon.id = this.coupon.id;
       }
+      coupon.type = coupon.type.value;
       coupon.value = coupon.value?.toFixed(2);
       coupon.expirationDate = coupon.expirationDate ? format(coupon.expirationDate, 'yyyy-MM-dd') : null;
       this.couponService.saveCoupon(coupon).subscribe(() => {

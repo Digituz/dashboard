@@ -50,7 +50,8 @@
     <tr>
       <td class="centered">{{ coupon.code }}</td>
       <td class="centered">{{ coupon.description }}</td>
-      <td class="centered">{{ coupon.type }}</td>
+      <td *ngIf="coupon.type !== 'PERCENTAGE'" class="centered">{{ coupon.type }}</td>
+      <td *ngIf="coupon.type == 'PERCENTAGE'" class="centered">%</td>
       <td class="centered">{{ coupon.value }}</td>
       <td class="centered">{{ coupon.expirationDate?.split('-').reverse().join('/') }}</td>
       <td class="centered">
