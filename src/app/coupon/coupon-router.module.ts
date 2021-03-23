@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { extract } from '@app/i18n';
 import { Shell } from '@app/shell/shell.service';
+import { CouponFormComponent } from './coupon-form/coupon-form.component';
+import { CouponListComponent } from './coupon-list/coupon-list.component';
 import { CouponComponent } from './coupon.component';
 
 const routes: Routes = [
@@ -17,10 +19,18 @@ const routes: Routes = [
       children: [
         {
           path: '',
-          component: CouponComponent,
+          component: CouponListComponent,
           data: {
             title: 'Lista de Cupoms',
             breadcrumb: 'Lista',
+          },
+        },
+        {
+          path: ':id',
+          component: CouponFormComponent,
+          data: {
+            title: 'Editar Cupom',
+            breadcrumb: 'Editar Cupom',
           },
         },
       ],

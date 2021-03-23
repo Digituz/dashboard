@@ -1,0 +1,66 @@
+<div class="search-container">
+  <form>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label for="query">Pesquisa</label>
+        <input id="query" name="query" type="text" pInputText />
+      </div>
+    </div>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-6">
+        <button pButton type="submit" label="Pesquisar"></button>
+        <button
+          pButton
+          type="submit"
+          class="p-button-secondary"
+          (click)="resetFilter()"
+          label="Limpar Filtros"
+        ></button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="feature-header">
+  <p>
+    <label>Controle seus cupons de desconto.</label>
+  </p>
+  <div class="actions">
+    <button title="Novo Cliente" routerLink="/coupons/new" pButton type="button" label="Novo Cliente"></button>
+    <button title="Novo Cupom" pButton type="button" label="Novo Cupom"></button>
+  </div>
+</div>
+<dgz-table
+  #couponsTable
+  [dataProvider]="this"
+  [queryParams]="queryParams"
+  (updateQueryParams)="updateQueryParams($event)"
+  name="coupons-list"
+>
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Tipo</th>
+      <th>Descrição</th>
+      <th>Valor</th>
+      <th>Data de Expiração</th>
+      <th>Ativo</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let coupon of couponsTable.currentData">
+    <tr>
+      <td class="centered">{{ coupon.code }}</td>
+      <td class="centered">{{ coupon.type }}</td>
+      <td class="centered">{{ coupon.description }}</td>
+      <td class="centered">{{ coupon.value }}</td>
+      <td class="centered">{{ coupon.expirationDate }}</td>
+      <td class="centered">
+        <i class="fal fa-check" style="color: #67c167;" *ngIf="coupon.active"></i>
+        <i class="fal fa-times" style="color: #df6666;" *ngIf="!coupon.active"></i>
+      </td>
+      <td class="actions">
+        <button [title]="'Editar Cupom'" pButton type="button" label="Editar"></button>
+      </td>
+    </tr>
+  </tbody>
+</dgz-table>

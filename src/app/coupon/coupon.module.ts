@@ -14,8 +14,10 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { CalendarModule } from 'primeng/calendar';
+import { CouponFormComponent } from './coupon-form/coupon-form.component';
+import { CouponListComponent } from './coupon-list/coupon-list.component';
 @NgModule({
-  declarations: [CouponComponent],
+  declarations: [CouponComponent, CouponFormComponent, CouponListComponent],
   imports: [
     CommonModule,
     FormsModule,
