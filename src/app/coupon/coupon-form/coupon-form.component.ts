@@ -66,7 +66,7 @@ export class CouponFormComponent implements OnInit {
       this.markAllFieldsAsTouched(this.formFields);
     } else {
       const coupon = { ...this.formFields.value };
-      if (this.coupon.id) {
+      if (this.coupon?.id) {
         coupon.id = this.coupon.id;
       }
       coupon.value = coupon.value?.toFixed(2);
@@ -89,7 +89,8 @@ export class CouponFormComponent implements OnInit {
   }
 
   ValidateDate(control: AbstractControl): { [key: string]: any } | null {
-    if (isBefore(control.value, new Date())) {
+    const today = new Date();
+    if (isBefore(control.value, new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())))) {
       return { err: true };
     }
     return null;
