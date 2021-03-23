@@ -66,10 +66,14 @@ export class CouponFormComponent implements OnInit {
       this.markAllFieldsAsTouched(this.formFields);
     } else {
       const coupon = { ...this.formFields.value };
-      console.log(coupon);
+      if (this.coupon.id) {
+        coupon.id = this.coupon.id;
+      }
       coupon.value = coupon.value?.toFixed(2);
       coupon.expirationDate = format(coupon.expirationDate, 'yyyy-MM-dd');
-      this.couponService.saveCoupon(coupon).subscribe(() => {});
+      this.couponService.saveCoupon(coupon).subscribe(() => {
+        this.router.navigate(['/coupons']);
+      });
     }
   }
 
