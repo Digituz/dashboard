@@ -38,8 +38,8 @@
   <thead>
     <tr>
       <th>Código</th>
-      <th>Tipo</th>
       <th>Descrição</th>
+      <th>Tipo</th>
       <th>Valor</th>
       <th>Data de Expiração</th>
       <th>Ativo</th>
@@ -49,8 +49,8 @@
   <tbody *ngFor="let coupon of couponsTable.currentData">
     <tr>
       <td class="centered">{{ coupon.code }}</td>
-      <td class="centered">{{ coupon.type }}</td>
       <td class="centered">{{ coupon.description }}</td>
+      <td class="centered">{{ coupon.type }}</td>
       <td class="centered">{{ coupon.value }}</td>
       <td class="centered">{{ coupon.expirationDate?.split('-').reverse().join('/') }}</td>
       <td class="centered">

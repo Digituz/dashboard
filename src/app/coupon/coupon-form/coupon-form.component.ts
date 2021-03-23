@@ -43,7 +43,8 @@ export class CouponFormComponent implements OnInit {
     } else {
       this.couponService.loadCoupon(id).subscribe((coupon) => {
         this.coupon = coupon;
-        this.coupon.expirationDate = new Date(coupon.expirationDate);
+        this.coupon.value = parseFloat(coupon.value.toString());
+        this.coupon.expirationDate = coupon.expirationDate ? new Date(coupon.expirationDate) : null;
         this.configureFormFields(coupon);
       });
     }
@@ -70,7 +71,7 @@ export class CouponFormComponent implements OnInit {
         coupon.id = this.coupon.id;
       }
       coupon.value = coupon.value?.toFixed(2);
-      coupon.expirationDate = format(coupon.expirationDate, 'yyyy-MM-dd');
+      coupon.expirationDate = coupon.expirationDate ? format(coupon.expirationDate, 'yyyy-MM-dd') : null;
       this.couponService.saveCoupon(coupon).subscribe(() => {
         this.router.navigate(['/coupons']);
       });
