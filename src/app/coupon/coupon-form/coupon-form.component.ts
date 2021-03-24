@@ -48,7 +48,7 @@ export class CouponFormComponent implements OnInit {
 
   private configureFormFields(coupon: Coupon) {
     this.formFields = this.fb.group({
-      code: [coupon?.code || null, Validators.required /*this.customCouponValidator.existingCode()*/],
+      code: [coupon?.code || null, Validators.required, this.customCouponValidator.existingCode()],
       description: [coupon?.description || null, [Validators.required]],
       type: [coupon?.type || this.couponsTypes[0], [Validators.required]],
       value: [coupon?.value || null],
