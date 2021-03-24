@@ -48,7 +48,11 @@ export class CouponFormComponent implements OnInit {
 
   private configureFormFields(coupon: Coupon) {
     this.formFields = this.fb.group({
-      code: [coupon?.code || null, Validators.required, this.customCouponValidator.existingCode()],
+      code: [
+        { value: coupon?.code || '', disabled: !!coupon?.id },
+        Validators.required,
+        this.customCouponValidator.existingCode(),
+      ],
       description: [coupon?.description || null, [Validators.required]],
       type: [coupon?.type || this.couponsTypes[0], [Validators.required]],
       value: [coupon?.value || null],
@@ -65,6 +69,7 @@ export class CouponFormComponent implements OnInit {
       const coupon = { ...this.formFields.value };
       if (this.coupon?.id) {
         coupon.id = this.coupon.id;
+        coupon.code = this.coupon.code;
       }
 
       coupon.type = this.type;
