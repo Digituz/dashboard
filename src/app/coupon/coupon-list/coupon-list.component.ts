@@ -19,6 +19,14 @@ export class CouponListComponent implements OnInit {
     { label: 'Ativos', value: 'true' },
     { label: 'Inativos', value: 'false' },
   ];
+  typeOptions: ComboBoxOption[] = [
+    { label: 'Todos', value: null },
+    { label: 'R$', value: 'R$' },
+    { label: '%', value: 'PERCENTAGE' },
+    { label: 'EQUIPE', value: 'EQUIPE' },
+    { label: 'SHIPPING', value: 'SHIPPING' },
+  ];
+  type: ComboBoxOption = this.typeOptions[0];
   status: ComboBoxOption = this.statusOptions[0];
   query: string;
 
@@ -38,9 +46,13 @@ export class CouponListComponent implements OnInit {
 
   updateQueryParams(queryParams: QueryParam[]) {
     this.query = queryParams.find((q) => q.key === 'query')?.value.toString();
-    const selectedstatusStatusOption = queryParams.find((q) => q.key === 'status')?.value;
-    if (selectedstatusStatusOption) {
-      this.status = this.statusOptions.find((o) => o.value === selectedstatusStatusOption);
+    const selectedStatusOption = queryParams.find((q) => q.key === 'status')?.value;
+    if (selectedStatusOption) {
+      this.status = this.statusOptions.find((o) => o.value === selectedStatusOption);
+    }
+    const selectedTypeOption = queryParams.find((q) => q.key === 'Type')?.value;
+    if (selectedTypeOption) {
+      this.type = this.typeOptions.find((o) => o.value === selectedTypeOption);
     }
   }
 
@@ -48,6 +60,7 @@ export class CouponListComponent implements OnInit {
     this.queryParams = [
       { key: 'query', value: this.query },
       { key: 'status', value: this.status.value },
+      { key: 'type', value: this.type.value },
     ];
 
     this.resultsTable.reload(this.queryParams);
@@ -55,6 +68,8 @@ export class CouponListComponent implements OnInit {
 
   resetFilter() {
     this.query = '';
+    this.type = this.typeOptions[0];
+    this.status = this.statusOptions[0];
     return localStorage.removeItem('coupons-list');
   }
 }

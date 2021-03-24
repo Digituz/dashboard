@@ -5,7 +5,11 @@
         <label for="query">Pesquisa</label>
         <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
       </div>
-      <div class="p-field p-col-6">
+      <div class="p-field p-col-3">
+        <label for="isApproved">Tipo do Cupom</label>
+        <p-dropdown name="active" [options]="typeOptions" [(ngModel)]="type" optionLabel="label"></p-dropdown>
+      </div>
+      <div class="p-field p-col-3">
         <label for="isApproved">Status do Cupom</label>
         <p-dropdown name="active" [options]="statusOptions" [(ngModel)]="status" optionLabel="label"></p-dropdown>
       </div>
