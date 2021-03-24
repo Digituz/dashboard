@@ -1,9 +1,13 @@
 <div class="search-container">
   <form (ngSubmit)="queryCoupons()">
     <div class="p-fluid p-formgrid p-grid">
-      <div class="p-field p-col-12">
+      <div class="p-field p-col-6">
         <label for="query">Pesquisa</label>
         <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+      <div class="p-field p-col-6">
+        <label for="isApproved">Status do Cupom</label>
+        <p-dropdown name="active" [options]="statusOptions" [(ngModel)]="status" optionLabel="label"></p-dropdown>
       </div>
     </div>
     <div class="p-fluid p-formgrid p-grid">

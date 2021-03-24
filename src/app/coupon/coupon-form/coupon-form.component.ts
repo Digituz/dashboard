@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ComboBoxOption } from '@app/util/combo-box-option.interface';
 import { format, isBefore } from 'date-fns';
 import { Coupon } from '../coupon.entity';
 import { CouponService } from '../coupon.service';
 import { CustomCouponValidator } from '../coupon.validator';
-
-interface couponsTypes {
-  label: string;
-  value: string;
-}
 
 @Component({
   selector: 'app-coupon-form',
@@ -20,13 +16,12 @@ export class CouponFormComponent implements OnInit {
   loading: boolean = true;
   coupon: Coupon;
   formFields: FormGroup;
-  couponsTypes: couponsTypes[] = [
+  couponsTypes: ComboBoxOption[] = [
     { label: 'R$', value: 'R$' },
     { label: '%', value: 'PERCENTAGE' },
     { label: 'EQUIPE', value: 'EQUIPE' },
     { label: 'SHIPPING', value: 'SHIPPING' },
   ];
-
   constructor(
     private couponService: CouponService,
     private fb: FormBuilder,
@@ -57,7 +52,7 @@ export class CouponFormComponent implements OnInit {
       type: [coupon?.type || this.couponsTypes[0], [Validators.required]],
       value: [coupon?.value || null],
       expirationDate: [coupon?.expirationDate || null, this.ValidateDate],
-      active: [coupon?.active || true],
+      active: [coupon?.active || false, Validators.required],
     });
     this.loading = false;
   }

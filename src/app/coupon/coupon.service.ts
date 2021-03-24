@@ -40,11 +40,15 @@ export class CouponService implements IDataProvider<Coupon> {
         query += `&${queryParam.key}=${queryParam.value}`;
       });
 
+    console.log(query);
     return this.httpClient.get<Pagination<Coupon>>(query);
   }
 
   public saveCoupon(coupon: Coupon): Observable<void> {
-    return this.httpClient.post<void>(`${this.COUPON_ENDPOINT}/save`, coupon);
+    if (coupon.id) {
+      return this.httpClient.put<void>(`${this.COUPON_ENDPOINT}`, coupon);
+    }
+    return this.httpClient.post<void>(`${this.COUPON_ENDPOINT}/create`, coupon);
   }
 
   loadCoupon(id: string) {
