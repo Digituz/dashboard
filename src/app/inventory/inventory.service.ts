@@ -76,7 +76,10 @@ export class InventoryService implements IDataProvider<Inventory> {
   }
 
   download(category: string): Observable<any> {
-    const path = `${this.INVENTORY_ENDPOINT}/report?category=${category}&xlsx=true`;
+    let path = `${this.INVENTORY_ENDPOINT}/report?xlsx=true`;
+    if (category) {
+      path += `&category=${category}`;
+    }
     return this.httpClient.get(path, { responseType: 'blob' });
   }
 }
