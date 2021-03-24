@@ -270,7 +270,6 @@ export class SalesOrderFormComponent implements OnInit {
   searchCoupon(event: any) {
     this.couponService.findCoupons(event.query).subscribe((results) => {
       this.coupons = results.items;
-      console.log(this.coupons);
     });
   }
 }

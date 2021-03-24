@@ -49,7 +49,7 @@ export class CouponListComponent implements OnInit {
       { key: 'query', value: this.query },
       { key: 'status', value: this.status.value },
     ];
-    console.log(this.queryParams);
+
     this.resultsTable.reload(this.queryParams);
   }
 

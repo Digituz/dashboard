@@ -13,7 +13,9 @@ export class CouponService implements IDataProvider<Coupon> {
   constructor(private httpClient: HttpClient) {}
 
   public findCoupons(query: string): Observable<Pagination<Coupon>> {
-    return this.httpClient.get<Pagination<Coupon>>(`${this.COUPON_ENDPOINT}?page=1&limit=10&query=${query}`);
+    return this.httpClient.get<Pagination<Coupon>>(
+      `${this.COUPON_ENDPOINT}?page=1&limit=10&query=${query}&status=true`
+    );
   }
 
   loadData(
@@ -40,7 +42,6 @@ export class CouponService implements IDataProvider<Coupon> {
         query += `&${queryParam.key}=${queryParam.value}`;
       });
 
-    console.log(query);
     return this.httpClient.get<Pagination<Coupon>>(query);
   }
 
