@@ -36,7 +36,7 @@
       </div>
       <div class="p-field p-col-3">
         <label for="type">Tipo</label>
-        <p-dropdown [options]="couponsTypes" formControlName="type"></p-dropdown>
+        <p-dropdown [options]="couponsTypes" (onChange)="valueIsActive()" formControlName="type"></p-dropdown>
       </div>
       <div class="p-field p-col-4">
         <label for="couponValue">Valor</label>

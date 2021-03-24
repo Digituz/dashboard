@@ -16,6 +16,7 @@ export class CouponFormComponent implements OnInit {
   loading: boolean = true;
   coupon: Coupon;
   formFields: FormGroup;
+  type: string;
   couponsTypes: ComboBoxOption[] = [
     { label: 'R$', value: 'R$' },
     { label: '%', value: 'PERCENTAGE' },
@@ -65,7 +66,8 @@ export class CouponFormComponent implements OnInit {
       if (this.coupon?.id) {
         coupon.id = this.coupon.id;
       }
-      coupon.type = coupon.type.value;
+
+      coupon.type = this.type;
       coupon.value = coupon.value?.toFixed(2);
       coupon.expirationDate = coupon.expirationDate ? format(coupon.expirationDate, 'yyyy-MM-dd') : null;
       this.couponService.saveCoupon(coupon).subscribe(() => {
@@ -91,5 +93,16 @@ export class CouponFormComponent implements OnInit {
       return { err: true };
     }
     return null;
+  }
+
+  valueIsActive() {
+    const type = this.formFields.get('type').value;
+    if (type === 'SHIPPING') {
+      this.formFields.get('value').disable();
+      this.formFields.get('value');
+    } else {
+      this.formFields.get('value').enable();
+    }
+    this.type = type;
   }
 }
