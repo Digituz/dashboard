@@ -46,6 +46,20 @@
           </ng-template>
         </p-autoComplete>
       </div>
+      <div class="p-field p-col-6">
+        <label class="input-label" for="coupon">Cupom </label>
+        <p-autoComplete
+          formControlName="coupon"
+          [suggestions]="coupons"
+          (completeMethod)="searchCoupon($event)"
+          placeholder="Insira um cupom de desconto"
+          field="code"
+        >
+          <ng-template let-coupon pTemplate="item">
+            <div>{{ coupon.code }} - {{ coupon.description }}</div>
+          </ng-template>
+        </p-autoComplete>
+      </div>
       <div class="p-field p-col-3">
         <label class="input-label" for="referenceCode">Referência <i class="fal fa-asterisk"></i></label>
         <input

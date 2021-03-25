@@ -50,6 +50,10 @@ const routes: Routes = [
         path: 'users',
         loadChildren: () => import('./users/users.module').then((m) => m.UsersModule),
       },
+      {
+        path: 'coupons',
+        loadChildren: () => import('./coupon/coupon.module').then((m) => m.CouponModule),
+      },
     ],
   },
 ];
