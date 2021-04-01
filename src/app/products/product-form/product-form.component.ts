@@ -45,6 +45,11 @@ export class ProductFormComponent implements OnInit {
     { label: 'Conjuntos', value: ProductCategory.CONJUNTOS },
     { label: 'Decoração', value: ProductCategory.DECORACAO },
     { label: 'Pulseiras', value: ProductCategory.PULSEIRAS },
+    { label: 'Mãe Empreendedora', value: ProductCategory.MAE_EMPREENDEDORA },
+    { label: 'Mãe Artista', value: ProductCategory.MAE_ARTISTA },
+    { label: 'Mãe Caseira', value: ProductCategory.MAE_CASEIRA },
+    { label: 'Mãe Estilosa', value: ProductCategory.MAE_ESTILOSA },
+    { label: 'Mãe Clássica', value: ProductCategory.MAE_CLASSICA },
   ];
 
   constructor(
