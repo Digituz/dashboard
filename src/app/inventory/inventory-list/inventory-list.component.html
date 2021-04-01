@@ -1,9 +1,13 @@
 <div class="search-container">
   <form (ngSubmit)="queryInventory()">
     <div class="p-fluid p-formgrid p-grid">
-      <div class="p-field p-col-12">
+      <div class="p-field p-col-8">
         <label for="query">Pesquisa</label>
         <input id="query" name="query" type="text" [(ngModel)]="query" pInputText />
+      </div>
+      <div class="p-field p-col-4">
+        <label for="query">Agrupar por categoria:</label>
+        <p-dropdown [options]="categories" name="category" [(ngModel)]="category"></p-dropdown>
       </div>
     </div>
     <div class="p-fluid p-formgrid p-grid">
@@ -25,7 +29,14 @@
     <label>Controle o estoque dos seus produtos.</label>
   </p>
   <div class="actions">
-    <button pButton class="p-button-secondary" type="button" label="Gerar Relátorio" (click)="xlsExport()"></button>
+    <button
+      title="Gerar Relatório de estoque"
+      pButton
+      class="p-button-secondary"
+      type="button"
+      label="Gerar Relatório"
+      (click)="xlsExport()"
+    ></button>
     <button pButton type="button" label="Nova Movimentação" (click)="openMovementDialog()"></button>
   </div>
 </div>

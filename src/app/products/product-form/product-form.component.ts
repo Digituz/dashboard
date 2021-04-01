@@ -11,10 +11,7 @@ import { ProductComposition } from '../product-composition.entity';
 import { ProductCompositionComponent } from '../product-composition/product-composition.component';
 import { CustomSkuValidator } from '../sku.validator';
 import { MessagesService } from '@app/messages/messages.service';
-interface Category {
-  label: string;
-  value: ProductCategory;
-}
+import { Category } from '../category.enum';
 
 @Component({
   selector: 'app-product-form',

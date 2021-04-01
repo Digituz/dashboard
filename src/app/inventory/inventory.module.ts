@@ -16,6 +16,7 @@ import { InventoryComponent } from '@app/inventory/inventory.component';
 import { BreadcrumbsModule } from '@app/breadcrumbs/breadcrumbs.module';
 import { MoveInventoryDialogComponent } from '@app/inventory/move-inventory-dialog/move-inventory-dialog.component';
 import { InventoryMovementsComponent } from './inventory-movements/inventory-movements.component';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [InventoryComponent, InventoryListComponent, MoveInventoryDialogComponent, InventoryMovementsComponent],
@@ -24,6 +25,7 @@ import { InventoryMovementsComponent } from './inventory-movements/inventory-mov
     ReactiveFormsModule,
     SharedModule,
     AutoCompleteModule,
+    CardModule,
     ButtonModule,
     DialogModule,
     DropdownModule,
