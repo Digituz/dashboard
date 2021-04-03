@@ -17,6 +17,10 @@ export const environment = {
   serverUrl: '/api/v1',
   defaultLanguage: 'en-US',
   supportedLanguages: ['en-US', 'fr-FR'],
+  devUser: {
+    username: 'bruno.krebs@fridakahlo.com.br',
+    password: 'lbX01as$',
+  },
 };
 
 /*

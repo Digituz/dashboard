@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { SignInService } from './sign-in.service';
 import { Router } from '@angular/router';
 
+import { environment } from '@env/environment';
+
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -13,9 +15,10 @@ export class SignInComponent implements OnInit {
   formFields: FormGroup;
 
   constructor(private fb: FormBuilder, private signInService: SignInService, private router: Router) {
+    const { devUser } = environment;
     this.formFields = this.fb.group({
-      username: [''],
-      password: [''],
+      username: [devUser?.username || ''],
+      password: [devUser?.password || ''],
     });
   }
 
