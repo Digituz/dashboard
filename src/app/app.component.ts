@@ -11,6 +11,7 @@ import { I18nService } from '@app/i18n';
 import { SwUpdate } from '@angular/service-worker';
 import { MessagesService } from './messages/messages.service';
 import { SignInService } from './sign-in/sign-in.service';
+import { initDatadog } from './util/logger';
 
 const log = new Logger('App');
 
@@ -34,6 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    initDatadog();
     // Setup logger
     if (environment.production) {
       Logger.enableProductionMode();

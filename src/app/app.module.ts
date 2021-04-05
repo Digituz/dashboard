@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsModule } from '@ngxs/store';
@@ -16,6 +16,7 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { MessagesComponent } from './messages/messages.component';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { CustomErrorHandler } from './custom-error-handler.service';
 
 @NgModule({
   imports: [
@@ -36,7 +37,7 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent, MessagesComponent],
-  providers: [],
+  providers: [{ provide: ErrorHandler, useClass: CustomErrorHandler }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
