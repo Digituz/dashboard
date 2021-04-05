@@ -3,7 +3,6 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/c
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Logger } from '../logger.service';
 import { MessagesService } from '../../messages/messages.service';
 
 /**
