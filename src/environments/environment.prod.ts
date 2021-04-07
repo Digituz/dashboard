@@ -5,9 +5,9 @@
 // Note that as usual, any environment variables you expose through it will end up in your
 // bundle, and you should not use it for any sensitive information like passwords or keys.
 import { env } from './.env';
-import { Environment } from './environment';
+// import { Environment } from './environment';
 
-export const environment: Environment = {
+export const environment: any = {
   production: true,
   hmr: false,
   version: env.npm_package_version,
