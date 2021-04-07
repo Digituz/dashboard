@@ -8,7 +8,17 @@
 // This is useful for granularity you might need beyond just the environment.
 // Note that as usual, any environment variables you expose through it will end up in your
 // bundle, and you should not use it for any sensitive information like passwords or keys.
-import { env, Environment } from './.env';
+import { env } from './.env';
+
+export interface Environment {
+  production: boolean;
+  hmr: boolean;
+  version: string;
+  serverUrl: string;
+  defaultLanguage: string;
+  supportedLanguages: string[];
+  devUser: { username: string; password: string } | null;
+}
 
 export const environment: Environment = {
   production: false,
