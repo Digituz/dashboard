@@ -10,7 +10,7 @@ export class CustomErrorHandler implements ErrorHandler {
       : 'https://hooks.slack.com/services/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';
 
     const message = {
-      text: 'Falha no DashBoard',
+      text: 'Falha na Digituz Dashboard',
       attachments: [
         {
           text: 'Houve um erro inesperado',
