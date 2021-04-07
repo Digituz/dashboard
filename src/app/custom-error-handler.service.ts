@@ -1,5 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { ErrorHandler, Injectable } from '@angular/core';
+import { ErrorHandler } from '@angular/core';
 import { environment } from '@env/environment';
 
 export class CustomErrorHandler implements ErrorHandler {
